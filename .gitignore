@@ -16,6 +16,9 @@
 *.zip 
 *.lock 
 *.log 
+*.ini
+*.dat
+*.properties
 # Logs and databases # ###################### 
 *.log 
 *.sql
