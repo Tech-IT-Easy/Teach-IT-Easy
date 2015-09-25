@@ -16,6 +16,9 @@
 *.zip 
 *.lock 
 *.log 
+*.ini
+*.dat
+*.properties
 # Logs and databases # ###################### 
 *.log 
 *.sql
@@ -39,6 +42,9 @@ Thumbs.db
 # Eclipse Core 
 .project 
 .metadata/
+metadata/*
+*.metadata
+*.settings
 # External tool builders 
 .externalToolBuilders/ 
 # Locally stored "Eclipse launch configurations" 
