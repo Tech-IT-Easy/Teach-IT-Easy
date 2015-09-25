@@ -37,7 +37,9 @@ Thumbs.db
 .settings/ 
 .loadpath 
 # Eclipse Core 
-.project 
+.project
+metadata/*
+.metadata
 # External tool builders 
 .externalToolBuilders/ 
 # Locally stored "Eclipse launch configurations" 
