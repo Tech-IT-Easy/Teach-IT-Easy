@@ -12,7 +12,7 @@ function setup()
 
     mc = lemock.controller()
     printer = mc:mock()
-    for key,value in pairs(package.loaded) do print(key,value) end
+
     package.loaded['tests.example.my_print'] = nil
     package.loaded['tests.example.my_func'] = nil
     package.preload['tests.example.my_print'] = nil
