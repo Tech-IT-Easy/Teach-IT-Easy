@@ -57,7 +57,7 @@ issue = git.createissue(project_id, title, description=description, assignee_id=
 if args.email:
     TO = args.email
     SUBJECT = 'Build failed after last push - New issue created'
-    TEXT = 'The build failed after your last commit'
+
 
     # Gmail Sign In
     gmail_sender = credentials['gmail_sender']
@@ -71,7 +71,7 @@ if args.email:
     BODY = '\r\n'.join(['To: %s' % TO,
                         'From: %s' % gmail_sender,
                         'Subject: %s' % SUBJECT,
-                        '', TEXT])
+                        '', description])
 
     try:
         server.sendmail(gmail_sender, [TO], BODY)
