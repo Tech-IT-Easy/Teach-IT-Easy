@@ -56,7 +56,7 @@ return {
     "luacov/stats$",
     "luacov/tick$",
 	"/lunit/",
-	"tests/",
+	--"tests/",
 	"/lunit",
 	"/lunitx",
 	"/lemock",
