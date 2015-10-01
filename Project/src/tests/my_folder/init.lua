@@ -1,1 +1,1 @@
-require "tests.my_folder.test_file"
+require "tests.my_folder.test_my_file"
