@@ -26,7 +26,7 @@ parser.add_argument("--email",
 args = parser.parse_args()
 
 module_dir = os.path.dirname(__file__)  # get current directory
-file_path = os.path.join(module_dir, 'credentials')
+file_path = os.path.join(module_dir, '../../../../my_scripts/credentials')
 
 with open(file_path, 'r') as f:
     credentials = {}

@@ -24,7 +24,7 @@ end
 function test1()
   assert_equal("Hello World", foobar)
   foobar = string.sub(foobar, 1, 5)
-  assert_equal("Hello", foobar)
+  assert_equal("Hell", foobar)
 end
 
 function test2()
