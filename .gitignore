@@ -63,3 +63,4 @@ metadata/*
 .texlipse 
 *.name 
 *.xml
+Project/src/tests/luacov/*.xml
