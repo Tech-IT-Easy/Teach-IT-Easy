@@ -53,9 +53,10 @@ function test_addition_of_positive_numbers_with_positive_integers()  -- one test
 end
 
 function test_addition_of_positive_numbers_with_negative_integers()
+  -- Description of test if needed
   local res = my_file.addition_of_positive_numbers(-1,-3)
 
-  assert_equal(4, res, "Message if the test fails.")
+  assert_equal(5, res, "Message if the test fails.")
 end
 
 function test_addition_of_positive_numbers_with_one_negative_one_positive_integer()
