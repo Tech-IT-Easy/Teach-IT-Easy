@@ -19,6 +19,12 @@ local icon = gfx.loadpng('data/logo.png')
 function onKey(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
   screen:clear({g=65, r=2, b=100}, {x=450,y=200,w=300,height=300})
+  if (key=='0') then
+    --ft = sys.new_freetype({g=0, r=255, b=0, a=155}, 25, {x=600, y=400}, 'data/Pacifico.ttf')
+    --ft:draw_over_surface(screen,'0')
+   end
+  
+  
   if (key=='right') or (key=='left') or (key=='up') or (key=='down') then
     if key=='right' then       
       icon_pos.x = icon_pos.x + 2       
@@ -29,7 +35,7 @@ function onKey(key,state)
   end
     
   if icon then 
-    screen:copyfrom(icon, nil, icon_pos,true)	
+    screen:copyfrom(icon, nil, icon_pos,true) 
     gfx.update()
   end
 end
@@ -48,7 +54,7 @@ function onStart()
   --Load in a JPEG image
   local lena = gfx.loadjpeg('data/lena.jpg')
 
-  local ft = sys.new_freetype({g=100, r=100, b=255, a=155}, 25, {x=15,y=39}, 'data/Pacifico.ttf')
+  local ft = sys.new_freetype({g=100, r=100, b=0, a=155}, 25, {x=15,y=39}, 'data/Pacifico.ttf')
   if ft then
     if lena then
       ft:draw_over_surface(lena, 'test')
@@ -56,23 +62,23 @@ function onStart()
   end
 
   --Render at full size
-  if lena then screen:copyfrom(lena, nil, {x=10,y=10},true)	end
+  if lena then screen:copyfrom(lena, nil, {x=15,y=15},true) end
   
   --Set alpha on image
-  lena:set_alpha(100)
+  lena:set_alpha(10)
   --Render at quarter size
-  if lena then screen:copyfrom(lena, nil, {x=300,y=10,w=lena:get_width() / 2, h=lena:get_height()/2},true)	end
+  if lena then screen:copyfrom(lena, nil, {x=300,y=10,w=lena:get_width() / 2, h=lena:get_height()/2},true)  end
   
   --Clear a few rectangles
   screen:clear({g=15, r=220, b=15}, {x=450,y=10,w=20,height=15})
   screen:clear({g=220, r=15, b=15}, {x=450,y=30,w=20,height=15})
-  screen:fill({g=15, r=15, b=220}, {x=450,y=50,w=20,height=15})
+  screen:clear({g=15, r=15, b=220}, {x=450,y=50,w=20,height=15})
   
   --Load in a PNG image
   local transparent_image = gfx.loadpng('data/transparency.png')
   
   --Render at full size
-  if transparent_image then screen:copyfrom(transparent_image, nil, {x=10,y=300},true)	end
+  if transparent_image then screen:copyfrom(transparent_image, nil, {x=50,y=300},true)  end
   
   
   --Set up a timer to render a random color box
