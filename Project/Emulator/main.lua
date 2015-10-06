@@ -12,18 +12,10 @@ if ADConfig.isSimulator then
   sys = require "SDK.Simulator.sys"
 end
 
---local button_active = gfx.loadpng('data/activeitem.png')
---local button_one = {255, 0, 0, 0}
 local button_inactive = gfx.loadpng('data/activeitem.png')
---button_inactive:set_alpha(150)
---local pos_one = "{x=150, y=200,w=button_active:get_width() * 0.5, h=button_active:get_height()*0.5}"
---local pos_two = "{x=394,y=200,w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5}"
---local button_three = gfx.loadpng('data/activeitem.png')
---local button_four = screen:fill({g=236, r=238, b=225}, {x=0, y=0, w=1280, height=600})
+
 local background = gfx.loadpng('data/background.png')
 local pos = 1;
---positions = {pos_one, pos_two}
-
 
 function onKey(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
@@ -42,84 +34,41 @@ function onStart()
   ADLogger.trace("onStart")
   if ADConfig.isSimulator then
     if arg[#arg] == "-debug" then require("mobdebug").start() end
-
-    --screen:fill({g=236, r=238, b=225}, {x=0, y=0, w=1280, height=600})
-    --screen:fill({g=187, r=155, b=89}, {x=0, y=600, w=1280, height=120})
     
-    screen:copyfrom(background, nil, {x=0,y=0,w=screen:get_width()*0.5, h=screen:get_height()},true)
+    screen:copyfrom(background, nil, {x=0,y=0,w=screen:get_width(), h=screen:get_height()},true)
     renderUI()
-    --[[
-    screen:fill({g=89, r=200, b=89}, {x=150, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
-    screen:fill({g=187, r=155, b=89}, {x=394, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
-    screen:fill({g=187, r=155, b=89}, {x=638, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
-    screen:fill({g=187, r=155, b=89}, {x=882, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
-    screen:fill({g=187, r=155, b=89}, {x=0, y=620, w=button_inactive:get_width() * 5, h=button_inactive:get_height()*0.2})
-    ]]--
     
-    --[[screen:copyfrom(button_active, nil, {x=150,y=200,w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5},true)
-    screen:copyfrom(button_inactive, nil, {x=394,y=200,w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5},true)
-    screen:copyfrom(button_inactive, nil, {x=638,y=200,w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5},true)
-    screen:copyfrom(button_inactive, nil, {x=882,y=200,w=button_inactive:get_width() * 0.5 , h=button_inactive:get_height()*0.5},true)
-    screen:copyfrom(button_inactive, nil, {x=-60,y=620,w=button_inactive:get_width() * 5 , h=button_inactive:get_height()*0.2},true)
-    --]]
-    --screen:copyfrom({g=255, r=255, b=255,nil, a=100}, {x=75, y=100, w=200, h=300,},true)
-    --button_one:set_alpha(150)    
-  --  screen:copyfrom(button_one, nil, {x=75,y=100,w=button_one:get_width(), h=button_one:get_height()},true)
-    --screen:copyfrom(button_two, nil, {x=75,y=100,w=button_one:get_width(), h=button_one:get_height()},true)
-    --screen:copyfrom(button_three, nil, {x=75,y=100,w=button_one:get_width(), h=button_one:get_height()},true)
-    --screen:copyfrom(button_four, nil, {x=75,y=100,w=button_one:get_width(), h=button_one:get_height()},true)
-    
-
   end
-
 
   gfx.update()
 
+end
 
-  --sys.new_timer(1000,"callback")
+function active(x1, y2)
+screen:fill({g=131, r=0, b=143}, {x=x1, y=y2, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
+screen:fill({g=255, r=255, b=255}, {x=x1 + 5, y=y2 + 5, w=button_inactive:get_width() * 0.5 - 10, h=button_inactive:get_height()*0.5 - 10})
+end
 
+function inactive(x1, y2)
+screen:fill({g=228, r=187, b=235}, {x=x1, y=y2, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
 end
 
 function renderUI()
   
-  if pos==1 then screen:fill({g=89, r=200, b=89}, {x=150, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
-  else screen:fill({g=187, r=155, b=89}, {x=150, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5}) end
+  if pos==1 then active(150, 200)
+  else inactive(150, 200) end
+
+  if pos==5 then screen:fill({g=131, r=0, b=143}, {x=0, y=580, w=screen:get_width(), h=button_inactive:get_height()*0.3})
+  screen:fill({g=255, r=255, b=255}, {x=5, y=585, w=screen:get_width() - 10, h=button_inactive:get_height()*0.3 - 10})
+  else screen:fill({g=228, r=187, b=235}, {x=0, y=580, w=screen:get_width(), h=button_inactive:get_height()*0.3}) end
   
-  --[[if pos==2 then screen:fill({g=89, r=200, b=89}, {x=394, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
-  else screen:fill({g=187, r=155, b=89}, {x=150, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5}) end
+  if pos==2 then active(394, 200)
+  else inactive(394, 200) end
   
-  if pos==3 then screen:fill({g=89, r=200, b=89}, {x=638, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
-  else screen:fill({g=187, r=155, b=89}, {x=150, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5}) end
+  if pos==3 then active(638, 200)
+  else inactive(638, 200) end
   
-  if pos==4 then screen:fill({g=89, r=200, b=89}, {x=882, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
-  else screen:fill({g=187, r=155, b=89}, {x=150, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5}) end
-  ]]--
-  if pos==5 then screen:fill({g=89, r=200, b=89}, {x=0, y=580, w=button_inactive:get_width() * 5, h=button_inactive:get_height()*0.3})
-  else screen:fill({g=187, r=155, b=89}, {x=0, y=580, w=button_inactive:get_width() * 5, h=button_inactive:get_height()*0.3}) end
-  
-  if pos==2 then screen:fill({g=89, r=200, b=89}, {x=394, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
-  else screen:fill({g=187, r=155, b=89}, {x=394, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5}) end
-  
-  if pos==3 then screen:fill({g=89, r=200, b=89}, {x=638, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
-  else screen:fill({g=187, r=155, b=89}, {x=638, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5}) end
-  
-  if pos==4 then screen:fill({g=89, r=200, b=89}, {x=882, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5})
-  else screen:fill({g=187, r=155, b=89}, {x=882, y=200, w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5}) end
-  --[[if pos == 1 then screen:copyfrom(button_active, nil, {x=150,y=200,w=button_active:get_width() * 0.5, h=button_active:get_height()*0.5},true)
-  else screen:copyfrom(button_inactive, nil, {x=150,y=200,w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5},true)
-  end
-  if pos == 2 then screen:copyfrom(button_active, nil, {x=394,y=200,w=button_active:get_width() * 0.5, h=button_active:get_height()*0.5}, true)
-  else screen:copy(button_inactive, nil, {x=394,y=200,w=button_inactive:get_width() * 0.5, h=button_inactive:get_height()*0.5}, true)
-  end
-  --[[if pos == 3 then button_three:set_aplha(255)
-  else button_three:set_alpha(150)
-  end
-  if pos == 4 then button_four:set_alpha(255)
-  else button_four:set_alpha(150)
-  end--]]
-  --button_two:set_alpha(150)  
-  --screen:copyfrom(button_one, nil, {x=75,y=100,w=button_one:get_width() * 0.7, h=button_one:get_height()*0.7},true)
-  --screen:copyfrom(button_two, nil, {x=450,y=100,w=button_one:get_width() * 1.5, h=button_one:get_height()*1.5},true)
-  --screen:copyfrom(button_three, nil, {x=825,y=100,w=button_one:get_width() * 1.5, h=button_one:get_height()*1.5},true)
-  --screen:copyfrom(button_four, nil, {x=850,y=620,w=button_four:get_width() * 1.2 , h=button_one:get_height() /4},true)
+  if pos==4 then active(882, 200)
+  else inactive(882, 200) end
+
 end
