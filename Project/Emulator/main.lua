@@ -14,8 +14,6 @@ end
 
 local button_inactive = gfx.loadpng('data/activeitem.png')
 
-
-
 local background = gfx.loadpng('data/background.png')
 local pos = 1;
 
