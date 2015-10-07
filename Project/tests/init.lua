@@ -5,4 +5,3 @@ require "tests.mock_emulator"
 
 -- Examlpe:
 require "tests.my_folder"
-require "tests.main"
