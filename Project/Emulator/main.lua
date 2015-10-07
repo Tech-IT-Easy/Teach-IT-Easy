@@ -17,7 +17,8 @@ local button_inactive = gfx.loadpng('data/activeitem.png')
 local background = gfx.loadpng('data/background.png')
 local pos = 1;
 
-local appnamebaseline = screen:get_height()*0.12
+--Interface scaling variables
+local appnamebaseline = screen:get_height()*0.08
 local pagenamebaseline = screen:get_height()*0.20
 local itemy = screen:get_height()*0.32
 local itemheight = screen:get_height()*0.28
@@ -28,7 +29,12 @@ local activewidth = itemwidth*0.96
 local hspacing = screen:get_width()*0.048
 local profilenamebaseline = screen:get_height()*0.77
 local addprofiley = screen:get_height()*0.84
+local addprofileheight = screen:get_height()*0.16
+local activeaddprofileheight = addprofileheight * 0.96
+local activeaddprofiley = addprofiley+(addprofileheight-activeaddprofileheight)
 
+--Fonts
+local appname = sys.new_freetype({g=131, r=0, b=143}, 25, {x= screen:get_width()*0.45, y=appnamebaseline}, 'data/BlackoutMidnight.ttf')
 
 
 
@@ -52,6 +58,7 @@ function onStart()
 
 
     screen:copyfrom(background, nil, {x=0,y=0,w=screen:get_width(), h=screen:get_height()},true)
+    appname:draw_over_surface(screen, "TEACH IT EASY")
     renderUI()
 
 
@@ -108,9 +115,9 @@ function renderUI()
   if pos==1 then active(1)
   else inactive(1) end
 
-  if pos==5 then screen:fill({g=131, r=0, b=143}, {x=0, y=580, w=screen:get_width(), h=button_inactive:get_height()*0.3})
-    screen:fill({g=255, r=255, b=255}, {x=5, y=585, w=screen:get_width() - 10, h=button_inactive:get_height()*0.3 - 10})
-  else screen:fill({g=228, r=187, b=235}, {x=0, y=580, w=screen:get_width(), h=button_inactive:get_height()*0.3}) end
+  if pos==5 then screen:fill({g=131, r=0, b=143}, {x=0, y=addprofiley, w=screen:get_width(), h=addprofileheight})
+    screen:fill({g=255, r=255, b=255}, {x=0, y=activeaddprofiley, w=screen:get_width(), h=activeaddprofileheight})
+  else screen:fill({g=228, r=187, b=235}, {x=0, y=addprofiley, w=screen:get_width(), h=addprofileheight}) end
 
 
   if pos==2 then active(2)
