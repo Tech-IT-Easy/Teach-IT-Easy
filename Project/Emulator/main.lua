@@ -19,7 +19,7 @@ local pos = 1;
 
 --Interface scaling variables
 local appnamebaseline = screen:get_height()*0.08
-local pagenamebaseline = screen:get_height()*0.20
+local pagenamebaseline = screen:get_height()*0.15
 local itemy = screen:get_height()*0.32
 local itemheight = screen:get_height()*0.28
 local itemwidth = screen:get_width()*0.19
@@ -34,9 +34,10 @@ local activeaddprofileheight = addprofileheight * 0.96
 local activeaddprofiley = addprofiley+(addprofileheight-activeaddprofileheight)
 
 --Fonts
-local appname = sys.new_freetype({g=131, r=0, b=143}, 25, {x= screen:get_width()*0.45, y=appnamebaseline}, 'data/BlackoutMidnight.ttf')
-
-
+local appname = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=appnamebaseline}, 'data/BlackoutMidnight.ttf')
+local pagename = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.07, {x= screen:get_width()*0.24, y=pagenamebaseline}, 'data/Chalkduster.ttf')
+local addprofileplus = sys.new_freetype({g=131, r=0, b=143}, screen:get_height()*0.075, {x= screen:get_width()*0.35, y=screen:get_height()*0.883}, 'data/BlackoutMidnight.ttf')
+local addprofilename = sys.new_freetype({g=131, r=0, b=143}, screen:get_height()*0.05, {x= screen:get_width()*0.38, y=screen:get_height()*0.88}, 'data/Chalkduster.ttf')
 
 function onKey(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
@@ -59,6 +60,7 @@ function onStart()
 
     screen:copyfrom(background, nil, {x=0,y=0,w=screen:get_width(), h=screen:get_height()},true)
     appname:draw_over_surface(screen, "TEACH IT EASY")
+    pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
     renderUI()
 
 
@@ -117,7 +119,12 @@ function renderUI()
 
   if pos==5 then screen:fill({g=131, r=0, b=143}, {x=0, y=addprofiley, w=screen:get_width(), h=addprofileheight})
     screen:fill({g=255, r=255, b=255}, {x=0, y=activeaddprofiley, w=screen:get_width(), h=activeaddprofileheight})
-  else screen:fill({g=228, r=187, b=235}, {x=0, y=addprofiley, w=screen:get_width(), h=addprofileheight}) end
+    addprofileplus:draw_over_surface(screen, "+")
+    addprofilename:draw_over_surface(screen, "ADD A PROFILE")
+  else screen:fill({g=228, r=187, b=235}, {x=0, y=addprofiley, w=screen:get_width(), h=addprofileheight}) 
+  addprofileplus:draw_over_surface(screen, "+")
+  addprofilename:draw_over_surface(screen, "ADD A PROFILE")
+  end
 
 
   if pos==2 then active(2)
