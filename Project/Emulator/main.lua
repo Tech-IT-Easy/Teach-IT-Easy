@@ -27,7 +27,8 @@ function onKey(key,state)
   
   if (key=='right') or (key=='left') or (key=='up') or (key=='down') then
     if key=='right' then       
-      icon_pos.x = icon_pos.x + 2       
+      --icon_pos.x = icon_pos.x + 2  Moved to separate function
+      function_to_run_when_pressed_key_right()     
     end
     if key=='left' then icon_pos.x = icon_pos.x - 2 end
     if key=='up' then icon_pos.y = icon_pos.y - 2 end
@@ -40,6 +41,9 @@ function onKey(key,state)
   end
 end
 
+function function_to_run_when_pressed_key_right()
+  icon_pos.x = icon_pos.x + 2
+end
 
 function onStart()
   
