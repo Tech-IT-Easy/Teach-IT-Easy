@@ -3,14 +3,18 @@ ADLogger = require("SDK.Utils.ADLogger")
 ADLogger.trace("Applicatio Init")
 
 if ADConfig.isSimulator then 
-  
-  gfx = require "SDK.Simulator.gfx"
-  zto = require "SDK.Simulator.zto"
-  surface = require "SDK.Simulator.surface" 
-  player = require "SDK.Simulator.player" 
-  freetype = require "SDK.Simulator.freetype" 
-  sys = require "SDK.Simulator.sys" 
+ 
+ gfx = require "SDK.Simulator.gfx"
+ zto = require "SDK.Simulator.zto"
+ surface = require "SDK.Simulator.surface" 
+ player = require "SDK.Simulator.player" 
+ freetype = require "SDK.Simulator.freetype" 
+ sys = require "SDK.Simulator.sys" 
+ script_path = ""
+else
+ script_path = sys.root_path()
 end
+
 
 
 local icon_pos = {x = 450, y=200}
@@ -58,7 +62,7 @@ function onStart()
   --Load in a JPEG image
   local lena = gfx.loadjpeg('data/lena.jpg')
 
-  local ft = sys.new_freetype({g=100, r=100, b=0, a=155}, 25, {x=15,y=39}, 'data/Pacifico.ttf')
+  local ft = sys.new_freetype({g=100, r=100, b=0, a=155}, 25, {x=15,y=39}, script_path..'data/Pacifico.ttf')
   if ft then
     if lena then
       ft:draw_over_surface(lena, 'test')
