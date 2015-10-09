@@ -2,104 +2,130 @@ ADConfig = require("Config.ADConfig")
 ADLogger = require("SDK.Utils.ADLogger")
 ADLogger.trace("Applicatio Init")
 
-if ADConfig.isSimulator then 
- 
- gfx = require "SDK.Simulator.gfx"
- zto = require "SDK.Simulator.zto"
- surface = require "SDK.Simulator.surface" 
- player = require "SDK.Simulator.player" 
- freetype = require "SDK.Simulator.freetype" 
- sys = require "SDK.Simulator.sys" 
- script_path = ""
+if ADConfig.isSimulator then
+  gfx = require "SDK.Simulator.gfx"
+  zto = require "SDK.Simulator.zto"
+  surface = require "SDK.Simulator.surface"
+  player = require "SDK.Simulator.player"
+  freetype = require "SDK.Simulator.freetype"
+  sys = require "SDK.Simulator.sys"
+  script_path = ""
 else
- script_path = sys.root_path()
+  script_path = sys.root_path()
 end
 
+local button_inactive = gfx.loadpng('data/activeitem.png')
+
+local background = gfx.loadpng('data/background_h720.png')
+local pos = 1;
+
+local appnamebaseline = screen:get_height()*0.12
+local pagenamebaseline = screen:get_height()*0.20
+local itemy = screen:get_height()*0.32
+local itemheight = screen:get_height()*0.28
+local itemwidth = screen:get_width()*0.19
+local activeheight = itemheight*0.96
+local activey = itemy+((itemheight-activeheight)/2)
+local activewidth = itemwidth*0.96
+local hspacing = screen:get_width()*0.048
+local profilenamebaseline = screen:get_height()*0.77
+local addprofiley = screen:get_height()*0.84
 
 
-local icon_pos = {x = 450, y=200}
-local icon = gfx.loadpng('data/logo.png')
+function getPos()
+  return pos
+end 
+
+function setPos(new_pos)
+  pos = new_pos
+end
 
 function onKey(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
-  screen:clear({g=65, r=2, b=100}, {x=450,y=200,w=300,height=300})
-  if (key=='0') then
-    --ft = sys.new_freetype({g=0, r=255, b=0, a=155}, 25, {x=600, y=400}, 'data/Pacifico.ttf')
-    --ft:draw_over_surface(screen,'0')
-   end
-  
-  
-  if (key=='right') or (key=='left') or (key=='up') or (key=='down') then
-    if key=='right' then       
-      --icon_pos.x = icon_pos.x + 2  Moved to separate function
-      function_to_run_when_pressed_key_right()     
-    end
-    if key=='left' then icon_pos.x = icon_pos.x - 2 end
-    if key=='up' then icon_pos.y = icon_pos.y - 2 end
-    if key=='down' then icon_pos.y = icon_pos.y + 2 end
-  end
-    
-  if icon then 
-    screen:copyfrom(icon, nil, icon_pos,true) 
-    gfx.update()
-  end
+  if key == 'exit' then sys.stop() end
+  if key == 'right' and state == 'down' and pos < 4 then pos = pos + 1 end
+  if key == 'left' and state == 'down' and pos > 1 then pos = pos - 1 end
+  if key == 'down' and state == 'down' then pos = 5 end
+  if key == 'up' and state == 'down' and pos == 5 then pos = 1 end
+  print(pos)
+  print (state)
+  renderUI()
+  gfx.update()
+  return pos
 end
 
-function function_to_run_when_pressed_key_right()
-  icon_pos.x = icon_pos.x + 2
-end
 
 function onStart()
-  
+
   ADLogger.trace("onStart")
   if ADConfig.isSimulator then
     if arg[#arg] == "-debug" then require("mobdebug").start() end
   end
-  
-  --Clear the screen dark green
-  screen:clear({g=50, r=0, b=0})
-  
-  --Load in a JPEG image
-  local lena = gfx.loadjpeg('data/lena.jpg')
-
-  local ft = sys.new_freetype({g=100, r=100, b=0, a=155}, 25, {x=15,y=39}, script_path..'data/Pacifico.ttf')
-  if ft then
-    if lena then
-      ft:draw_over_surface(lena, 'test')
-    end
-  end
-
-  --Render at full size
-  if lena then screen:copyfrom(lena, nil, {x=15,y=15},true) end
-  
-  --Set alpha on image
-  lena:set_alpha(10)
-  --Render at quarter size
-  if lena then screen:copyfrom(lena, nil, {x=300,y=10,w=lena:get_width() / 2, h=lena:get_height()/2},true)  end
-  
-  --Clear a few rectangles
-  screen:clear({g=15, r=220, b=15}, {x=450,y=10,w=20,height=15})
-  screen:clear({g=220, r=15, b=15}, {x=450,y=30,w=20,height=15})
-  screen:clear({g=15, r=15, b=220}, {x=450,y=50,w=20,height=15})
-  
-  --Load in a PNG image
-  local transparent_image = gfx.loadpng('data/transparency.png')
-  
-  --Render at full size
-  if transparent_image then screen:copyfrom(transparent_image, nil, {x=50,y=300},true)  end
-  
-  
-  --Set up a timer to render a random color box
-  callback = function(timer)
-    screen:clear({g=math.random()*255, r=math.random()*255, b=math.random()*255}, {x=475,y=10,w=55,height=55})
-    gfx.update()
-  end
-  
+  screen:copyfrom(background, nil, {x=0,y=0,w=screen:get_width(), h=screen:get_height()},true)
+  renderUI()
   gfx.update()
-  
-  
-  sys.new_timer(1000,"callback")
-        
+
 end
 
+function active(x1)
+  if x1==1 then
+    screen:clear({g=131, r=0, b=143}, {x=hspacing, y=itemy, w=itemwidth, h= itemheight})
+    screen:clear({g=255, r=255, b=255}, {x=hspacing + itemwidth*0.02 , y=activey, w=activewidth, h=activeheight})
+  end
 
+  if x1==2 then
+    screen:clear({g=131, r=0, b=143}, {x=(hspacing*2)+itemwidth, y=itemy, w=itemwidth, h= itemheight})
+    screen:clear({g=255, r=255, b=255}, {x=(hspacing*2)+itemwidth + itemwidth*0.02 , y=activey, w=activewidth, h=activeheight})
+  end
+
+  if x1==3 then
+    screen:clear({g=131, r=0, b=143}, {x=(hspacing*3)+(itemwidth*2), y=itemy, w=itemwidth, h= itemheight})
+    screen:clear({g=255, r=255, b=255}, {x=(hspacing*3)+(itemwidth*2) + itemwidth*0.02 , y=activey, w=activewidth, h=activeheight})
+  end
+
+  if x1==4 then
+    screen:clear({g=131, r=0, b=143}, {x=(hspacing*4)+(itemwidth*3), y=itemy, w=itemwidth, h= itemheight})
+    screen:clear({g=255, r=255, b=255}, {x=(hspacing*4)+(itemwidth*3) + itemwidth*0.02 , y=activey, w=activewidth, h=activeheight})
+  end
+end
+
+function inactive(x1)
+  --screen:clear({g=228, r=187, b=235}, {x=x1, y=itemy, w=itemwidth, h=itemheight})
+
+  if x1==1 then
+    screen:clear({g=228, r=187, b=235}, {x=hspacing, y=itemy, w=itemwidth, h= itemheight})
+  end
+
+  if x1==2 then
+    screen:clear({g=228, r=187, b=235}, {x=(hspacing*2)+itemwidth, y=itemy, w=itemwidth, h= itemheight})
+  end
+
+  if x1==3 then
+    screen:clear({g=228, r=187, b=235}, {x=(hspacing*3)+(itemwidth*2), y=itemy, w=itemwidth, h= itemheight})
+  end
+
+  if x1==4 then
+    screen:clear({g=228, r=187, b=235}, {x=(hspacing*4)+(itemwidth*3), y=itemy, w=itemwidth, h= itemheight})
+  end
+end
+
+function renderUI()
+
+  if pos==1 then active(1)
+  else inactive(1) end
+
+  if pos==5 then screen:clear({g=131, r=0, b=143}, {x=0, y=580, w=screen:get_width(), h=button_inactive:get_height()*0.3})
+    screen:clear({g=255, r=255, b=255}, {x=5, y=585, w=screen:get_width() - 10, h=button_inactive:get_height()*0.3 - 10})
+  else screen:clear({g=228, r=187, b=235}, {x=0, y=580, w=screen:get_width(), h=button_inactive:get_height()*0.3}) end
+
+
+  if pos==2 then active(2)
+  else inactive(2) end
+
+  if pos==3 then active(3)
+  else inactive(3) end
+
+  if pos==4 then active(4)
+  else inactive(4) end
+
+end

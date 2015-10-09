@@ -36,6 +36,7 @@ local addprofiley = screen:get_height()*0.84
 
 function onKey(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
+  if key == 'exit' then sys.stop() end
   if key == 'right' and state == 'down' and pos < 4 then pos = pos + 1 end
   if key == 'left' and state == 'down' and pos > 1 then pos = pos - 1 end
   if key == 'down' and state == 'down' then pos = 5 end
