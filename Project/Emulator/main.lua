@@ -11,7 +11,7 @@ ADLogger.trace("Applicatio Init")
   freetype = require "SDK.Simulator.freetype"
   sys = require "SDK.Simulator.sys"
 end
---]]
+--]] 
 
 if ADConfig.isSimulator then
 
@@ -26,16 +26,19 @@ else
   script_path = sys.root_path()
 end
 
-
+-- profile images
 local background = gfx.loadpng('data/background.png')
 local image1 = gfx.loadpng('data/bowser.png')
 local image2 = gfx.loadpng('data/mario.png')
 local image3 = gfx.loadpng('data/toad.png')
 local images ={image1, image2, image3}
 
+-- profile names
+local usernames = {"ERIK", "MARCUS", "TOAD"}
+
 local pos = 1;
 
---Interface scaling variables
+-- Interface scaling variables
 local appnamebaseline = screen:get_height()*0.08
 local pagenamebaseline = screen:get_height()*0.15
 local itemy = screen:get_height()*0.32
@@ -74,7 +77,6 @@ function onStart()
   if ADConfig.isSimulator then
     if arg[#arg] == "-debug" then require("mobdebug").start() end
 
-
     screen:copyfrom(background, nil, {x=0,y=0,w=screen:get_width(), h=screen:get_height()},true)
     appname:draw_over_surface(screen, "TEACH IT EASY")
     pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
@@ -107,7 +109,7 @@ function inactive(x1)
   if x1<5 then
     screen:clear({g=228, r=187, b=235}, {x=(hspacing*x1)+ itemwidth*(x1-1), y=itemy, w=itemwidth, h= itemheight})
     if x1<(table.getn(images)+1) then
-    --images[x1]:set_alpha(150)
+      --images[x1]:set_alpha(150)
       screen:copyfrom(images[x1], nil, {x=(hspacing*x1)+ itemwidth*(x1-1)+screen:get_width()*0.025,y=itemy+screen:get_height()*0.01,w=image1:get_width()*0.6, h=image1:get_height()*0.6},true)
     end
   else
@@ -117,9 +119,17 @@ function inactive(x1)
   end
 end
 
+function printnames()
+  for i in pairs(usernames) do
+    local username = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.05, {x= (hspacing*i)+ itemwidth*(i-1), y=itemy+itemheight*1.1}, script_path..'data/Chalkduster.ttf')
+    username:draw_over_surface(screen, usernames[i])
+  end
+end
+
 function renderUI()
   active(1)
   for i=2, 5, 1 do
     inactive(i)
   end
+  printnames()
 end
