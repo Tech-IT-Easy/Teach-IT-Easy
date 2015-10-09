@@ -4,11 +4,6 @@
 -- will be used.
 -- @class module
 -- @name luacov.defaults
-local os_date = os.date("%Y_%m_%d_%H_%M_%S")
-local reportName = "../tests/luacov/luacov.report." .. os_date .. ".out"
-
---
-print("Code coverage in: " .. reportName)
 return {
 
   -- default filename to load for config options if not provided
@@ -16,10 +11,10 @@ return {
   ["configfile"] = ".luacov",
 
   -- filename to store stats collected
-  ["statsfile"] = "../tests/luacov/luacov.stats.out",
+  ["statsfile"] = "luacov.stats.out",
 
   -- filename to store report
-  ["reportfile"] = reportName,
+  ["reportfile"] = "luacov.report.out",
 
   -- luacov.stats file updating frequency.
   -- The lower this value - the more frequenty results will be written out to luacov.stats
@@ -27,7 +22,7 @@ return {
   ["savestepsize"] = 100,
 
   -- Run reporter on completion? (won't work for ticks)
-  runreport = true,
+  runreport = false,
 
   -- Delete stats file after reporting?
   deletestats = false,
@@ -35,7 +30,7 @@ return {
   -- Process Lua code loaded from raw strings
   -- (that is, when the 'source' field in the debug info
   -- does not start with '@')
-  codefromstrings = true,
+  codefromstrings = false,
 
   -- Patterns for files to include when reporting
   -- all will be included if nothing is listed
@@ -56,15 +51,6 @@ return {
     "luacov/stats$",
     "luacov/tick$",
 	"lunit$",
-    "/lunit/",
-	--"tests/",
-	"/lunit",
-	"/lunitx",
-	"/lemock",
-	"lemock",
-	"lemock/",
-	"/lemock/",
-    "/SDK/",
   },
 
   -- Table mapping names of modules to be included to their filenames.

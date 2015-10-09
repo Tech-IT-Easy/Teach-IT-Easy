@@ -6,8 +6,8 @@
 -- @name luacov.defaults
 local os_date = os.date("%Y_%m_%d_%H_%M_%S")
 
-local reportName = "./tests/luacov/luacov.report." .. os_date .. ".out"
-local statsName = "./tests/luacov/luacov.stats." .. os_date .. ".out"
+local reportName = "tests/luacov/luacov.report." .. os_date .. ".out"
+local statsName = "tests/luacov/luacov.stats." .. os_date .. ".out"
 print("Code coverage in: " .. reportName)
 return {
 
@@ -16,7 +16,7 @@ return {
   ["configfile"] = ".luacov",
 
   -- filename to store stats collected
-  ["statsfile"] = "../tests/luacov/luacov.stats.out",
+  ["statsfile"] = "tests/luacov/luacov.stats.out",
 
   -- filename to store report
   ["reportfile"] = reportName,
