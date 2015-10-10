@@ -32,10 +32,6 @@ local profilenamebaseline = screen:get_height()*0.77
 local addprofiley = screen:get_height()*0.84
 
 
-function getPos()
-  return pos
-end 
-
 function setPos(new_pos)
   pos = new_pos
 end
@@ -47,8 +43,6 @@ function onKey(key,state)
   if key == 'left' and state == 'down' and pos > 1 then pos = pos - 1 end
   if key == 'down' and state == 'down' then pos = 5 end
   if key == 'up' and state == 'down' and pos == 5 then pos = 1 end
-  print(pos)
-  print (state)
   renderUI()
   gfx.update()
   return pos
