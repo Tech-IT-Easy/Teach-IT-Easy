@@ -2,6 +2,8 @@ ADConfig = require("Config.ADConfig")
 ADLogger = require("SDK.Utils.ADLogger")
 ADLogger.trace("Applicatio Init")
 
+local menu = {}
+
 if ADConfig.isSimulator then
   gfx = require "SDK.Simulator.gfx"
   zto = require "SDK.Simulator.zto"
@@ -32,20 +34,24 @@ local profilenamebaseline = screen:get_height()*0.77
 local addprofiley = screen:get_height()*0.84
 
 
-function setPos(new_pos)
+function menu.setPos(new_pos)
   pos = new_pos
 end
 
-function onKey(key,state)
+function menu.onKey(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
   if key == 'exit' then sys.stop() end
   if key == 'right' and state == 'down' and pos < 4 then pos = pos + 1 end
   if key == 'left' and state == 'down' and pos > 1 then pos = pos - 1 end
   if key == 'down' and state == 'down' then pos = 5 end
   if key == 'up' and state == 'down' and pos == 5 then pos = 1 end
-  renderUI()
+  menu.renderUI()
   gfx.update()
   return pos
+end
+
+function onKey(key,state)
+  menu.onKey(key,state)
 end
 
 
@@ -56,12 +62,12 @@ function onStart()
     if arg[#arg] == "-debug" then require("mobdebug").start() end
   end
   screen:copyfrom(background, nil, {x=0,y=0,w=screen:get_width(), h=screen:get_height()},true)
-  renderUI()
+  menu.renderUI()
   gfx.update()
 
 end
 
-function active(x1)
+function menu.active(x1)
   if x1==1 then
     screen:clear({g=131, r=0, b=143}, {x=hspacing, y=itemy, w=itemwidth, h= itemheight})
     screen:clear({g=255, r=255, b=255}, {x=hspacing + itemwidth*0.02 , y=activey, w=activewidth, h=activeheight})
@@ -83,7 +89,7 @@ function active(x1)
   end
 end
 
-function inactive(x1)
+function menu.inactive(x1)
   --screen:clear({g=228, r=187, b=235}, {x=x1, y=itemy, w=itemwidth, h=itemheight})
 
   if x1==1 then
@@ -103,23 +109,25 @@ function inactive(x1)
   end
 end
 
-function renderUI()
+function menu.renderUI()
 
-  if pos==1 then active(1)
-  else inactive(1) end
+  if pos==1 then menu.active(1)
+  else menu.inactive(1) end
 
   if pos==5 then screen:clear({g=131, r=0, b=143}, {x=0, y=580, w=screen:get_width(), h=button_inactive:get_height()*0.3})
     screen:clear({g=255, r=255, b=255}, {x=5, y=585, w=screen:get_width() - 10, h=button_inactive:get_height()*0.3 - 10})
   else screen:clear({g=228, r=187, b=235}, {x=0, y=580, w=screen:get_width(), h=button_inactive:get_height()*0.3}) end
 
 
-  if pos==2 then active(2)
-  else inactive(2) end
+  if pos==2 then menu.active(2)
+  else menu.inactive(2) end
 
-  if pos==3 then active(3)
-  else inactive(3) end
+  if pos==3 then menu.active(3)
+  else menu.inactive(3) end
 
-  if pos==4 then active(4)
-  else inactive(4) end
+  if pos==4 then menu.active(4)
+  else menu.inactive(4) end
 
 end
+
+return menu
