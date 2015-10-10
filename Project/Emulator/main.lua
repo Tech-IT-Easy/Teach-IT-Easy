@@ -40,11 +40,21 @@ end
 
 function menu.onKey(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
-  if key == 'exit' then sys.stop() end
-  if key == 'right' and state == 'down' and pos < 4 then pos = pos + 1 end
-  if key == 'left' and state == 'down' and pos > 1 then pos = pos - 1 end
-  if key == 'down' and state == 'down' then pos = 5 end
-  if key == 'up' and state == 'down' and pos == 5 then pos = 1 end
+  if key == 'exit' then
+    sys.stop()
+  end
+  if key == 'right' and state == 'down' and pos < 4 then
+    pos = pos + 1
+  end
+  if key == 'left' and state == 'down' and pos > 1 then
+    pos = pos - 1
+  end
+  if key == 'down' and state == 'down' then
+    pos = 5
+  end
+  if key == 'up' and state == 'down' and pos == 5 then
+    pos = 1
+  end
   menu.renderUI()
   gfx.update()
   return pos
