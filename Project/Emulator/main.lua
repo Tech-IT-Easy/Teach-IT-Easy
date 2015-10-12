@@ -2,17 +2,6 @@ ADConfig = require("Config.ADConfig")
 ADLogger = require("SDK.Utils.ADLogger")
 ADLogger.trace("Applicatio Init")
 
---[[if ADConfig.isSimulator then
-
-  gfx = require "SDK.Simulator.gfx"
-  zto = require "SDK.Simulator.zto"
-  surface = require "SDK.Simulator.surface"
-  player = require "SDK.Simulator.player"
-  freetype = require "SDK.Simulator.freetype"
-  sys = require "SDK.Simulator.sys"
-end
---]] 
-
 if ADConfig.isSimulator then
 
   gfx = require "SDK.Simulator.gfx"
@@ -25,6 +14,81 @@ if ADConfig.isSimulator then
 else
   script_path = sys.root_path()
 end
+
+-- included classes
+require('classes.ProfileSelection')
+require('classes.MainMenu')
+
+
+function onStart()
+
+  ADLogger.trace("onStart")
+  if ADConfig.isSimulator then
+    if arg[#arg] == "-debug" then require("mobdebug").start() end
+  end
+
+  loadviews()
+  views[currentview]:loadview()
+  --profileselection:loadview()
+  gfx.update()
+
+end
+
+function onKey(key,state)
+  ADLogger.trace("OnKey("..key..","..state..")")
+  if state == 'down' then
+    local temp = views[currentview]:handleinput(key)
+    if temp ~= " " then changeview(temp) end
+    gfx.update()
+  end
+end
+
+function loadviews()
+  profileselection = ProfileSelection:new()
+  mainmenu = MainMenu:new()
+  views = {profilesel = profileselection, main = mainmenu}
+  currentview = "profilesel"
+end
+
+
+function changeview(newview)
+  --[[
+function for loading a new view. Not sure whats the best way to do it.
+should this be called from the views directly?
+--]]
+  currentview = newview
+  views[currentview]:loadview()
+end
+
+
+
+
+--[[
+-- gamla
+if ADConfig.isSimulator then
+ 
+  gfx = require "SDK.Simulator.gfx"
+  zto = require "SDK.Simulator.zto"
+  surface = require "SDK.Simulator.surface"
+  player = require "SDK.Simulator.player"
+  freetype = require "SDK.Simulator.freetype"
+  sys = require "SDK.Simulator.sys"
+end
+
+-- nya
+if ADConfig.isSimulator then
+
+  gfx = require "SDK.Simulator.gfx"
+  zto = require "SDK.Simulator.zto"
+  surface = require "SDK.Simulator.surface"
+  player = require "SDK.Simulator.player"
+  freetype = require "SDK.Simulator.freetype"
+  sys = require "SDK.Simulator.sys"
+  script_path = ""
+else
+  script_path = sys.root_path()
+end
+
 
 -- profile images
 local background = gfx.loadpng('data/background.png')
@@ -39,8 +103,8 @@ local usernames = {"ERIK", "MARCUS", "TOAD"}
 local pos = 1;
 
 -- Interface scaling variables
-local appnamebaseline = screen:get_height()*0.08
-local pagenamebaseline = screen:get_height()*0.15
+-- local appnamebaseline = screen:get_height()*0.08
+-- local pagenamebaseline = screen:get_height()*0.15
 local itemy = screen:get_height()*0.32
 local itemheight = screen:get_height()*0.28
 local itemwidth = screen:get_width()*0.19
@@ -89,6 +153,8 @@ function onStart()
 
 end
 
+
+
 function active(x1)
   if x1<5 then
     screen:clear({g=131, r=0, b=143}, {x=(hspacing*x1)+ itemwidth*(x1-1), y=itemy, w=itemwidth, h= itemheight})
@@ -134,3 +200,4 @@ function renderUI()
   end
   printnames()
 end
+--]]
