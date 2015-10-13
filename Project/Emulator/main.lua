@@ -19,6 +19,7 @@ end
 require('classes.ProfileSelection')
 require('classes.MainMenu')
 require('classes.CreateProfile')
+require('classes.Games')
 
 function onStart()
 
@@ -47,7 +48,8 @@ function loadviews()
   profileselection = ProfileSelection:new()
   mainmenu = MainMenu:new()
   createprofile = CreateProfile:new()
-  views = {profilesel = profileselection, main = mainmenu, create = createprofile}
+  games = Games:new()
+  views = {profilesel = profileselection, main = mainmenu, create = createprofile, games = games}
   currentview = "profilesel"
 end
 
