@@ -23,7 +23,7 @@ function CreateProfile:handleinput(key)
 
 end
 
-
+--load view
 function CreateProfile:loadview()
   self:printbackground()
   self:renderui()
