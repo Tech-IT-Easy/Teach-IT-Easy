@@ -18,7 +18,7 @@ end
 -- included classes
 require('classes.ProfileSelection')
 require('classes.MainMenu')
-
+require('classes.CreateProfile')
 
 function onStart()
 
@@ -46,7 +46,8 @@ end
 function loadviews()
   profileselection = ProfileSelection:new()
   mainmenu = MainMenu:new()
-  views = {profilesel = profileselection, main = mainmenu}
+  createprofile = CreateProfile:new()
+  views = {profilesel = profileselection, main = mainmenu, create = createprofile}
   currentview = "profilesel"
 end
 

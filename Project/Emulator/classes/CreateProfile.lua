@@ -24,9 +24,9 @@ function CreateProfile:handleinput(key)
 end
 
 
-function CreateProfile:loadview(input)
+function CreateProfile:loadview()
   self:printbackground()
-  self:renderui(input)
+  self:renderui()
 
 end
 
@@ -36,8 +36,10 @@ end
 
 
 
-function CreateProfile:renderui(input)
+function CreateProfile:renderui()
 
   self.appname:draw_over_surface(screen, "TEACH IT EASY")
   self.pagename:draw_over_surface(screen, "TYPE IN YOUR NAME")
 end
+
+return CreateProfile
