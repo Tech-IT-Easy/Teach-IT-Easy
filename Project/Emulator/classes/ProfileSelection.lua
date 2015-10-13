@@ -50,7 +50,7 @@ end
 
 function ProfileSelection:handleinput(key)
     -- each menu will have its own function to handle remote input
-    if key == 'right' and self.pos < table.getn(self.usernames) then self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos) end
+    if key == 'right' and self.pos < #self.usernames then self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos) end
     if key == 'left' and self.pos > 1 then self:inactive(self.pos) self.pos = self.pos - 1 self:active(self.pos) end
     if key == 'down' then self:inactive(self.pos) self.pos = 5 self:active(self.pos) end
     if key == 'up' and self.pos == 5 then self:inactive(self.pos) self.pos = 1 self:active(self.pos) end
@@ -83,7 +83,7 @@ function ProfileSelection:handleinput(key)
         if x1 < 5 then
             screen:clear({ g = 131, r = 0, b = 143 }, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1), y = self.itemy, w = self.itemwidth, h = self.itemheight })
             screen:clear({ g = 255, r = 255, b = 255 }, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + self.itemwidth * 0.02, y = self.activey, w = self.activewidth, h = self.activeheight })
-            if x1 < (table.getn(self.images) + 1) then
+            if x1 < (#self.images + 1) then
                 --images[x1]:set_alpha(255)
                 screen:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = self.itemy + screen:get_height() * 0.01, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
                 --screen:copyfrom(self.images[x1], nil, {x=(self.hspacing*x1)+ self.itemwidth*(x1-1)+screen:get_width()*0.025,y=self.itemy+self.screen:get_height()*0.01,w=self.image1:get_width()*0.6, h=self.image1:get_height()*0.6},true)
@@ -100,7 +100,7 @@ function ProfileSelection:handleinput(key)
     function ProfileSelection:inactive(x1)
         if x1 < 5 then
             screen:clear({ g = 228, r = 187, b = 235 }, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1), y = self.itemy, w = self.itemwidth, h = self.itemheight })
-            if x1 < (table.getn(self.images) + 1) then
+            if x1 < (#self.images + 1) then
                 --images[x1]:set_alpha(150)
                 screen:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = self.itemy + screen:get_height() * 0.01, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
             end

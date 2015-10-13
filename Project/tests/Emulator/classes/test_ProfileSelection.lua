@@ -55,6 +55,19 @@ function test_loadview()
   mc:verify()
 end
 
+
+function test_handleinput()
+  -- make things here
+  a.usernames = {"a", "b"}
+  a.pos = 1
+  a:handleinput('right')
+  assert_equal(2, a.pos, "shouldn't be 2")
+
+end
+function test_printbackground()
+  a:printbackground()
+end
+
 function test_ProfileSelection_and_fail()
    fail("ProfileSelection not tested, always fail")
 end
