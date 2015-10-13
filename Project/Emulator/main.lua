@@ -21,6 +21,7 @@ require('classes.MainMenu')
 require('classes.CreateProfile')
 require('classes.Games')
 
+
 function onStart()
 
   ADLogger.trace("onStart")

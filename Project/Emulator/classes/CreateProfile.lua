@@ -19,7 +19,7 @@ function CreateProfile:new()
 end
 
 function CreateProfile:handleinput(key)
-  if key == '1' then return {"NAME?"} else return {" "} end
+  if key == '1' then return {" "} else return {" "} end
 
 end
 
