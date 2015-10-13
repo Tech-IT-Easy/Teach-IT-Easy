@@ -38,7 +38,7 @@ function onKey(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
   if state == 'down' then
     local temp = views[currentview]:handleinput(key)
-    if temp ~= " " then changeview(temp) end
+    if temp[1] ~= " " then changeview(temp) end
     gfx.update()
   end
 end
@@ -56,8 +56,8 @@ function changeview(newview)
 function for loading a new view. Not sure whats the best way to do it.
 should this be called from the views directly?
 --]]
-  currentview = newview
-  views[currentview]:loadview()
+  currentview = newview[1]
+  views[currentview]:loadview(newview[2])
 end
 
 
