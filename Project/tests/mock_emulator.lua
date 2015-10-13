@@ -9,7 +9,7 @@
 package.loaded['Config.ADConfig'] = nil -- need to delete the package where the function is taken from.
 package.preload['Config.ADConfig'] = function () -- Create preload. When the program wants to include love. This function will run instead
   local ADConfig = {} -- empty table. To make sure it looks the same as in the test program.
-  ADConfig.isSimulator = true -- Adds the getHeight function to the table
+  ADConfig.isSimulator = true
   return ADConfig
 end
 
