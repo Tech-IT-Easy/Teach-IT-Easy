@@ -16,7 +16,7 @@ function Games:new()
   self.appname = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=self.appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
   self.pagename = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=self.pagenamebaseline}, script_path..'data/Chalkduster.ttf')
   self.username = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=self.usernamebaseline}, script_path..'data/BlackoutMidnight.ttf')
-  
+
   self.pos = 1
   return self
 end
@@ -24,17 +24,18 @@ end
 
 function Games:handleinput(key)
 
-  if key == '1' then return {"main"} else return {" "} end
+  if key == '1' then return {"main", self.usernamestring} else return {" "} end
 
 end
 
 
 
 function Games:loadview(input)
-
+ self.usernamestring = input
   self:printbackground()
 
-  self:renderui(input)
+  self:renderui()
+ 
 
 end
 
@@ -44,10 +45,12 @@ end
 
 
 
-function Games:renderui(input)
+function Games:renderui()
 
   self.appname:draw_over_surface(screen, "TEACH IT EASY")
   self.pagename:draw_over_surface(screen, "CHOOSE A GAME")
-  self.username:draw_over_surface(screen, input)
+  self.username:draw_over_surface(screen, self.usernamestring)
   screen:clear({g=228, r=187, b=235}, {x=screen:get_width()*0.08, y=screen:get_height()*0.09, w=screen:get_width()*0.06, h= screen:get_height()*0.1})
 end
+
+return Games
