@@ -13,7 +13,7 @@ return {
 
   -- default filename to load for config options if not provided
   -- only has effect in 'luacov.defaults.lua'
-  ["configfile"] = ".luacov",
+  ["configfile"] = ".asdluacov",
 
   -- filename to store stats collected
   ["statsfile"] = "../tests/luacov/luacov.stats.out",

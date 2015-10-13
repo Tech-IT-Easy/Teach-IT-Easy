@@ -16,13 +16,21 @@ function mock_render_ui()
 
   local lemock = require 'lemock' -- import lemock, needed to be able to make a mock
   mc = lemock.controller() -- create a mock controller, also needed
-  local renderUI = mc:mock() -- function you want imitate.
-  my_file.renderUI = renderUI -- In this case we only want to mock one function renderUI in main
-  renderUI(mc.ANYARGS) ;mc :returns(nil) :anytimes() -- Tells what input the function should take and what should be
+  local renderui = mc:mock() -- function you want imitate.
+  function a:renderui()
+    return renderui
+  end
+  renderui(mc.ANYARGS) ;mc :returns(nil) :anytimes() -- Tells what input the function should take and what should be
   -- return. In this case: for any input arguments return nil.
   -- mc.ANYARGS => will do this no matter what input.
   -- nil => will return this.
   -- anytimes() => How many times. in this case all times
+
+  local printbackground = mc:mock() -- function you want imitate.
+  function a:printbackground()
+    return printbackground
+  end
+  printbackground(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   mc:replay() -- Tells "now we start testing the code"
 end
 
@@ -34,7 +42,7 @@ function reset_mocks()
 end
 
 function setup()
-
+  a = my_file:new()
 end
 
 function teardown()
@@ -43,7 +51,7 @@ end
 
 function test_loadview()
   mock_render_ui()
-  a = my_file:new()
+  a:loadview()
   mc:verify()
 end
 
