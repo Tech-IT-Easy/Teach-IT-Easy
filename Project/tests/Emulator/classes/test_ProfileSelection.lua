@@ -11,6 +11,42 @@ lunit = require "lunit"
 module( "Emulator_classes_ProfileSelection", package.seeall, lunit.testcase )
 my_file = require "Emulator.classes.ProfileSelection"
 
+
+function mock_render_ui()
+
+  local lemock = require 'lemock' -- import lemock, needed to be able to make a mock
+  mc = lemock.controller() -- create a mock controller, also needed
+  local renderUI = mc:mock() -- function you want imitate.
+  my_file.renderUI = renderUI -- In this case we only want to mock one function renderUI in main
+  renderUI(mc.ANYARGS) ;mc :returns(nil) :anytimes() -- Tells what input the function should take and what should be
+  -- return. In this case: for any input arguments return nil.
+  -- mc.ANYARGS => will do this no matter what input.
+  -- nil => will return this.
+  -- anytimes() => How many times. in this case all times
+  mc:replay() -- Tells "now we start testing the code"
+end
+
+function reset_mocks()
+  -- makes sure you have run enought times if time is set instead of anytimes()
+  package.loaded['Emulator.classes.ProfileSelection'] = nil -- Remove the imported package.
+  package.preload['Emulator.classes.ProfileSelection'] = nil -- Removes the mock package.
+  my_file = require "Emulator.classes.ProfileSelection" -- import main agian
+end
+
+function setup()
+
+end
+
+function teardown()
+  reset_mocks()
+end
+
+function test_loadview()
+  mock_render_ui()
+  a = my_file:new()
+  mc:verify()
+end
+
 function test_ProfileSelection_and_fail()
    fail("ProfileSelection not tested, always fail")
 end
