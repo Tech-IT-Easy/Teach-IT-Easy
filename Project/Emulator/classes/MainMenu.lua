@@ -29,18 +29,17 @@ end
 
 function MainMenu:handleinput(key)
 
-  if key == '1' then return {"games", self.username} else return {" "} end
+  if key == '1' then return {"games", self.usernamestring} else return {" "} end
 
 end
 
 
 
 function MainMenu:loadview(input)
-
+  self.usernamestring = input
   self:printbackground()
 
-  self:renderui(input)
-  self.username = input
+  self:renderui()
 end
 
 function MainMenu:printbackground()
@@ -49,11 +48,11 @@ end
 
 
 
-function MainMenu:renderui(input)
+function MainMenu:renderui()
 
   self.appname:draw_over_surface(screen, "TEACH IT EASY")
   self.pagename:draw_over_surface(screen, "MAIN MENU")
-  self.username:draw_over_surface(screen, input)
+  self.username:draw_over_surface(screen, self.usernamestring)
   screen:clear({g=228, r=187, b=235}, {x=screen:get_width()*0.08, y=screen:get_height()*0.09, w=screen:get_width()*0.06, h= screen:get_height()*0.1})
   self:gamebuttonactive()
 end
