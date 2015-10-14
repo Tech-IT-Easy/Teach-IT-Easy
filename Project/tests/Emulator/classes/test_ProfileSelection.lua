@@ -146,9 +146,6 @@ function test_printbackground()
   a:printbackground()
 end
 
-function test_ProfileSelection_and_fail()
-   fail("ProfileSelection not tested, always fail")
-end
 
 
 
