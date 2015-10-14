@@ -36,27 +36,26 @@ function MainMenu:handleinput(key)
     self:gamebuttoninactive()
     self.pos = 1
     self:sidebuttonactive(self.pos)
-  end
-  if key == 'down' and self.pos >0 and self.pos < 3 then
+
+  elseif key == 'down' and self.pos >0 and self.pos < 3 then
     self:sidebuttoninactive(self.pos)
     self.pos = self.pos + 1
     self:sidebuttonactive(self.pos)
-  end
-  if key == 'up' and self.pos > 1 and self.pos < 4 then
+
+  elseif key == 'up' and self.pos > 1 and self.pos < 4 then
     self:sidebuttoninactive(self.pos)
     self.pos = self.pos -1
     self:sidebuttonactive(self.pos)
-  end
-  if key == 'left' and self.pos > 0 and self.pos < 4 then
+  elseif key == 'left' and self.pos > 0 and self.pos < 4 then
     self:sidebuttoninactive(self.pos)
     self.pos = 0
     self:gamebuttonactive()
-  end
-  if key == '1' and self.pos == 0 then
+  elseif key == '1' and self.pos == 0 then
     return {"games", self.usernamestring}
-  end
-  if key == 'backspace' then
-    return {"profilesel"} else return {" "}
+
+  elseif key == 'backspace' then
+    return {"profilesel"}
+  else return {" "}
   end
 
 end
