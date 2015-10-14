@@ -49,13 +49,35 @@ end
 
 function ProfileSelection:handleinput(key)
     -- each menu will have its own function to handle remote input
-    if key == 'right' and self.pos < #self.usernames then self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos) end
-    if key == 'left' and self.pos > 1 and self.pos < #self.usernames +1 then self:inactive(self.pos) self.pos = self.pos - 1 self:active(self.pos) end
-    if key == 'down' then self:inactive(self.pos) self.pos = 5 self:active(self.pos) end
-    if key == 'up' and self.pos == 5 then self:inactive(self.pos) self.pos = 1 self:active(self.pos) end
+    if key == 'right' and self.pos < #self.usernames then
+        self:inactive(self.pos)
+        self.pos = self.pos + 1
+        self:active(self.pos)
+    end
+    if key == 'left' and self.pos > 1 and self.pos < #self.usernames +1 then
+        self:inactive(self.pos)
+        self.pos = self.pos - 1
+        self:active(self.pos)
+    end
+    if key == 'down' then
+        self:inactive(self.pos)
+        self.pos = 5
+        self:active(self.pos)
+    end
+    if key == 'up' and self.pos == 5 then
+        self:inactive(self.pos)
+        self.pos = 1
+        self:active(self.pos)
+    end
     --if key == '1' and self.pos == 5 then return {"create"} else return " " end
-    if key == '1' and self.pos < 5 then return { "main", self.usernames[self.pos] } end--else--else return { " " } end
-    if key == '1' and self.pos == 5 then return {"create"}  else return { " " } end
+    if key == '1' and self.pos < 5 then
+        return { "main", self.usernames[self.pos] }
+    end--else--else return { " " } end
+    if key == '1' and self.pos == 5 then
+        return {"create" }
+    else
+        return { " " }
+    end
     end
 
     function ProfileSelection:loadview()
