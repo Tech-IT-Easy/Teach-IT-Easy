@@ -141,6 +141,7 @@ function test_handleinput_left()
 end
 
 function test_handleinput_left_two()
+  -- should move one step left
   local mc = create_mock(SUT)
   local inactive = mc:mock()
   local active = mc:mock()
@@ -152,7 +153,7 @@ function test_handleinput_left_two()
   mc:replay()
 
   local a = ps:new()
-  a.usernames = {"a", "b", "c"}
+  a.usernames = {"a", "b", "c" }
   a.pos = 3
   a.handleinput('left')
   assert_equal(2, a.pos, "did not move left, should have.")
