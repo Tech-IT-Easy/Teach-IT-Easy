@@ -152,9 +152,9 @@ function test_handleinput_left_two()
   mc:replay()
 
   local a = ps:new()
-  a.usernames = {"a", "b", "c"}
+  a.usernames = {"a", "b", "c" }
   a.pos = 3
-  a.handleinput('left')
+  a:handleinput('left')
   assert_equal(2, a.pos, "did not move left, should have.")
   verify_mock(mc)
 end
@@ -298,10 +298,3 @@ function test_printbackground()
   local a = ps:new()
   a:printbackground()
 end
-
-function test_ProfileSelection_and_fail()
-   fail("ProfileSelection not tested, always fail")
-end
-
-
-
