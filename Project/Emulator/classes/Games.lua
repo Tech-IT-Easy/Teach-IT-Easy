@@ -55,7 +55,7 @@ function Games:renderui()
 end
 
 function Games:buttonactive(x)
-  screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width()*0.1 + (screen:get_width()*0.2)*(x-1) , y = (screen:get_height()*0.25) , w = screen:get_width()*0.18, h = screen:get_height()*0.45 })
+  screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width()*0.1 + (screen:get_width()*0.2)*(x-1) , y = (screen:get_height()*0.28) , w = screen:get_width()*0.18, h = screen:get_height()*0.45 })
 
   --local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.35) + ((screen:get_height()*0.2125)*(x-1)) }, script_path .. 'data/condensed.ttf')
   --sidebuttontext:draw_over_surface(screen, self.sidebuttons[x])

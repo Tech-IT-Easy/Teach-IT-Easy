@@ -32,13 +32,12 @@ function ProfileSelection:new()
 
     -- varibles for placing
     self.itemy = screen:get_height() * 0.32
-    self.itemheight = screen:get_height() * 0.28
+    self.itemheight = screen:get_height() * 0.35
     self.itemwidth = screen:get_width() * 0.19
     self.activeheight = self.itemheight * 0.96
     self.activey = self.itemy + ((self.itemheight - self.activeheight) / 2)
     self.activewidth = self.itemwidth * 0.96
     self.hspacing = screen:get_width() * 0.048
-    self.profilenamebaseline = screen:get_height() * 0.77
     self.addprofiley = screen:get_height() * 0.84
     self.addprofileheight = screen:get_height() * 0.16
     self.activeaddprofileheight = self.addprofileheight * 0.96
@@ -51,7 +50,7 @@ end
 function ProfileSelection:handleinput(key)
     -- each menu will have its own function to handle remote input
     if key == 'right' and self.pos < #self.usernames then self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos) end
-    if key == 'left' and self.pos > 1 then self:inactive(self.pos) self.pos = self.pos - 1 self:active(self.pos) end
+    if key == 'left' and self.pos > 1 and self.pos < #self.usernames +1 then self:inactive(self.pos) self.pos = self.pos - 1 self:active(self.pos) end
     if key == 'down' then self:inactive(self.pos) self.pos = 5 self:active(self.pos) end
     if key == 'up' and self.pos == 5 then self:inactive(self.pos) self.pos = 1 self:active(self.pos) end
     --if key == '1' and self.pos == 5 then return {"create"} else return " " end
@@ -85,7 +84,7 @@ function ProfileSelection:handleinput(key)
             screen:clear({ g = 255, r = 255, b = 255 }, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + self.itemwidth * 0.02, y = self.activey, w = self.activewidth, h = self.activeheight })
             if x1 < (#self.images + 1) then
                 --images[x1]:set_alpha(255)
-                screen:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = self.itemy + screen:get_height() * 0.01, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
+                screen:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = self.itemy + screen:get_height() * 0.045, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
                 --screen:copyfrom(self.images[x1], nil, {x=(self.hspacing*x1)+ self.itemwidth*(x1-1)+screen:get_width()*0.025,y=self.itemy+self.screen:get_height()*0.01,w=self.image1:get_width()*0.6, h=self.image1:get_height()*0.6},true)
                 --screen:copyfrom(self.background, nil, {x=0,y=0,w=screen:get_width(), h=screen:get_height()},true)
             end
@@ -102,7 +101,7 @@ function ProfileSelection:handleinput(key)
             screen:clear({ g = 228, r = 187, b = 235 }, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1), y = self.itemy, w = self.itemwidth, h = self.itemheight })
             if x1 < (#self.images + 1) then
                 --images[x1]:set_alpha(150)
-                screen:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = self.itemy + screen:get_height() * 0.01, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
+                screen:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = self.itemy + screen:get_height() * 0.045, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
             end
         else
             screen:clear({ g = 228, r = 187, b = 235 }, { x = 0, y = self.addprofiley, w = screen:get_width(), h = self.addprofileheight })
@@ -113,7 +112,7 @@ function ProfileSelection:handleinput(key)
 
     function ProfileSelection:printnames()
         for i in pairs(self.usernames) do
-            local username = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.05, { x = (self.hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.1 }, script_path .. 'data/Chalkduster.ttf')
+            local username = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.05, { x = (self.hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
             username:draw_over_surface(screen, self.usernames[i])
         end
     end

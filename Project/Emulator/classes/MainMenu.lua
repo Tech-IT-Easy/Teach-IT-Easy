@@ -19,8 +19,8 @@ function MainMenu:new()
   -- Needs to be changed to absolute path on STB, or implement solution
   self.appname = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=self.appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
   self.pagename = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=self.pagenamebaseline}, script_path..'data/Chalkduster.ttf')
-  self.username = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=self.usernamebaseline}, script_path..'data/BlackoutMidnight.ttf')
-  self.games = sys.new_freetype({g=131, r=0, b=143}, screen:get_height()*0.1, {x= screen:get_width()*0.165, y=(screen:get_height()*0.75)}, script_path..'data/BlackoutMidnight.ttf')
+  self.username = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=self.usernamebaseline}, script_path..'data/GROBOLD.ttf')
+  self.games = sys.new_freetype({g=131, r=0, b=143}, screen:get_height()*0.1, {x= screen:get_width()*0.15, y=(screen:get_height()*0.75)}, script_path..'data/GROBOLD.ttf')
 
   self.sidebuttons = {"TROPHY ROOM", "WARDROBE", "SETTINGS"}
 
@@ -98,13 +98,13 @@ function MainMenu:sidebuttonactive(x)
   screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width()*0.5375, y = (screen:get_height()*0.3) + ((screen:get_height()*0.2125)*(x-1)) , w = screen:get_width()*0.425, h = screen:get_height()*0.185 })
   screen:clear({g=255, r=255, b=255}, {x=screen:get_width()*0.5425 , y=(screen:get_height()*0.309)+ ((screen:get_height()*0.2125)*(x-1)), w=(screen:get_width()*0.415), h=(screen:get_height()*0.1685)})
 
-  local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.35) + ((screen:get_height()*0.2125)*(x-1)) }, script_path .. 'data/condensed.ttf')
+  local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*(x-1)) }, script_path .. 'data/GROBOLD.ttf')
   sidebuttontext:draw_over_surface(screen, self.sidebuttons[x])
 end
 
 function MainMenu:sidebuttoninactive(x)
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width()*0.5375, y = (screen:get_height()*0.3) + ((screen:get_height()*0.2125)*(x-1)) , w = screen:get_width()*0.425, h = screen:get_height()*0.185 })
-  local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.35) + ((screen:get_height()*0.2125)*(x-1)) }, script_path .. 'data/condensed.ttf')
+  local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*(x-1)) }, script_path .. 'data/GROBOLD.ttf')
   sidebuttontext:draw_over_surface(screen, self.sidebuttons[x])
 end
 
