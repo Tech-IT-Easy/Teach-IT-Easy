@@ -57,6 +57,7 @@ function ProfileSelection:handleinput(key)
     if key == 'left' and self.pos > 1 and self.pos < #self.usernames +1 then
         self:inactive(self.pos)
         self.pos = self.pos - 1
+
         self:active(self.pos)
     end
     if key == 'down' then

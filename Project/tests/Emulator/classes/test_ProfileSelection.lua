@@ -141,6 +141,7 @@ function test_handleinput_left()
 end
 
 function test_handleinput_left_two()
+  -- should move one step left
   local mc = create_mock(SUT)
   local inactive = mc:mock()
   local active = mc:mock()
