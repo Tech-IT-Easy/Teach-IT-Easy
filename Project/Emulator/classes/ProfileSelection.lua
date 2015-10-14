@@ -53,33 +53,32 @@ function ProfileSelection:handleinput(key)
         self:inactive(self.pos)
         self.pos = self.pos + 1
         self:active(self.pos)
-    end
-    if key == 'left' and self.pos > 1 and self.pos < #self.usernames +1 then
+    elseif key == 'left' and self.pos > 1 and self.pos < #self.usernames +1 then
         self:inactive(self.pos)
         self.pos = self.pos - 1
 
         self:active(self.pos)
-    end
-    if key == 'down' then
+
+    elseif key == 'down' then
         self:inactive(self.pos)
         self.pos = 5
         self:active(self.pos)
-    end
-    if key == 'up' and self.pos == 5 then
+
+    elseif key == 'up' and self.pos == 5 then
         self:inactive(self.pos)
         self.pos = 1
         self:active(self.pos)
-    end
+
     --if key == '1' and self.pos == 5 then return {"create"} else return " " end
-    if key == '1' and self.pos < 5 then
+    elseif key == '1' and self.pos < 5 then
         return { "main", self.usernames[self.pos] }
-    end--else--else return { " " } end
-    if key == '1' and self.pos == 5 then
+    --else--else return { " " } end
+    elseif key == '1' and self.pos == 5 then
         return {"create" }
     else
         return { " " }
     end
-    end
+end
 
     function ProfileSelection:loadview()
         self.pos = 1

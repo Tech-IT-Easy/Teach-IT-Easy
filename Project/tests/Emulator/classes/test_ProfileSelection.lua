@@ -293,6 +293,40 @@ function test_handleinput_up_down()
   verify_mock(mc)
 end
 
+function test_handleinput_up_one()
+  -- tests if the right user is choses when 1 is pressed
+  local ps = require(SUT)
+  local a = ps:new()
+  a.usernames = {"a", "b", "c"}
+  a.pos = 1
+  local b = a:handleinput('1')
+  assert_equal("a", b[2], "should get username a")
+  a.pos = 2
+  local b = a:handleinput('1')
+  assert_equal("b", b[2], "should get username b")
+  a.pos = 3
+  local b = a:handleinput('1')
+  assert_equal("c", b[2], "should get username c")
+
+end
+
+function test_handleinput_down_one()
+  -- checks if create is chosen if 1 is pressed
+  local ps = require(SUT)
+  local a = ps:new()
+  a.pos = 5
+  local b = a:handleinput('1')
+  assert_equal("create", b[1], "should get create")
+end
+
+function test_handleinput_any_other_button()
+  -- test what happens if any other button is pressed.
+  local ps = require(SUT)
+  local a = ps:new()
+  a.pos = 5
+  local b = a:handleinput('7')
+  assert_equal(" ", b[1], "should do nothing")
+end
 
 function test_printbackground()
   local ps = require(SUT)
