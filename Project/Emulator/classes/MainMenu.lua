@@ -21,8 +21,10 @@ function MainMenu:new()
   self.pagename = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=self.pagenamebaseline}, script_path..'data/Chalkduster.ttf')
   self.username = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=self.usernamebaseline}, script_path..'data/GROBOLD.ttf')
   self.games = sys.new_freetype({g=131, r=0, b=143}, screen:get_height()*0.1, {x= screen:get_width()*0.15, y=(screen:get_height()*0.75)}, script_path..'data/GROBOLD.ttf')
+  self.backbutton = sys.new_freetype({g=0, r=0, b=0}, screen:get_height()*0.03, { x=screen:get_width()*0.8103, y=screen:get_height()*0.08046}, script_path..'data/condensed.ttf')
+  self.backtext = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.03, { x=screen:get_width()*0.765, y=screen:get_height()*0.125}, script_path..'data/GROBOLD.ttf')
 
-  self.sidebuttons = {"TROPHY ROOM", "WARDROBE", "SETTINGS"}
+  self.sidebuttons = {"Trophy room", "Wardrobe", "Settings"}
 
   return self
 end
@@ -50,7 +52,12 @@ function MainMenu:handleinput(key)
     self.pos = 0
     self:gamebuttonactive()
   end
-  if key == '1' and self.pos == 0 then return {"games", self.usernamestring} else return {" "} end
+  if key == '1' and self.pos == 0 then
+    return {"games", self.usernamestring}
+  end
+  if key == 'backspace' then
+    return {"profilesel"} else return {" "}
+  end
 
 end
 
@@ -80,18 +87,23 @@ function MainMenu:renderui()
   for i = 1, 3, 1 do
     self:sidebuttoninactive(i)
   end
+  screen:clear({g=0, r=0, b=0}, {x=screen:get_width()*0.8, y=screen:get_height()*0.08, w=screen:get_width()*0.05, h= screen:get_height()*0.04})
+  screen:clear({g=230, r=230, b=230}, {x=screen:get_width()*0.803, y=screen:get_height()*0.0845, w=screen:get_width()*0.0455, h= screen:get_height()*0.0308})
+  self.backbutton:draw_over_surface(screen, "BACK")
+  self.backtext:draw_over_surface(screen, "Change profile")
+
 
 end
 
 function MainMenu:gamebuttonactive()
   screen:clear({g=131, r=0, b=143}, {x=screen:get_width()*0.05, y=screen:get_height()*0.3, w=screen:get_width()*0.42, h= screen:get_height()*0.61})
   screen:clear({g=255, r=255, b=255}, {x=screen:get_width()*0.055 , y=(screen:get_height()*0.309), w=(screen:get_width()*0.41), h=(screen:get_height()*0.593)})
-  self.games:draw_over_surface(screen, "GAMES")
+  self.games:draw_over_surface(screen, "Games")
 end
 
 function MainMenu:gamebuttoninactive()
   screen:clear({g=228, r=187, b=235}, {x=screen:get_width()*0.05, y=screen:get_height()*0.3, w=screen:get_width()*0.42, h= screen:get_height()*0.61})
-  self.games:draw_over_surface(screen, "GAMES")
+  self.games:draw_over_surface(screen, "Games")
 end
 
 function MainMenu:sidebuttonactive(x)

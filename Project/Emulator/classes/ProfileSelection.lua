@@ -22,7 +22,7 @@ function ProfileSelection:new()
     self.images = { self.image1, self.image2, self.image3 }
 
     -- usernames
-    self.usernames = { "ERIK", "MARCUS", "TOAD" }
+    self.usernames = { "Erik", "Marcus", "Toad" }
 
     -- fonts
     self.pagename = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = self.pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
