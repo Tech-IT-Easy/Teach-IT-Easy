@@ -36,9 +36,9 @@ function Games:handleinput(key)
     self:buttoninactive(self.pos) self.pos = self.pos - 1 self:buttonactive(self.pos)
   end
 
-  if key == '1' then
+  --[[if key == '1' then
     return {"main", self.games[self.pos][1]}
-  end
+  end]]
   if key == 'backspace' then
     return {"main", self.usernamestring} else
     return {" "}
