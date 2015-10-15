@@ -55,9 +55,9 @@ function MainMenu:handleinput(key)
 
   elseif key == 'backspace' then
     return {"profilesel"}
-  else return {" "}
   end
 
+   return {" "}
 end
 
 

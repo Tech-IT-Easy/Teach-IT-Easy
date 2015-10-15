@@ -56,7 +56,6 @@ function ProfileSelection:handleinput(key)
     elseif key == 'left' and self.pos > 1 and self.pos < #self.usernames +1 then
         self:inactive(self.pos)
         self.pos = self.pos - 1
-
         self:active(self.pos)
 
     elseif key == 'down' then
@@ -75,9 +74,10 @@ function ProfileSelection:handleinput(key)
     --else--else return { " " } end
     elseif key == '1' and self.pos == 5 then
         return {"create" }
-    else
-        return { " " }
+
     end
+
+  return { " " }
 end
 
     function ProfileSelection:loadview()
