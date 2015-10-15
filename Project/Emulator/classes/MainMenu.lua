@@ -1,10 +1,10 @@
---require("classes.MenuView")
-
--- Inherits from MenuView
-
 MainMenu = {} --MenuView:new()
 
-
+-------------------------------------
+-- Creates the Main menu.
+-- @return self. The created menu-object.
+-- @author Erik
+-------------------------------------
 function MainMenu:new()
 
   -- text placing
@@ -16,7 +16,6 @@ function MainMenu:new()
   self.background = gfx.loadpng("data/background.png")
 
   -- fonts
-  -- Needs to be changed to absolute path on STB, or implement solution
   self.appname = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=self.appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
   self.pagename = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=self.pagenamebaseline}, script_path..'data/Chalkduster.ttf')
   self.username = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=self.usernamebaseline}, script_path..'data/GROBOLD.ttf')
@@ -29,7 +28,12 @@ function MainMenu:new()
   return self
 end
 
-
+-------------------------------------
+-- Handles the button-click sent from main.
+-- @param key. Represent which button was pressed.
+-- @return string. Either " " as standard or a string representing view to be changed to.
+-- @author Erik
+-------------------------------------
 function MainMenu:handleinput(key)
 
   if key == 'right' and self.pos ==0 then
@@ -61,7 +65,10 @@ function MainMenu:handleinput(key)
 end
 
 
-
+-------------------------------------
+-- Loads the view to the screen.
+-- @author Erik
+-------------------------------------
 function MainMenu:loadview(input)
   self.pos = 0
   self.usernamestring = input
@@ -70,12 +77,19 @@ function MainMenu:loadview(input)
   self:renderui()
 end
 
+-------------------------------------
+-- Prints background on screen.
+-- @author Erik
+-------------------------------------
 function MainMenu:printbackground()
   screen:copyfrom(self.background, nil, {x=0,y=0,w=screen:get_width(), h=screen:get_height()},true)
 end
 
 
-
+-------------------------------------
+-- Prints content on screen.
+-- @author Erik
+-------------------------------------
 function MainMenu:renderui()
 
   self.appname:draw_over_surface(screen, "TEACH IT EASY")
@@ -90,21 +104,32 @@ function MainMenu:renderui()
   screen:clear({g=230, r=230, b=230}, {x=screen:get_width()*0.803, y=screen:get_height()*0.0845, w=screen:get_width()*0.0455, h= screen:get_height()*0.0308})
   self.backbutton:draw_over_surface(screen, "BACK")
   self.backtext:draw_over_surface(screen, "Change profile")
-
-
 end
 
+-------------------------------------
+-- Prints an active gamebutton.
+-- @author Erik
+-------------------------------------
 function MainMenu:gamebuttonactive()
   screen:clear({g=131, r=0, b=143}, {x=screen:get_width()*0.05, y=screen:get_height()*0.3, w=screen:get_width()*0.42, h= screen:get_height()*0.61})
   screen:clear({g=255, r=255, b=255}, {x=screen:get_width()*0.055 , y=(screen:get_height()*0.309), w=(screen:get_width()*0.41), h=(screen:get_height()*0.593)})
   self.games:draw_over_surface(screen, "Games")
 end
 
+-------------------------------------
+-- Prints an inactive gamebutton.
+-- @author Erik
+-------------------------------------
 function MainMenu:gamebuttoninactive()
   screen:clear({g=228, r=187, b=235}, {x=screen:get_width()*0.05, y=screen:get_height()*0.3, w=screen:get_width()*0.42, h= screen:get_height()*0.61})
   self.games:draw_over_surface(screen, "Games")
 end
 
+-------------------------------------
+-- Prints an active sidebutton.
+-- @param x. Which place to print button.
+-- @author Erik
+-------------------------------------
 function MainMenu:sidebuttonactive(x)
   screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width()*0.5375, y = (screen:get_height()*0.3) + ((screen:get_height()*0.2125)*(x-1)) , w = screen:get_width()*0.425, h = screen:get_height()*0.185 })
   screen:clear({g=255, r=255, b=255}, {x=screen:get_width()*0.5425 , y=(screen:get_height()*0.309)+ ((screen:get_height()*0.2125)*(x-1)), w=(screen:get_width()*0.415), h=(screen:get_height()*0.1685)})
@@ -113,6 +138,11 @@ function MainMenu:sidebuttonactive(x)
   sidebuttontext:draw_over_surface(screen, self.sidebuttons[x])
 end
 
+-------------------------------------
+-- Prints an inactive sidebutton.
+-- @param x. Which place to print button.
+-- @author Erik
+-------------------------------------
 function MainMenu:sidebuttoninactive(x)
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width()*0.5375, y = (screen:get_height()*0.3) + ((screen:get_height()*0.2125)*(x-1)) , w = screen:get_width()*0.425, h = screen:get_height()*0.185 })
   local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*(x-1)) }, script_path .. 'data/GROBOLD.ttf')

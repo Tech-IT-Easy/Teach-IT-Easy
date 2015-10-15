@@ -22,6 +22,10 @@ require('classes.CreateProfile')
 require('classes.Games')
 
 
+-------------------------------------
+-- Runs on startup. 
+-- @author Erik/ Marcus
+-------------------------------------
 function onStart()
 
   ADLogger.trace("onStart")
@@ -31,11 +35,15 @@ function onStart()
 
   loadviews()
   views[currentview]:loadview()
-  --profileselection:loadview()
   gfx.update()
 
 end
 
+-------------------------------------
+-- Reacts to every button-click. Forwards click to the current view-object.
+-- @param key, state. Represents button clicked.
+-- @author Erik/ Marcus
+-------------------------------------
 function onKey(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
   if state == 'down' then
@@ -45,6 +53,10 @@ function onKey(key,state)
   end
 end
 
+-------------------------------------
+-- Creates the menu-views un startup.
+-- @author Erik/ Marcus
+-------------------------------------
 function loadviews()
   profileselection = ProfileSelection:new()
   mainmenu = MainMenu:new()
@@ -54,12 +66,12 @@ function loadviews()
   currentview = "profilesel"
 end
 
-
+-------------------------------------
+-- Changes the current view and loads it.
+-- @param newview. String that represents the new view.
+-- @author Erik/ Marcus
+-------------------------------------
 function changeview(newview)
-  --[[
-function for loading a new view. Not sure whats the best way to do it.
-should this be called from the views directly?
---]]
   currentview = newview[1]
   views[currentview]:loadview(newview[2])
 end

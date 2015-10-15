@@ -1,6 +1,10 @@
 Games = {} --MenuView:new()
 
-
+-------------------------------------
+-- Creates the Games menu.
+-- @return self. The created menu-object.
+-- @author Erik
+-------------------------------------
 function Games:new()
 
   -- text placing
@@ -12,21 +16,23 @@ function Games:new()
   self.background = gfx.loadpng("data/background.png")
 
   -- fonts
-  -- Needs to be changed to absolute path on STB, or implement solution
   self.appname = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=self.appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
   self.pagename = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.07, {x= screen:get_width()*0.33, y=self.pagenamebaseline}, script_path..'data/Chalkduster.ttf')
   self.username = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=self.usernamebaseline}, script_path..'data/GROBOLD.ttf')
   self.backbutton = sys.new_freetype({g=0, r=0, b=0}, screen:get_height()*0.03, { x=screen:get_width()*0.8103, y=screen:get_height()*0.08046}, script_path..'data/condensed.ttf')
   self.backtext = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.03, { x=screen:get_width()*0.791, y=screen:get_height()*0.125}, script_path..'data/GROBOLD.ttf')
 
-
+  -- available games
   self.games = {{"Programming", "5/12"},{"Other game", "1/12"},{"Test game", "12/12"}, {"Pony game", "100/100"}}
-
-
   return self
 end
 
-
+-------------------------------------
+-- Handles the button-click sent from main.
+-- @param key. Represent which button was pressed.
+-- @return string. Either " " as standard or a string representing view to be changed to.
+-- @author Erik
+-------------------------------------
 function Games:handleinput(key)
 
   if key == 'right' and self.pos < #self.games then
@@ -35,10 +41,11 @@ function Games:handleinput(key)
   if key == 'left' and self.pos > 1 then
     self:buttoninactive(self.pos) self.pos = self.pos - 1 self:buttonactive(self.pos)
   end
-
-  --[[if key == '1' then
-    return {"main", self.games[self.pos][1]}
+  --[[ Returns which view to change to (not implemented)
+  if key == '1' then
+   return {"main", self.games[self.pos][1]}
   end]]
+
   if key == 'backspace' then
     return {"main", self.usernamestring} else
     return {" "}
@@ -46,23 +53,30 @@ function Games:handleinput(key)
 end
 
 
-
+-------------------------------------
+-- Loads the view to the screen.
+-- @author Erik
+-------------------------------------
 function Games:loadview(input)
   self.pos = 1
   self.usernamestring = input
   self:printbackground()
 
   self:renderui()
-
-
 end
 
+-------------------------------------
+-- Prints background on screen.
+-- @author Erik
+-------------------------------------
 function Games:printbackground()
   screen:copyfrom(self.background, nil, {x=0,y=0,w=screen:get_width(), h=screen:get_height()},true)
 end
 
-
-
+-------------------------------------
+-- Prints content on screen.
+-- @author Erik
+-------------------------------------
 function Games:renderui()
 
   self.appname:draw_over_surface(screen, "TEACH IT EASY")
@@ -77,9 +91,13 @@ function Games:renderui()
   screen:clear({g=230, r=230, b=230}, {x=screen:get_width()*0.803, y=screen:get_height()*0.0845, w=screen:get_width()*0.0455, h= screen:get_height()*0.0308})
   self.backbutton:draw_over_surface(screen, "BACK")
   self.backtext:draw_over_surface(screen, "Go back")
-
 end
 
+-------------------------------------
+-- Prints an active gamebutton.
+-- @param x. Which place to print button at.
+-- @author Erik
+-------------------------------------
 function Games:buttonactive(x)
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width()*0.08 + (screen:get_width()*0.22)*(x-1) , y = (screen:get_height()*0.28) , w = screen:get_width()*0.18, h = screen:get_height()*0.45 })
 
@@ -90,6 +108,11 @@ function Games:buttonactive(x)
   trophies:draw_over_surface(screen,"Trophies: " .. self.games[x][2])
 end
 
+-------------------------------------
+-- Prints an inactive gamebutton.
+-- @param x. Which place to print button at.
+-- @author Erik
+-------------------------------------
 function Games:buttoninactive(x)
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width()*0.08 + (screen:get_width()*0.22)*(x-1) , y = (screen:get_height()*0.28) , w = screen:get_width()*0.18, h = screen:get_height()*0.45 })
 
@@ -98,10 +121,7 @@ function Games:buttoninactive(x)
 
   local trophies = sys.new_freetype({r=139, g=139, b=139}, screen:get_height() * 0.04, {x = screen:get_width()*0.095 + (screen:get_width()*0.22)*(x-1) , y = (screen:get_height()*0.28)+(screen:get_height()*0.28)*1.3 , w = screen:get_width()*0.18, h = screen:get_height()*0.45  }, script_path .. 'data/condensed.ttf')
   trophies:draw_over_surface(screen,"Trophies: " .. self.games[x][2])
-
-
 end
-
 
 
 return Games
