@@ -4,15 +4,15 @@ ADLogger.trace("Applicatio Init")
 
 if ADConfig.isSimulator then
 
-  gfx = require "SDK.Simulator.gfx"
-  zto = require "SDK.Simulator.zto"
-  surface = require "SDK.Simulator.surface"
-  player = require "SDK.Simulator.player"
-  freetype = require "SDK.Simulator.freetype"
-  sys = require "SDK.Simulator.sys"
-  script_path = ""
+    gfx = require "SDK.Simulator.gfx"
+    zto = require "SDK.Simulator.zto"
+    surface = require "SDK.Simulator.surface"
+    player = require "SDK.Simulator.player"
+    freetype = require "SDK.Simulator.freetype"
+    sys = require "SDK.Simulator.sys"
+    script_path = ""
 else
-  script_path = sys.root_path()
+    script_path = sys.root_path()
 end
 
 -- included classes
@@ -28,15 +28,14 @@ require('classes.Games')
 -------------------------------------
 function onStart()
 
-  ADLogger.trace("onStart")
-  if ADConfig.isSimulator then
-    if arg[#arg] == "-debug" then require("mobdebug").start() end
-  end
+    ADLogger.trace("onStart")
+    if ADConfig.isSimulator then
+        if arg[#arg] == "-debug" then require("mobdebug").start() end
+    end
 
-  loadviews()
-  views[currentview]:loadview()
-  gfx.update()
-
+    loadviews()
+    views[currentview]:loadview()
+    gfx.update()
 end
 
 -------------------------------------
@@ -44,13 +43,13 @@ end
 -- @param key, state. Represents button clicked.
 -- @author Erik/ Marcus
 -------------------------------------
-function onKey(key,state)
-  ADLogger.trace("OnKey("..key..","..state..")")
-  if state == 'down' then
-    local temp = views[currentview]:handleinput(key)
-    if temp[1] ~= " " then changeview(temp) end
-    gfx.update()
-  end
+function onKey(key, state)
+    ADLogger.trace("OnKey(" .. key .. "," .. state .. ")")
+    if state == 'down' then
+        local temp = views[currentview]:handleinput(key)
+        if temp[1] ~= " " then changeview(temp) end
+        gfx.update()
+    end
 end
 
 -------------------------------------
@@ -58,12 +57,12 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function loadviews()
-  profileselection = ProfileSelection:new()
-  mainmenu = MainMenu:new()
-  createprofile = CreateProfile:new()
-  games = Games:new()
-  views = {profilesel = profileselection, main = mainmenu, create = createprofile, games = games}
-  currentview = "profilesel"
+    profileselection = ProfileSelection:new()
+    mainmenu = MainMenu:new()
+    createprofile = CreateProfile:new()
+    games = Games:new()
+    views = { profilesel = profileselection, main = mainmenu, create = createprofile, games = games }
+    currentview = "profilesel"
 end
 
 -------------------------------------
@@ -72,8 +71,8 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function changeview(newview)
-  currentview = newview[1]
-  views[currentview]:loadview(newview[2])
+    currentview = newview[1]
+    views[currentview]:loadview(newview[2])
 end
 
 
