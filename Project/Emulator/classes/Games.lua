@@ -13,7 +13,7 @@ function Games:new()
   self.usernamebaseline = screen:get_height()*0.125
 
   -- images
-  self.background = gfx.loadpng("data/background.png")
+  self.background = gfx.loadpng("data/background_h720.png")
 
   -- fonts
   self.appname = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=self.appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')

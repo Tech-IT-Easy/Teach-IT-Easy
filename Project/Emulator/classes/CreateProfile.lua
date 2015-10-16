@@ -8,7 +8,7 @@ function CreateProfile:new()
   self.pagenamebaseline = screen:get_height()*0.15
 
   -- images
-  self.background = gfx.loadpng("data/background.png")
+  self.background = gfx.loadpng("data/background_h720.png")
 
   -- fonts
   -- Needs to be changed to absolute path on STB, or implement solution

@@ -15,7 +15,7 @@ function ProfileSelection:new()
   self.appname = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.43, y = self.appnamebaseline }, script_path .. 'data/BlackoutMidnight.ttf')
 
   -- images
-  self.background = gfx.loadpng("data/background.png")
+  self.background = gfx.loadpng("data/background_h720.png")
   self.image1 = gfx.loadpng('data/bowser.png')
   self.image2 = gfx.loadpng('data/mario.png')
   self.image3 = gfx.loadpng('data/toad.png')
