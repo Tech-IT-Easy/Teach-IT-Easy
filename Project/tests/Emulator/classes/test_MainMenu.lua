@@ -43,6 +43,29 @@ function teardown()
   package.preload['Emulator.classes.MainMenu'] = nil
 end
 
+function test_loadview()
+  local mc = create_mock(SUT)
+
+  -- Mock renderui and printbackground
+  local renderui = mc:mock()
+  local printbackground = mc:mock()
+
+  local ps = require(SUT)
+
+  package.loaded[SUT].renderui = renderui
+  package.loaded[SUT].printbackground = printbackground
+
+  renderui(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  printbackground(mc.ANYARGS) ;mc :returns(nil) :times(1)
+
+  mc:replay()
+
+  local b = ps:new()
+  b:loadview()
+
+  verify_mock(mc)
+end
+
 function test_handleinput_right()
   -- goes right from pos 1
   local mc = create_mock(SUT)
