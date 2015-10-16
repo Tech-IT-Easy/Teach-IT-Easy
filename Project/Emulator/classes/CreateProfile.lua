@@ -1,5 +1,9 @@
 CreateProfile = {} --MenuView:new()
 
+ADConfig = require("Config.ADConfig")
+ADLogger = require("SDK.Utils.ADLogger")
+ADLogger.trace("Applicatio Init")
+
 if ADConfig.isSimulator then
 
   gfx = require "SDK.Simulator.gfx"
