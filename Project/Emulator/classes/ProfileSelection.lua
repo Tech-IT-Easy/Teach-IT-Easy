@@ -1,22 +1,6 @@
 
 ProfileSelection = {} --MenuView:new()
 
-ADConfig = require("Config.ADConfig")
-ADLogger = require("SDK.Utils.ADLogger")
-ADLogger.trace("Applicatio Init")
-
-if ADConfig.isSimulator then
-
-  gfx = require "SDK.Simulator.gfx"
-  zto = require "SDK.Simulator.zto"
-  surface = require "SDK.Simulator.surface"
-  player = require "SDK.Simulator.player"
-  freetype = require "SDK.Simulator.freetype"
-  sys = require "SDK.Simulator.sys"
-  script_path = ""
-else
-  script_path = sys.root_path()
-end
 
 -------------------------------------
 -- Creates the Profile selection-menu.
@@ -29,7 +13,7 @@ function ProfileSelection:new()
   self.appnamebaseline = screen:get_height() * 0.08
   self.pagenamebaseline = screen:get_height() * 0.15
   -- Fonts
-  self.appname = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.43, y = self.appnamebaseline }, script_path .. 'data/BlackoutMidnight.ttf')
+  -- self.appname = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.43, y = self.appnamebaseline }, script_path .. 'data/BlackoutMidnight.ttf')
 
   -- images
   self.background = gfx.loadpng("data/background_h720.png")
@@ -126,8 +110,8 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:renderui()
-  self.appname:draw_over_surface(screen, "TEACH IT EASY")
-  self.pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
+  -- self.appname:draw_over_surface(screen, "TEACH IT EASY")
+  -- self.pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
   self:active(1)
   for i = 2, 5, 1 do
     self:inactive(i)
@@ -150,8 +134,8 @@ function ProfileSelection:active(x1)
   else
     screen:clear({ g = 131, r = 0, b = 143 }, { x = 0, y = self.addprofiley, w = screen:get_width(), h = self.addprofileheight })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = 0, y = self.activeaddprofiley, w = screen:get_width(), h = self.activeaddprofileheight })
-    self.addprofileplus:draw_over_surface(screen, "+")
-    self.addprofilename:draw_over_surface(screen, "ADD A PROFILE")
+    -- self.addprofileplus:draw_over_surface(screen, "+")
+   --  self.addprofilename:draw_over_surface(screen, "ADD A PROFILE")
   end
 end
 
@@ -168,8 +152,8 @@ function ProfileSelection:inactive(x1)
     end
   else
     screen:clear({ g = 228, r = 187, b = 235 }, { x = 0, y = self.addprofiley, w = screen:get_width(), h = self.addprofileheight })
-    self.addprofileplus:draw_over_surface(screen, "+")
-    self.addprofilename:draw_over_surface(screen, "ADD A PROFILE")
+    -- self.addprofileplus:draw_over_surface(screen, "+")
+    -- self.addprofilename:draw_over_surface(screen, "ADD A PROFILE")
   end
 end
 
@@ -179,8 +163,8 @@ end
 -------------------------------------
 function ProfileSelection:printnames()
   for i in pairs(self.usernames) do
-    local username = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.05, { x = (self.hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
-    username:draw_over_surface(screen, self.usernames[i])
+    -- local username = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.05, { x = (self.hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+    -- username:draw_over_surface(screen, self.usernames[i])
   end
 end
 
