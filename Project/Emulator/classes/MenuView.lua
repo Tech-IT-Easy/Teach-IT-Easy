@@ -10,7 +10,7 @@ function MenuView:new()
   self.pagenamebaseline = screen:get_height()*0.15
   -- Fonts
   -- Needs to be changed to absolute path on STB, or implement solution
-  self.appname = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=self.appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
+  -- self.appname = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=self.appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
 
   return self
 end
