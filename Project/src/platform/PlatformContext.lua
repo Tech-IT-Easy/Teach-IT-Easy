@@ -1,7 +1,8 @@
 ----------------------------------------------------
 -- This class is for the platform context which is used 
--- to create menu and to control the screen showing or
--- update
+-- to create menu and all the objects related to platform
+-- and to control the screen showing of all objects or
+-- update screen
 -- 
 -- Created by Chuck, Aug 16,2015
 -- Updated by author,date
@@ -36,20 +37,31 @@ PlatformContext = Object:new()
 -- Platform context responsible for all the platform things
 ----------------------------------------------------
 function PlatformContext:new() 
+  -- Platform contains a game which will be allocated when profile selected
   self.game = {}
   
+  -- Platform menu
   self.platformMenu = PlatformMenu:new()
   
+  -- Platform event listener 
   self.platformEventListener = EventListener:new()
-  -- attach some objects to listener
+  
+  -- Attach menu object to listener
   self.platformEventListener:attach(self.platformMenu)
   
+  --------------
   -- code
+  --------------
+  
   return self
 end
 
 function PlatformContext:load()
+
+  -- self.platformMenu:loadImage()
+  --------------
   -- code
+  --------------
 end
 
 ----------------------------------------------------
