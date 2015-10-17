@@ -48,9 +48,9 @@ function Mario:new(context)
   ----------------
   -- some error I am trying to solve here. It is the connection between platform listener and game listener
   -----------------
-  -- self:initListener()
+  self:initListener()
   -- attach all object to delegate
-  -- self.gameEventListener:attach(self.exampleActor)
+  self.gameEventListener:attach(self.exampleActor)
   return self.class()
 end
 

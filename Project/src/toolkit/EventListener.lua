@@ -15,16 +15,18 @@ local EventListener = extends(Object.class())
 -----------------------------------------------------------
 function EventListener:new(context)
   -- Object which owns this listener
-  self.context = context
+  newObject = {}
+  newObject.context = context
   -- Objects which are registed in this listener
-  self.observers = {}
+  newObject.observers = {}
   
   -- Chain listener which will be notified when this listener finishes updating
-  self.chainListener = nil
+  newObject.chainListener = nil
   
+  self.__index = self
   -- Hook for doing something before notifying
   -- self.beforeUpdateHook = nil
-  return self.class()
+  return setmetatable(newObject,self)--self.class()
 end
 
 
@@ -71,7 +73,7 @@ function EventListener:update(event)
   
   -- notify chain listener which is usually a game listener
   if self.chainListener ~= nil then
-    ---self.chainListener:update(event)
+    self.chainListener:update(event)
   end
 
 end

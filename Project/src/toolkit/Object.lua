@@ -25,7 +25,7 @@ function extends( baseClass )
   --
   function new_class.class()
     local newinst = {}
-    setmetatable( newinst, class_mt )
+    setmetatable( newinst, class_mt) --class_mt
     return newinst
   end
   
