@@ -1,18 +1,38 @@
+-----------------------------------------------------------
+-- This class is for creating specific games based on profile
+-- which is the name of the game. 
+-- 
+-- @Author:Created by Chuck, Aug 16,2015
+-- @Author:Updated by author,date
+-----------------------------------------------------------
 
 
-GameFactory = Object:new()
+local Object = require('toolkit.Object')
+local GameFactory = extends(Object.class())
 
 GameFactory.game = nil
 
-function GameFactory:getGame(profile)
-
+-----------------------------------------------------------
+-- Game create factory to create specific games based on profile
+-- which is the name of the game. 
+-- 
+-- @profile name of the game
+-- @context which is the platform context
+-----------------------------------------------------------
+function GameFactory:getGame(profile,context)
+  local mod = nil
   if profile == "mario" then
-    self.game = require("games.mario.Mario")
+    load = require("games.mario.Mario")
+    
   elseif profile == "duck" then
-    self.game = require("games.duck.Duck")
+    load = require("games.duck.Duck")
   end
+  --------------------
+  -- add another game profile when extended
+  --------------------
   
+  self.game = load:new(context)
   return self.game
 end
 
-return GameFactory
+return GameFactory:new()
