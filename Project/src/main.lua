@@ -1,3 +1,16 @@
+-----------------------------------------------------------
+-- This class is main class for system starting. Main class
+-- is like a system loop. All the procedure will be process
+-- sub module. please never changed main class for game 
+-- logic things
+-- 
+-- Main class only consists of platform context object which
+-- will process all the logistic
+-- 
+-- @Author:Created by Chuck, Aug 16,2015
+-- @Author:Updated by author,date
+-----------------------------------------------------------
+--
 ADConfig = require("Config.ADConfig")
 ADLogger = require("SDK.Utils.ADLogger")
 ADLogger.trace("Application Init")
@@ -12,24 +25,23 @@ if ADConfig.isSimulator then
   sys = require "SDK.Simulator.sys" 
 end
 
-require("platform.PlatformContext")
-require('toolkit.Events')
+local PlatformContext= require("platform.PlatformContext")
 
 -- create global a game context
 platformContext = PlatformContext:new()
 
--- listen keyboard events
+-----------------------------------------------------------
+-- Listen keyboard events and trigger platform context listener
+-----------------------------------------------------------
 function onKey(key,state)
-  ADLogger.trace("OnKey("..key..","..state..")")
-  
-  -- state change and update buffer 
-  platformContext:process(Events.formatSystemIdentifier[key]) 
-  
+  -- ADLogger.trace("OnKey("..key..","..state..")")
+  platformContext:process(key,state) 
 end
 
-
--- load resources 
-
+-----------------------------------------------------------
+-- System start only once where platform loads resources and
+-- show start screen
+-----------------------------------------------------------
 function onStart()
   
   ADLogger.trace("onStart")
