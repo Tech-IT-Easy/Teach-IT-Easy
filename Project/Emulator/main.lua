@@ -1,6 +1,6 @@
 ADConfig = require("Config.ADConfig")
 ADLogger = require("SDK.Utils.ADLogger")
-ADLogger.trace("Applicatio Init")
+ADLogger.trace("Application Init")
 
 if ADConfig.isSimulator then
 
@@ -107,7 +107,7 @@ end
 
 
 -- profile images
-local background = gfx.loadpng('data/background.png')
+local background = gfx.loadpng('data/background_h720.png')
 local image1 = gfx.loadpng('data/bowser.png')
 local image2 = gfx.loadpng('data/mario.png')
 local image3 = gfx.loadpng('data/toad.png')
