@@ -115,13 +115,20 @@ function surface:clear(color, rectangle)
 end
 
 
-function surface:draw()
+--[[function surface:draw()
     image = love.graphics.newImage(self.image_data)
     function love.draw()
         love.graphics.draw(image)
     end
 end
-
+]]
+function surface:draw()
+  image = love.graphics.newImage(self.image_data)
+  function love.draw()
+    love.graphics.draw(image)
+  end
+  collectgarbage()
+end
 
 ---
 -- *************** Zenterio API Doc ********************************
