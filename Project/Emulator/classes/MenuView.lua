@@ -1,4 +1,4 @@
-require("classes.Object")
+--[[require("classes.Object")
 
 -- "Abstract" menu class
 
@@ -30,3 +30,4 @@ function MenuView:loadview()
 end
 
 return MenuView
+]]

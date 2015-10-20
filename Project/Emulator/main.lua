@@ -46,8 +46,7 @@ end
 function onKey(key, state)
     ADLogger.trace("OnKey(" .. key .. "," .. state .. ")")
     if state == 'down' then
-        --local temp = views[currentview]:handleinput(key)
-        temp = views[currentview]:handleinput(key)
+        local temp = views[currentview]:handleinput(key)
         if temp[1] ~= " " then changeview(temp) end
         gfx.update()
     end
@@ -80,7 +79,7 @@ end
 
 
 --[[
--- gamla
+-- old
 if ADConfig.isSimulator then
  
   gfx = require "SDK.Simulator.gfx"
@@ -91,7 +90,7 @@ if ADConfig.isSimulator then
   sys = require "SDK.Simulator.sys"
 end
 
--- nya
+-- new
 if ADConfig.isSimulator then
 
   gfx = require "SDK.Simulator.gfx"
