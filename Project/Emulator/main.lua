@@ -46,7 +46,8 @@ end
 function onKey(key, state)
     ADLogger.trace("OnKey(" .. key .. "," .. state .. ")")
     if state == 'down' then
-        local temp = views[currentview]:handleinput(key)
+        --local temp = views[currentview]:handleinput(key)
+        temp = views[currentview]:handleinput(key)
         if temp[1] ~= " " then changeview(temp) end
         gfx.update()
     end
