@@ -25,7 +25,7 @@ function ProfileSelection:new()
     self.usernames = { "Erik", "Marcus", "Toad" }
 
     -- fonts
-     --self.pagename = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = self.pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
+     self.pagename = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = self.pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
      self.addprofileplus = sys.new_freetype({ g = 131, r = 0, b = 143 }, screen:get_height() * 0.075, { x = screen:get_width() * 0.35, y = screen:get_height() * 0.883 }, script_path .. 'data/BlackoutMidnight.ttf')
      --self.addprofilename = sys.new_freetype({ g = 131, r = 0, b = 143 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.38, y = screen:get_height() * 0.88 }, script_path .. 'data/Chalkduster.ttf')
 
@@ -109,7 +109,7 @@ end
 -------------------------------------
 function ProfileSelection:renderui()
      self.appname:draw_over_surface(screen, "TEACH IT EASY")
-     --self.pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
+     self.pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
     self:active(1)
     for i = 2, 5, 1 do
         self:inactive(i)
