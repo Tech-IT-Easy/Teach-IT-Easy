@@ -16,11 +16,14 @@ function ProfileSelection:new()
   self.appname = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.43, y = self.appnamebaseline }, script_path .. 'data/BlackoutMidnight.ttf')
 
   -- images
-  self.background = gfx.loadpng("data/background_h720.png")
-  self.image1 = gfx.loadpng('data/bowser.png')
+ -- self.background = gfx.loadpng("data/background_h720.png")
+ self.image1 = gfx.loadpng('data/bowser.png')
   self.image2 = gfx.loadpng('data/mario.png')
   self.image3 = gfx.loadpng('data/toad.png')
   self.images = { self.image1, self.image2, self.image3 }
+
+
+--self.images = {1=data/bowser.png, 2=data/mario.png ,3=data/toad.png}
 
   -- usernames
   self.usernames = { "Erik", "Marcus", "Toad" }
@@ -100,7 +103,9 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:printbackground()
+self.background = gfx.loadpng("data/background_h720.png")
   screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+self.background:destroy()
 end
 
 -------------------------------------

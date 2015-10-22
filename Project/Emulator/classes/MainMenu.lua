@@ -15,7 +15,7 @@ function MainMenu:new()
   self.usernamebaseline = screen:get_height() * 0.125
 
   -- images
-  self.background = gfx.loadpng("data/background_h720.png")
+  --self.background = gfx.loadpng("data/background_h720.png")
 
   -- fonts
   self.appname = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=self.appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
@@ -84,7 +84,9 @@ end
 -- @author Erik
 -------------------------------------
 function MainMenu:printbackground()
+self.background = gfx.loadpng("data/background_h720.png")
   screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+self.background:destroy()
 end
 
 
