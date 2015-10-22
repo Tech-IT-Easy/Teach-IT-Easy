@@ -62,7 +62,7 @@ function loadviews()
     -- createprofile = CreateProfile:new()
     --games = Games:new()
     views = { profilesel = profileselection, main = mainmenu}--, create = createprofile, games = games }
-    currentview = "profilesel"
+    currentview = "main"
 end
 
 -------------------------------------
