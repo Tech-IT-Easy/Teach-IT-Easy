@@ -58,10 +58,10 @@ end
 -------------------------------------
 function loadviews()
      profileselection = ProfileSelection:new()
-    mainmenu = MainMenu:new()
-    createprofile = CreateProfile:new()
-    games = Games:new()
-    views = { profilesel = profileselection, main = mainmenu, create = createprofile, games = games }
+    --mainmenu = MainMenu:new()
+    --createprofile = CreateProfile:new()
+    --games = Games:new()
+    views = { profilesel = profileselection}--, main = mainmenu, create = createprofile, games = games }
     currentview = "profilesel"
 end
 
