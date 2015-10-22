@@ -158,7 +158,7 @@ function MainMenu:updatescreen()
 end
 
 function MainMenu:remove()
-
+  self.sidebutton = nil
 end
 
 

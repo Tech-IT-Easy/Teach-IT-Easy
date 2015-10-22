@@ -16,20 +16,20 @@ function ProfileSelection:new()
   self.appname = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.43, y = self.appnamebaseline }, script_path .. 'data/BlackoutMidnight.ttf')
 
   -- images
- -- self.background = gfx.loadpng("data/background_h720.png")
- self.image1 = gfx.loadpng('data/bowser.png')
+  -- self.background = gfx.loadpng("data/background_h720.png")
+  self.image1 = gfx.loadpng('data/bowser.png')
   self.image2 = gfx.loadpng('data/mario.png')
   self.image3 = gfx.loadpng('data/toad.png')
   self.images = { self.image1, self.image2, self.image3 }
 
 
---self.images = {1=data/bowser.png, 2=data/mario.png ,3=data/toad.png}
+  --self.images = {1=data/bowser.png, 2=data/mario.png ,3=data/toad.png}
 
   -- usernames
   self.usernames = { "Erik", "Marcus", "Toad" }
 
   -- fonts
-  self.pagename = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = self.pagenamebaseline }, script_path .. 'data/GROBOLD.ttf')
+  self.pagename = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = self.pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
   self.addprofileplus = sys.new_freetype({ g = 131, r = 0, b = 143 }, screen:get_height() * 0.075, { x = screen:get_width() * 0.35, y = screen:get_height() * 0.883 }, script_path .. 'data/BlackoutMidnight.ttf')
   self.addprofilename = sys.new_freetype({ g = 131, r = 0, b = 143 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.38, y = screen:get_height() * 0.88 }, script_path .. 'data/condensed.ttf')
 
@@ -103,7 +103,7 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:printbackground()
-self.background = gfx.loadpng("data/background_h720.png")
+  self.background = gfx.loadpng("data/background_h720.png")
   screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
 end
 
@@ -175,6 +175,7 @@ function ProfileSelection:updatescreen()
 end
 
 function ProfileSelection:remove()
+  self.images=nil
   self.image1:destroy()
   self.image2:destroy()
   self.image3:destroy()

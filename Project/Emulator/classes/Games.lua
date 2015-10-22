@@ -130,7 +130,7 @@ function Games:updatescreen()
 end
 
 function Games:remove()
-
+  self.games = nil
 end
 
 
