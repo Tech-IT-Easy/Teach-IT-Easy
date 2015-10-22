@@ -134,12 +134,12 @@ end
 -- @param x. Which place to print button.
 -- @author Erik
 -------------------------------------
-function MainMenu:sidebuttonactive(x)
-  screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.5375, y = (screen:get_height() * 0.3) + ((screen:get_height() * 0.2125) * (x - 1)), w = screen:get_width() * 0.425, h = screen:get_height() * 0.185 })
-  screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.5425, y = (screen:get_height() * 0.309) + ((screen:get_height() * 0.2125) * (x - 1)), w = (screen:get_width() * 0.415), h = (screen:get_height() * 0.1685) })
+function MainMenu:sidebuttonactive(x1)
+  screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.5375, y = (screen:get_height() * 0.3) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = screen:get_width() * 0.425, h = screen:get_height() * 0.185 })
+  screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.5425, y = (screen:get_height() * 0.309) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = (screen:get_width() * 0.415), h = (screen:get_height() * 0.1685) })
 
-  local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*(x-1)) }, script_path .. 'data/condensed.ttf')
-  sidebuttontext:draw_over_surface(screen, self.sidebuttons[x])
+  local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*(x1-1)) }, script_path .. 'data/condensed.ttf')
+  sidebuttontext:draw_over_surface(screen, self.sidebuttons[x1])
   sidebuttontext = nil
 end
 
@@ -148,10 +148,10 @@ end
 -- @param x. Which place to print button.
 -- @author Erik
 -------------------------------------
-function MainMenu:sidebuttoninactive(x)
-  screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.5375, y = (screen:get_height() * 0.3) + ((screen:get_height() * 0.2125) * (x - 1)), w = screen:get_width() * 0.425, h = screen:get_height() * 0.185 })
-  local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*(x-1)) }, script_path .. 'data/condensed.ttf')
-  sidebuttontext:draw_over_surface(screen, self.sidebuttons[x])
+function MainMenu:sidebuttoninactive(x1)
+  screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.5375, y = (screen:get_height() * 0.3) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = screen:get_width() * 0.425, h = screen:get_height() * 0.185 })
+  local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*(x1-1)) }, script_path .. 'data/condensed.ttf')
+  sidebuttontext:draw_over_surface(screen, self.sidebuttons[x1])
   sidebuttontext = nil
 end
 

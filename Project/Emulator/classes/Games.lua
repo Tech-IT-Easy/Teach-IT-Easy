@@ -100,14 +100,14 @@ end
 -- @param x. Which place to print button at.
 -- @author Erik
 -------------------------------------
-function Games:buttonactive(x)
-  screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
+function Games:buttonactive(x1)
+  screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
 
-  local gamename = sys.new_freetype({ r = 78, g = 78, b = 78 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x - 1), y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.1, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
-  gamename:draw_over_surface(screen, self.games[x][1])
+  local gamename = sys.new_freetype({ r = 78, g = 78, b = 78 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.1, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
+  gamename:draw_over_surface(screen, self.games[x1][1])
 
-  local trophies = sys.new_freetype({ r = 139, g = 139, b = 139 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x - 1), y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.3, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
-  trophies:draw_over_surface(screen,"Trophies: " .. self.games[x][2])
+  local trophies = sys.new_freetype({ r = 139, g = 139, b = 139 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.3, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
+  trophies:draw_over_surface(screen,"Trophies: " .. self.games[x1][2])
 end
 
 -------------------------------------
@@ -115,14 +115,14 @@ end
 -- @param x. Which place to print button at.
 -- @author Erik
 -------------------------------------
-function Games:buttoninactive(x)
-  screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
+function Games:buttoninactive(x1)
+  screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
 
-  local gamename = sys.new_freetype({r=139, g=139, b=139}, screen:get_height() * 0.05, {x = screen:get_width()*0.095 + (screen:get_width()*0.22)*(x-1) , y = (screen:get_height()*0.28)+(screen:get_height()*0.28)*1.1 , w = screen:get_width()*0.18, h = screen:get_height()*0.45  }, script_path .. 'data/condensed.ttf')
-  gamename:draw_over_surface(screen, self.games[x][1])
+  local gamename = sys.new_freetype({r=139, g=139, b=139}, screen:get_height() * 0.05, {x = screen:get_width()*0.095 + (screen:get_width()*0.22)*(x1-1) , y = (screen:get_height()*0.28)+(screen:get_height()*0.28)*1.1 , w = screen:get_width()*0.18, h = screen:get_height()*0.45  }, script_path .. 'data/condensed.ttf')
+  gamename:draw_over_surface(screen, self.games[x1][1])
 
-  local trophies = sys.new_freetype({r=139, g=139, b=139}, screen:get_height() * 0.04, {x = screen:get_width()*0.095 + (screen:get_width()*0.22)*(x-1) , y = (screen:get_height()*0.28)+(screen:get_height()*0.28)*1.3 , w = screen:get_width()*0.18, h = screen:get_height()*0.45  }, script_path .. 'data/condensed.ttf')
-  trophies:draw_over_surface(screen,"Trophies: " .. self.games[x][2])
+  local trophies = sys.new_freetype({r=139, g=139, b=139}, screen:get_height() * 0.04, {x = screen:get_width()*0.095 + (screen:get_width()*0.22)*(x1-1) , y = (screen:get_height()*0.28)+(screen:get_height()*0.28)*1.3 , w = screen:get_width()*0.18, h = screen:get_height()*0.45  }, script_path .. 'data/condensed.ttf')
+  trophies:draw_over_surface(screen,"Trophies: " .. self.games[x1][2])
 end
 
 return Games
