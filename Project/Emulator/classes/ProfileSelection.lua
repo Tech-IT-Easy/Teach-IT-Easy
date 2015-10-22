@@ -161,8 +161,8 @@ end
 -------------------------------------
 function ProfileSelection:printnames()
     for i in pairs(self.usernames) do
-        --local username = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.05, { x = (self.hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
-        --username:draw_over_surface(screen, self.usernames[i])
+        local username = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.05, { x = (self.hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+        username:draw_over_surface(screen, self.usernames[i])
     end
 end
 
