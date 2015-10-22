@@ -23,7 +23,7 @@ function MainMenu:new()
     self.backbutton = sys.new_freetype({g=0, r=0, b=0}, screen:get_height()*0.03, { x=screen:get_width()*0.8103, y=screen:get_height()*0.08046}, script_path..'data/condensed.ttf')
     self.backtext = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.03, { x=screen:get_width()*0.765, y=screen:get_height()*0.125}, script_path..'data/GROBOLD.ttf')
   --]]
-    self.sidebuttons = { "Trophy room", "Wardrobe", "Settings" }
+    --self.sidebuttons = { "Trophy room", "Wardrobe", "Settings" }
 
     return self
 end
@@ -69,9 +69,9 @@ end
 -- Loads the view to the screen.
 -- @author Erik
 -------------------------------------
-function MainMenu:loadview(input)
+function MainMenu:loadview()
     self.pos = 0
-    self.usernamestring = input
+    self.usernamestring = " "
     self:printbackground()
 
     self:renderui()
