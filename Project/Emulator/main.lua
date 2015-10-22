@@ -34,7 +34,8 @@ function onStart()
     end
 
     loadviews()
-    views[currentview]:loadview()
+    --views[currentview]:loadview()
+    currentview:loadview()
     gfx.update()
 end
 
@@ -45,11 +46,18 @@ end
 -------------------------------------
 function onKey(key, state)
     ADLogger.trace("OnKey(" .. key .. "," .. state .. ")")
-    if state == 'down' then
+   --[[ if state == 'down' then
         local temp = views[currentview]:handleinput(key)
         if temp[1] ~= " " then changeview(temp) end
         gfx.update()
+    end]]--
+    
+    if state == 'down' then
+        local temp = currentview:handleinput(key)
+        if temp[1] ~= " " then changeview(temp) end
+        gfx.update()
     end
+    
 end
 
 -------------------------------------
@@ -57,12 +65,16 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function loadviews()
-     profileselection = ProfileSelection:new()
+     -- profileselection = ProfileSelection:new()
     --mainmenu = MainMenu:new()
     --createprofile = CreateProfile:new()
     --games = Games:new()
-    views = { profilesel = profileselection}--, main = mainmenu, create = createprofile, games = games }
-    currentview = "profilesel"
+    --views = { profilesel = profileselection}--, main = mainmenu, create = createprofile, games = games }
+    --currentview = "profilesel"
+    currentview = ProfileSelection:new()
+    views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile}
+    
+    
 end
 
 -------------------------------------
@@ -71,8 +83,10 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function changeview(newview)
-    currentview = newview[1]
-    views[currentview]:loadview(newview[2])
+    --currentview = newview[1]
+    --views[currentview]:loadview(newview[2])
+    currentview = views[newview[1]]:new()
+    currentview:loadview(newview[2])
 end
 
 
