@@ -59,7 +59,7 @@ function MainMenu:handleinput(key)
   elseif key == '1' and self.pos == 0 then
     return { "games", self.usernamestring }
 
-  elseif key == 'backspace' then
+  elseif key == '2' then
     return { "profilesel" }
   end
 
