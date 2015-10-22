@@ -74,10 +74,9 @@ function ProfileSelection:handleinput(key)
         self.pos = 1
         self:active(self.pos)
 
-        --if key == '1' and self.pos == 5 then return {"create"} else return " " end
     elseif key == '1' and self.pos < 5 then
         return { "main", self.usernames[self.pos] }
-        --else--else return { " " } end
+        
     elseif key == '1' and self.pos == 5 then
         return { "create" }
     end
