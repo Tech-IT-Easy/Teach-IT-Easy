@@ -12,8 +12,8 @@ function CreateProfile:new()
 
     -- fonts
     -- Needs to be changed to absolute path on STB, or implement solution
-    -- self.appname = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=self.appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
-    -- self.pagename = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.07, {x= screen:get_width()*0.275, y=self.pagenamebaseline}, script_path..'data/Chalkduster.ttf')
+    self.appname = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=self.appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
+    self.pagename = sys.new_freetype({g=255, r=255, b=255}, screen:get_height()*0.07, {x= screen:get_width()*0.275, y=self.pagenamebaseline}, script_path..'data/Chalkduster.ttf')
 
 
     --Profile name
@@ -37,7 +37,7 @@ end
 
 function CreateProfile:handleinput(key)
     -- if key == 'right' and self.pos < #self.letters then self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos) end
-    if key == 'right' and self.pos < self.letters then self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos) end
+    if key == 'right' and self.pos < #self.letters then self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos) end
     if key == 'left' and self.pos > 1 then self:inactive(self.pos) self.pos = self.pos - 1 self:active(self.pos) end
     if key == '1' and self.pos < 4 then self.profilename = self.profilename .. self.letters[self.pos] self:updatetext() return { " " } end
     if key == '1' and self.pos == 4 then self:chooseavatar() return { " " } end
@@ -59,8 +59,8 @@ end
 
 function CreateProfile:renderui()
 
-    -- self.appname:draw_over_surface(screen, "TEACH IT EASY")
-    -- self.pagename:draw_over_surface(screen, "TYPE IN YOUR NAME")
+     self.appname:draw_over_surface(screen, "TEACH IT EASY")
+     self.pagename:draw_over_surface(screen, "TYPE IN YOUR NAME")
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.1, y = screen:get_height() * 0.25 * 1.2, w = screen:get_width() * 0.8, h = screen:get_height() * 0.3 * 0.6 })
     screen:clear({ g = 131, r = 0, b = 143 }, { x = 0, y = screen:get_height() * 0.55, w = screen:get_width(), h = screen:get_height() * 0.45 })
     --self.keyletter:draw_over_surface(screen, self.letters[1])
@@ -74,24 +74,24 @@ function CreateProfile:active(x1)
     screen:clear({ g = 255, r = 255, b = 255 }, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1), y = self.itemy, w = self.itemwidth, h = self.itemheight })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + self.itemwidth * 0.02, y = self.activey, w = self.activewidth, h = self.activeheight })
 
-    -- self.keyletter = sys.new_freetype({g=131, r=0, b=143}, screen:get_height()*0.04, {x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y=self.itemy + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')
+     self.keyletter = sys.new_freetype({g=131, r=0, b=143}, screen:get_height()*0.04, {x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y=self.itemy + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')
     --screen:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = self.itemy + screen:get_height() * 0.01, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
-    -- self.keyletter:draw_over_surface(screen, self.letters[x1])
+     self.keyletter:draw_over_surface(screen, self.letters[x1])
 end
 
 function CreateProfile:inactive(x1)
     screen:clear({ g = 228, r = 187, b = 235 }, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1), y = self.itemy, w = self.itemwidth, h = self.itemheight })
-    --if x1 < (#letters + 1) then
-    --self.keyletter = sys.new_freetype({g=131, r=0, b=143}, screen:get_height()*0.04, {x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y=self.itemy + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')
+    if x1 < (#self.letters + 1) then
+    self.keyletter = sys.new_freetype({g=131, r=0, b=143}, screen:get_height()*0.04, {x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y=self.itemy + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')
     --screen:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = self.itemy + screen:get_height() * 0.01, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
-    --  self.keyletter:draw_over_surface(screen, self.letters[x1])
-    -- end
+      self.keyletter:draw_over_surface(screen, self.letters[x1])
+     end
 end
 
 function CreateProfile:updatetext()
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.1, y = screen:get_height() * 0.25 * 1.2, w = screen:get_width() * 0.8, h = screen:get_height() * 0.3 * 0.6 })
-    -- self.typed = sys.new_freetype({g=131, r=0, b=143}, screen:get_height()*0.1 , {x = screen:get_width() * 0.11, y=screen:get_height() * 0.3 * 1.2}, script_path..'data/BlackoutMidnight.ttf')
-    -- self.typed:draw_over_surface(screen, self.profilename)
+     self.typed = sys.new_freetype({g=131, r=0, b=143}, screen:get_height()*0.1 , {x = screen:get_width() * 0.11, y=screen:get_height() * 0.3 * 1.2}, script_path..'data/BlackoutMidnight.ttf')
+     self.typed:draw_over_surface(screen, self.profilename)
 end
 
 function CreateProfile:chooseavatar()
