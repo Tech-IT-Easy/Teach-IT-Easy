@@ -12,7 +12,7 @@ function ProfileSelection:new()
     self.appnamebaseline = screen:get_height() * 0.08
     self.pagenamebaseline = screen:get_height() * 0.15
     -- Fonts
-    -- self.appname = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.43, y = self.appnamebaseline }, script_path .. 'data/BlackoutMidnight.ttf')
+     self.appname = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.43, y = self.appnamebaseline }, script_path .. 'data/BlackoutMidnight.ttf')
 
     -- images
     self.background = gfx.loadpng("data/background_h720.png")
@@ -108,7 +108,7 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:renderui()
-    -- self.appname:draw_over_surface(screen, "TEACH IT EASY")
+     self.appname:draw_over_surface(screen, "TEACH IT EASY")
     -- self.pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
     self:active(1)
     for i = 2, 5, 1 do
