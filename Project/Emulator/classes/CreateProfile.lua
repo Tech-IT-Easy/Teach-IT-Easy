@@ -37,10 +37,15 @@ end
 
 function CreateProfile:handleinput(key)
     -- if key == 'right' and self.pos < #self.letters then self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos) end
-    if key == 'right' and self.pos < #self.letters then self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos) end
-    if key == 'left' and self.pos > 1 then self:inactive(self.pos) self.pos = self.pos - 1 self:active(self.pos) end
-    if key == '1' and self.pos < 4 then self.profilename = self.profilename .. self.letters[self.pos] self:updatetext() return { " " } end
-    if key == '1' and self.pos == 4 then self:chooseavatar() return { " " } end
+    if key == 'right' and self.pos < #self.letters then
+     self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos)
+    elseif key == 'left' and self.pos > 1 then
+     self:inactive(self.pos) self.pos = self.pos - 1 self:active(self.pos)
+    elseif key == 'ok' and self.pos < 4 then 
+    self.profilename = self.profilename .. self.letters[self.pos] self:updatetext()
+    elseif key == 'ok' and self.pos == 4 then 
+    self:chooseavatar()
+    end
     return { " " }
 end
 

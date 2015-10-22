@@ -37,19 +37,19 @@ function Games:handleinput(key)
 
     if key == 'right' and self.pos < #self.games then
         self:buttoninactive(self.pos) self.pos = self.pos + 1 self:buttonactive(self.pos)
-    end
-    if key == 'left' and self.pos > 1 then
+   
+    elseif key == 'left' and self.pos > 1 then
         self:buttoninactive(self.pos) self.pos = self.pos - 1 self:buttonactive(self.pos)
-    end
+
     --[[ Returns which view to change to (not implemented)
-    if key == '1' then
+    if key == 'ok' then
      return {"main", self.games[self.pos][1]}
     end]]
 
-    if key == 'backspace' then
+    elseif key == 'backspace' then
         return { "main", self.usernamestring } else
-        return { " " }
     end
+    return { " " }
 end
 
 

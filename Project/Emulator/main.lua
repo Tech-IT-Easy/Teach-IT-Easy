@@ -15,11 +15,11 @@ else
     script_path = sys.root_path()
 end
 
--- included classes
--- local ProfileSelection = require('classes.ProfileSelection')
--- local MainMenu = require('classes.MainMenu')
+ --included classes
+local ProfileSelection = require('classes.ProfileSelection')
+local MainMenu = require('classes.MainMenu')
 local CreateProfile = require('classes.CreateProfile')
--- local Games = require('classes.Games')
+local Games = require('classes.Games')
 
 
 -------------------------------------
@@ -57,12 +57,12 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function loadviews()
-    -- profileselection = ProfileSelection:new()
-    --mainmenu = MainMenu:new()
+     profileselection = ProfileSelection:new()
+    mainmenu = MainMenu:new()
     createprofile = CreateProfile:new()
-    --games = Games:new()
-    views = {create = createprofile}--{ profilesel = profileselection, main = mainmenu}--, create = createprofile, games = games }
-    currentview = "create"
+    games = Games:new()
+    views = { profilesel = profileselection, main = mainmenu, create = createprofile, games = games }
+    currentview = "profilesel"
 end
 
 -------------------------------------
