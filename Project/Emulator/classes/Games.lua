@@ -129,8 +129,8 @@ function Games:updatescreen()
   screen:copyfrom(oursurface,nil,nil,false)
 end
 
-function Games:destroy()
-  oursurface:destroy()
+function Games:remove()
+
 end
 
 

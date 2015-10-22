@@ -113,8 +113,8 @@ function CreateProfile:updatescreen()
   screen:copyfrom(oursurface,nil,nil,false)
 end
 
-function CreateProfile:destroy()
-  oursurface:destroy()
+function CreateProfile:remove()
+
 end
 
 return CreateProfile

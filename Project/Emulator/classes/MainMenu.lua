@@ -84,9 +84,9 @@ end
 -- @author Erik
 -------------------------------------
 function MainMenu:printbackground()
-self.background = gfx.loadpng("data/background_h720.png")
+  self.background = gfx.loadpng("data/background_h720.png")
   screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-self.background:destroy()
+  self.background:destroy()
 end
 
 
@@ -158,7 +158,7 @@ function MainMenu:updatescreen()
 end
 
 function MainMenu:remove()
-  screen:destroy()
+
 end
 
 
