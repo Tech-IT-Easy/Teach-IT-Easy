@@ -105,6 +105,7 @@ end
 function ProfileSelection:printbackground()
   self.background = gfx.loadpng("data/background_h720.png")
   screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+  self.background:destroy()
 end
 
 -------------------------------------
