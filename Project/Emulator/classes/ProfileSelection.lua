@@ -27,7 +27,7 @@ function ProfileSelection:new()
     -- fonts
      self.pagename = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = self.pagenamebaseline }, script_path .. 'data/GROBOLD.ttf')
      self.addprofileplus = sys.new_freetype({ g = 131, r = 0, b = 143 }, screen:get_height() * 0.075, { x = screen:get_width() * 0.35, y = screen:get_height() * 0.883 }, script_path .. 'data/BlackoutMidnight.ttf')
-     self.addprofilename = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.38, y = screen:get_height() * 0.88 }, script_path .. 'data/Chalkduster.ttf')
+     self.addprofilename = sys.new_freetype({ g = 131, r = 0, b = 143 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.38, y = screen:get_height() * 0.88 }, script_path .. 'data/Chalkduster.ttf')
 
 
     -- varibles for placing
