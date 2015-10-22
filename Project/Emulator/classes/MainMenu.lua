@@ -71,6 +71,7 @@ end
 -------------------------------------
 function MainMenu:loadview(input)
     self.pos = 0
+    self.sidebuttons = { "Trophy room", "Wardrobe", "Settings" }
     self.usernamestring = " "
     self:printbackground()
 
