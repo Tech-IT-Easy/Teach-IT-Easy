@@ -123,5 +123,13 @@ function Games:buttoninactive(x)
     trophies:draw_over_surface(screen,"Trophies: " .. self.games[x][2])
 end
 
+function Games:updatescreen()
+  screen:copyfrom(oursurface,nil,nil,false)
+end
+
+function Games:destroy()
+  oursurface:destroy()
+end
+
 
 return Games

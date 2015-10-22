@@ -4,18 +4,18 @@ ADLogger.trace("Application Init")
 
 if ADConfig.isSimulator then
 
-    gfx = require "SDK.Simulator.gfx"
-    zto = require "SDK.Simulator.zto"
-    surface = require "SDK.Simulator.surface"
-    player = require "SDK.Simulator.player"
-    freetype = require "SDK.Simulator.freetype"
-    sys = require "SDK.Simulator.sys"
-    script_path = ""
+  gfx = require "SDK.Simulator.gfx"
+  zto = require "SDK.Simulator.zto"
+  surface = require "SDK.Simulator.surface"
+  player = require "SDK.Simulator.player"
+  freetype = require "SDK.Simulator.freetype"
+  sys = require "SDK.Simulator.sys"
+  script_path = ""
 else
-    script_path = sys.root_path()
+  script_path = sys.root_path()
 end
 
- --included classes
+--included classes
 local ProfileSelection = require('classes.ProfileSelection')
 local MainMenu = require('classes.MainMenu')
 local CreateProfile = require('classes.CreateProfile')
@@ -23,20 +23,21 @@ local Games = require('classes.Games')
 
 
 -------------------------------------
--- Runs on startup. 
+-- Runs on startup.
 -- @author Erik/ Marcus
 -------------------------------------
 function onStart()
 
-    ADLogger.trace("onStart")
-    if ADConfig.isSimulator then
-        if arg[#arg] == "-debug" then require("mobdebug").start() end
-    end
+  ADLogger.trace("onStart")
+  if ADConfig.isSimulator then
+    if arg[#arg] == "-debug" then require("mobdebug").start() end
+  end
 
-    loadviews()
-    --views[currentview]:loadview()
-    currentview:loadview()
-    gfx.update()
+  loadviews()
+  --views[currentview]:loadview()
+  currentview:loadview()
+  currentview:updatescreen()
+  gfx.update()
 end
 
 -------------------------------------
@@ -45,19 +46,20 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function onKey(key, state)
-    ADLogger.trace("OnKey(" .. key .. "," .. state .. ")")
-   --[[ if state == 'down' then
+  ADLogger.trace("OnKey(" .. key .. "," .. state .. ")")
+  --[[ if state == 'down' then
         local temp = views[currentview]:handleinput(key)
         if temp[1] ~= " " then changeview(temp) end
         gfx.update()
     end]]--
-    
-    if state == 'down' then
-        local temp = currentview:handleinput(key)
-        if temp[1] ~= " " then changeview(temp) end
-        gfx.update()
-    end
-    
+
+  if state == 'down' then
+    local temp = currentview:handleinput(key)
+    if temp[1] ~= " " then changeview(temp) end
+    currentview:updatescreen()
+    gfx.update()
+  end
+
 end
 
 -------------------------------------
@@ -65,16 +67,17 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function loadviews()
-     -- profileselection = ProfileSelection:new()
-    --mainmenu = MainMenu:new()
-    --createprofile = CreateProfile:new()
-    --games = Games:new()
-    --views = { profilesel = profileselection}--, main = mainmenu, create = createprofile, games = games }
-    --currentview = "profilesel"
-    currentview = ProfileSelection:new()
-    views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games}
-    
-    
+  -- profileselection = ProfileSelection:new()
+  --mainmenu = MainMenu:new()
+  --createprofile = CreateProfile:new()
+  --games = Games:new()
+  --views = { profilesel = profileselection}--, main = mainmenu, create = createprofile, games = games }
+  --currentview = "profilesel"
+  --currentview:destroy()
+  currentview = ProfileSelection:new()
+  views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games}
+
+
 end
 
 -------------------------------------
@@ -83,10 +86,12 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function changeview(newview)
-    --currentview = newview[1]
-    --views[currentview]:loadview(newview[2])
-    currentview = views[newview[1]]:new()
-    currentview:loadview(newview[2])
+  --currentview = newview[1]
+  --views[currentview]:loadview(newview[2])
+  currentview:destroy()
+  currentview = views[newview[1]]:new()
+  currentview:loadview(newview[2])
+  currentview:updatescreen()
 end
 
 
