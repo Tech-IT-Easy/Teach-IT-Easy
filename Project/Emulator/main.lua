@@ -16,8 +16,8 @@ else
 end
 
 -- included classes
-require('classes.ProfileSelection')
-require('classes.MainMenu')
+local ProfileSelection = require('classes.ProfileSelection')
+local MainMenu = require('classes.MainMenu')
 -- require('classes.CreateProfile')
 -- require('classes.Games')
 
