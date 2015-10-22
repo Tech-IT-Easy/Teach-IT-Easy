@@ -155,7 +155,7 @@ function MainMenu:updatescreen()
   screen:copyfrom(self.oursurface,nil,nil,false)
 end
 
-function MainMenu:destroy()
+function MainMenu:remove()
   self.oursurface:destroy()
 end
 

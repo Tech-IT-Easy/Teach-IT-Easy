@@ -170,7 +170,7 @@ function ProfileSelection:updatescreen()
   screen:copyfrom(self.oursurface,nil,nil,false)
 end
 
-function ProfileSelection:destroy()
+function ProfileSelection:remove()
   self.oursurface:destroy()
 end
 

@@ -17,7 +17,7 @@ end
 
 --included classes
 local ProfileSelection = require('classes.ProfileSelection')
---local MainMenu = require('classes.MainMenu')
+local MainMenu = require('classes.MainMenu')
 --local CreateProfile = require('classes.CreateProfile')
 --local Games = require('classes.Games')
 
@@ -75,7 +75,7 @@ function loadviews()
   --currentview = "profilesel"
   --currentview:destroy()
   currentview = ProfileSelection:new()
-  views = {profilesel=ProfileSelection}--, main=MainMenu, create=CreateProfile, games=Games}
+  views = {profilesel=ProfileSelection, main=MainMenu}--, create=CreateProfile, games=Games}
 
 
 end
@@ -88,7 +88,7 @@ end
 function changeview(newview)
   --currentview = newview[1]
   --views[currentview]:loadview(newview[2])
-  currentview:destroy()
+  currentview:remove()
   currentview = views[newview[1]]:new()
   currentview:loadview(newview[2])
   currentview:updatescreen()
