@@ -69,7 +69,7 @@ end
 -- Loads the view to the screen.
 -- @author Erik
 -------------------------------------
-function MainMenu:loadview()
+function MainMenu:loadview(input)
     self.pos = 0
     self.usernamestring = " "
     self:printbackground()
