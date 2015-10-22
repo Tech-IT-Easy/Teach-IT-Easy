@@ -17,10 +17,10 @@ function ProfileSelection:new()
 
   -- images
   self.background = gfx.loadpng("data/background_h720.png")
-  self.image1 = gfx.loadpng('data/bowser.png')
-  self.image2 = gfx.loadpng('data/mario.png')
-  self.image3 = gfx.loadpng('data/toad.png')
-  self.images = { self.image1, self.image2, self.image3 }
+  --self.image1 = gfx.loadpng('data/bowser.png')
+  --self.image2 = gfx.loadpng('data/mario.png')
+  --self.image3 = gfx.loadpng('data/toad.png')
+  --self.images = { self.image1, self.image2, self.image3 }
 
   -- usernames
   self.usernames = { "Erik", "Marcus", "Toad" }
@@ -126,9 +126,9 @@ function ProfileSelection:active(x1)
   if x1 < 5 then
     self.oursurface:clear({ g = 131, r = 0, b = 143 }, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1), y = self.itemy, w = self.itemwidth, h = self.itemheight })
     self.oursurface:clear({ g = 255, r = 255, b = 255 }, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + self.itemwidth * 0.02, y = self.activey, w = self.activewidth, h = self.activeheight })
-    if x1 < (#self.images + 1) then
-      self.oursurface:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + self.oursurface:get_width() * 0.025, y = self.itemy + self.oursurface:get_height() * 0.045, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
-    end
+    --if x1 < (#self.images + 1) then
+    --  self.oursurface:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + self.oursurface:get_width() * 0.025, y = self.itemy + self.oursurface:get_height() * 0.045, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
+    --end
   else
     self.oursurface:clear({ g = 131, r = 0, b = 143 }, { x = 0, y = self.addprofiley, w = self.oursurface:get_width(), h = self.addprofileheight })
     self.oursurface:clear({ g = 255, r = 255, b = 255 }, { x = 0, y = self.activeaddprofiley, w = self.oursurface:get_width(), h = self.activeaddprofileheight })
@@ -145,9 +145,9 @@ end
 function ProfileSelection:inactive(x1)
   if x1 < 5 then
     self.oursurface:clear({ g = 228, r = 187, b = 235 }, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1), y = self.itemy, w = self.itemwidth, h = self.itemheight })
-    if x1 < (#self.images + 1) then
-      self.oursurface:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + self.oursurface:get_width() * 0.025, y = self.itemy + self.oursurface:get_height() * 0.045, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
-    end
+    --if x1 < (#self.images + 1) then
+    --  self.oursurface:copyfrom(self.images[x1], nil, { x = (self.hspacing * x1) + self.itemwidth * (x1 - 1) + self.oursurface:get_width() * 0.025, y = self.itemy + self.oursurface:get_height() * 0.045, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
+    --end
   else
     self.oursurface:clear({ g = 228, r = 187, b = 235 }, { x = 0, y = self.addprofiley, w = self.oursurface:get_width(), h = self.addprofileheight })
     self.addprofileplus:draw_over_surface(self.oursurface, "+")
@@ -167,7 +167,7 @@ function ProfileSelection:printnames()
 end
 
 function ProfileSelection:updatescreen()
-  screen:copyfrom(self.oursurface,nil,nil,false)
+  screen = self.oursurface
 end
 
 function ProfileSelection:remove()
