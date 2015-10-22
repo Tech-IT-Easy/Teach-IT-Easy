@@ -54,7 +54,7 @@ function MainMenu:handleinput(key)
         self:sidebuttoninactive(self.pos)
         self.pos = 0
         self:gamebuttonactive()
-    elseif key == 'ok' and self.pos == 0 then
+    elseif key == '1' and self.pos == 0 then
         return { "games", self.usernamestring }
 
     elseif key == 'backspace' then

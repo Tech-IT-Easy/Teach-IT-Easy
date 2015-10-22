@@ -72,7 +72,7 @@ function loadviews()
     --views = { profilesel = profileselection}--, main = mainmenu, create = createprofile, games = games }
     --currentview = "profilesel"
     currentview = ProfileSelection:new()
-    views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile}
+    views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games}
     
     
 end
