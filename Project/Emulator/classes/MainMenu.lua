@@ -153,13 +153,4 @@ function MainMenu:sidebuttoninactive(x)
   sidebuttontext:draw_over_surface(screen, self.sidebuttons[x])
 end
 
-function MainMenu:updatescreen()
-  screen:copyfrom(screen,nil,nil,false)
-end
-
-function MainMenu:remove()
-  self.sidebutton = nil
-end
-
-
 return MainMenu

@@ -170,16 +170,4 @@ function ProfileSelection:printnames()
   end
 end
 
-function ProfileSelection:updatescreen()
-  screen = screen
-end
-
-function ProfileSelection:remove()
-  self.images=nil
-  self.image1:destroy()
-  self.image2:destroy()
-  self.image3:destroy()
-end
-
-
 return ProfileSelection

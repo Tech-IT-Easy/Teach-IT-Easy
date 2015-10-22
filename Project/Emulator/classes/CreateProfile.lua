@@ -109,12 +109,4 @@ function CreateProfile:chooseavatar()
   --self.pagename:draw_over_surface(screen, "CHOOSE YOUR AVATAR")
 end
 
-function CreateProfile:updatescreen()
-  screen:copyfrom(oursurface,nil,nil,false)
-end
-
-function CreateProfile:remove()
-
-end
-
 return CreateProfile

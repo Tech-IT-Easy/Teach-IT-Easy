@@ -88,7 +88,7 @@ end
 function changeview(newview)
   --currentview = newview[1]
   --views[currentview]:loadview(newview[2])
-  currentview:remove()
+  
   currentview = views[newview[1]]:new()
   currentview:loadview(newview[2])
   --currentview:updatescreen()
