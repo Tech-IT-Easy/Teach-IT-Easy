@@ -17,9 +17,9 @@ end
 
 -- included classes
 -- local ProfileSelection = require('classes.ProfileSelection')
-local MainMenu = require('classes.MainMenu')
--- require('classes.CreateProfile')
--- require('classes.Games')
+-- local MainMenu = require('classes.MainMenu')
+-- local CreateProfile = require('classes.CreateProfile')
+local Games = require('classes.Games')
 
 
 -------------------------------------
@@ -58,11 +58,11 @@ end
 -------------------------------------
 function loadviews()
     -- profileselection = ProfileSelection:new()
-    mainmenu = MainMenu:new()
+    --mainmenu = MainMenu:new()
     -- createprofile = CreateProfile:new()
-    --games = Games:new()
-    views = {main = mainmenu}--{ profilesel = profileselection, main = mainmenu}--, create = createprofile, games = games }
-    currentview = "main"
+    games = Games:new()
+    views = {games = games}--{ profilesel = profileselection, main = mainmenu}--, create = createprofile, games = games }
+    currentview = "games"
 end
 
 -------------------------------------
