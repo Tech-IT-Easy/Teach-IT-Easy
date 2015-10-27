@@ -28,12 +28,7 @@ function ProfileSelection:new()
   -- usernames
   self.usernames = { "Erik", "Marcus", "Toad" }
 
-  -- fonts
-  self.pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a=255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = self.pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
-  self.addprofileplus = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.075, { x = screen:get_width() * 0.35, y = screen:get_height() * 0.883 }, script_path .. 'data/BlackoutMidnight.ttf')
-  self.addprofilename = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.38, y = screen:get_height() * 0.88 }, script_path .. 'data/condensed.ttf')
-
-
+  
   -- varibles for placing
   self.itemy = screen:get_height() * 0.32
   self.itemheight = screen:get_height() * 0.35
@@ -47,6 +42,15 @@ function ProfileSelection:new()
   self.activeaddprofileheight = self.addprofileheight * 0.96
   self.activeaddprofiley = self.addprofiley + (self.addprofileheight - self.activeaddprofileheight)
 
+-- fonts
+  self.pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a=255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = self.pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
+  self.addprofileplus = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.075, { x = screen:get_width() * 0.35, y = screen:get_height() * 0.883 }, script_path .. 'data/BlackoutMidnight.ttf')
+  self.addprofilename = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.38, y = screen:get_height() * 0.88 }, script_path .. 'data/condensed.ttf')
+  self.username1 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (self.hspacing), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+  self.username2 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (self.hspacing * 2) + self.itemwidth, y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+  self.username3 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (self.hspacing * 3) + self.itemwidth * (2), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+  self.username4 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (self.hspacing * 4) + self.itemwidth * (3), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+  self.usernamefonts = {self.username1, self.username2, self.username3, self.username4}
 
   return self
 end
@@ -166,8 +170,8 @@ end
 -------------------------------------
 function ProfileSelection:printnames()
   for i in pairs(self.usernames) do
-    local username = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (self.hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
-    username:draw_over_surface(screen, self.usernames[i])
+    --local username = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (self.hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+    self.usernamefonts[i]:draw_over_surface(screen, self.usernames[i])
   end
 end
 
