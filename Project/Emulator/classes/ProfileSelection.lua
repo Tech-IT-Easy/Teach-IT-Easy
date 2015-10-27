@@ -13,7 +13,7 @@ function ProfileSelection:new()
   self.appnamebaseline = screen:get_height() * 0.08
   self.pagenamebaseline = screen:get_height() * 0.15
   -- Fonts
-  self.appname = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.43, y = self.appnamebaseline }, script_path .. 'data/BlackoutMidnight.ttf')
+  self.appname = sys.new_freetype({ g = 255, r = 255, b = 255, a =255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.43, y = self.appnamebaseline }, script_path .. 'data/BlackoutMidnight.ttf')
 
   -- images
   -- self.background = gfx.loadpng("data/background_h720.png")
@@ -29,9 +29,9 @@ function ProfileSelection:new()
   self.usernames = { "Erik", "Marcus", "Toad" }
 
   -- fonts
-  self.pagename = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = self.pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
-  self.addprofileplus = sys.new_freetype({ g = 131, r = 0, b = 143 }, screen:get_height() * 0.075, { x = screen:get_width() * 0.35, y = screen:get_height() * 0.883 }, script_path .. 'data/BlackoutMidnight.ttf')
-  self.addprofilename = sys.new_freetype({ g = 131, r = 0, b = 143 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.38, y = screen:get_height() * 0.88 }, script_path .. 'data/condensed.ttf')
+  self.pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a=255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = self.pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
+  self.addprofileplus = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.075, { x = screen:get_width() * 0.35, y = screen:get_height() * 0.883 }, script_path .. 'data/BlackoutMidnight.ttf')
+  self.addprofilename = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.38, y = screen:get_height() * 0.88 }, script_path .. 'data/condensed.ttf')
 
 
   -- varibles for placing
@@ -166,7 +166,7 @@ end
 -------------------------------------
 function ProfileSelection:printnames()
   for i in pairs(self.usernames) do
-    local username = sys.new_freetype({ g = 255, r = 255, b = 255 }, screen:get_height() * 0.05, { x = (self.hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+    local username = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (self.hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
     username:draw_over_surface(screen, self.usernames[i])
   end
 end
