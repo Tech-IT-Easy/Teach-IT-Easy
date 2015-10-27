@@ -21,6 +21,7 @@ local MainMenu = require('classes.MainMenu')
 local CreateProfile = require('classes.CreateProfile')
 local Games = require('classes.Games')
 
+local background = gfx.loadpng("data/background_h720.png")
 
 -------------------------------------
 -- Runs on startup.
@@ -35,6 +36,8 @@ function onStart()
 
   loadviews()
   --views[currentview]:loadview()
+   screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+  
   currentview:loadview()
   --currentview:updatescreen()
   gfx.update()
@@ -88,8 +91,11 @@ end
 function changeview(newview)
   --currentview = newview[1]
   --views[currentview]:loadview(newview[2])
-  
+
   currentview = views[newview[1]]:new()
+
+  screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+
   currentview:loadview(newview[2])
   --currentview:updatescreen()
 end

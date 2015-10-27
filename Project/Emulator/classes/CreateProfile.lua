@@ -64,7 +64,7 @@ end
 --load view
 function CreateProfile:loadview()
   self.pos = 1
-  self:printbackground()
+  --self:printbackground()
   self:renderui()
 end
 

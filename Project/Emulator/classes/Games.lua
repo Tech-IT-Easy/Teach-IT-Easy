@@ -75,7 +75,7 @@ end
 function Games:loadview(input)
   self.pos = 1
   self.usernamestring = input
-  self:printbackground()
+  --self:printbackground()
 
   self:renderui()
 end

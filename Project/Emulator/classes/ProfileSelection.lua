@@ -98,7 +98,7 @@ end
 -------------------------------------
 function ProfileSelection:loadview()
   self.pos = 1
-  self:printbackground()
+  --self:printbackground()
   self:renderui()
 end
 
