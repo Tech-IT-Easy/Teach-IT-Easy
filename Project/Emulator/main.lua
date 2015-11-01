@@ -20,7 +20,7 @@ local ProfileSelection = require('classes.ProfileSelection')
 local MainMenu = require('classes.MainMenu')
 local CreateProfile = require('classes.CreateProfile')
 local Games = require('classes.Games')
-
+skin = require('classes.skin')
 local background = gfx.loadpng("data/background_h720.png")
 
 -------------------------------------

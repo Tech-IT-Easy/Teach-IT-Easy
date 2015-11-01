@@ -8,6 +8,7 @@ ProfileSelection = {} --MenuView:new()
 -------------------------------------
 function ProfileSelection:new()
 
+
   --screen = gfx.new_surface(screen:get_width(), screen:get_height())
   -- text placing
   self.appnamebaseline = screen:get_height() * 0.08
@@ -27,6 +28,7 @@ function ProfileSelection:new()
 
   -- usernames
   self.usernames = { "Erik", "Marcus", "Toad" }
+
 
   return self
 end
