@@ -91,12 +91,12 @@ end
 -------------------------------------
 function ProfileSelection:renderui()
   --self.appname:draw_over_surface(screen, "TEACH IT EASY")
-  main_menu_pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
+  prof_sel_pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
   self:active(1)
   for i = 2, 5, 1 do
     self:inactive(i)
   end
-  --self:printnames()
+  self:printnames()
 end
 
 -------------------------------------

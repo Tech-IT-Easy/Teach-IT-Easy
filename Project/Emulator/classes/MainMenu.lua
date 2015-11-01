@@ -64,7 +64,7 @@ function MainMenu:handleinput(key)
     self.pos = 0
     self:gamebuttonactive()
   elseif key == '1' and self.pos == 0 then
-    return { "games", main_menu_usernamestring }
+    return { "games", self.usernamestring }
 
   elseif key == '2' then
     return { "profilesel" }
@@ -105,7 +105,7 @@ function MainMenu:renderui()
 
   main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
   main_menu_pagename:draw_over_surface(screen, "MAIN MENU")
-  main_menu_username:draw_over_surface(screen, main_menu_usernamestring)
+  main_menu_username:draw_over_surface(screen, self.usernamestring)
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
   self:gamebuttonactive()
   for i = 1, 3, 1 do

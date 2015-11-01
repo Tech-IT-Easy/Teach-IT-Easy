@@ -16,23 +16,23 @@
   main_menu_pagenamebaseline = screen:get_height() * 0.15
   main_menu_usernamebaseline = screen:get_height() * 0.125
 
-  --[[
+
   games_appnamebaseline = screen:get_height() * 0.08
   games_pagenamebaseline = screen:get_height() * 0.15
   games_usernamebaseline = screen:get_height() * 0.125
-]]
+
   --General fonts
   --main_menu_pagename = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=main_menu_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
 
 -- profile selection fonts
-  prof_sel_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a=255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = prof_sel_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
+  prof_sel_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a=255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = main_menu_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
   prof_sel_addprofileplus = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.075, { x = screen:get_width() * 0.35, y = screen:get_height() * 0.883 }, script_path .. 'data/BlackoutMidnight.ttf')
   prof_sel_addprofilename = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.38, y = screen:get_height() * 0.88 }, script_path .. 'data/condensed.ttf')
-  --prof_sel_username1 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing), y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
-  --prof_sel_username2 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 2) + prof_sel_itemwidth, y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
-  --prof_sel_username3 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 3) + prof_sel_itemwidth * (2), y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
-  --prof_sel_username4 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 4) + prof_sel_itemwidth * (3), y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
-  --prof_sel_usernamefonts = {prof_sel_username1, prof_sel_username2, prof_sel_username3, prof_sel_username4 }
+  prof_sel_username1 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing), y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+  prof_sel_username2 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 2) + prof_sel_itemwidth, y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+  prof_sel_username3 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 3) + prof_sel_itemwidth * (2), y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+  prof_sel_username4 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 4) + prof_sel_itemwidth * (3), y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+  prof_sel_usernamefonts = {prof_sel_username1, prof_sel_username2, prof_sel_username3, prof_sel_username4 }
 
   --main menu fonts
   main_menu_appname = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=main_menu_baseline}, script_path..'data/BlackoutMidnight.ttf')
@@ -47,7 +47,7 @@
 
   
   --Game menu fonts
-  --[[
+
   games_appname = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=games_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
   games_pagename = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.33, y=games_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
   games_username = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=games_usernamebaseline}, script_path..'data/GROBOLD.ttf')
@@ -68,4 +68,3 @@
 
   games_gamesfonts = {games_gamename1, games_gamename2, games_gamename3,games_gamename4}
   games_trophiesfonts = {games_trophies1, games_trophies2, games_trophies3, games_trophies4}
-    ]]
