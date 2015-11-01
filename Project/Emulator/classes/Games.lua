@@ -49,7 +49,7 @@ end
 -- @author Erik
 -------------------------------------
 function Games:handleinput(key)
-
+  collectgarbage()
   if key == 'right' and self.pos < #self.games then
     self:buttoninactive(self.pos) self.pos = self.pos + 1 self:buttonactive(self.pos)
 

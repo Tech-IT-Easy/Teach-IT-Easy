@@ -46,6 +46,7 @@ function CreateProfile:new()
 end
 
 function CreateProfile:handleinput(key)
+  collectgarbage()
   -- if key == 'right' and self.pos < #self.letters then self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos) end
   if key == 'right' and self.pos < #self.letters then
     self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos)
