@@ -1,5 +1,5 @@
 -- Object class for trying out inheritance
-
+--[[
 Object = {}
 
 function Object:new()
@@ -10,3 +10,4 @@ end
 
 return Object:new()
 
+]]

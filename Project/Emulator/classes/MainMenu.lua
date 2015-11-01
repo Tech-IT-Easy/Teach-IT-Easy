@@ -43,6 +43,7 @@ end
 -------------------------------------
 function MainMenu:handleinput(key)
 
+  collectgarbage()
   if key == 'right' and self.pos == 0 then
     self:gamebuttoninactive()
     self.pos = 1
