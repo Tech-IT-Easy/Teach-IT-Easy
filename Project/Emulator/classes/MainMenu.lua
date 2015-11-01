@@ -81,7 +81,7 @@ end
 function MainMenu:loadview(input)
   self.pos = 0
   self.sidebuttons = { "Trophy room", "Wardrobe", "Settings" }
-  main_menu_usernamestring = input
+  self.usernamestring = input
   --self:printbackground()
   self:renderui()
 end
