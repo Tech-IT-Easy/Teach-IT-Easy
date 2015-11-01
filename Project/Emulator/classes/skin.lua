@@ -20,6 +20,16 @@
   games_appnamebaseline = screen:get_height() * 0.08
   games_pagenamebaseline = screen:get_height() * 0.15
   games_usernamebaseline = screen:get_height() * 0.125
+  
+  create_prof_appnamebaseline = screen:get_height() * 0.08
+  create_prof_pagenamebaseline = screen:get_height() * 0.15
+  create_prof_itemy = screen:get_height() * 0.6
+  create_prof_itemheight = screen:get_height() * 0.14
+  create_prof_itemwidth = screen:get_width() * 0.09
+  create_prof_activeheight = create_prof_itemheight * 0.48
+  create_prof_activey = create_prof_itemy + ((create_prof_itemheight - create_prof_activeheight) / 2)
+  create_prof_activewidth = create_prof_itemwidth * 0.48
+  create_prof_hspacing = screen:get_width() * 0.048
 
   --General fonts
   --main_menu_pagename = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=main_menu_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
@@ -68,3 +78,18 @@
 
   games_gamesfonts = {games_gamename1, games_gamename2, games_gamename3,games_gamename4}
   games_trophiesfonts = {games_trophies1, games_trophies2, games_trophies3, games_trophies4}
+
+  
+  --Create profile fonts
+  create_prof_appname = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=create_prof_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
+  create_prof_pagename = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.275, y=create_prof_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
+  
+  create_prof_keyletter1 = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.04, {x = (create_prof_hspacing) + screen:get_width() * 0.025, y=create_prof_itemy + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')
+  create_prof_keyletter2 = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.04, {x = (create_prof_hspacing * 2) + create_prof_itemwidth + screen:get_width() * 0.025, y=create_prof_itemy + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')
+  create_prof_keyletter3 = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.04, {x = (create_prof_hspacing * 3) + create_prof_itemwidth * 2 + screen:get_width() * 0.025, y=create_prof_itemy + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')
+  create_prof_keyletter4 = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.04, {x = (create_prof_hspacing * 4) + create_prof_itemwidth * 3 + screen:get_width() * 0.025, y=create_prof_itemy + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')
+  
+  create_prof_keyletters = {create_prof_keyletter1, create_prof_keyletter2, create_prof_keyletter3, create_prof_keyletter4}
+  
+  create_prof_typed = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.1 , {x = screen:get_width() * 0.11, y=screen:get_height() * 0.3 * 1.2}, script_path..'data/BlackoutMidnight.ttf')
+  
