@@ -13,18 +13,12 @@ function ProfileSelection:new()
   -- text placing
   self.appnamebaseline = screen:get_height() * 0.08
   self.pagenamebaseline = screen:get_height() * 0.15
-  -- Fonts
-  -- self.appname = sys.new_freetype({ g = 255, r = 255, b = 255, a =255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.43, y = self.appnamebaseline }, script_path .. 'data/BlackoutMidnight.ttf')
 
   -- images
-  -- self.background = gfx.loadpng("data/background_h720.png")
   self.image1 = gfx.loadpng('data/bowser.png')
   self.image2 = gfx.loadpng('data/mario.png')
   self.image3 = gfx.loadpng('data/toad.png')
   self.images = { self.image1, self.image2, self.image3 }
-
-
-  --self.images = {1=data/bowser.png, 2=data/mario.png ,3=data/toad.png}
 
   -- usernames
   self.usernames = { "Erik", "Marcus", "Toad" }
