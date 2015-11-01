@@ -16,10 +16,11 @@
   main_menu_pagenamebaseline = screen:get_height() * 0.15
   main_menu_usernamebaseline = screen:get_height() * 0.125
 
+  --[[
   games_appnamebaseline = screen:get_height() * 0.08
   games_pagenamebaseline = screen:get_height() * 0.15
   games_usernamebaseline = screen:get_height() * 0.125
-
+]]
   --General fonts
   --main_menu_pagename = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=main_menu_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
 
@@ -46,6 +47,7 @@
 
   
   --Game menu fonts
+  --[[
   games_appname = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=games_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
   games_pagename = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.33, y=games_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
   games_username = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=games_usernamebaseline}, script_path..'data/GROBOLD.ttf')
@@ -66,3 +68,4 @@
 
   games_gamesfonts = {games_gamename1, games_gamename2, games_gamename3,games_gamename4}
   games_trophiesfonts = {games_trophies1, games_trophies2, games_trophies3, games_trophies4}
+    ]]
