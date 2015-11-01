@@ -102,7 +102,7 @@ function ProfileSelection:renderui()
   for i = 2, 5, 1 do
     self:inactive(i)
   end
-  --self:printnames()
+  self:printnames()
 end
 
 -------------------------------------
@@ -148,10 +148,9 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:printnames()
- local nameplacement = gfx.new_surface(screen:get_width(), screen:get_height())
   for i in pairs(self.usernames) do
     --local username = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
-    prof_sel_usernamefonts[i]:draw_over_surface(nameplacement, self.usernames[i])
+    prof_sel_usernamefonts[i]:draw_over_surface(screen, self.usernames[i])
   end
 
 end
