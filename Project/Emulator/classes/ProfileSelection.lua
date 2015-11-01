@@ -96,7 +96,7 @@ function ProfileSelection:renderui()
   for i = 2, 5, 1 do
     self:inactive(i)
   end
-  self:printnames()
+  --self:printnames()
 end
 
 -------------------------------------
