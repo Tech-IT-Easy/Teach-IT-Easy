@@ -10,25 +10,26 @@ function MainMenu:new()
   --screen = gfx.new_surface(screen:get_width(), screen:get_height())
 
   -- text placing
-  self.appnamebaseline = screen:get_height() * 0.08
-  self.pagenamebaseline = screen:get_height() * 0.15
-  self.usernamebaseline = screen:get_height() * 0.125
-
+  --[[
+  main_menu_appnamebaseline = screen:get_height() * 0.08
+  main_menu_pagenamebaseline = screen:get_height() * 0.15
+  main_menu_usernamebaseline = screen:get_height() * 0.125
+]]
   -- images
   --self.background = gfx.loadpng("data/background_h720.png")
 
   -- fonts
-  self.appname = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=self.appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
-  self.pagename = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=self.pagenamebaseline}, script_path..'data/Chalkduster.ttf')
-  self.username = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=self.usernamebaseline}, script_path..'data/GROBOLD.ttf')
-  self.games = sys.new_freetype({g=131, r=0, b=143,a=255}, screen:get_height()*0.1, {x= screen:get_width()*0.15, y=(screen:get_height()*0.75)}, script_path..'data/condensed.ttf')
-  self.backbutton = sys.new_freetype({g=0, r=0, b=0,a=255}, screen:get_height()*0.03, { x=screen:get_width()*0.803 + (screen:get_width()*0.803*0.009), y=screen:get_height()*0.08046}, script_path..'data/condensed.ttf')
-  self.backtext = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.03, { x=screen:get_width()*0.765, y=screen:get_height()*0.125}, script_path..'data/GROBOLD.ttf')
-  self.sidebuttontext1 = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36)}, script_path .. 'data/condensed.ttf')
-  self.sidebuttontext2 = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*1) }, script_path .. 'data/condensed.ttf')
-  self.sidebuttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*2) }, script_path .. 'data/condensed.ttf')
+  --main_menu_appname = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=main_menu_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
+  --main_menu_pagename = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=main_menu_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
+ -- main_menu_username = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=main_menu_usernamebaseline}, script_path..'data/GROBOLD.ttf')
+ -- main_menu_games = sys.new_freetype({g=131, r=0, b=143,a=255}, screen:get_height()*0.1, {x= screen:get_width()*0.15, y=(screen:get_height()*0.75)}, script_path..'data/condensed.ttf')
+  --main_menu_backbutton = sys.new_freetype({g=0, r=0, b=0,a=255}, screen:get_height()*0.03, { x=screen:get_width()*0.803 + (screen:get_width()*0.803*0.009), y=screen:get_height()*0.08046}, script_path..'data/condensed.ttf')
+  --main_menu_backtext = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.03, { x=screen:get_width()*0.765, y=screen:get_height()*0.125}, script_path..'data/GROBOLD.ttf')
+  --main_menu_sidebuttontext1 = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36)}, script_path .. 'data/condensed.ttf')
+  --main_menu_sidebuttontext2 = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*1) }, script_path .. 'data/condensed.ttf')
+  --main_menu_sidebuttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*2) }, script_path .. 'data/condensed.ttf')
 
-  self.sidebuttonfonts = {self.sidebuttontext1, self.sidebuttontext2, self.sidebuttontext3}
+  self.sidebuttonfonts = {main_menu_sidebuttontext1, main_menu_sidebuttontext2, main_menu_sidebuttontext3}
 
   --self.sidebuttons = { "Trophy room", "Wardrobe", "Settings" }
 
@@ -63,7 +64,7 @@ function MainMenu:handleinput(key)
     self.pos = 0
     self:gamebuttonactive()
   elseif key == '1' and self.pos == 0 then
-    return { "games", self.usernamestring }
+    return { "games", main_menu_usernamestring }
 
   elseif key == '2' then
     return { "profilesel" }
@@ -80,7 +81,7 @@ end
 function MainMenu:loadview(input)
   self.pos = 0
   self.sidebuttons = { "Trophy room", "Wardrobe", "Settings" }
-  self.usernamestring = input
+  main_menu_usernamestring = input
   --self:printbackground()
   self:renderui()
 end
@@ -102,9 +103,9 @@ end
 -------------------------------------
 function MainMenu:renderui()
 
-  self.appname:draw_over_surface(screen, "TEACH IT EASY")
-  self.pagename:draw_over_surface(screen, "MAIN MENU")
-  self.username:draw_over_surface(screen, self.usernamestring)
+  main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
+  main_menu_pagename:draw_over_surface(screen, "MAIN MENU")
+  main_menu_username:draw_over_surface(screen, main_menu_usernamestring)
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
   self:gamebuttonactive()
   for i = 1, 3, 1 do
@@ -112,8 +113,8 @@ function MainMenu:renderui()
   end
   screen:clear({ g = 0, r = 0, b = 0 }, { x = screen:get_width() * 0.8, y = screen:get_height() * 0.08, w = screen:get_width() * 0.05, h = screen:get_height() * 0.04 })
   screen:clear({ g = 230, r = 230, b = 230 }, { x = screen:get_width() * 0.803, y = screen:get_height() * 0.0845, w = screen:get_width() * 0.0455, h = screen:get_height() * 0.0308 })
-  self.backbutton:draw_over_surface(screen, "BACK")
-  self.backtext:draw_over_surface(screen, "Change profile")
+  main_menu_backbutton:draw_over_surface(screen, "BACK")
+  main_menu_backtext:draw_over_surface(screen, "Change profile")
 end
 
 -------------------------------------
@@ -123,7 +124,7 @@ end
 function MainMenu:gamebuttonactive()
   screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.3, w = screen:get_width() * 0.42, h = screen:get_height() * 0.61 })
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.055, y = (screen:get_height() * 0.309), w = (screen:get_width() * 0.41), h = (screen:get_height() * 0.593) })
-  self.games:draw_over_surface(screen, "Games")
+  main_menu_games:draw_over_surface(screen, "Games")
 end
 
 -------------------------------------
@@ -132,7 +133,7 @@ end
 -------------------------------------
 function MainMenu:gamebuttoninactive()
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.3, w = screen:get_width() * 0.42, h = screen:get_height() * 0.61 })
-  self.games:draw_over_surface(screen, "Games")
+  main_menu_games:draw_over_surface(screen, "Games")
 end
 
 -------------------------------------
