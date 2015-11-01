@@ -7,9 +7,6 @@ ProfileSelection = {} --MenuView:new()
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:new()
-
-
-  --screen = gfx.new_surface(screen:get_width(), screen:get_height())
   -- text placing
   self.appnamebaseline = screen:get_height() * 0.08
   self.pagenamebaseline = screen:get_height() * 0.15
@@ -90,7 +87,7 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:renderui()
-  --self.appname:draw_over_surface(screen, "TEACH IT EASY")
+  prof_sel_appname:draw_over_surface(screen, "TEACH IT EASY")
   prof_sel_pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
   self:active(1)
   for i = 2, 5, 1 do
@@ -143,7 +140,6 @@ end
 -------------------------------------
 function ProfileSelection:printnames()
   for i in pairs(self.usernames) do
-    --local username = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * i) + self.itemwidth * (i - 1), y = self.itemy + self.itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
     prof_sel_usernamefonts[i]:draw_over_surface(screen, self.usernames[i])
   end
 

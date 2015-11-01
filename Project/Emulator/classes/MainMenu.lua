@@ -7,32 +7,7 @@ MainMenu = {} --MenuView:new()
 -------------------------------------
 function MainMenu:new()
 
-  --screen = gfx.new_surface(screen:get_width(), screen:get_height())
-
-  -- text placing
-  --[[
-  main_menu_appnamebaseline = screen:get_height() * 0.08
-  main_menu_pagenamebaseline = screen:get_height() * 0.15
-  main_menu_usernamebaseline = screen:get_height() * 0.125
-]]
-  -- images
-  --self.background = gfx.loadpng("data/background_h720.png")
-
-  -- fonts
-  --main_menu_appname = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=main_menu_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
-  --main_menu_pagename = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=main_menu_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
- -- main_menu_username = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=main_menu_usernamebaseline}, script_path..'data/GROBOLD.ttf')
- -- main_menu_games = sys.new_freetype({g=131, r=0, b=143,a=255}, screen:get_height()*0.1, {x= screen:get_width()*0.15, y=(screen:get_height()*0.75)}, script_path..'data/condensed.ttf')
-  --main_menu_backbutton = sys.new_freetype({g=0, r=0, b=0,a=255}, screen:get_height()*0.03, { x=screen:get_width()*0.803 + (screen:get_width()*0.803*0.009), y=screen:get_height()*0.08046}, script_path..'data/condensed.ttf')
-  --main_menu_backtext = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.03, { x=screen:get_width()*0.765, y=screen:get_height()*0.125}, script_path..'data/GROBOLD.ttf')
-  --main_menu_sidebuttontext1 = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36)}, script_path .. 'data/condensed.ttf')
-  --main_menu_sidebuttontext2 = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*1) }, script_path .. 'data/condensed.ttf')
-  --main_menu_sidebuttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*2) }, script_path .. 'data/condensed.ttf')
-
   self.sidebuttonfonts = {main_menu_sidebuttontext1, main_menu_sidebuttontext2, main_menu_sidebuttontext3}
-
-  --self.sidebuttons = { "Trophy room", "Wardrobe", "Settings" }
-
   return self
 end
 
@@ -145,8 +120,6 @@ function MainMenu:sidebuttonactive(x1)
   screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.5375, y = (screen:get_height() * 0.3) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = screen:get_width() * 0.425, h = screen:get_height() * 0.185 })
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.5425, y = (screen:get_height() * 0.309) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = (screen:get_width() * 0.415), h = (screen:get_height() * 0.1685) })
 
-  --local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*(x1-1)) }, script_path .. 'data/condensed.ttf')
-  --sidebuttontext:draw_over_surface(screen, self.sidebuttons[x1])
   self.sidebuttonfonts[x1]:draw_over_surface(screen, self.sidebuttons[x1])
 end
 
@@ -158,8 +131,6 @@ end
 function MainMenu:sidebuttoninactive(x1)
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.5375, y = (screen:get_height() * 0.3) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = screen:get_width() * 0.425, h = screen:get_height() * 0.185 })
 
-  --local sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*(x1-1)) }, script_path .. 'data/condensed.ttf')
-  --sidebuttontext:draw_over_surface(screen, self.sidebuttons[x1])
   self.sidebuttonfonts[x1]:draw_over_surface(screen, self.sidebuttons[x1])
 end
 

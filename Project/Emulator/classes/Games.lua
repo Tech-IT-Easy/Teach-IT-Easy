@@ -7,37 +7,6 @@ Games = {} --MenuView:new()
 -------------------------------------
 function Games:new()
 
-  -- text placing
-  --[[
-  games_appnamebaseline = screen:get_height() * 0.08
-  games_pagenamebaseline = screen:get_height() * 0.15
-  games_usernamebaseline = screen:get_height() * 0.125
-
-  -- images
-  --games_background = gfx.loadpng("data/background_h720.png")
-
-  -- fonts
-  games_appname = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=games_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
-  games_pagename = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.33, y=games_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
-  games_username = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=games_usernamebaseline}, script_path..'data/GROBOLD.ttf')
-  games_backbutton = sys.new_freetype({g=0, r=0, b=0, a=255}, screen:get_height()*0.03, { x=screen:get_width()*0.8103, y=screen:get_height()*0.08046}, script_path..'data/condensed.ttf')
-  games_backtext = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.03, { x=screen:get_width()*0.791, y=screen:get_height()*0.125}, script_path..'data/GROBOLD.ttf')
-
-  games_gamename1 = sys.new_freetype({ r = 78, g = 78, b = 78 ,a=255}, screen:get_height() * 0.05, { x = screen:get_width() * 0.095, y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.1, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
-  games_trophies1 = sys.new_freetype({ r = 139, g = 139, b = 139, a=255}, screen:get_height() * 0.04, { x = screen:get_width() * 0.095, y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.3, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
-
-  games_gamename2 = sys.new_freetype({ r = 78, g = 78, b = 78, a=255}, screen:get_height() * 0.05, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22), y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.1, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
-  games_trophies2 = sys.new_freetype({ r = 139, g = 139, b = 139, a=255}, screen:get_height() * 0.04, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22), y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.3, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
-
-  games_gamename3 = sys.new_freetype({ r = 78, g = 78, b = 78, a=255}, screen:get_height() * 0.05, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * 2, y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.1, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
-  games_trophies3 = sys.new_freetype({ r = 139, g = 139, b = 139, a=255}, screen:get_height() * 0.04, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * 2, y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.3, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
-
-  games_gamename4 = sys.new_freetype({ r = 78, g = 78, b = 78, a=255}, screen:get_height() * 0.05, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * 3, y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.1, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
-  games_trophies4 = sys.new_freetype({ r = 139, g = 139, b = 139, a=255}, screen:get_height() * 0.04, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * 3, y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.3, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
-
-  games_gamesfonts = {games_gamename1, games_gamename2, games_gamename3,games_gamename4}
-  games_trophiesfonts = {games_trophies1, games_trophies2, games_trophies3, games_trophies4}
-]]
   -- available games
   self.games = { { "Programming", "5/12" }, { "Other game", "1/12" }, { "Test game", "12/12" }, { "Pony game", "100/100" } }
   return self
@@ -53,15 +22,8 @@ function Games:handleinput(key)
   collectgarbage()
   if key == 'right' and self.pos < #self.games then
     self:buttoninactive(self.pos) self.pos = self.pos + 1 self:buttonactive(self.pos)
-
   elseif key == 'left' and self.pos > 1 then
     self:buttoninactive(self.pos) self.pos = self.pos - 1 self:buttonactive(self.pos)
-
-    --[[ Returns which view to change to (not implemented)
-    if key == '1' then
-     return {"main", games_games[games_pos][1]}
-    end]]
-
   elseif key == '2' then
     return { "main", self.usernamestring }
   end
@@ -119,10 +81,7 @@ end
 function Games:buttonactive(x1)
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
 
-  --local gamename = sys.new_freetype({ r = 78, g = 78, b = 78 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.1, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
-
-  --local trophies = sys.new_freetype({ r = 139, g = 139, b = 139 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.3, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
   games_trophiesfonts[x1]:draw_over_surface(screen,"Trophies: " .. self.games[x1][2])
 end
 
@@ -134,10 +93,7 @@ end
 function Games:buttoninactive(x1)
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
 
-  --local gamename = sys.new_freetype({r=139, g=139, b=139}, screen:get_height() * 0.05, {x = screen:get_width()*0.095 + (screen:get_width()*0.22)*(x1-1) , y = (screen:get_height()*0.28)+(screen:get_height()*0.28)*1.1 , w = screen:get_width()*0.18, h = screen:get_height()*0.45  }, script_path .. 'data/condensed.ttf')
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
-
-  --local trophies = sys.new_freetype({r=139, g=139, b=139}, screen:get_height() * 0.04, {x = screen:get_width()*0.095 + (screen:get_width()*0.22)*(x1-1) , y = (screen:get_height()*0.28)+(screen:get_height()*0.28)*1.3 , w = screen:get_width()*0.18, h = screen:get_height()*0.45  }, script_path .. 'data/condensed.ttf')
   games_trophiesfonts[x1]:draw_over_surface(screen,"Trophies: " .. self.games[x1][2])
 end
 
