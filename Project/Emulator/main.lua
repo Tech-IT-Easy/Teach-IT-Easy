@@ -47,6 +47,9 @@ end
 -------------------------------------
 function onKey(key, state)
   ADLogger.trace("OnKey(" .. key .. "," .. state .. ")")
+  if key == 'exit' then
+    sys.stop()
+  end
   if state == 'down' then
     local temp = currentview:handleinput(key)
     if temp[1] ~= " " then changeview(temp) end
