@@ -33,18 +33,20 @@ end
 function ProfileSelection:handleinput(event)
   collectgarbage()
   -- each menu will have its own function to handle remote input
+
+
   self.lastpos = self.pos
   if event.key == Event.KEY_RIGHT and self.pos < #self.usernames then
     self.lastpos = self.pos
     self.pos = self.pos + 1
-  elseif key == 'left' and self.pos > 1 and self.pos < #self.usernames + 1 then
+  elseif event.key == Event.KEY_LEFT and self.pos > 1 and self.pos < #self.usernames + 1 then
 
     self.pos = self.pos - 1
-  elseif key == 'down' then
+  elseif event.key == Event.KEY_DOWN then
 
     self.pos = 5
 
-  elseif key == 'up' and self.pos == 5 then
+  elseif event.key == Event.KEY_UP and self.pos == 5 then
 
     self.pos = 1
 

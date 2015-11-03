@@ -88,7 +88,7 @@ function menuEventHandler:update(object,eventListener,event)
    -- sys.stop()
   --end
   if event.state == Event.KEY_STATE_DOWN then
-    local temp = self.currentview:handleinput(event)
+    local temp = PlatformMenu.currentview:handleinput(event)
     if temp[1] ~= " " then self:changeview(temp) end
 end
  --[[ if e-vent.key == Event.KEY_UP then
