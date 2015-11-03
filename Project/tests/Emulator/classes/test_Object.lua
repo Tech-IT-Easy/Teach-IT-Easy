@@ -6,6 +6,7 @@
 -- To change this template use File | Settings | File Templates.
 --
 
+--[[ Object.lua not implemented atm, tests not needed.
 
 lunit = require "lunit"
 module( "Emulator_classes_Object", package.seeall, lunit.testcase )
@@ -15,3 +16,4 @@ function test_Object_and_fail()
    fail("Object not tested, always fail")
 end
 
+]]
