@@ -14,25 +14,58 @@ local GameFactory = require('games.GameFactory')
 
 local PlatformMenu = extends(Controllable.class())
 
+--included classes for menu
+local ProfileSelection = require('menus.ProfileSelection')
+local MainMenu = require('menus.MainMenu')
+local CreateProfile = require('menus.CreateProfile')
+local Games = require('menus.Games')
+skin = require('menus.skin')
+local background = gfx.loadpng("data/background_h720.png")
 
 -----------------------------------------------------------
 -- Construct method
 -----------------------------------------------------------
 function PlatformMenu:new()
   -- example code 
-  self.position = {x=1,y=2}
+ -- self.position = {x=1,y=2 }
+  self:loadviews()
+
   return self.class()
 end
 
 function PlatformMenu:show()
   -- example code
-  screen:clear({g=15, r=15, b=220}, {x=self.position.x*100,y=self.position.y*100,width=100,height=100})
+  screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+  self.currentview:loadview()
+  --screen:clear({g=15, r=15, b=220}, {x=self.position.x*100,y=self.position.y*100,width=100,height=100})
 end
 
 function PlatformMenu:update()
   -- example code
-  screen:clear({g=15, r=15, b=220}, {x=self.position.x*100,y=self.position.y*100,width=100,height=100})
+  self.currentview:update()
+  --screen:clear({g=15, r=15, b=220}, {x=self.position.x*100,y=self.position.y*100,width=100,height=100})
 end
+
+-------------------------------------
+-- Creates the menu-views un startup.
+-- @author Erik/ Marcus
+-------------------------------------
+function PlatformMenu:loadviews()
+  self.currentview = ProfileSelection:new()
+  self.views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games}
+end
+
+-------------------------------------
+-- Changes the current view and loads it.
+-- @param newview. String that represents the new view.
+-- @author Erik/ Marcus
+-------------------------------------
+function PlatformMenu:changeview(newview)
+  self.currentview = self.views[newview[1]]:new()
+  screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+  self.currentview:loadview(newview[2])
+end
+
 -----------------------------------------------------------
 -- Menu event handler for some keyboard input, when creating 
 -- a handler, you need to do a few the steps as follow
@@ -50,8 +83,16 @@ menuEventHandler.events = {[Event.KEY_UP] = Event.KEY_STATE_DOWN,[Event.KEY_DOWN
 -- override specific update method to response keyboard events, 
 function menuEventHandler:update(object,eventListener,event)
   print("platform menu event handler")
-  if event.key == Event.KEY_UP then
-    ------------
+
+   -- if key == 'exit' then
+   -- sys.stop()
+  --end
+  if event.state == Event.KEY_STATE_DOWN then
+    local temp = self.currentview:handleinput(event)
+    if temp[1] ~= " " then self:changeview(temp) end
+end
+ --[[ if e-vent.key == Event.KEY_UP then
+    -----------
     --code 
     ------------
     
@@ -77,7 +118,7 @@ function menuEventHandler:update(object,eventListener,event)
     ------------
     --code 
     ------------
-  end
+  end]]
 end
 
 -- Make handler useful to PlatformMenu
