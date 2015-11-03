@@ -71,19 +71,26 @@ function test_handleinput_right()
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
-  local inactive = mc:mock()
-  local active = mc:mock()
+  local sidebuttoninactive = mc:mock()
+  local sidebuttonactive = mc:mock()
+  local gamebuttoninactive = mc:mock()
+  local gamebuttonactive = mc:mock()
 
   -- In this case we want to mock 2 member functions so then we import the SUT (System under test)
   local ps = require(SUT)
 
   -- override the original functions with mocks
-  package.loaded[SUT].inactive = inactive
-  package.loaded[SUT].active = active
+  package.loaded[SUT].sidebuttoninactive = sidebuttoninactive
+  package.loaded[SUT].sidebuttonactive = sidebuttonactive
+  package.loaded[SUT].gamebuttoninactive = gamebuttoninactive
+  package.loaded[SUT].gamebuttonactive = gamebuttonactive
 
   -- Tell for which arguments it should work, what it should return and how many times it should be called.
-  inactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
-  active(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+
 
   -- Start the testing
   mc:replay()
@@ -101,19 +108,25 @@ function test_handleinput_from_right_down()
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
-  local inactive = mc:mock()
-  local active = mc:mock()
+  local sidebuttoninactive = mc:mock()
+  local sidebuttonactive = mc:mock()
+  local gamebuttoninactive = mc:mock()
+  local gamebuttonactive = mc:mock()
 
   -- In this case we want to mock 2 member functions so then we import the SUT (System under test)
   local ps = require(SUT)
 
   -- override the original functions with mocks
-  package.loaded[SUT].inactive = inactive
-  package.loaded[SUT].active = active
+  package.loaded[SUT].sidebuttoninactive = sidebuttoninactive
+  package.loaded[SUT].sidebuttonactive = sidebuttonactive
+  package.loaded[SUT].gamebuttoninactive = gamebuttoninactive
+  package.loaded[SUT].gamebuttonactive = gamebuttonactive
 
   -- Tell for which arguments it should work, what it should return and how many times it should be called.
-  inactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
-  active(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
 
   -- Start the testing
   mc:replay()
@@ -131,19 +144,25 @@ function test_handleinput_from_right_down_two()
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
-  local inactive = mc:mock()
-  local active = mc:mock()
+  local sidebuttoninactive = mc:mock()
+  local sidebuttonactive = mc:mock()
+  local gamebuttoninactive = mc:mock()
+  local gamebuttonactive = mc:mock()
 
   -- In this case we want to mock 2 member functions so then we import the SUT (System under test)
   local ps = require(SUT)
 
   -- override the original functions with mocks
-  package.loaded[SUT].inactive = inactive
-  package.loaded[SUT].active = active
+  package.loaded[SUT].sidebuttoninactive = sidebuttoninactive
+  package.loaded[SUT].sidebuttonactive = sidebuttonactive
+  package.loaded[SUT].gamebuttoninactive = gamebuttoninactive
+  package.loaded[SUT].gamebuttonactive = gamebuttonactive
 
   -- Tell for which arguments it should work, what it should return and how many times it should be called.
-  inactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
-  active(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
 
   -- Start the testing
   mc:replay()
@@ -160,19 +179,25 @@ function test_handleinput_from_right_up()
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
-  local inactive = mc:mock()
-  local active = mc:mock()
+  local sidebuttoninactive = mc:mock()
+  local sidebuttonactive = mc:mock()
+  local gamebuttoninactive = mc:mock()
+  local gamebuttonactive = mc:mock()
 
   -- In this case we want to mock 2 member functions so then we import the SUT (System under test)
   local ps = require(SUT)
 
-  -- override the original functions with mocks
-  package.loaded[SUT].inactive = inactive
-  package.loaded[SUT].active = active
+   -- override the original functions with mocks
+  package.loaded[SUT].sidebuttoninactive = sidebuttoninactive
+  package.loaded[SUT].sidebuttonactive = sidebuttonactive
+  package.loaded[SUT].gamebuttoninactive = gamebuttoninactive
+  package.loaded[SUT].gamebuttonactive = gamebuttonactive
 
   -- Tell for which arguments it should work, what it should return and how many times it should be called.
-  inactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
-  active(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
 
   -- Start the testing
   mc:replay()
@@ -189,19 +214,25 @@ function test_handleinput_from_right_up_two()
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
-  local inactive = mc:mock()
-  local active = mc:mock()
+  local sidebuttoninactive = mc:mock()
+  local sidebuttonactive = mc:mock()
+  local gamebuttoninactive = mc:mock()
+  local gamebuttonactive = mc:mock()
 
   -- In this case we want to mock 2 member functions so then we import the SUT (System under test)
   local ps = require(SUT)
 
   -- override the original functions with mocks
-  package.loaded[SUT].inactive = inactive
-  package.loaded[SUT].active = active
+  package.loaded[SUT].sidebuttoninactive = sidebuttoninactive
+  package.loaded[SUT].sidebuttonactive = sidebuttonactive
+  package.loaded[SUT].gamebuttoninactive = gamebuttoninactive
+  package.loaded[SUT].gamebuttonactive = gamebuttonactive
 
   -- Tell for which arguments it should work, what it should return and how many times it should be called.
-  inactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
-  active(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
 
   -- Start the testing
   mc:replay()
@@ -219,19 +250,25 @@ function test_handleinput_from_right_left()
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
-  local inactive = mc:mock()
-  local active = mc:mock()
+  local sidebuttoninactive = mc:mock()
+  local sidebuttonactive = mc:mock()
+  local gamebuttoninactive = mc:mock()
+  local gamebuttonactive = mc:mock()
 
   -- In this case we want to mock 2 member functions so then we import the SUT (System under test)
   local ps = require(SUT)
 
-  -- override the original functions with mocks
-  package.loaded[SUT].inactive = inactive
-  package.loaded[SUT].active = active
+   -- override the original functions with mocks
+  package.loaded[SUT].sidebuttoninactive = sidebuttoninactive
+  package.loaded[SUT].sidebuttonactive = sidebuttonactive
+  package.loaded[SUT].gamebuttoninactive = gamebuttoninactive
+  package.loaded[SUT].gamebuttonactive = gamebuttonactive
 
   -- Tell for which arguments it should work, what it should return and how many times it should be called.
-  inactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
-  active(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
 
   -- Start the testing
   mc:replay()
@@ -249,19 +286,25 @@ function test_handleinput_left_left()
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
-  local inactive = mc:mock()
-  local active = mc:mock()
+  local sidebuttoninactive = mc:mock()
+  local sidebuttonactive = mc:mock()
+  local gamebuttoninactive = mc:mock()
+  local gamebuttonactive = mc:mock()
 
   -- In this case we want to mock 2 member functions so then we import the SUT (System under test)
   local ps = require(SUT)
 
-  -- override the original functions with mocks
-  package.loaded[SUT].inactive = inactive
-  package.loaded[SUT].active = active
+   -- override the original functions with mocks
+  package.loaded[SUT].sidebuttoninactive = sidebuttoninactive
+  package.loaded[SUT].sidebuttonactive = sidebuttonactive
+  package.loaded[SUT].gamebuttoninactive = gamebuttoninactive
+  package.loaded[SUT].gamebuttonactive = gamebuttonactive
 
   -- Tell for which arguments it should work, what it should return and how many times it should be called.
-  inactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
-  active(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  sidebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttoninactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  gamebuttonactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
 
   -- Start the testing
   mc:replay()
