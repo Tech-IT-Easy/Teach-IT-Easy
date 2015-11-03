@@ -1,3 +1,4 @@
+
 --- Global configuration file. Copy, customize and store in your
 -- project folder as '.luacov' for project specific configuration.
 -- If some options are missing, their default values from this file
