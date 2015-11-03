@@ -326,11 +326,11 @@ function test_handleinput_left_one()
   assert_equal("games", b[1], "should want to start game")
 end
 
-function test_handleinput_blankspace()
+function test_handleinput_two()
   -- checks if create is chosen if 1 is pressed
   local ps = require(SUT)
   local a = ps:new()
-  local b = a:handleinput('backspace')
+  local b = a:handleinput('2')
   assert_equal("profilesel", b[1], "should get create")
 end
 
