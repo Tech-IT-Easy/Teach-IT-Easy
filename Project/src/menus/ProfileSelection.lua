@@ -50,10 +50,10 @@ function ProfileSelection:handleinput(event)
 
     self.pos = 1
 
-  elseif key == '1' and self.pos < 5 then
+  elseif event.key == Event.KEY_ONE and self.pos < 5 then
     return { "main", self.usernames[self.pos] }
 
-  elseif key == '1' and self.pos == 5 then
+  elseif event.key == Event.KEY_ONE and self.pos == 5 then
     return { "create" }
   end
 

@@ -78,7 +78,7 @@ end
 menuEventHandler = EventHandler:new()
 
 -- register interesting events, listener will only notify these events
-menuEventHandler.events = {[Event.KEY_UP] = Event.KEY_STATE_DOWN,[Event.KEY_DOWN] = Event.KEY_STATE_DOWN,[Event.KEY_RIGHT]=Event.KEY_STATE_DOWN,[Event.KEY_LEFT]=Event.KEY_STATE_DOWN}
+menuEventHandler.events = {[Event.KEY_UP] = Event.KEY_STATE_DOWN,[Event.KEY_DOWN] = Event.KEY_STATE_DOWN,[Event.KEY_RIGHT]=Event.KEY_STATE_DOWN,[Event.KEY_LEFT]=Event.KEY_STATE_DOWN,[Event.KEY_ONE]=Event.KEY_STATE_DOWN,[Event.KEY_TWO]=Event.KEY_STATE_DOWN}
 
 -- override specific update method to response keyboard events, 
 function menuEventHandler:update(object,eventListener,event)
@@ -89,7 +89,7 @@ function menuEventHandler:update(object,eventListener,event)
   --end
   if event.state == Event.KEY_STATE_DOWN then
     local temp = PlatformMenu.currentview:handleinput(event)
-    if temp[1] ~= " " then self:changeview(temp) end
+    if temp[1] ~= " " then PlatformMenu:changeview(temp) end
 end
  --[[ if e-vent.key == Event.KEY_UP then
     -----------
