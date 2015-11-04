@@ -1,6 +1,6 @@
 ------------------------------
 --The queue that contains the actions the player wants to take.
---Allows others to add things to the queue, remove last (pop),
+--Allows others to push things to the queue, remove last (pop),
 --change place of something in the queue(setPosition) and create a new queue.
 ------------------------------
 local Object = require('toolkit.Object')
@@ -14,7 +14,7 @@ function Queue:new()
 end
 
 --Adds something at the end of the queue
-function Queue:add(action)
+function Queue:push(action)
   table.insert(self.actions,action)
 end
 
