@@ -1,5 +1,6 @@
 CreateProfile = {} --MenuView:new()
 
+local PlatformMenu = require('menus.PlatformMenu')
 
 function CreateProfile:new()
   --Profile name
@@ -18,7 +19,7 @@ function CreateProfile:handleinput(key)
     self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos)
   elseif key == 'left' and self.pos > 1 then
     self:inactive(self.pos) self.pos = self.pos - 1 self:active(self.pos)
-  elseif key == '1' and self.pos < 4 then
+  elseif key == '1' and self.pos < 27 then
     self.profilename = self.profilename .. self.letters[self.pos] self:updatetext()
   elseif key == '1' and self.pos == 4 then
     self:chooseavatar()
