@@ -23,6 +23,7 @@ GameInputHandler = extends(Controllable.class())
 -- -------------------------------------------------------
 function GameInputHandler:new()
 
+return self.class()
 end
 
 function GameInputHandler:load()
