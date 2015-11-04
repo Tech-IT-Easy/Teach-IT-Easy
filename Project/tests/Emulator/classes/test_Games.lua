@@ -188,6 +188,3 @@ end
 
 
 
-function test_Games_and_fail()
-   fail("Games not completely tested, always fail")
-end
