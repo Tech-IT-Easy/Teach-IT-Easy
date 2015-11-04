@@ -35,7 +35,11 @@ platformContext = PlatformContext:new()
 -----------------------------------------------------------
 function onKey(key,state)
   -- ADLogger.trace("OnKey("..key..","..state..")")
+  if key == 'exit' then
+    sys.stop()
+  end
   platformContext:process(key,state) 
+  collectgarbage()
 end
 
 -----------------------------------------------------------

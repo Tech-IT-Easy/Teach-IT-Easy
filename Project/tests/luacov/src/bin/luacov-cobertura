@@ -1,5 +1,6 @@
 #!/usr/bin/env lua
 
+
 local function show_help() print([[
 Usage:
    luacov-cobertura [-c FILE] [-o FILE]

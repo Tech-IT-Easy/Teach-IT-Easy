@@ -14,6 +14,8 @@ Event.KEY_UP = 1
 Event.KEY_DOWN = 2
 Event.KEY_LEFT = 3
 Event.KEY_RIGHT = 4
+Event.KEY_ONE = 5
+Event.KEY_TWO = 6
 
 Event.KEY_STATE_DOWN = 1
 Event.KEY_STATE_UP = 2
@@ -25,8 +27,9 @@ Event.formatSystemKey = {
 ["up"] = Event.KEY_UP,
 ["down"] = Event.KEY_DOWN,
 ["left"] = Event.KEY_LEFT,
-["right"] = Event.KEY_RIGHT
-
+["right"] = Event.KEY_RIGHT,
+["1"] = Event.KEY_ONE,
+["2"] = Event.KEY_TWO
 --- Other events we are interested need to be added here
 }
 
