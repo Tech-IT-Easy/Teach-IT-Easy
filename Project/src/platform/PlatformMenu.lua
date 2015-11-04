@@ -3,7 +3,7 @@
 -- to show game choice menu and process some key events
 --
 -- @Author:Created by Chuck, Aug 16,2015
--- @Author:Updated by author,date
+-- @Author:Updated by Tobias, Nov 02, 2015
 -----------------------------------------------------------
 
 local Object = require('toolkit.Object')
@@ -34,6 +34,9 @@ function PlatformMenu:new()
   return self.class()
 end
 
+-----------------------------------------------------------
+-- Loads the current view to the screen
+-----------------------------------------------------------
 function PlatformMenu:show()
   -- example code
   screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
@@ -95,34 +98,7 @@ function menuEventHandler:update(object,eventListener,event)
     if temp[1] ~= " " then PlatformMenu:changeview(temp) end
   collectgarbage()
 end
- --[[ if e-vent.key == Event.KEY_UP then
-    -----------
-    --code 
-    ------------
-    
-    -- load game only once
-    if event.state == Event.KEY_STATE_DOWN then
-      PlatformContext.game = GameFactory:getGame("mario",PlatformContext)
-      PlatformContext.game:start()
-    end
-    
-    
-  elseif event.key == Event.KEY_RIGHT then
-    PlatformMenu.position.x = PlatformMenu.position.x + 1
-    ------------
-    --code 
-    ------------ 
-  elseif event.key == Event.KEY_LEFT then
-    PlatformMenu.position.x = PlatformMenu.position.x - 1
-    ------------
-    --code 
-    ------------
-  elseif event.key == Event.KEY_DOWN then
-    PlatformMenu.position.y = PlatformMenu.position.y + 1
-    ------------
-    --code 
-    ------------
-  end]]
+ 
 end
 
 -- Make handler useful to PlatformMenu
