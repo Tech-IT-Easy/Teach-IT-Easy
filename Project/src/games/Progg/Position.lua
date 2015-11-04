@@ -15,21 +15,21 @@ end
 
 
 --Geters and setters of X and Y
-function Position.getX()
+function Position:getX()
 
 return self.X
 end
 
-function Position.getY()
+function Position:getY()
 
 return self.Y
 end
 
-function Position.setX(x)
+function Position:setX(x)
 self.X = x
 end
 
-function Position.setY(y)
+function Position:setY(y)
 self.Y = y
 end
 
