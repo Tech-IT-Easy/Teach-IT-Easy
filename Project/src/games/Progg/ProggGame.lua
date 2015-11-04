@@ -1,11 +1,10 @@
 -------------------------------
 --The highest level for the game. Creates the parts of the game and
---calls the parts to update them.
+--tells the parts to update.
 -------------------------------
 
 local Game = require('toolkit.Game')
 --Will have to include the classes of the other components here
-local ExampleActor = require('games.mario.ExampleActor')
 
 local ProggGame = extends(Game.class())
 
@@ -32,8 +31,10 @@ local function load()
 -----------------------
 end
 
-
-function Mario:start()
+-----------------------
+--When the platform launches the game it calls this function
+-----------------------
+function ProggGame:start()
   load()
   ----------------------
   --We might need to do more here as well
@@ -42,9 +43,9 @@ end
 
 
 ------------------------
---Updates 
+--Updates the parts of the game
 ------------------------
-function Mario:update()
+function ProggGame:update()
 -----------------------
 --Calls update on all objects, e.g.
 --UI:update()

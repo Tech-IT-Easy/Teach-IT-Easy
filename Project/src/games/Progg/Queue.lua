@@ -7,18 +7,25 @@ local Object = require('toolkit.Object')
 
 Queue = extends(Object.class())
 
---Creates a new instance of a queue, can take any objects
+-------------------------------------
+--Constructor creates a new instance of a queue, can take any objects
+--but is meant to store actions/commands
+------------------------------------
 function Queue:new()
   self.actions = {}
   return self.class()
 end
 
+-------------------------------------
 --Adds something at the end of the queue
+-------------------------------------
 function Queue:push(action)
   table.insert(self.actions,action)
 end
 
+--------------------------------------
 --Removes the object in the queue that was added last
+--------------------------------------
 function Queue:pop()
   return table.remove(self.actions)
 end
