@@ -4,7 +4,7 @@ require "tests.Emulator.classes.test_MainMenu"
 --require "tests.Emulator.classes.test_MenuView"
 --require "tests.Emulator.classes.test_Object"
 require "tests.Emulator.classes.test_ProfileSelection"
---require "tests.Emulator.classes.test_CreateProfile"
+require "tests.Emulator.classes.test_CreateProfile"
 require "tests.Emulator.classes.test_Games"
 
 
