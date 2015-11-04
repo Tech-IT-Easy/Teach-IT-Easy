@@ -7,10 +7,6 @@ local Object = require('toolkit.Object')
 
 Queue = extends(Object.class())
 
---I don't yet know the difference between creating this as a local 
---table or creating it as self.actions in the constructor
---local actions = {}
-
 --Creates a new instance of a queue, can take any objects
 function Queue:new()
   self.actions = {}
@@ -27,11 +23,11 @@ function Queue:pop()
   return table.remove(self.actions)
 end
 
+--Allows someone to switch positions for two objects in the queue
 function Queue:setPosition(currentPos, goalPos)
 ---------------
 --code
 ---------------
 end
-
 
 return Queue
