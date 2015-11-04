@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -------------------------------
 --The highest level for the game. Creates the parts of the game and
 --tells the parts to update.
@@ -54,4 +55,60 @@ function ProggGame:update()
 end
 
 
+=======
+-------------------------------
+--The highest level for the game. Creates the parts of the game and
+--tells the parts to update.
+-------------------------------
+
+local Game = require('toolkit.Game')
+--Will have to include the classes of the other components here
+
+local ProggGame = extends(Game.class())
+
+-----------------------------------------------------------
+-- Constructor method, see toolkit.Game
+-----------------------------------------------------------
+function ProggGame:new(context)
+  self.platformContext = context
+  self:initListener()
+  --------------------------------
+  -- attach all object to delegate
+  --------------------------------
+  return self.class()
+end
+
+-----------------------------------------------------------
+-- Loading resources, only called when the game starts
+-- as of right now.
+-----------------------------------------------------------
+local function load()
+-----------------------
+  -- call load on all resources e.g.
+  -- UI:load() 
+-----------------------
+end
+
+-----------------------
+--When the platform launches the game it calls this function
+-----------------------
+function ProggGame:start()
+  load()
+  ----------------------
+  --We might need to do more here as well
+  ----------------------
+end
+
+
+------------------------
+--Updates the parts of the game
+------------------------
+function ProggGame:update()
+-----------------------
+--Calls update on all objects, e.g.
+--UI:update()
+end
+
+
+>>>>>>> branch 'Sprint2' of git@gitlab.ida.liu.se:toblu611/tddc88_tech_it_easy.git
 return ProggGame
