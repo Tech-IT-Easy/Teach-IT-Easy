@@ -77,7 +77,7 @@ end
 -- a handler, you need to do a few the steps as follow
 -- @object which will be operated, usually it is 
 --          the class that contain this handler, here is menu
--- @event which is event currently happening
+-- @event which is event currently happening 
 -----------------------------------------------------------
 
 -- create a event delegate for menu
