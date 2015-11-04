@@ -28,13 +28,13 @@ end
 function GameInputHandler:load()
 
 end
-
+ 
 --Subscribing the eventHandler to all events. Only numbers by now
-exampleEventHandler = EventHandler:new()
-exampleEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1,[Event.KEY_ZERO]=1}
+gameEventHandler = EventHandler:new()
+gameEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1,[Event.KEY_ZERO]=1}
 
 --Update function on every key input
-function exampleEventHandler:update(object,eventListener,event)
+function gameEventHandler:update(object,eventListener,event)
 
   --Switch for all the input handling to implement
   if event.key == Event.KEY_ONE then
@@ -61,6 +61,6 @@ function exampleEventHandler:update(object,eventListener,event)
  return true
 end
 
-GameInputHandler.eventHandler = exampleEventHandler
+GameInputHandler.eventHandler = gameEventHandler
 
 return GameInputHandler
