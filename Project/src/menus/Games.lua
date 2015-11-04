@@ -1,5 +1,7 @@
 Games = {} --MenuView:new()
 
+local Event = require('toolkit.Event')
+
 -------------------------------------
 -- Creates the Games menu.
 -- @return games_ The created menu-object.
@@ -18,25 +20,31 @@ end
 -- @return string. Either " " as standard or a string representing view to be changed to.
 -- @author Erik
 -------------------------------------
-function Games:handleinput(key)
+function Games:handleinput(event)
   collectgarbage()
-  if key == 'right' and self.pos < #self.games then
-    self:buttoninactive(self.pos) self.pos = self.pos + 1 self:buttonactive(self.pos)
-  elseif key == 'left' and self.pos > 1 then
-    self:buttoninactive(self.pos) self.pos = self.pos - 1 self:buttonactive(self.pos)
-  elseif key == '2' then
+  self.lastpos = self.pos
+  if event.key == Event.KEY_RIGHT and self.pos < #self.games then
+     self.pos = self.pos + 1
+  elseif event.key == Event.KEY_LEFT and self.pos > 1 then
+    self.pos = self.pos - 1
+  elseif event.key == Event.KEY_TWO then
     return { "main", self.usernamestring }
   end
   return { " " }
 end
 
 
+function Games:update()
+  self:buttoninactive(self.lastpos)
+  self:buttonactive(self.pos)
+end
 -------------------------------------
 -- Loads the view to the screen.
 -- @author Erik
 -------------------------------------
 function Games:loadview(input)
   self.pos = 1
+  self.lastpos = 1
   self.usernamestring = input
   --self:printbackground()
 

@@ -1,5 +1,6 @@
 CreateProfile = {} --MenuView:new()
 
+local Event = require('toolkit.Event')
 
 function CreateProfile:new()
   --Profile name
@@ -11,26 +12,32 @@ function CreateProfile:new()
   return self
 end
 
-function CreateProfile:handleinput(key)
+function CreateProfile:handleinput(event)
   collectgarbage()
-
-  if key == 'right' and self.pos < #self.letters then
-    self:inactive(self.pos) self.pos = self.pos + 1 self:active(self.pos)
-  elseif key == 'left' and self.pos > 1 then
-    self:inactive(self.pos) self.pos = self.pos - 1 self:active(self.pos)
-  elseif key == '1' and self.pos < 4 then
+  self.lastpos = self.pos
+  if event.key == Event.KEY_RIGHT and self.pos < #self.letters then
+     self.pos = self.pos + 1
+  elseif event.key == Event.KEY_LEFT and self.pos > 1 then
+     self.pos = self.pos - 1
+  elseif event.key == Event.KEY_ONE and self.pos < 4 then
     self.profilename = self.profilename .. self.letters[self.pos] self:updatetext()
-  elseif key == '1' and self.pos == 4 then
+  elseif event.key == Event.KEY_ONE and self.pos == 4 then
     self:chooseavatar()
-  elseif key == '2' then
+  elseif event.key == Event.KEY_TWO then
     return { "profilesel", " " }
   end
   return { " " }
 end
 
+
+function CreateProfile:update()
+  self:inactive(self.lastpos)
+  self:active(self.pos)
+end
 --load view
 function CreateProfile:loadview()
   self.pos = 1
+  self.lastpos = 1
   --self:printbackground()
   self:renderui()
 end
