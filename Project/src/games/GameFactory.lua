@@ -26,6 +26,8 @@ function GameFactory:getGame(profile,context)
     
   elseif profile == "duck" then
     load = require("games.duck.Duck")
+  elseif profile == "progg" then
+    load = require("games.Progg.ProggGame")
   end
   --------------------
   -- add another game profile when extended
