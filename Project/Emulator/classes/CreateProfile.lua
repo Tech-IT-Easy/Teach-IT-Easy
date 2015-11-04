@@ -1,5 +1,6 @@
 CreateProfile = {} --MenuView:new()
 
+local PlatformMenu = require('menus.PlatformMenu')
 
 function CreateProfile:new()
   --Profile name

@@ -56,7 +56,7 @@ end
 -------------------------------------
 function PlatformMenu:loadviews()
   self.currentview = ProfileSelection:new()
-  self.views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games}
+  self.views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games, chooseavatar=ChooseAvatar}
   collectgarbage()
 end
 

@@ -57,23 +57,3 @@ function onKey(key, state)
   end
 
 end
-
--------------------------------------
--- Creates the menu-views un startup.
--- @author Erik/ Marcus
--------------------------------------
-function loadviews()
-  currentview = ProfileSelection:new()
-  views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games}
-end
-
--------------------------------------
--- Changes the current view and loads it.
--- @param newview. String that represents the new view.
--- @author Erik/ Marcus
--------------------------------------
-function changeview(newview)
-  currentview = views[newview[1]]:new()
-  screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-  currentview:loadview(newview[2])
-end
