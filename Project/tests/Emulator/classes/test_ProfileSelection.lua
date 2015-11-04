@@ -8,11 +8,13 @@
 
 
 lunit = require "lunit"
-module( "Emulator_classes_ProfileSelection", package.seeall, lunit.testcase )
+module( "src_menus_ProfileSelection", package.seeall, lunit.testcase )
+--local Object = require'src.toolkit.Object'
+local event = require "src.toolkit.Event"
 
 
 -- System under test
-local SUT = 'Emulator.classes.ProfileSelection'
+local SUT = 'src.menus.ProfileSelection'
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
   package.loaded[class_to_mock] = nil
@@ -40,8 +42,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['Emulator.classes.ProfileSelection'] = nil
-  package.preload['Emulator.classes.ProfileSelection'] = nil
+  package.loaded['src.menus.ProfileSelection'] = nil
+  package.preload['src.menus.ProfileSelection'] = nil
 end
 
 function test_loadview()
@@ -49,15 +51,15 @@ function test_loadview()
 
   -- Mock renderui and printbackground
   local renderui = mc:mock()
-  local printbackground = mc:mock()
+  --local printbackground = mc:mock()
 
   local ps = require(SUT)
 
   package.loaded[SUT].renderui = renderui
-  package.loaded[SUT].printbackground = printbackground
+  --package.loaded[SUT].printbackground = printbackground
 
   renderui(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  printbackground(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  --printbackground(mc.ANYARGS) ;mc :returns(nil) :times(1)
 
   mc:replay()
 
@@ -93,7 +95,8 @@ function test_handleinput_right()
   local a = ps:new()
   a.usernames = {"a", "b", "c"}
   a.pos = 1
-  a:handleinput('right')
+  event.key = event.KEY_RIGHT
+  a:handleinput(event)
   assert_equal(2, a.pos, "should move one step right, didn't")
 
   verify_mock(mc)
@@ -114,7 +117,8 @@ function test_handleinput_right_two()
   local a = ps:new()
   a.usernames = {"a", "b", "c"}
   a.pos = 3
-  a:handleinput('right')
+  event.key = event.KEY_RIGHT
+  a:handleinput(event)
   assert_equal(3, a.pos, "moved right even though it was positioned far right")
 
   verify_mock(mc)
@@ -135,7 +139,8 @@ function test_handleinput_left()
   local a = ps:new()
   a.usernames = {"a", "b", "c"}
   a.pos = 1
-  a:handleinput('left')
+  event.key = event.KEY_LEFT
+  a:handleinput(event)
   assert_equal(1, a.pos, "tried to move left even though is was posistioned far left")
   verify_mock(mc)
 end
@@ -155,7 +160,8 @@ function test_handleinput_left_two()
   local a = ps:new()
   a.usernames = {"a", "b", "c" }
   a.pos = 3
-  a:handleinput('left')
+  event.key = event.KEY_LEFT
+  a:handleinput(event)
   assert_equal(2, a.pos, "did not move left, should have.")
   verify_mock(mc)
 end
@@ -175,7 +181,8 @@ function test_handleinput_bottom_right()
   local a = ps:new()
   a.usernames = {"a", "b", "c"}
   a.pos = 5
-  a:handleinput('right')
+  event.key = event.KEY_RIGHT
+  a:handleinput(event)
   assert_equal(5, a.pos, "moved from bottom when right was pressed")
   verify_mock(mc)
 end
@@ -195,7 +202,8 @@ function test_handleinput_bottom_left()
   local a = ps:new()
   a.usernames = {"a", "b", "c"}
   a.pos = 5
-  a:handleinput('left')
+  event.key = event.KEY_LEFT
+  a:handleinput(event)
   assert_equal(5, a.pos, "moved from bottom when left was pressed")
   verify_mock(mc)
 end
@@ -215,7 +223,8 @@ function test_handleinput_bottom_down()
   local a = ps:new()
   a.usernames = {"a", "b", "c"}
   a.pos = 5
-  a:handleinput('down')
+  event.key = event.KEY_DOWN
+  a:handleinput(event)
   assert_equal(5, a.pos, "moved from bottom when down was pressed")
   verify_mock(mc)
 end
@@ -235,7 +244,8 @@ function test_handleinput_bottom_up()
   local a = ps:new()
   a.usernames = {"a", "b", "c"}
   a. pos = 5
-  a:handleinput('up')
+  event.key = event.KEY_UP
+  a:handleinput(event)
   assert_equal(1, a.pos, "did not move up from bottom when up was pressed")
   verify_mock(mc)
 end
@@ -256,13 +266,14 @@ function test_handleinput_up_up()
   a.usernames = {"a", "b", "c"}
 
   a.pos = 1
-  a:handleinput('up')
+  event.key = event.KEY_UP
+  a:handleinput(event)
   assert_equal(1, a.pos, "tried to move from pos 1 when it was already up")
   a.pos = 2
-  a:handleinput('up')
+  a:handleinput(event)
   assert_equal(2, a.pos, "tried to move from pos 2 when it was already up")
   a.pos = 3
-  a:handleinput('up')
+  a:handleinput(event)
   assert_equal(3, a.pos, "tried to move from pos 3 when it was already up")
   verify_mock(mc)
 end
@@ -282,13 +293,14 @@ function test_handleinput_up_down()
   local a = ps:new()
   a.usernames = {"a", "b", "c"}
   a.pos = 1
-  a:handleinput('down')
+  event.key = event.KEY_DOWN
+  a:handleinput(event)
   assert_equal(5, a.pos, "should have moved down from pos 1 to pos 5")
   a.pos = 2
-  a:handleinput('down')
+  a:handleinput(event)
   assert_equal(5, a.pos, "should have moved down from pos 2 to pos 5")
   a.pos = 3
-  a:handleinput('down')
+  a:handleinput(event)
   assert_equal(5, a.pos, "should have moved down from pos 3 to pos 5")
   verify_mock(mc)
 end
@@ -299,13 +311,14 @@ function test_handleinput_up_one()
   local a = ps:new()
   a.usernames = {"a", "b", "c"}
   a.pos = 1
-  local b = a:handleinput('1')
+  event.key = event.KEY_ONE
+  local b = a:handleinput(event)
   assert_equal("a", b[2], "should get username a")
   a.pos = 2
-  local b = a:handleinput('1')
+  local b = a:handleinput(event)
   assert_equal("b", b[2], "should get username b")
   a.pos = 3
-  local b = a:handleinput('1')
+  local b = a:handleinput(event)
   assert_equal("c", b[2], "should get username c")
 
 end
@@ -315,7 +328,8 @@ function test_handleinput_down_one()
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 5
-  local b = a:handleinput('1')
+  event.key = event.KEY_ONE
+  local b = a:handleinput(event)
   assert_equal("create", b[1], "should get create")
 end
 
@@ -324,7 +338,8 @@ function test_handleinput_any_other_button()
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 5
-  local b = a:handleinput('7')
+  event.key = '7'
+  local b = a:handleinput(event)
   assert_equal(" ", b[1], "should do nothing")
 end
 
