@@ -22,7 +22,7 @@ function CreateProfile:handleinput(event)
   elseif event.key == Event.KEY_ONE and self.pos < 4 then
     self.profilename = self.profilename .. self.letters[self.pos] self:updatetext()
   elseif event.key == Event.KEY_ONE and self.pos == 4 then
-    self:chooseavatar()
+    return { "chooseavatar", self.profilename }
   elseif event.key == Event.KEY_TWO then
     return { "profilesel", " " }
   end
@@ -78,10 +78,5 @@ function CreateProfile:updatetext()
   create_prof_typed:draw_over_surface(screen, self.profilename)
 end
 
-function CreateProfile:chooseavatar()
-  self:printbackground()
-  --create_prof_appname:draw_over_surface(screen, "TEACH IT EASY")
-  --create_prof_pagename:draw_over_surface(screen, "CHOOSE YOUR AVATAR")
-end
 
 return CreateProfile

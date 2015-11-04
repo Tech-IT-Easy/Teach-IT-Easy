@@ -21,6 +21,7 @@ local CreateProfile = require('menus.CreateProfile')
 local Games = require('menus.Games')
 skin = require('menus.skin')
 local background = gfx.loadpng("data/background_h720.png")
+local ChooseAvatar = require('menus.ChooseAvatar')
 
 -----------------------------------------------------------
 -- Construct method
@@ -52,7 +53,7 @@ end
 -------------------------------------
 function PlatformMenu:loadviews()
   self.currentview = ProfileSelection:new()
-  self.views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games}
+  self.views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games, chooseavatar=ChooseAvatar}
 end
 
 -------------------------------------
