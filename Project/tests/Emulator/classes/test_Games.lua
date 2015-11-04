@@ -8,8 +8,10 @@
 
 
 lunit = require "lunit"
-module( "Emulator_classes_Games", package.seeall, lunit.testcase )
-my_file = require "Emulator.classes.Games"
+module( "src_menus_Games", package.seeall, lunit.testcase )
+my_file = require "src.menus.Games"
+local event = require "src.toolkit.Event"
+
 
 -- System under test
 local SUT = 'Emulator.classes.Games'
@@ -40,8 +42,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['Emulator.classes.Games'] = nil
-  package.preload['Emulator.classes.Games'] = nil
+  package.loaded['src.menus.Games'] = nil
+  package.preload['src.menus.Games'] = nil
 end
 
 -- tests if move right from far left posistion.
@@ -68,9 +70,11 @@ function test_handleinput_right_from_left()
 
   local a = ps:new()
   a.pos = 1
-  a:handleinput('right')
+  event.key = event.KEY_RIGHT
+  a:handleinput(event)
   assert_equal(2, a.pos, "should move one position to the right, didn't ")
 end
+--[[
 
 -- tests if move right from far right position, shouldn't
 function test_handleinput_right_from_right()
@@ -156,3 +160,4 @@ end
 function test_Games_and_fail()
    fail("Games not completely tested, always fail")
 end
+]]

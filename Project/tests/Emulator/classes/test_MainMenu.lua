@@ -7,11 +7,11 @@
 
 
 lunit = require "lunit"
-module( "Emulator_classes_MainMenu", package.seeall, lunit.testcase )
-
+module( "src_menus_MainMenu", package.seeall, lunit.testcase )
+local event = require "src.toolkit.Event"
 
 -- System under test
-local SUT = 'Emulator.classes.MainMenu'
+local SUT = 'src.menus.MainMenu'
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
   package.loaded[class_to_mock] = nil
@@ -39,8 +39,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['Emulator.classes.MainMenu'] = nil
-  package.preload['Emulator.classes.MainMenu'] = nil
+  package.loaded['src.menus.MainMenu'] = nil
+  package.preload['src.menus.MainMenu'] = nil
 end
 
 function test_loadview()
@@ -48,15 +48,15 @@ function test_loadview()
 
   -- Mock renderui and printbackground
   local renderui = mc:mock()
-  local printbackground = mc:mock()
+  --local printbackground = mc:mock()
 
   local ps = require(SUT)
 
   package.loaded[SUT].renderui = renderui
-  package.loaded[SUT].printbackground = printbackground
+ -- package.loaded[SUT].printbackground = printbackground
 
   renderui(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  printbackground(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  --printbackground(mc.ANYARGS) ;mc :returns(nil) :times(1)
 
   mc:replay()
 
@@ -97,7 +97,8 @@ function test_handleinput_right()
 
   local a = ps:new()
   a.pos = 0
-  a:handleinput('right')
+  event.key = event.KEY_RIGHT
+  a:handleinput(event)
   assert_equal(1, a.pos, "should move to the right section of the screen, didn't")
 
   verify_mock(mc)
@@ -133,7 +134,8 @@ function test_handleinput_from_right_down()
 
   local a = ps:new()
   a.pos = 1
-  a:handleinput('down')
+  event.key = event.KEY_DOWN
+  a:handleinput(event)
   assert_equal(2, a.pos, "should move down in the right section of the screen, didn't")
 
   verify_mock(mc)
@@ -169,7 +171,8 @@ function test_handleinput_from_right_down_two()
 
   local a = ps:new()
   a.pos = 3
-  a:handleinput('down')
+  event.key = event.KEY_DOWN
+  a:handleinput(event)
   assert_equal(3, a.pos, "should do nothing")
 
   verify_mock(mc)
@@ -204,7 +207,8 @@ function test_handleinput_from_right_up()
 
   local a = ps:new()
   a.pos = 3
-  a:handleinput('up')
+  event.key = event.KEY_UP
+  a:handleinput(event)
   assert_equal(2, a.pos, "should move up a step")
 
   verify_mock(mc)
@@ -239,7 +243,8 @@ function test_handleinput_from_right_up_two()
 
   local a = ps:new()
   a.pos = 1
-  a:handleinput('up')
+  event.key = event.KEY_UP
+  a:handleinput(event)
   assert_equal(1, a.pos, "should do nothing")
 
   verify_mock(mc)
@@ -275,7 +280,8 @@ function test_handleinput_from_right_left()
 
   local a = ps:new()
   a.pos = 3
-  a:handleinput('left')
+  event.key = event.KEY_LEFT
+  a:handleinput(event)
   assert_equal(0, a.pos, "should move to the left section")
 
   verify_mock(mc)
@@ -311,7 +317,8 @@ function test_handleinput_left_left()
 
   local a = ps:new()
   a.pos = 0
-  a:handleinput('left')
+  event.key = event.KEY_LEFT
+  a:handleinput(event)
   assert_equal(0, a.pos, "should do nothing")
 
   verify_mock(mc)
@@ -322,7 +329,8 @@ function test_handleinput_left_one()
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 0
-  local b = a:handleinput('1')
+  event.key = event.KEY_ONE
+  local b = a:handleinput(event)
   assert_equal("games", b[1], "should want to start game")
 end
 
@@ -330,7 +338,8 @@ function test_handleinput_two()
   -- checks if create is chosen if 1 is pressed
   local ps = require(SUT)
   local a = ps:new()
-  local b = a:handleinput('2')
+  event.key = event.KEY_TWO
+  local b = a:handleinput(event)
   assert_equal("profilesel", b[1], "should get create")
 end
 
@@ -339,10 +348,12 @@ function test_handleinput_any_other()
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 2
-  local b = a:handleinput('right')
+  event.key = event.KEY_RIGHT
+  local b = a:handleinput(event)
   assert_equal(" ", b[1], "should do nothing")
   a.pos = 2
-  local b = a:handleinput('L')
+  event.key = 'L'
+  local b = a:handleinput(event)
   assert_equal(" ", b[1], "should do nothing")
 
 end
