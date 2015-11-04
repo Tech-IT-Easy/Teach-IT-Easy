@@ -8,11 +8,22 @@
 
 
 local Object = require("toolkit.Object")
-
 local RightMenu = extends(Object.class())
+RightMenu.ImageArray = {}
 
+--Constructor method
+function RightMenu:new()
+
+    return self.class()
+end
+
+-- Used to load images
+function RightMenu:load()
+
+end
+
+--Highlights the image/position the user has selected
 function RightMenu:highlight()
-
 
 end
 

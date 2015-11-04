@@ -8,11 +8,23 @@
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
-
 local BottomMenu = extends(Object.class())
+BottomMenu.ImageArray={}
 
-function BottomMenu:rearrage()
 
+--Constructor method
+function BottomMenu:new()
+
+    return self.class()
+end
+
+-- Used to load images
+function BottomMenu:load()
+
+end
+
+--Rearranges the positions according to the queue positions
+function BottomMenu:rearrage(queue)
 
 end
 
