@@ -53,6 +53,7 @@ end
 function PlatformMenu:loadviews()
   self.currentview = ProfileSelection:new()
   self.views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games}
+  collectgarbage()
 end
 
 -------------------------------------
@@ -64,6 +65,7 @@ function PlatformMenu:changeview(newview)
   self.currentview = self.views[newview[1]]:new()
   screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
   self.currentview:loadview(newview[2])
+  collectgarbage()
 end
 
 -----------------------------------------------------------
@@ -90,6 +92,7 @@ function menuEventHandler:update(object,eventListener,event)
   if event.state == Event.KEY_STATE_DOWN then
     local temp = PlatformMenu.currentview:handleinput(event)
     if temp[1] ~= " " then PlatformMenu:changeview(temp) end
+  collectgarbage()
 end
  --[[ if e-vent.key == Event.KEY_UP then
     -----------

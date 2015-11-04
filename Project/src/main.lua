@@ -36,6 +36,7 @@ platformContext = PlatformContext:new()
 function onKey(key,state)
   -- ADLogger.trace("OnKey("..key..","..state..")")
   platformContext:process(key,state) 
+  collectgarbage()
 end
 
 -----------------------------------------------------------
