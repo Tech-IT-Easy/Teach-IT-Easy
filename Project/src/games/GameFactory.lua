@@ -19,14 +19,12 @@ GameFactory.game = nil
 -- @profile name of the game
 -- @context which is the platform context
 -----------------------------------------------------------
-function GameFactory:getGame(profile,context)
+function GameFactory:getGame(gameName,context)
   local mod = nil
-  if profile == "mario" then
+  if gameName == "mario" then
     load = require("games.mario.Mario")
     
-  elseif profile == "duck" then
-    load = require("games.duck.Duck")
-  elseif profile == "progg" then
+  elseif gameName == "Programming" then
     load = require("games.Progg.ProggGame")
   end
   --------------------

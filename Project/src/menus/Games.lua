@@ -1,6 +1,8 @@
 Games = {} --MenuView:new()
 
 local Event = require('toolkit.Event')
+--added to test game
+local GameFactory = require('games.GameFactory')
 
 -------------------------------------
 -- Creates the Games menu.
@@ -29,6 +31,13 @@ function Games:handleinput(event)
     self.pos = self.pos - 1
   elseif event.key == Event.KEY_TWO then
     return { "main", self.usernamestring }
+  elseif event.key == Event.KEY_ONE then
+----------------------------------------------------
+--  Launches game and discards the menu to save space
+----------------------------------------------------
+    PlatformContext.game = GameFactory:getGame(self.games[self.pos][1],PlatformContext)
+    PlatformContext.game:start()
+    PlatformContext.platformMenu = nil
   end
   return { " " }
 end
