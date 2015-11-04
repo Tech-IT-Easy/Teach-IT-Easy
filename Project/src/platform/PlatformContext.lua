@@ -93,6 +93,7 @@ function PlatformContext:update()
   end
   -- code
   gfx.update()
+  --collectgarbage()
 end
 
 ----------------------------------------------------------

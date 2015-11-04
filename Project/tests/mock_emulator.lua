@@ -91,3 +91,12 @@ getTime(mec.ANYARGS) ; mec:returns(0.1) :anytimes()
 nil_returner(mec.ANYARGS) ; mec:returns(nil) :anytimes()
 mec:replay() -- Tells "now we start testing the code"
 _G.love = require "love"
+_G.ADConfig = require("Config.ADConfig")
+_G.ADLogger = require("SDK.Utils.ADLogger")
+_G.gfx = require "SDK.Simulator.gfx"
+_G.zto = require "SDK.Simulator.zto"
+_G.surface = require "SDK.Simulator.surface"
+_G.player = require "SDK.Simulator.player"
+_G.freetype = require "SDK.Simulator.freetype"
+_G.sys = require "SDK.Simulator.sys"
+_G.script_path = ""

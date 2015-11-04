@@ -1,10 +1,10 @@
 --## gfx module ##
 local surface = require "SDK.Simulator.surface"
-local class = require( "SDK.Lib.classy" )
+local class = require("SDK.Lib.classy")
 
-local gfx = class( "gfx")
+local gfx = class("gfx")
 
----Set Auto Update
+--- Set Auto Update
 -- *************** Zenterio API Doc ********************************
 -- If set to true, any change to gfx.screen immediately triggers
 -- gfx.update() to make the change visible. This slows the system if
@@ -13,10 +13,10 @@ local gfx = class( "gfx")
 -- *****************************************************************
 -- @param bool
 function gfx.set_auto_update(bool)
-  --Not currently implemented
+    --Not currently implemented
 end
 
----New Surface
+--- New Surface
 -- *************** Zenterio API Doc ********************************
 -- Creates and returns a new 32-bit RGBA graphics surface of chosen
 -- dimensions. The surface pixels are not initialized; clear() or
@@ -28,10 +28,10 @@ end
 -- @param height surface height in pixels
 -- @return image_data
 function gfx.new_surface(width, height)
-  --local image_data = surface()
-  --image_data:change_size(width, height)
-  local image_data = surface(width, height)
-  return image_data
+    --local image_data = surface()
+    --image_data:change_size(width, height)
+    local image_data = surface(width, height)
+    return image_data
 end
 
 
@@ -43,7 +43,7 @@ end
 -- are 32-bit. A limit of gfx.get_memory_limit() is enforced.
 -- *****************************************************************
 function gfx.get_memory_use()
-  --Not currently implemented
+    --Not currently implemented
 end
 
 ---
@@ -54,7 +54,7 @@ end
 -- for animations)
 -- *****************************************************************
 -- The main screen defaults to 1280x720
-screen = gfx.new_surface(1280,720)
+screen = gfx.new_surface(1280, 720)
 
 
 
@@ -64,14 +64,14 @@ screen = gfx.new_surface(1280,720)
 -- allowed to use.
 -- *****************************************************************
 function gfx.get_memory_limit()
-  --Not currently implemented
+    --Not currently implemented
 end
 
 -- *************** Zenterio API Doc ********************************
 -- Makes any pending changes to gfx.screen visible.
 -- *****************************************************************. 
 function gfx.update()
-  screen:draw()
+    screen:draw()
 end
 
 
@@ -85,9 +85,9 @@ end
 -- @param path location of image file
 -- @return image_data
 function gfx.loadpng(path)
-  local image_data = surface()
-  image_data:loadImage(path)
-  return image_data
+    local image_data = surface()
+    image_data:loadImage(path)
+    return image_data
 end
 
 -- *************** Zenterio API Doc ********************************
@@ -99,9 +99,9 @@ end
 -- @param path location of image file
 -- @return image_data
 function gfx.loadjpeg(path)
-  local image_data = surface()
-  image_data:loadImage(path)
-  return image_data
+    local image_data = surface()
+    image_data:loadImage(path)
+    return image_data
 end
 
 return gfx

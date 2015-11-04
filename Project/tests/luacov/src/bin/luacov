@@ -4,6 +4,7 @@
 -- the -c option will load the specifed configfile
 -- the filenames are the ones that need to be reported on
 
+
 local arg = { ... }
 
 local runner = require("luacov.runner")
