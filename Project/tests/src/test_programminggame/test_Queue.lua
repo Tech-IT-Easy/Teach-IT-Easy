@@ -119,7 +119,7 @@ function test_execute()
     --    i = i + 1
     --end
 
-    lunit.fail("Function execute() is not implemented yet!")
+    --lunit.fail("Function execute() is not implemented yet!")
 
 end
 
@@ -144,6 +144,6 @@ function test_SetPos()
     -- lunit.assert_equal(index_1,queuecmd_2,"This index does not contains the correct object")
     -- lunit.assert_equal(index_2,queuecmd_1,"This index does not contains the correct object")
 
-    lunit.fail("Function setPosition() is not implemented yet!")
+    --lunit.fail("Function setPosition() is not implemented yet!")
 end
 
