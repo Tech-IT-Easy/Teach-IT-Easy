@@ -28,7 +28,11 @@ return self.class()
 end
 
 function GameInputHandler:load()
+  self.proggImage = gfx.loadpng('data/ProgrammingGamePic_405.png')
+end
 
+function GameInputHandler:show()
+  screen:copyfrom(self.proggImage, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
 end
  
 --Subscribing the eventHandler to all events. Only numbers by now
@@ -53,6 +57,7 @@ function gameEventHandler:update(object,eventListener,event)
   ------------------------------
   context.platformEventListener:removeChainListener()
   context:createNewMenu()
+  context.game = nil
   elseif event.key == Event.KEY_FIVE then
   
   elseif event.key == Event.KEY_SIX then
