@@ -17,20 +17,28 @@ function ChooseAvatar:new()
 end
 
 function ChooseAvatar:update()
-
+  self:inactive(self.lastpos)
+  self:active(self.pos)
 end
 
 function ChooseAvatar:handleinput(event)
-  if (event.key == Event.KEY_ONE) then
+  collectgarbage()
+  self.lastpos = self.pos
+  if event.key == Event.KEY_RIGHT and self.pos < #self.myimages then
+    self.pos = self.pos + 1
+  elseif event.key == Event.KEY_LEFT and self.pos > 1 then
+    self.pos = self.pos - 1
+  elseif (event.key == Event.KEY_ONE) then
     table.insert(usernames, CreateProfile.profilename)
-    self.image4 = gfx.loadpng('data/bowser.png')
+    --self.image4 = gfx.loadpng('data/bowser.png')
+    self.image4 = self.myimages[self.pos]
     table.insert(images, self.image4)
     return { "profilesel", " " }
-  end
-  if (event.key == Event.KEY_TWO) then
+  elseif (event.key == Event.KEY_TWO) then
     CreateProfile.profilename = ""
     return { "create" }
   end
+  return {" "}
 end
 
 function ChooseAvatar:loadview(input)
@@ -38,16 +46,41 @@ function ChooseAvatar:loadview(input)
   self.lastpos = 1
   self.username = input
   --self:printbackground()
+  image1 = gfx.loadpng('data/bowser.png')
+  image2 = gfx.loadpng('data/mario.png')
+  image3 = gfx.loadpng('data/toad.png')
+  self.myimages = { image1, image2, image3 }
   self:renderui()
+end
+
+function ChooseAvatar:active(x1)
+  screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+  screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = image1:get_width() * 0.6, h = image1:get_height() * 0.6 }, true)
+
+end
+
+-------------------------------------
+-- Prints an inactive gamebutton.
+-- @param x. Which place to print button at.
+-- @author Erik
+-------------------------------------
+function ChooseAvatar:inactive(x1)
+  screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+  screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = image1:get_width() * 0.6, h = image1:get_height() * 0.6 }, true)
+
 end
 
 
 function ChooseAvatar:renderui()
   create_prof_appname:draw_over_surface(screen, "TEACH IT EASY")
   create_prof_pagename:draw_over_surface(screen, "CHOOSE YOUR AVATAR")
- -- screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.1, y = screen:get_height() * 0.25 * 1.2, w = screen:get_width() * 0.8, h = screen:get_height() * 0.3 * 0.6 })
- -- screen:clear({ g = 131, r = 0, b = 143 }, { x = 0, y = screen:get_height() * 0.55, w = screen:get_width(), h = screen:get_height() * 0.45 })
+  -- screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.1, y = screen:get_height() * 0.25 * 1.2, w = screen:get_width() * 0.8, h = screen:get_height() * 0.3 * 0.6 })
+  -- screen:clear({ g = 131, r = 0, b = 143 }, { x = 0, y = screen:get_height() * 0.55, w = screen:get_width(), h = screen:get_height() * 0.45 })
 
+  self:active(1)
+  for i = 2, #self.myimages, 1 do
+    self:inactive(i)
+  end
 end
 
 
