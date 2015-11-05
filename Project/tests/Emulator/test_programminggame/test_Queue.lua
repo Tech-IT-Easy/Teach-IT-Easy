@@ -8,7 +8,7 @@
 lunit = require "lunit"
 module( "test_selectAction", package.seeall, lunit.testcase )
 
-require "source.model.command.Queue" -- import the Queue class
+local SUT = 'src.games.Progg.Queue' -- import the Queue class
 
 
 ---------------------------------------------------------------
@@ -42,35 +42,35 @@ require "source.model.command.Queue" -- import the Queue class
 
 -- -------------------------------------------------------------
 function test_add()
-  queuelist = Queue:new()
-  queuecmd_1 = "Command_1"
-  queuecmd_2 = "Command_2"
+    queuelist = Queue:new()
+    queuecmd_1 = "Command_1"
+    queuecmd_2 = "Command_2"
 
-  commands = {queuecmd_1,queuecmd_2}
+    commands = {queuecmd_1,queuecmd_2}
 
-  queuelist:push(queuecmd_1)
-  queuelist:push(queuecmd_2)
+    queuelist:push(queuecmd_1)
+    queuelist:push(queuecmd_2)
 
-  assert_equal() ---how to do this??? mock?
+    assert_equal() ---how to do this??? mock?
 end
 
-function test_delete()
-  --cmdlist = CommandQueue:new()
-  --leftcmd = LeftCommand:new()
-  --rightcmd = RightCommand:new()
-  --forwardcmd = ForwardCommand:new()
-  --loopcmd = LoopCommand:new()
-  --procedurecmd = ProcedureCommand:new()
-  --ifcmd = IfCommand:new()
+function test_delete() --if test_add() fails this will fail as well
+    local queuelist = require(SUT):new()
+    local queuecmd_1 = "Command_1"
+    local queuecmd_2 = "Command_2"
+    local queuecmd_3 = "Command_3"
 
-  --cmdlist:add(leftcmd)
-  --cmdlist:add(rightcmd)
-  --cmdlist:add(forwardcmd)
-  --cmdlist:add(loopcmd)
-  --cmdlist:add(procedurecmd)
-  --cmdlist:add(ifcmd)
+    queuelist:push(queuecmd_1)
+    queuelist:push(queuecmd_2)
+    queuelist:push(queuecmd_3)
 
-  --assert_equal(forwardcmd, cmdlist:delete(3), "Should have deleted " .. forwardcmd .. ", but did remove" .. cmdlist:delete(3) .."instead")
+    queuelist:pop()
+
+    expectedcommands = {queuecmd_1, queuecmd_2}
+
+    assert_equal(expectedcommands[1], queuelist.actions[1], "Was supposed to be " .. expectedcommands[1] .. ", but was not")
+    assert_equal(expectedcommands[2], queuelist.actions[2], "Was supposed to be " .. expectedcommands[1] .. ", but was not")
+
 end
 
 function test_execute()
