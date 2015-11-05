@@ -1,4 +1,4 @@
-## freetype module ##
+--## freetype module ##
 local class = require( "SDK.Lib.classy" )
 
 local freetype = class( "SDK.Simulator.freetype")

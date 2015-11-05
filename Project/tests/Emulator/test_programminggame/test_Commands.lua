@@ -10,10 +10,12 @@ local SUT = 'src.games.Progg.Commands'
 
 lunit = require "lunit"
 module( "Emulator_..", package.seeall, lunit.testcase )
+local event = require "src.toolkit.Event"
 
 function test_Commands()
     local aCommand = require(SUT)
-    local new_Command=aCommand:new("MoveLeft")
-    assert_equal("MoveLeft", new_Command:get(), "Did not get the right value for the commands")
+    event.key = event.KEY_ONE
+    local new_Command=aCommand:new(event,nil)
+    assert_equal(new_Command.KEY_ONE, new_Command.command, "Did not get the right value for the commands")
 end
 
