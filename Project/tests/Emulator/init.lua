@@ -8,6 +8,5 @@ require "tests.Emulator.classes.test_CreateProfile"
 require "tests.Emulator.classes.test_Games"
 
 require "tests.Emulator.test_programminggame.test_Queue"
---require "tests.Emulator.test_programminggame.test_Commands"
 
 
