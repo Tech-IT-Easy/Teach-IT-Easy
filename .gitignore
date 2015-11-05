@@ -110,7 +110,7 @@ local.properties
 
 ### PyCharm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
-
+*.eml
 *.iml
 
 ## Directory-based project format:
