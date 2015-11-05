@@ -37,7 +37,11 @@ local SUT = 'src.games.Progg.Queue'
 -- >> Description: iterates over queue and returns the Command objects in it
 -- >> Input: -
 -- >> Output: -
--- Function 5. empty()
+-- Function 5. setPosition()
+-- >> Description: allows someone to switch positions for two objects in the queue
+-- >> Input: -
+-- >> Output: -
+-- Function 6. empty()
 -- >> Description: checks if queue is empty
 -- >> Input: -
 -- >> Output: -
@@ -90,5 +94,29 @@ end
 
 function test_execute()
 
+end
+
+-- Tests if two object can swap places in the queue
+function test_SetPos()
+    local a = require(SUT)
+    local queuelist = a:new()
+    local queuecmd_1 = "Command_1"
+    local queuecmd_2 = "Command_2"
+
+    -- Pushes two items to the queue
+    queuelist:push(queuecmd_1)
+    queuelist:push(queuecmd_2)
+
+    -- Swap place of the two objects
+    queuelist:setPosition(1,2)
+
+    local index_1 = queuelist.actions[1]
+    local index_2 = queuelist.actions[2]
+
+    -- Uncomment when setPosition is implemented in Queue class
+    -- lunit.assert_equal(index_1,queuecmd_2,"This index does not contains the correct object")
+    -- lunit.assert_equal(index_2,queuecmd_1,"This index does not contains the correct object")
+
+    lunit.fail("Function setPosition() is not implemented yet!")
 end
 
