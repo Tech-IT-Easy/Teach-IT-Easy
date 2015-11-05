@@ -46,6 +46,17 @@ function EventListener:attach(object)
 end
 
 -----------------------------------------------------------
+-- Remove an object from this listener.
+-- @object which is being removed
+-----------------------------------------------------------
+function EventListener:remove(object)
+  for _,obj in pairs(self.observers) do
+    if obj == object then
+      table.remove(self.observers, _)
+    end
+  end
+end
+-----------------------------------------------------------
 -- Notify all the observers which has been attached to this listener
 -- @events which is event currently happening
 -----------------------------------------------------------
