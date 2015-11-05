@@ -1,19 +1,21 @@
 --
 -- Created by IntelliJ IDEA.
--- User: Lena
+-- User: Andreas Mansson
 -- Date: 2015-11-04
--- Time: 11:22
+-- Time: 20:03
 -- To change this template use File | Settings | File Templates.
 --
+
 lunit = require "lunit"
 module( "test_selectAction", package.seeall, lunit.testcase )
 
-require "source.model.command.Queue" -- import the Queue class
+local SUT = 'src.games.Progg.Queue'
+--require "source.model.command.Queue" -- import the Queue class
 
 
 ---------------------------------------------------------------
--- Tests for class Queue
--- Tests for UC06
+-- Tests for functions of class Queue in Software Architecture
+-- Tests corresponds to UC06 in SRS
 ---------------------------------------------------------------
 
 -- ------------Required classes and functions------------------
@@ -41,17 +43,37 @@ require "source.model.command.Queue" -- import the Queue class
 -- >> Output: -
 
 -- -------------------------------------------------------------
-function test_add()
-  queuelist = Queue:new()
-  queuecmd_1 = "Command_1"
-  queuecmd_2 = "Command_2"
 
-  commands = {queuecmd_1,queuecmd_2}
+-- Tests if an object can be added to the queue
+function test_push_1()
+  local a = require(SUT)
+  local queuelist = a:new()
+  local queuecmd_1 = "Command_1"
 
+  --Add object 'queuecmd_1' to the queue 'queuelist'
+  if pcall(queuelist:push(), queuecmd_1) then
+    lunit.fail("Could not push an object to the queue")
+  end
+
+end
+
+-- Tests if objects added to the queue are added correctly
+function test_push_2()
+  local a = require(SUT)
+  local queuelist = a:new()
+  local queuecmd_1 = "Command_1"
+  local queuecmd_2 = "Command_2"
+
+  -- Pushes two items to the queue
   queuelist:push(queuecmd_1)
   queuelist:push(queuecmd_2)
 
-  assert_equal() ---how to do this??? mock?
+  -- Get the added objects from queue
+  local c1 = queuelist.actions[1]
+  local c2 = queuelist.actions[2]
+
+  lunit.assert_equal(queuecmd_2, c2, "Did not found the correct element in the queue")
+  lunit.assert_equal(queuecmd_1, c1, "Did not found the correct element in the queue")
 end
 
 function test_delete()
@@ -74,4 +96,6 @@ function test_delete()
 end
 
 function test_execute()
+
 end
+
