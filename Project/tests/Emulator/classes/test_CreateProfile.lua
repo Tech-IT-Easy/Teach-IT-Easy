@@ -97,36 +97,36 @@ function test_handleinput_right_from_left()
 
   verify_mock(mc)
 end
---  -- tests if what happens if user tries to move right from far right position. When this test is written, there are only four positions.
---function test_handleinput_right_from_right()
---  local mc = create_mock(SUT)
---  -- Mock inactive and active
---  -- Create mock objects for each function to mock
---  local inactive = mc:mock()
---  local active = mc:mock()
---
---  -- In this case we want to mock 2 member functions so then we import the SUT (System under test)
---  local ps = require(SUT)
---
---  -- override the original functions with mocks
---  package.loaded[SUT].inactive = inactive
---  package.loaded[SUT].active = active
---
---  -- Tell for which arguments it should work, what it should return and how many times it should be called.
---  inactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
---  active(mc.ANYARGS) ;mc :returns(nil) :anytimes()
---
---  -- Start the testing
---  mc:replay()
---
---  local a = ps:new()
---  a.pos = 4
---  event.key = event.KEY_RIGHT
---  a:handleinput(event)
---  assert_equal(4, a.pos, "should not be able to move right from far right position")
---
---  verify_mock(mc)
---end
+  -- tests if what happens if user tries to move right from far right position.
+function test_handleinput_right_from_right()
+  local mc = create_mock(SUT)
+  -- Mock inactive and active
+  -- Create mock objects for each function to mock
+  local inactive = mc:mock()
+  local active = mc:mock()
+
+  -- In this case we want to mock 2 member functions so then we import the SUT (System under test)
+  local ps = require(SUT)
+
+  -- override the original functions with mocks
+  package.loaded[SUT].inactive = inactive
+  package.loaded[SUT].active = active
+
+  -- Tell for which arguments it should work, what it should return and how many times it should be called.
+  inactive(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  active(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+
+  -- Start the testing
+  mc:replay()
+
+  local a = ps:new()
+  a.pos = 27
+  event.key = event.KEY_RIGHT
+  a:handleinput(event)
+  assert_equal(27, a.pos, "should not be able to move right from far right position")
+
+  verify_mock(mc)
+end
 -- tests if goes left from far right position ( when test is written, only 4 positions)
 function test_handleinput_left_from_right()
   local mc = create_mock(SUT)
