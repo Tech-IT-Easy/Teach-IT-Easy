@@ -35,6 +35,8 @@ function Games:handleinput(event)
 ----------------------------------------------------
 --  Launches game and discards the menu to save space
 ----------------------------------------------------
+    proggImage = gfx.loadpng('data/ProgrammingGamePic.jpg')
+    screen:copyfrom(proggImage, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
     PlatformContext.game = GameFactory:getGame(self.games[self.pos][1],PlatformContext)
     PlatformContext.game:start()
     PlatformContext.platformMenu = nil
