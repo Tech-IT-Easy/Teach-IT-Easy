@@ -12,10 +12,11 @@ lunit = require "lunit"
 module( "Emulator_..", package.seeall, lunit.testcase )
 local event = require "src.toolkit.Event"
 
+-- Tests if correct selection (key press) is added to the Command object
 function test_Commands()
     local aCommand = require(SUT)
     event.key = event.KEY_ONE
     local new_Command=aCommand:new(event,nil)
-    assert_equal(new_Command.KEY_ONE, new_Command.command, "Did not get the right value for the commands")
+    assert_equal(event, new_Command.command, "Did not get the right value for the commands")
 end
 
