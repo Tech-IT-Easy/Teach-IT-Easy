@@ -27,8 +27,7 @@ function CreateProfile:handleinput(event)
   elseif event.key == Event.KEY_ONE and self.pos < 27 then
     self.profilename = self.profilename .. self.letters[self.pos] self:updatetext()
   elseif event.key == Event.KEY_ONE and self.pos == 27 then
-    table.insert(ProfileSelection.usernames, self.profilename)
-    return { "chooseavatar", self.profilename }
+    return { "chooseavatar" }
   elseif event.key == Event.KEY_TWO then
     return { "profilesel", " " }
   end

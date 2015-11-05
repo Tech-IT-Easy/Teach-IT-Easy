@@ -47,7 +47,9 @@ end
   prof_sel_username2 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 2) + prof_sel_itemwidth, y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
   prof_sel_username3 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 3) + prof_sel_itemwidth * (2), y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
   prof_sel_username4 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 4) + prof_sel_itemwidth * (3), y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
-  prof_sel_usernamefonts = {prof_sel_username1, prof_sel_username2, prof_sel_username3, prof_sel_username4 }
+  prof_sel_username5 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 5) + prof_sel_itemwidth * (4), y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
+  
+  prof_sel_usernamefonts = {prof_sel_username1, prof_sel_username2, prof_sel_username3, prof_sel_username4, prof_sel_username5 }
 
   --main menu fonts
   main_menu_appname = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=main_menu_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')

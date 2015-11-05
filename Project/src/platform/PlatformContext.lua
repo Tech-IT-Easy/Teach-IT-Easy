@@ -53,7 +53,15 @@ function PlatformContext:new()
 
   return self.class()
 end
-
+------------------------------------
+--Allows a game to create a new menu, since the 
+--old menu is discarded when game is created
+------------------------------------
+function PlatformContext:createNewMenu()
+  if self.platformMenu == nil then
+    self.platformMenu = PlatformMenu:new()
+  end
+end
 
 -----------------------------------------------------------
 -- Load resources,such as images to platform context 

@@ -309,17 +309,17 @@ function test_handleinput_up_one()
   -- tests if the right user is choses when 1 is pressed
   local ps = require(SUT)
   local a = ps:new()
-  a.usernames = {"a", "b", "c"}
+ -- a.usernames = {"a", "b", "c"}
   a.pos = 1
   event.key = event.KEY_ONE
   local b = a:handleinput(event)
-  assert_equal("a", b[2], "should get username a")
+  assert_equal("Erik", b[2], "should get username a")
   a.pos = 2
   local b = a:handleinput(event)
-  assert_equal("b", b[2], "should get username b")
+  assert_equal("Marcus", b[2], "should get username b")
   a.pos = 3
   local b = a:handleinput(event)
-  assert_equal("c", b[2], "should get username c")
+  assert_equal("Toad", b[2], "should get username c")
 
 end
 
