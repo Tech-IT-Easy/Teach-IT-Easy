@@ -38,6 +38,13 @@ function EventListener:addChainListener(listener)
 end
 
 -----------------------------------------------------------
+-- Remove the chain listener from this listener
+-----------------------------------------------------------
+function EventListener:removeChainListener()
+  self.chainListener = nil
+end
+
+-----------------------------------------------------------
 -- Attach a object to this listener
 -- @object which is being attached object
 -----------------------------------------------------------

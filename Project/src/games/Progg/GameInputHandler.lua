@@ -51,8 +51,8 @@ function gameEventHandler:update(object,eventListener,event)
   --Since the menu is discarded when game starts, 
   --this creates a new one.
   ------------------------------
+  context.platformEventListener:removeChainListener()
   context:createNewMenu()
-  
   elseif event.key == Event.KEY_FIVE then
   
   elseif event.key == Event.KEY_SIX then

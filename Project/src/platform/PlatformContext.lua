@@ -55,11 +55,13 @@ function PlatformContext:new()
 end
 ------------------------------------
 --Allows a game to create a new menu, since the 
---old menu is discarded when game is created
+--old menu is discarded when game is created.
 ------------------------------------
 function PlatformContext:createNewMenu()
   if self.platformMenu == nil then
     self.platformMenu = PlatformMenu:new()
+    self.platformEventListener:attach(self.platformMenu)
+    self.platformMenu:show()
   end
 end
 
