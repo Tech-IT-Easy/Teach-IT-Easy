@@ -76,22 +76,15 @@ function test_push_2()
   lunit.assert_equal(queuecmd_1, c1, "Did not found the correct element in the queue")
 end
 
-function test_delete() --if test_add() fails this will fail as well
+function test_delete() --presumes that add() functions works in adding element, as it is tested above
     local queuelist = require(SUT):new()
-    local queuecmd_1 = "Command_1"
-    local queuecmd_2 = "Command_2"
-    local queuecmd_3 = "Command_3"
+    local queuecmd = "Command"
 
-    queuelist:push(queuecmd_1)
-    queuelist:push(queuecmd_2)
-    queuelist:push(queuecmd_3)
+    queuelist:push(queuecmd)
 
     queuelist:pop()
 
-    expectedcommands = {queuecmd_1, queuecmd_2}
-
-    assert_equal(expectedcommands[1], queuelist.actions[1], "Was supposed to be " .. expectedcommands[1] .. ", but was not")
-    assert_equal(expectedcommands[2], queuelist.actions[2], "Was supposed to be " .. expectedcommands[1] .. ", but was not")
+    lunit.assert_equal(queuelist[1], nil, "Did not remove the expected element in list")
 
 end
 
