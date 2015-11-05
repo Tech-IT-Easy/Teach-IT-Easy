@@ -313,13 +313,13 @@ function test_handleinput_up_one()
   a.pos = 1
   event.key = event.KEY_ONE
   local b = a:handleinput(event)
-  assert_equal("Erik", b[2], "should get username a")
+  assert_equal("ERIK", b[2], "should get username a")
   a.pos = 2
   local b = a:handleinput(event)
-  assert_equal("Marcus", b[2], "should get username b")
+  assert_equal("MARCUS", b[2], "should get username b")
   a.pos = 3
   local b = a:handleinput(event)
-  assert_equal("Toad", b[2], "should get username c")
+  assert_equal("TOAD", b[2], "should get username c")
 
 end
 
