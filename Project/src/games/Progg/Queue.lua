@@ -6,6 +6,7 @@
 local Object = require('toolkit.Object')
 
 Queue = extends(Object.class())
+local executionQueue = nil
 
 -------------------------------------
 --Constructor creates a new instance of a queue, can take any objects
@@ -29,12 +30,32 @@ end
 function Queue:pop()
   return table.remove(self.actions)
 end
-
+----------------------------------------------------------------
 --Allows someone to switch positions for two objects in the queue
+----------------------------------------------------------------
 function Queue:setPosition(currentPos, goalPos)
 ---------------
 --code
 ---------------
+end
+
+--------------------------------------------------------
+--Used when the actions in the queue should be executed.
+--It will probably send one action each time it's called,
+--the one that was added first
+--------------------------------------------------------
+function Queue:execute()
+  ---------------
+  --code
+  ---------------
+  if executionQueue == nil then
+    for _,obj in pairs(self.actions) do
+      table.insert(executionQueue, table.remove(self.actions))
+    end
+  end
+
+  return table.remove(executionQueue)
+
 end
 
 return Queue
