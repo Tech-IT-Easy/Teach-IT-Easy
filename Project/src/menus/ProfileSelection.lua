@@ -70,18 +70,7 @@ end
 function ProfileSelection:loadview()
   self.pos = 1
   self.lastpos = 1
-  --self:printbackground()
   self:renderui()
-end
-
--------------------------------------
--- Prints background on screen.
--- @author Erik/ Marcus
--------------------------------------
-function ProfileSelection:printbackground()
-  self.background = gfx.loadpng("data/background_h720.png")
-  screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-  self.background:destroy()
 end
 
 -------------------------------------

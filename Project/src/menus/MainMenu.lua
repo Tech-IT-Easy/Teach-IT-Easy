@@ -64,20 +64,8 @@ function MainMenu:loadview(input)
     self.lastpos = self.pos
     self.sidebuttons = { "Trophy room", "Wardrobe", "Settings" }
     self.usernamestring = input
-    --self:printbackground()
     self:renderui()
 end
-
--------------------------------------
--- Prints background on screen.
--- @author Erik
--------------------------------------
-function MainMenu:printbackground()
-    self.background = gfx.loadpng("data/background_h720.png")
-    screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-    self.background:destroy()
-end
-
 
 -------------------------------------
 -- Prints content on screen.
