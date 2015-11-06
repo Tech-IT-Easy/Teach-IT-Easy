@@ -53,7 +53,6 @@ function ChooseAvatar:loadview(input)
   self.pos = 1
   self.lastpos = 1
   self.username = input
-  --self:printbackground()
   self.image1 = gfx.loadpng('data/bowser.png')
   self.image2 = gfx.loadpng('data/mario.png')
   self.image3 = gfx.loadpng('data/toad.png')

@@ -60,19 +60,8 @@ function Games:loadview(input)
   self.pos = 1
   self.lastpos = 1
   self.usernamestring = input
-  --self:printbackground()
 
   self:renderui()
-end
-
--------------------------------------
--- Prints background on screen.
--- @author Erik
--------------------------------------
-function Games:printbackground()
-  self.background = gfx.loadpng("data/background_h720.png")
-  screen:copyfrom(games_background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-  self.background:destroy()
 end
 
 -------------------------------------
