@@ -3,7 +3,7 @@ ProfileSelection = {} --MenuView:new()
 --usernames
 usernames = { "Erik", "Marcus", "Toad" }
 
-  -- images
+-- images
 image1 = gfx.loadpng('data/bowser.png')
 image2 = gfx.loadpng('data/mario.png')
 image3 = gfx.loadpng('data/toad.png')
@@ -31,7 +31,6 @@ end
 function ProfileSelection:handleinput(event)
   collectgarbage()
   -- each menu will have its own function to handle remote input
-
 
   self.lastpos = self.pos
   if event.key == Event.KEY_RIGHT and self.pos < #usernames then

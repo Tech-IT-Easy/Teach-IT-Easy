@@ -127,7 +127,7 @@ function test_handleinput_right_from_right()
 
   verify_mock(mc)
 end
--- tests if goes left from far right position ( when test is written, only 4 positions)
+-- tests if goes left from far right position ( when test is written, 27 positions)
 function test_handleinput_left_from_right()
   local mc = create_mock(SUT)
   -- Mock inactive and active
@@ -150,7 +150,7 @@ function test_handleinput_left_from_right()
   mc:replay()
 
   local a = ps:new()
-  a.pos = 4
+  a.pos = 27
   event.key = event.KEY_LEFT
   a:handleinput(event)
   assert_equal(3, a.pos, "should move to the left section of the screen, didn't")
