@@ -3,10 +3,9 @@
 --Allows others to push things to the queue, remove last (pop),
 --change place of something in the queue(setPosition) and create a new queue.
 ------------------------------
-local Object = require('toolkit.Object')
+local Object = require('Object')
 
 Queue = extends(Object.class())
-local executionQueue = nil
 
 -------------------------------------
 --Constructor creates a new instance of a queue, can take any objects
@@ -40,22 +39,42 @@ function Queue:setPosition(currentPos, goalPos)
 end
 
 --------------------------------------------------------
---Used when the actions in the queue should be executed.
+-- This required keeping two copies of the queue in the queue and having functions for both.
+-- Instead use getExecutionQueue to create a new queue instance in revesed order.
+--
+--OLD!: Used when the actions in the queue should be executed.
 --It will probably send one action each time it's called,
---the one that was added first
+--the one that was added first.
 --------------------------------------------------------
+--[[
 function Queue:execute()
-  ---------------
-  --code
-  ---------------
-  if executionQueue == nil then
-    for _,obj in pairs(self.actions) do
-      table.insert(executionQueue, table.remove(self.actions))
+
+  if self.executionQueue == nil then
+    for i = 1, #self.actions do
+      table.insert(self.executionQueue, i, self.actions[#self.actions - i])
     end
   end
 
-  return table.remove(executionQueue)
+  return table.remove(self.executionQueue)
+end
+--]]
 
+
+----------------------------------------
+--Returns a queue in reversed order, so that another part of the program can use pop to
+--go through it in execution order.
+--Added a function next() to the returned queue just because it's an intuitive name.
+----------------------------------------
+function Queue:getExecutionQueue()
+  local executionQueue = self:new()
+  for i = 1, #self.actions do
+      table.insert(executionQueue.actions, i, self.actions[#self.actions - i])
+  end
+
+  --Just pop() with a new name
+  --function executionQueue:next() return table.remove(self) end
+
+  return executionQueue
 end
 
 return Queue
