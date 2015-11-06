@@ -3,7 +3,7 @@
 --Allows others to push things to the queue, remove last (pop),
 --change place of something in the queue(setPosition) and create a new queue.
 ------------------------------
-local Object = require('Object')
+local Object = require('toolkit.Object')
 
 Queue = extends(Object.class())
 
