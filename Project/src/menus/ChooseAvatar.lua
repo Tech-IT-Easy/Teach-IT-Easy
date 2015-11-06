@@ -17,8 +17,10 @@ function ChooseAvatar:new()
 end
 
 function ChooseAvatar:update()
-  self:inactive(self.lastpos)
-  self:active(self.pos)
+  if self.image1 then
+    self:inactive(self.lastpos)
+    self:active(self.pos)
+  end
 end
 
 function ChooseAvatar:handleinput(event)
@@ -33,6 +35,12 @@ function ChooseAvatar:handleinput(event)
     --self.image4 = gfx.loadpng('data/bowser.png')
     self.image4 = self.myimages[self.pos]
     table.insert(images, self.image4)
+    self.image1=nil
+    self.image2=nil
+    self.image3=nil
+    self.image4=nil
+    self.myimages = nil
+    collectgarbage()
     return { "profilesel", " " }
   elseif (event.key == Event.KEY_TWO) then
     CreateProfile.profilename = ""
@@ -46,10 +54,10 @@ function ChooseAvatar:loadview(input)
   self.lastpos = 1
   self.username = input
   --self:printbackground()
-  image1 = gfx.loadpng('data/bowser.png')
-  image2 = gfx.loadpng('data/mario.png')
-  image3 = gfx.loadpng('data/toad.png')
-  self.myimages = { image1, image2, image3 }
+  self.image1 = gfx.loadpng('data/bowser.png')
+  self.image2 = gfx.loadpng('data/mario.png')
+  self.image3 = gfx.loadpng('data/toad.png')
+  self.myimages = { self.image1, self.image2, self.image3 }
   self:renderui()
 end
 

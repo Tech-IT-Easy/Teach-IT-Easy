@@ -1,0 +1,18 @@
+-- Add your testfiles here .
+--require "tests.Emulator.test_main"
+require "tests.src.classes.test_MainMenu"
+--require "tests.Emulator.classes.test_MenuView"
+--require "tests.Emulator.classes.test_Object"
+require "tests.src.classes.test_ProfileSelection"
+require "tests.src.classes.test_CreateProfile"
+require "tests.src.classes.test_Games"
+
+require "tests.src.test_programminggame.test_Queue"
+--require "tests.Emulator.test_programminggame.test_BottomMenu"
+--require "tests.Emulator.test_programminggame.test_Character"
+require "tests.src.test_programminggame.test_Commands"
+--require "tests.Emulator.test_programminggame.test_GameInputHandler"
+--require "tests.Emulator.test_programminggame.test_Map"
+--require "tests.Emulator.test_programminggame.test_Position"
+--require "tests.Emulator.test_programminggame.test_ProggGame"
+--require "tests.Emulator.test_programminggame.test_RightMenu"

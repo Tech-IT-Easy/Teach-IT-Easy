@@ -35,11 +35,14 @@ function Games:handleinput(event)
 ----------------------------------------------------
 --  Launches game and discards the menu to save space
 ----------------------------------------------------
-    proggImage = gfx.loadpng('data/ProgrammingGamePic_405.png')
-    screen:copyfrom(proggImage, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+   -- proggImage = gfx.loadpng('data/ProgrammingGamePic_405.png')
+    --screen:copyfrom(proggImage, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+    --proggImage:destroy()
     PlatformContext.game = GameFactory:getGame(self.games[self.pos][1],PlatformContext)
     PlatformContext.game:start()
+    PlatformContext.platformEventListener:remove(platformContext.platformMenu)
     PlatformContext.platformMenu = nil
+    collectgarbage()
   end
   return { " " }
 end

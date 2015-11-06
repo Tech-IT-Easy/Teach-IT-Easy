@@ -38,6 +38,13 @@ function EventListener:addChainListener(listener)
 end
 
 -----------------------------------------------------------
+-- Remove the chain listener from this listener
+-----------------------------------------------------------
+function EventListener:removeChainListener()
+  self.chainListener = nil
+end
+
+-----------------------------------------------------------
 -- Attach a object to this listener
 -- @object which is being attached object
 -----------------------------------------------------------
@@ -45,6 +52,17 @@ function EventListener:attach(object)
    table.insert(self.observers,object)
 end
 
+-----------------------------------------------------------
+-- Remove an object from this listener.
+-- @object which is being removed
+-----------------------------------------------------------
+function EventListener:remove(object)
+  for _,obj in pairs(self.observers) do
+    if obj == object then
+      table.remove(self.observers, _)
+    end
+  end
+end
 -----------------------------------------------------------
 -- Notify all the observers which has been attached to this listener
 -- @events which is event currently happening

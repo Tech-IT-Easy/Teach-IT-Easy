@@ -31,6 +31,7 @@ local function load()
   -- call load on all resources e.g.
   -- UI:load() 
 -----------------------
+  ProggGame.inputHandler:load()
 end
 
 -----------------------
@@ -51,6 +52,7 @@ function ProggGame:update()
 -----------------------
 --Calls update on all objects, e.g.
 --UI:update()
+  self.inputHandler:show()
 end
 
 return ProggGame
