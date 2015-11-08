@@ -1,7 +1,7 @@
 ProfileSelection = {} --MenuView:new()
 
 --usernames
-usernames = { "Erik", "Marcus", "Toad" }
+usernames = { "ERIK", "MARCUS", "TOAD" }
 
 -- images
 image1 = gfx.loadpng('data/bowser.png')

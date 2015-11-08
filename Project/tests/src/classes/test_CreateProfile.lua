@@ -153,7 +153,7 @@ function test_handleinput_left_from_right()
   a.pos = 27
   event.key = event.KEY_LEFT
   a:handleinput(event)
-  assert_equal(3, a.pos, "should move to the left section of the screen, didn't")
+  assert_equal(26, a.pos, "should move to the left section of the screen, didn't")
 
   verify_mock(mc)
 end

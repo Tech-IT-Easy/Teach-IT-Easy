@@ -1,5 +1,5 @@
 -- Add your testfiles here .
---require "tests.Emulator.test_main"
+--require "tests.src.test_main"
 require "tests.src.classes.test_MainMenu"
 --require "tests.Emulator.classes.test_MenuView"
 --require "tests.Emulator.classes.test_Object"
