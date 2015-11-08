@@ -343,8 +343,3 @@ function test_handleinput_any_other_button()
   assert_equal(" ", b[1], "should do nothing")
 end
 
-function test_printbackground()
-  local ps = require(SUT)
-  local a = ps:new()
-  a:printbackground()
-end
