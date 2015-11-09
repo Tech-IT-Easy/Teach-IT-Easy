@@ -18,5 +18,6 @@ function test_Commands()
     event.key = event.KEY_ONE
     local new_Command=aCommand:new(event,nil)
     assert_equal(event, new_Command.command, "Did not get the right value for the commands")
+    fail("Test fail")
 end
 
