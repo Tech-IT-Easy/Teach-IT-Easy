@@ -43,6 +43,10 @@ function teardown()
   package.preload['src.menus.MainMenu'] = nil
 end
 
+function test_fail()
+  fail()
+end
+
 function test_loadview()
   local mc = create_mock(SUT)
 
