@@ -108,18 +108,18 @@ function test_execute()
     queuelist:push(queuecmd_3)
 
     -- Uncomment when execute() is implemented in Queue class
-    --local executedqueue = queuelist:execute()
+    local executedqueue = queuelist:getExecutionQueue()
 
     local expectedelements = {queuecmd_1,queuecmd_2,queuecmd_3}
 
-    -- Uncomment when execute() is implemented in Queue class
-    --local i = 1
-    --while not(i<=3) do
-    --    assert_equal(executedqueue.actions[i], expectedcommands[i], "Did not find the expected element in queue")
-    --    i = i + 1
-    --end
+     --Uncomment when execute() is implemented in Queue class
+    local i = 1
+    while not(i<=3) do
+        assert_equal(executedqueue:pop(), expectedelements[i], "Did not find the expected element in queue")
+        i = i + 1
+    end
+    lunit.assert_equal(3, #queuelist.actions, "Original queue should not be affected by changes in execution queue")
 
-    --lunit.fail("Function execute() is not implemented yet!")
 
 end
 
