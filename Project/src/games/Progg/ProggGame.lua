@@ -4,6 +4,7 @@
 -------------------------------
 
 local rightmenu = require('games.Progg.RightMenu')
+local map = require('games.Progg.Map')
 
 local Game = require('toolkit.Game')
 --Will have to include the classes of the other components here
@@ -22,6 +23,7 @@ function ProggGame:new(context)
   self.inputHandler = inputHandler:new(self.platformContext)
   self.gameEventListener:attach(self.inputHandler)
   self.rightmenu = rightmenu:new()
+  self.map = map:new()
   return self.class()
 end
 
@@ -30,13 +32,14 @@ end
 -- as of right now.
 -----------------------------------------------------------
 local function load()
------------------------
+  -----------------------
   -- call load on all resources e.g.
-  -- UI:load() 
------------------------
+  -- UI:load()
+  -----------------------
   ProggGame.inputHandler:load()
- 
-  
+  ProggGame.map:load()
+
+
 end
 
 -----------------------
@@ -54,9 +57,9 @@ end
 --Updates the parts of the game
 ------------------------
 function ProggGame:update()
------------------------
---Calls update on all objects, e.g.
---UI:update()
+  -----------------------
+  --Calls update on all objects, e.g.
+  --UI:update()
   self.inputHandler:show()
 end
 
