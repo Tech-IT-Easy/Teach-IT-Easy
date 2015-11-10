@@ -18,12 +18,14 @@ local Event = require('toolkit.Event')
 GameInputHandler = extends(Controllable.class())
 
 local context = nil
+local queue = nil
 -----------------------------------------------------------
 -- Construct method takes the context as parameter
 -- to be able to create new menu for PlatformContext
 -- -------------------------------------------------------
-function GameInputHandler:new(gameContext)
+function GameInputHandler:new(gameContext, inqueue)
   context = gameContext
+  queue = inqueue
 return self.class()
 end
 
@@ -46,10 +48,12 @@ function gameEventHandler:update(object,eventListener,event)
   if event.key == Event.KEY_ONE then
  
   elseif event.key == Event.KEY_TWO then
+    queue:push("Hello")
   
   elseif event.key == Event.KEY_THREE then
   print("It works!!")
-  
+  print(queue:pop())
+
   elseif event.key == Event.KEY_FOUR then
   ------------------------------
   --Since the menu is discarded when game starts, 
