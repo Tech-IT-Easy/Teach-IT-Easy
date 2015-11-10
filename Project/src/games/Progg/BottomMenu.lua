@@ -21,6 +21,8 @@ end
 
 -- Used to load images
 function BottomMenu:load()
+    self:drawBackground()
+    self:drawEmptySlots(self.availableSlots)
 
 end
 
@@ -41,7 +43,7 @@ end
 -- @param boxNmb. The number of the box being drawn.
 -- @author Mikael Ögren
 -------------------------------------
-function CreateProfile:drawSingleEmptySlot(boxNmb)
+function BottomMenu:drawSingleEmptySlot(boxNmb)
     if boxNmb <= 8 then
         screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
     else
@@ -53,7 +55,7 @@ end
 -- Draws the background for BottomMenu
 -- @author Mikael Ögren
 -------------------------------------
-function CreateProfile:drawBackground()
+function BottomMenu:drawBackground()
     screen:clear({r = 27, g = 39, b = 53 }, { x = 0, y = screen:get_height() * 0.65, w = screen:get_width(), h = screen:get_height() * 0.35 })
     screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.7, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
     screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.7, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
