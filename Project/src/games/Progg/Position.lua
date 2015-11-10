@@ -1,13 +1,13 @@
 
 
 local Object = require('toolkit.Object')
-local Event = extends(Object.class())
 
-Position.X = 0
-Position.Y = 0
+Position = extends(Object.class())
+
+local X = 0
+local Y = 0
 
 function Position:new(x,y)
-
 self.X = x
 self.Y = y
 return self.class()
