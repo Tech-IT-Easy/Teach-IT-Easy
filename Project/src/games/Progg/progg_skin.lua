@@ -1,3 +1,14 @@
+-----------------------------------------------------------
+-- This class keeps track of fixed positions and freetype 
+-- objects that are used in the programming game module.
+-- 
+-- Currently only specifies information relevant for the
+-- right hand part of the screen
+--
+-- @Author:Created by Vilhelm Granath,Nov 10,2015
+-- @Author:Updated by 
+-----------------------------------------------------------
+
 if ADConfig.isSimulator then
   script_path = ""
 else
@@ -12,7 +23,7 @@ command_height = screen:get_width() * 0.25 * 0.25
 first_row = col_spacing
 first_column = screen:get_width() * 0.75 + row_spacing
 
--- preset freetype objects for text i the right-hand menu
+-- preset freetype objects for text in the right-hand menu
 command_1 = sys.new_freetype({g=255, r=255, b=255, a=255}, command_height*0.4, {x= first_column-command_width*0.10, y=first_row-command_height*0.15}, script_path..'data/GROBOLD.ttf')
 command_2 = sys.new_freetype({g=255, r=255, b=255, a=255}, command_height*0.4, {x= first_column+(command_width+row_spacing)-command_width*0.10, y=first_row-command_height*0.15}, script_path..'data/GROBOLD.ttf')
 command_3 = sys.new_freetype({g=255, r=255, b=255, a=255}, command_height*0.4, {x= first_column+2*(command_width+row_spacing)-command_width*0.10, y=first_row-command_height*0.15}, script_path..'data/GROBOLD.ttf')

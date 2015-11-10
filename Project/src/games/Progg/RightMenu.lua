@@ -3,15 +3,15 @@
 -- of the marker to properly display the right menu.
 --
 -- @Author:Created by Mikael Ögren, Nov 04,2015
--- @Author:Updated by Vilhelm Granath,Nov 09, 2015
+-- @Author:Updated by Vilhelm Granath,Nov 10, 2015
 -----------------------------------------------------------
-
 
 local Object = require("toolkit.Object")
 local RightMenu = extends(Object.class())
---RightMenu.ImageArray = {}
-
 skin = require('games/Progg/progg_skin')
+
+-- Variale to keep track of a highlighted command
+highlight = nill
 
 -- images
 img1 = gfx.loadpng('data/progg_game_icons/arrow_up.png')
@@ -24,7 +24,6 @@ img7 = gfx.loadpng('data/progg_game_icons/P1.png')
 img8 = gfx.loadpng('data/progg_game_icons/P2.png')
 img9 = gfx.loadpng('data/progg_game_icons/P2.png')
 images = { img1, img2, img3, img4, img5, img6, img7, img8, img9 }
-
 
 -------------------------------------
 -- Creates the Right-hand screen in the programming game
@@ -58,7 +57,7 @@ function RightMenu:drawRow(row)
 end
 
 -------------------------------------
--- Adds numbers to the 9-command layout
+-- Adds all numbers to the 9-command layout
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:addNumbers()
@@ -72,6 +71,33 @@ function RightMenu:addNumbers()
      command_8:draw_over_surface(screen, "8")
      command_9:draw_over_surface(screen, "9")
      command_play:draw_over_surface(screen, "0  Play!")
+end
+
+
+-------------------------------------
+-- Adds a single numbers to the 9-command layout
+-- @author Vilhelm
+-------------------------------------
+function RightMenu:addSingleNumber(position)
+   if position == 1 then
+     command_1:draw_over_surface(screen, "1")
+   elseif position == 2 then
+     command_2:draw_over_surface(screen, "2")
+   elseif position == 3 then
+     command_3:draw_over_surface(screen, "3")
+   elseif position == 4 then
+     command_4:draw_over_surface(screen, "4")
+   elseif position == 5 then
+     command_5:draw_over_surface(screen, "5")
+   elseif position == 6 then
+     command_6:draw_over_surface(screen, "6")
+   elseif position == 7 then
+     command_7:draw_over_surface(screen, "7")
+   elseif position == 8 then
+     command_8:draw_over_surface(screen, "8")
+   elseif position == 9 then
+     command_9:draw_over_surface(screen, "9")
+   end
 end
 
 -------------------------------------
@@ -109,24 +135,63 @@ function RightMenu:drawBox(r1,g1,b1,r2,g2,b2,x,y,w,h)
      
 end
 
--- Unsure how to be used /Vilhelm
--- Used to load images
-function RightMenu:load()
+-------------------------------------
+-- Highlights the command in the
+-- specified position.
+-- 
+-- Needs to implement a timed call to remove 
+-- the highlight again
+-- 
+-- @author Vilhelm
+-------------------------------------
+function RightMenu:highlight(position)
+  if highlight ~= nill then
+    self:removeHighlight(highlight)
+  end
+  
+  xvalue = first_column+((position-1)%3)*(command_width+row_spacing)
+  yvalue = first_row+math.floor((position-1)/3)*(command_height+col_spacing)
+  
+  self:drawBox(255,192,0,203,212,214,xvalue,yvalue,command_width,command_height)
+  screen:copyfrom(images[position], nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
+  self:addSingleNumber(position)
+  
+  highlight = position
 
 end
 
---To be added
---Highlights the image/position the user has selected
-function RightMenu:highlight(position)
+-------------------------------------
+-- Removes the highlight on the command in the
+-- specified position. 
+-- @author Vilhelm
+-------------------------------------
+function RightMenu:removeHighlight(position)
 
+  xvalue = first_column+((position-1)%3)*(command_width+row_spacing)
+  yvalue = first_row+math.floor((position-1)/3)*(command_height+col_spacing)
+  
+  self:drawBox(34,59,94,203,212,214,xvalue,yvalue,command_width,command_height)
+  screen:copyfrom(images[position], nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
+  self:addSingleNumber(position)
+  
+  highlight = nill
+  
 end
 
 -------------------------------------
 -- Changes the play-button to a stop-button when 
 -- the play-button is pressed
+-- Also removes any highlight on the commands
+-- 
+-- Needs to stop the timer if there is one
+-- 
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:play()
+    if highlight ~= nill then
+      self:removeHighlight(highlight)
+    end
+    
     self:drawFullRow(4,245,45,120)
     command_play:draw_over_surface(screen, "0  Stop!")
 end
@@ -139,6 +204,17 @@ end
 function RightMenu:stop()
     self:drawFullRow(4,78,113,215)
     command_play:draw_over_surface(screen, "0  Play!")
+end
+
+-------------------------------------
+-- I'm unsure what this function was 
+-- meant to do /Vilhelm
+-- 
+-- Used to load images
+-- @author 
+-------------------------------------
+function RightMenu:load()
+
 end
 
 return RightMenu
