@@ -38,6 +38,7 @@ function RightMenu:new()
     self:drawRow(3)
     self:drawFullRow(4,78,113,215)
     self:addNumbers()
+    self:loop()
     return self.class()
 end
 
@@ -205,6 +206,15 @@ function RightMenu:stop()
     self:drawFullRow(4,78,113,215)
     command_play:draw_over_surface(screen, "0  Play!")
 end
+
+
+function RightMenu:loop()
+    self:drawFullRow(4,78,113,215)
+    command_inf:draw_over_surface(screen, string.char(226))
+    
+end
+
+
 
 -------------------------------------
 -- I'm unsure what this function was 
