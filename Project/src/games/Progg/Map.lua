@@ -49,8 +49,6 @@ function Map:load()
   screen:clear({ r = 55, g = 72, b = 160 }, { x = screen:get_width() * 0.055, y = screen:get_height()*0.06, w = screen:get_width() * 0.64, h = screen:get_height()*0.532 })
 
 
-
-
     self.mapdata = {2, 1, 2, 1, 1, 1, 1, 1,
                     1, 2, 1, 2, 1, 1, 1, 1,
                     1, 1, 2, 1, 2, 1, 1, 1,
@@ -97,6 +95,51 @@ function Map:printsquare(i, mapdata)
   
   end
   end
+
+
+    if mapdata[i]==2 then
+
+  if(i<9)then
+    screen:clear({ g = 116, r = 155, b = 222 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.06) * (i - 1), y = (screen:get_height() * 0.08), w = screen:get_width() * 0.05, h = screen:get_height() * 0.08 })
+  elseif(i<17)then
+  i= i -8
+  screen:clear({ g = 116, r = 155, b = 222 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.06) * (i - 1), y = (screen:get_height() * 0.18), w = screen:get_width() * 0.05, h = screen:get_height() * 0.08 })
+
+  elseif(i<25)then
+  i= i -16
+  screen:clear({ g = 116, r = 155, b = 222 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.06) * (i - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.05, h = screen:get_height() * 0.08 })
+
+  elseif(i<33)then
+  i= i -24
+  screen:clear({ g = 116, r = 155, b = 222 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.06) * (i - 1), y = (screen:get_height() * 0.38), w = screen:get_width() * 0.05, h = screen:get_height() * 0.08 })
+
+  else
+  i= i -32
+  screen:clear({ g = 116, r = 155, b = 222 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.06) * (i - 1), y = (screen:get_height() * 0.48), w = screen:get_width() * 0.05, h = screen:get_height() * 0.08 })
+
+
+  end
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 end
