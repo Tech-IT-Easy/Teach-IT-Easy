@@ -12,6 +12,9 @@ local Object = require('toolkit.Object')
 local Map = extends(Object.class())
 
 -- constructor for new empty map, 0 = free walking
+
+
+
 function Map:new()
   --[[
   -- defining the total area
@@ -45,11 +48,21 @@ function Map:load()
   screen:clear({ r = 0, g = 0, b = 0 }, { x = screen:get_width() * 0.05, y = screen:get_height()*0.05, w = screen:get_width() * 0.65, h = screen:get_height()*0.55 })
   screen:clear({ r = 55, g = 72, b = 160 }, { x = screen:get_width() * 0.055, y = screen:get_height()*0.06, w = screen:get_width() * 0.64, h = screen:get_height()*0.532 })
 
+
+
+
+    self.mapdata = {2, 1, 2, 1, 1, 1, 1, 1,
+                    1, 2, 1, 2, 1, 1, 1, 1,
+                    1, 1, 2, 1, 2, 1, 1, 1,
+                    1, 1, 1, 2, 1, 2, 1, 1,
+                    1, 1, 1, 1, 2, 1, 2, 1,}
+
   --Mapdata
   for i = 1, 40, 1 do
     --to be implemented?
     --self:printsquare(mapdata[i])
-    self:printsquare(i)
+
+    self:printsquare(i, self.mapdata)
   end
 
 end
@@ -58,7 +71,10 @@ function Map:update()
 
 end
 
-function Map:printsquare(i)
+function Map:printsquare(i, mapdata)
+
+  -- If bloctype == type 1
+  if mapdata[i]==1 then
 
   if(i<9)then
     screen:clear({ g = 83, r = 101, b = 219 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.06) * (i - 1), y = (screen:get_height() * 0.08), w = screen:get_width() * 0.05, h = screen:get_height() * 0.08 })
@@ -80,6 +96,9 @@ function Map:printsquare(i)
  
   
   end
+  end
+
+
 end
 
 
