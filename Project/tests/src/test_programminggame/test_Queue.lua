@@ -141,8 +141,8 @@ function test_SetPos()
     local index_2 = queuelist.actions[2]
 
     -- Uncomment when setPosition is implemented in Queue class
-    -- lunit.assert_equal(index_1,queuecmd_2,"This index does not contains the correct object")
-    -- lunit.assert_equal(index_2,queuecmd_1,"This index does not contains the correct object")
+     lunit.assert_equal(index_1,queuecmd_2,"This index does not contains the correct object")
+     lunit.assert_equal(index_2,queuecmd_1,"This index does not contains the correct object")
 
     --lunit.fail("Function setPosition() is not implemented yet!")
 end

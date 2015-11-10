@@ -31,9 +31,7 @@ end
 --Allows someone to switch positions for two objects in the queue
 ----------------------------------------------------------------
 function Queue:setPosition(currentPos, goalPos)
----------------
---code
----------------
+  self.actions[currentPos], self.actions[goalPos] = self.actions[goalPos], self.actions[currentPos]
 end
 
 

@@ -18,8 +18,8 @@ Commands.IF_END = "if-end"
 -------------------------------------
 --Constructor to create a new command-object.
 ------------------------------------
-function Commands:new(key,state)
-  self.command = key
+function Commands:new(action)
+  self.command = action
   return self.class()
 end
 
