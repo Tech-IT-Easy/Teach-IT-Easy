@@ -76,7 +76,7 @@ function test_handleinput_right()
   local gamebuttoninactive = mc:mock()
   local gamebuttonactive = mc:mock()
 
-  -- In this case we want to mock 2 member functions so then we import the SUT (System under test)
+  -- In this case we want to mock 4 member functions so then we import the SUT (System under test)
   local ps = require(SUT)
 
   -- override the original functions with mocks
