@@ -3,6 +3,8 @@
 --tells the parts to update.
 -------------------------------
 
+local rightmenu = require('games.Progg.RightMenu')
+
 local Game = require('toolkit.Game')
 --Will have to include the classes of the other components here
 local inputHandler = require('games.Progg.GameInputHandler')
@@ -19,6 +21,7 @@ function ProggGame:new(context)
   --------------------------------
   self.inputHandler = inputHandler:new(self.platformContext)
   self.gameEventListener:attach(self.inputHandler)
+  self.rightmenu = rightmenu:new()
   return self.class()
 end
 
@@ -32,6 +35,8 @@ local function load()
   -- UI:load() 
 -----------------------
   ProggGame.inputHandler:load()
+ 
+  
 end
 
 -----------------------

@@ -38,7 +38,6 @@ function RightMenu:new()
     self:drawRow(3)
     self:drawFullRow(4,78,113,215)
     self:addNumbers()
-    self:loop()
     return self.class()
 end
 
@@ -210,7 +209,6 @@ end
 
 function RightMenu:loop()
     self:drawFullRow(4,78,113,215)
-    command_inf:draw_over_surface(screen, string.char(226))
     
 end
 
