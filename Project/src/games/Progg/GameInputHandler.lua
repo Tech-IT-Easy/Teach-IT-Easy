@@ -14,16 +14,21 @@ end
 local Controllable = require("toolkit.Controllable")
 local EventHandler = require('toolkit.EventHandler')
 local Event = require('toolkit.Event')
+local Commands = require('games.Progg.Commands')
 
 GameInputHandler = extends(Controllable.class())
 
 local context = nil
+local queue = nil
+local character = nil
 -----------------------------------------------------------
 -- Construct method takes the context as parameter
 -- to be able to create new menu for PlatformContext
 -- -------------------------------------------------------
-function GameInputHandler:new(gameContext)
+function GameInputHandler:new(gameContext, inqueue, newCharacter)
   context = gameContext
+  queue = inqueue
+  character = newCharacter
 return self.class()
 end
 
@@ -35,6 +40,16 @@ function GameInputHandler:show()
   --screen:copyfrom(self.proggImage, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
 end
  
+
+--Execute the entire queue but dosnt delete it
+function GameInputHandler:executeQueue()
+
+  local executionQueue = queue:getExecutionQueue()
+  for i = 1, #executionQueue.actions do
+    character:execute(executionQueue:pop())
+  end
+end
+
 --Subscribing the eventHandler to all events. Only numbers by now
 gameEventHandler = EventHandler:new()
 gameEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1,[Event.KEY_ZERO]=1}
@@ -42,34 +57,37 @@ gameEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_TH
 --Update function on every key input
 function gameEventHandler:update(object,eventListener,event)
 
-  --Switch for all the input handling to implement
-  if event.key == Event.KEY_ONE then
- 
-  elseif event.key == Event.KEY_TWO then
-  
-  elseif event.key == Event.KEY_THREE then
-  print("It works!!")
-  
-  elseif event.key == Event.KEY_FOUR then
-  ------------------------------
-  --Since the menu is discarded when game starts, 
-  --this creates a new one.
-  ------------------------------
-  context.platformEventListener:removeChainListener()
-  context:createNewMenu()
-  context.game = nil
-  elseif event.key == Event.KEY_FIVE then
-  
-  elseif event.key == Event.KEY_SIX then
-   
-  elseif event.key == Event.KEY_SEVEN then
-    
-  elseif event.key == Event.KEY_EIGHT then
+if(event.state==Event.KEY_STATE_DOWN) then
+      --Switch for all the input handling to implement
+      if event.key == Event.KEY_ONE then
      
-  elseif event.key == Event.KEY_NINE then
+      elseif event.key == Event.KEY_TWO then
+        queue:push(Commands.TURN_RIGHT)
       
-  elseif event.key == Event.KEY_ZERO then
- 
+      elseif event.key == Event.KEY_THREE then
+      queue:push(Commands.TURN_LEFT)
+
+      elseif event.key == Event.KEY_FOUR then
+      queue:push(Commands.MOVE)
+    
+      elseif event.key == Event.KEY_FIVE then
+     
+      
+      elseif event.key == Event.KEY_SIX then
+       
+      elseif event.key == Event.KEY_SEVEN then
+        
+      elseif event.key == Event.KEY_EIGHT then
+         
+      elseif event.key == Event.KEY_NINE then
+      context.platformEventListener:removeChainListener()
+      context:createNewMenu()
+      context.game = nil
+          
+      elseif event.key == Event.KEY_ZERO then
+      GameInputHandler:executeQueue()
+      
+     end
  end
  return true
 end

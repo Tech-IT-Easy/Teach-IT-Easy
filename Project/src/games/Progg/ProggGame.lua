@@ -12,16 +12,21 @@ local Game = require('toolkit.Game')
 local inputHandler = require('games.Progg.GameInputHandler')
 local ProggGame = extends(Game.class())
 
+local Queue = require('games.Progg.Queue')
+local Character = require('games.Progg.Character')
+local Position = require('games.Progg.Position')
 -----------------------------------------------------------
 -- Constructor method, see toolkit.Game
 -----------------------------------------------------------
 function ProggGame:new(context)
   self.platformContext = context
   self:initListener()
+  self.queue = Queue:new()
+  self.character = Character:new(Position:new(0,0))
   --------------------------------
   -- attach all object to delegate, in this case the input handler
   --------------------------------
-  self.inputHandler = inputHandler:new(self.platformContext)
+  self.inputHandler = inputHandler:new(self.platformContext, self.queue, self.character)
   self.gameEventListener:attach(self.inputHandler)
   self.rightMenu = rightMenu:new()
   self.bottomMenu = bottomMenu:new(16)
