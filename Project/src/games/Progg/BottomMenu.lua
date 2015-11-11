@@ -9,6 +9,12 @@
 
 local Object = require("toolkit.Object")
 local BottomMenu = extends(Object.class())
+
+
+--Images
+
+
+
 BottomMenu.ImageArray={}
 BottomMenu.Position={}
 
@@ -16,13 +22,28 @@ BottomMenu.Position={}
 --Constructor method
 function BottomMenu:new(maxCommands)
     self.availableSlots = maxCommands
+    self.queue = {'move', 'turn-right', 'turn-right'}  -- test Queue
     return self.class()
 end
 
 -- Used to load images
 function BottomMenu:load()
+    move = gfx.loadpng('data/progg_game_icons/arrow_up.png')
+    turnLeft = gfx.loadpng('data/progg_game_icons/turn_left.png')
+    turnRight = gfx.loadpng('data/progg_game_icons/turn_right.png')
+    action = gfx.loadpng('data/progg_game_icons/action.png')
+    ifWall = gfx.loadpng('data/progg_game_icons/if_wall.png')
+    loopStart = gfx.loadpng('data/progg_game_icons/loop.png')
+    p1 = gfx.loadpng('data/progg_game_icons/P1.png')
+    p2 = gfx.loadpng('data/progg_game_icons/P2.png')
+    images = {["move"]=move, ["turn-left"]=turnLeft, ["turn-right"]=turnRight, ["commandname1"]=action, ["commandname2"]=ifWall, ["commandname3"]=loopStart, ["commandname4"]=p1, ["commandname5"]=p2}
     self:drawBackground()
     self:drawEmptySlots(self.availableSlots)
+    self:drawImages(self.queue)
+end
+
+function BottomMenu:show()
+
 
 end
 
@@ -52,7 +73,7 @@ function BottomMenu:drawSingleEmptySlot(boxNmb)
 end
 
 -------------------------------------
--- Draws the background for BottomMenu
+-- Draws the background for the bottom left menu
 -- @author Mikael Ögren
 -------------------------------------
 function BottomMenu:drawBackground()
@@ -65,6 +86,20 @@ end
 function BottomMenu:rearrage(queue)
     for i, command in queue(command) do
         self.Position[i] = queue[i]
+    end
+end
+
+
+-------------------------------------
+-- Draws the icons for the bottom left menu.
+-- @param queue. The queue of commands. An array of strings.
+-- @author Mikael Ögren
+-------------------------------------
+function BottomMenu:drawImages(queue)
+    xPos = 6
+    for i = 1, #queue do
+        xPos = xPos + 18
+        screen:copyfrom(images[queue[i]], nil, { x = screen:get_width()*(0.037 + (i-1)*0.0545), y = screen:get_height()*0.742, w=screen:get_width()*0.040, h = screen:get_height()*0.070 }, true)
     end
 end
 
