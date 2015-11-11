@@ -8,7 +8,7 @@ local Commands = require('games.Progg.Commands')
 --Constructor of the character
 ----
 function Character:new()
-return self.class()
+return Character:init({})
 end
 
 

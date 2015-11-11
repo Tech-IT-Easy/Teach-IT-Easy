@@ -9,30 +9,31 @@
 
 local Object = require('toolkit.Object')
 
-local Map = extends(Object.class())
+local Map = extends(Object)
 
 -- constructor for new empty map, 0 = free walking
 function Map:new()
+  local o = Map:super()
     -- defining the total area
- self.area={x=0,y=0,width=800,height=500 }
+ o.area={x=0,y=0,width=800,height=500 }
 
-    self.mapblocks = {0, 0, 0, 0, 0, 0, 0, 0,
+    o.mapblocks = {0, 0, 0, 0, 0, 0, 0, 0,
           0, 0, 0, 0, 0, 0, 0, 0,
           0, 0, 0, 0, 0, 0, 0, 0,
           0, 0, 0, 0, 0, 0, 0, 0,
           0, 0, 0, 0, 0, 0, 0, 0,}
 
- return self.class
+ return Map:init(o)
 end
 
 -- 2nd constructor, for constructing map with help of predefined Mapdata (does not yet exist such data)
 function Map:new(Mapdata)
+  local o = Map:super()
+    o.area={x=0,y=0,width=800,height=500 }
+    o.mapblocks = {}
+    o.mapblocks = Mapdata
 
-    self.area={x=0,y=0,width=800,height=500 }
-    self.mapblocks = {}
-    self.mapblocks = Mapdata
-
- return self.class
+ return Map:init(o)
 end
 
 

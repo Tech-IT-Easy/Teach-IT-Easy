@@ -15,7 +15,7 @@ local Controllable = require("toolkit.Controllable")
 local EventHandler = require('toolkit.EventHandler')
 local Event = require('toolkit.Event')
 
-GameInputHandler = extends(Controllable.class())
+GameInputHandler = extends(Controllable)
 
 local context = nil
 -----------------------------------------------------------
@@ -23,8 +23,9 @@ local context = nil
 -- to be able to create new menu for PlatformContext
 -- -------------------------------------------------------
 function GameInputHandler:new(gameContext)
+  local o = GameInputHandler:super()
   context = gameContext
-return self.class()
+  return GameInputHandler:init(o)
 end
 
 function GameInputHandler:load()

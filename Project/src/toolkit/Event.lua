@@ -3,12 +3,12 @@
 -- events consistent 
 --
 -- @Author:Created by Chuck, Aug 16,2015
--- @Author:Updated by author,date
+-- @Author:Updated by Chuck, Nov 11,2015 fit to new structure
 -----------------------------------------------------------
 
 local Object = require('toolkit.Object')
 
-local Event = extends(Object.class())
+local Event = extends(Object)
 
 Event.KEY_UP = 1
 Event.KEY_DOWN = 2
@@ -56,9 +56,10 @@ Event.formatSystemState = {
 }
 
 function Event:new(key,state)
-  self.key = self.formatSystemKey[key]
-  self.state = self.formatSystemState[state]
-  return self.class()
+  o = Event:super()
+  o.key = self.formatSystemKey[key]
+  o.state = self.formatSystemState[state]
+  return Event:init(o)
 end
 
 

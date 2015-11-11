@@ -8,7 +8,7 @@
 
 
 local Object = require("toolkit.Object")
-local RightMenu = extends(Object.class())
+local RightMenu = extends(Object)
 RightMenu.ImageArray = {}
 
 row_spacing = screen:get_width() * 0.25 * 0.25 * 0.25
@@ -22,13 +22,14 @@ first_column = screen:get_width() * 0.75 + row_spacing
 
 --Constructor method
 function RightMenu:new()
+   local o = RightMenu:super()
     --Draw right-hand side
     screen:clear({ r = 92, g = 128, b = 149 }, { x = screen:get_width() * 0.75, y = 0, w = screen:get_width() * 0.25, h = screen:get_height()*0.65 })
     self:drawRow(1)
     self:drawRow(2)
     self:drawRow(3)
     self:drawFullRow(4)
-    return self.class()
+    return RightMenu:init(o)
 end
 
 function RightMenu:drawRow(row)

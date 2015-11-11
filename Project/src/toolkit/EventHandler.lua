@@ -4,11 +4,11 @@
 -- for example up or left.
 --
 -- @Author:Created by Chuck, Aug 16,2015
--- @Author:Updated by author,date
+-- @Author:Updated by Chuck, Nov 11,2015 fit to new structure
 -----------------------------------------------------------
 local Object = require("toolkit.Object")
 
-local EventHandler = extends(Object.class())
+local EventHandler = extends(Object)
 
 
 -- events that this handler are capable of processing

@@ -8,15 +8,16 @@
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
-local BottomMenu = extends(Object.class())
+local BottomMenu = extends(Object)
 BottomMenu.ImageArray={}
 BottomMenu.Position={}
 
 
 --Constructor method
 function BottomMenu:new(maxCommands)
-    self.availableSlots = maxCommands
-    return self.class()
+    local o = BottomMenu:super()
+    o.availableSlots = maxCommands
+    return BottomMenu:init(o)
 end
 
 -- Used to load images

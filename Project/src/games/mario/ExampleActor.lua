@@ -15,17 +15,18 @@ local Controllable = require("toolkit.Controllable")
 local EventHandler = require('toolkit.EventHandler')
 local Event = require('toolkit.Event')
 
-ExampleActor = extends(Controllable.class())
+ExampleActor = extends(Controllable)
 
 -----------------------------------------------------------
 -- Construct method 
 -- This is a specific object, give some specific properties value
 -----------------------------------------------------------
-function ExampleActor:new()
-  self.position = {x=3,y=3}
-  self.image = "data/mario.png"
-  self.loadImage = nil
-  return self.class()
+function ExampleActor:new(args)
+  local o = ExampleActor:super()
+  o.position = args.position--{x=3,y=3}
+  o.image = args.image--"data/mario.png"
+  o.loadImage = nil
+  return ExampleActor:init(o)
 end
 
 
@@ -69,7 +70,7 @@ function exampleEventHandler:update(object,eventListener,event)
   ------------
   --code
   ------------
-  ExampleActor.position.x = ExampleActor.position.x + 1
+  object.position.x = object.position.x + 1
   
   elseif event.key == Event.KEY_LEFT then
   ------------

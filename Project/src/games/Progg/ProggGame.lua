@@ -6,20 +6,23 @@
 local Game = require('toolkit.Game')
 --Will have to include the classes of the other components here
 local inputHandler = require('games.Progg.GameInputHandler')
-local ProggGame = extends(Game.class())
+local ProggGame = extends(Game)
 
 -----------------------------------------------------------
 -- Constructor method, see toolkit.Game
 -----------------------------------------------------------
 function ProggGame:new(context)
+  local o = ProggGame:super()
+  
   self.platformContext = context
+  print(self.platformContext)
   self:initListener()
   --------------------------------
   -- attach all object to delegate, in this case the input handler
   --------------------------------
   self.inputHandler = inputHandler:new(self.platformContext)
   self.gameEventListener:attach(self.inputHandler)
-  return self.class()
+  return ProggGame:init(o)
 end
 
 -----------------------------------------------------------

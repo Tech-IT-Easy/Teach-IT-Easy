@@ -12,7 +12,7 @@ local Event = require('toolkit.Event')
 local Controllable = require('toolkit.Controllable')
 local GameFactory = require('games.GameFactory')
 
-local PlatformMenu = extends(Controllable.class())
+local PlatformMenu = extends(Controllable)
 
 --included classes for menu
 local ProfileSelection = require('menus.ProfileSelection')
@@ -27,11 +27,12 @@ local ChooseAvatar = require('menus.ChooseAvatar')
 -- Construct method
 -----------------------------------------------------------
 function PlatformMenu:new()
+  local o = PlatformMenu:super()
   -- example code 
  -- self.position = {x=1,y=2 }
   self:loadviews()
 
-  return self.class()
+  return PlatformMenu:init(o)
 end
 
 -----------------------------------------------------------
@@ -94,8 +95,8 @@ function menuEventHandler:update(object,eventListener,event)
    -- sys.stop()
   --end
   if event.state == Event.KEY_STATE_DOWN then
-    local temp = PlatformMenu.currentview:handleinput(event)
-    if temp[1] ~= " " then PlatformMenu:changeview(temp) end
+    local temp = object.currentview:handleinput(event)
+    if temp[1] ~= " " then object:changeview(temp) end
   collectgarbage()
 end
  
