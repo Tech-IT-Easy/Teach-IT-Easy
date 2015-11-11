@@ -1,3 +1,4 @@
+
 ADConfig = require("Config.ADConfig")
 ADLogger = require("SDK.Utils.ADLogger")
 ADLogger.trace("Application Init")
@@ -62,10 +63,10 @@ if(event.state==Event.KEY_STATE_DOWN) then
       if event.key == Event.KEY_ONE then
      
       elseif event.key == Event.KEY_TWO then
-        queue:push(Commands.TURN_RIGHT)
+        queue:push(Commands.TURN_LEFT)
       
       elseif event.key == Event.KEY_THREE then
-      queue:push(Commands.TURN_LEFT)
+      queue:push(Commands.TURN_RIGHT)
 
       elseif event.key == Event.KEY_FOUR then
       queue:push(Commands.MOVE)
