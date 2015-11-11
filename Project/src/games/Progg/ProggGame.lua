@@ -24,7 +24,7 @@ function ProggGame:new(context)
   self.inputHandler = inputHandler:new(self.platformContext)
   self.gameEventListener:attach(self.inputHandler)
   self.rightmenu = rightmenu:new()
-  self.bottomMenu = bottomMenu:new(9)
+  self.bottomMenu = bottomMenu:new(16)
   self.map = map:new()
   return self.class()
 end
@@ -41,7 +41,7 @@ local function load()
   ProggGame.inputHandler:load()
   ProggGame.map:load()
   ProggGame.bottomMenu:load()
-
+  ProggGame.bottomMenu:show()
 end
 
 -----------------------
