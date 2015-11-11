@@ -43,6 +43,8 @@ function RightMenu:load()
     self.p2 = gfx.loadpng('data/progg_game_icons/P2.png')
     self.images = { ["move"]=self.move, ["turn-left"]=self.turnLeft, ["turn-right"]=self.turnRight, ["action"]=self.action,
         ["if-wall"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2 }
+
+    self.inf_loop = gfx.loadpng('data/progg_game_icons/infinity_loop.png')
 end
 
 -------------------------------------
@@ -60,7 +62,7 @@ function RightMenu:show()
     self:highlight("action")
     self:highlight("P2")
     self:play()
-    -- self:loop()
+    self:loopLayout()
 end
 
 -------------------------------------
@@ -282,11 +284,26 @@ end
 -- Called to replace buttons for loops
 -- @author Vilhelm
 -------------------------------------
-function RightMenu:loop()
-    -- draw rows
+function RightMenu:loopLayout()
+    self:drawRow(1)
+    self:drawRow(2)
+    self:drawRow(3)
     -- add numbers in boxes
     self:drawFullRow(4,78,113,215)
-    -- image for loop symbol
+    self:addNumbers()
+    nr_1:draw_over_surface(screen, "1")
+    nr_2:draw_over_surface(screen, "2")
+    nr_3:draw_over_surface(screen, "3")
+    nr_4:draw_over_surface(screen, "4")
+    nr_5:draw_over_surface(screen, "5")
+    nr_6:draw_over_surface(screen, "6")
+    nr_7:draw_over_surface(screen, "7")
+    nr_8:draw_over_surface(screen, "8")
+    nr_9:draw_over_surface(screen, "9")
+    self:drawFullRow(4,78,113,215)
+    command_play:draw_over_surface(screen, "0")
+    screen:copyfrom(self.inf_loop, nil, { x = first_column+(command_width+row_spacing)+6,
+        y = first_row+3*(command_height+col_spacing)+6, w=command_width-12, h = command_height-12 }, true)
 end
 
 return RightMenu
