@@ -4,7 +4,8 @@
 
 local Queue = {}
 
-function Queue:new()
+function Queue:new(newBottomMenu)
+  self.bottomMenu = newBottomMenu
   local newObj = {actions = {}}
   self.__index = self
   return setmetatable(newObj, self)
@@ -16,6 +17,7 @@ end
 -------------------------------------
 function Queue:push(action)
   table.insert(self.actions,action)
+  self.bottomMenu:drawIcons(self.actions)
 end
 
 

@@ -14,7 +14,7 @@ local BottomMenu = extends(Object.class())
 --Constructor method
 function BottomMenu:new(maxCommands)
     self.availableSlots = maxCommands
-    self.queue = {'move', 'turn-right', 'turn-left', 'turn-left', 'turn-right', 'turn-left', 'turn-right', 'turn-left', 'turn-left', 'turn-left', 'turn-left', 'turn-left', 'move'}  -- test Queue
+    self.queue = {}  -- test Queue
     return self.class()
 end
 
