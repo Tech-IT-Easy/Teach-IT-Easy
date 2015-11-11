@@ -24,12 +24,13 @@ function ProggGame:new(context)
   self.bottomMenu = BottomMenu:new(16)
   self.queue = Queue:new(self.bottomMenu)
   self.character = Character:new(Position:new(0,0))
+  self.rightMenu = rightmenu:new()
+
   --------------------------------
   -- attach all object to delegate, in this case the input handler
   --------------------------------
-  self.inputHandler = inputHandler:new(self.platformContext, self.queue, self.character)
+  self.inputHandler = inputHandler:new(self.platformContext, self.queue, self.character, self.rightMenu)
   self.gameEventListener:attach(self.inputHandler)
-  self.rightmenu = rightmenu:new()
   self.map = map:new()
   return self.class()
 end

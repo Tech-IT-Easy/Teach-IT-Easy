@@ -22,14 +22,16 @@ GameInputHandler = extends(Controllable.class())
 local context = nil
 local queue = nil
 local character = nil
+local rightMenu = nil
 -----------------------------------------------------------
 -- Construct method takes the context as parameter
 -- to be able to create new menu for PlatformContext
 -- -------------------------------------------------------
-function GameInputHandler:new(gameContext, inqueue, newCharacter)
+function GameInputHandler:new(gameContext, inqueue, newCharacter, newRightMenu)
   context = gameContext
   queue = inqueue
   character = newCharacter
+  rightMenu = newRightMenu
 return self.class()
 end
 
@@ -51,6 +53,10 @@ function GameInputHandler:executeQueue()
   end
 end
 
+function GameInputHandler:highlight(command)
+  rightMenu:highlight(command)
+end
+
 --Subscribing the eventHandler to all events. Only numbers by now
 gameEventHandler = EventHandler:new()
 gameEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1,[Event.KEY_ZERO]=1}
@@ -61,15 +67,19 @@ function gameEventHandler:update(object,eventListener,event)
 if(event.state==Event.KEY_STATE_DOWN) then
       --Switch for all the input handling to implement
       if event.key == Event.KEY_ONE then
+        queue:push(Commands.MOVE)
+        GameInputHandler:highlight(Commands.MOVE)
      
       elseif event.key == Event.KEY_TWO then
         queue:push(Commands.TURN_LEFT)
+        GameInputHandler:highlight(Commands.TURN_LEFT)
       
       elseif event.key == Event.KEY_THREE then
-      queue:push(Commands.TURN_RIGHT)
+        queue:push(Commands.TURN_RIGHT)
+        GameInputHandler:highlight(Commands.TURN_RIGHT)
 
       elseif event.key == Event.KEY_FOUR then
-      queue:push(Commands.MOVE)
+
     
       elseif event.key == Event.KEY_FIVE then
      

@@ -202,7 +202,7 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:highlight(command)
-    if highlight ~= nill then
+    if highlight ~= nil then
         self:removeHighlight(highlight)
     end
 
