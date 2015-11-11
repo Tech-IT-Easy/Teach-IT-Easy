@@ -14,7 +14,7 @@ local BottomMenu = extends(Object.class())
 --Constructor method
 function BottomMenu:new(maxCommands)
     self.availableSlots = maxCommands
-    self.queue = {}  -- test Queue
+    self.queue = {}
     return self.class()
 end
 
@@ -25,11 +25,11 @@ function BottomMenu:load()
     self.turnRight = gfx.loadpng('data/progg_game_icons/turn_right.png')
     self.action = gfx.loadpng('data/progg_game_icons/action.png')
     self.ifWall = gfx.loadpng('data/progg_game_icons/if_wall.png')
-    self.loopStart = gfx.loadpng('data/progg_game_icons/loop.png')
+    self.loop = gfx.loadpng('data/progg_game_icons/loop.png')
     self.p1 = gfx.loadpng('data/progg_game_icons/P1.png')
     self.p2 = gfx.loadpng('data/progg_game_icons/P2.png')
     self.images = {["move"]=self.move, ["turn-left"]=self.turnLeft, ["turn-right"]=self.turnRight,
-        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["commandname3"]=self.loopStart, ["commandname4"]=self.p1, ["commandname5"]=self.p2}
+        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["commandname5"]=self.p2}
 end
 
 --Used when BottomMenu is updated
@@ -39,6 +39,9 @@ function BottomMenu:show()
     self:drawIcons(self.queue)
 end
 
+function BottomMenu:setQueue(queue)
+    self.queue = queue
+end
 --
 -------------------------------------
 -- Draw all empty command slots for current level.
@@ -83,6 +86,7 @@ end
 function BottomMenu:drawIcons(queue)
     for i = 1, #queue do
         if i <= 8 then
+            print(queue[i])
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
             screen:copyfrom(self.images[queue[i]], nil, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         else

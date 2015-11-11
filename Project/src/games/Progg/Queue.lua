@@ -17,7 +17,7 @@ end
 -------------------------------------
 function Queue:push(action)
   table.insert(self.actions,action)
-  self.bottomMenu:drawIcons(self.actions)
+  self.bottomMenu:setQueue(self.actions)
 end
 
 

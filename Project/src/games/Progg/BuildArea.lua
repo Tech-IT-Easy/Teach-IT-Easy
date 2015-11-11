@@ -28,9 +28,19 @@ function BuildArea:load()
         ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["commandname3"]=self.loopStart, ["commandname4"]=self.p1, ["commandname5"]=self.p2}
 end
 
+function BuildArea:setBuildType(buildType)
+    self.buildType = buildType
+end
+
 function BuildArea:show()
-    self:drawEmptySlots(self.availableSlots)
-    self:drawIcons(self.queue)
+    if self.buildType == "procedure" then
+        self:drawEmptySlots(self.availableSlots)
+        self:drawIcons(self.queue)
+    elseif self.buildType == "loop" then
+        self:drawEmptySlots(self.availableSlots)
+        self:drawIcons(self.queue)
+        self:drawTimesLooped()
+    end
 end
 
 -------------------------------------
@@ -51,9 +61,9 @@ end
 -------------------------------------
 function BuildArea:drawSingleEmptySlot(boxNmb)
     if boxNmb <= 8 then
-        screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
+        screen:clear({r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.535 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
     else
-        screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
+        screen:clear({r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.535 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
     end
 end
 
@@ -65,11 +75,17 @@ end
 function BuildArea:drawIcons(queue)
     for i = 1, #queue do
         if i <= 8 then
-            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-            screen:copyfrom(self.images[queue[i]], nil, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.538 + (i-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:copyfrom(self.images[queue[i]], nil, { x = screen:get_width()*(0.538 + (i-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         else
-            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (i-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-            screen:copyfrom(self.images[queue[i]], nil, { x = screen:get_width()*(0.038 + (i-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.538 + (i-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:copyfrom(self.images[queue[i]], nil, { x = screen:get_width()*(0.538 + (i-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         end
     end
 end
+
+function BuildArea:drawTimesLooped()
+    screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.87), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+end
+
+return BuildArea
