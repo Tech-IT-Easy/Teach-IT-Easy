@@ -3,22 +3,35 @@
 --tells the parts to update.
 -------------------------------
 
+local rightMenu = require('games.Progg.RightMenu')
+local BottomMenu = require('games.Progg.BottomMenu')
+local map = require('games.Progg.Map')
+
 local Game = require('toolkit.Game')
 --Will have to include the classes of the other components here
 local inputHandler = require('games.Progg.GameInputHandler')
 local ProggGame = extends(Game.class())
 
+local Queue = require('games.Progg.Queue')
+local Character = require('games.Progg.Character')
+local Position = require('games.Progg.Position')
 -----------------------------------------------------------
 -- Constructor method, see toolkit.Game
 -----------------------------------------------------------
 function ProggGame:new(context)
   self.platformContext = context
   self:initListener()
+  self.bottomMenu = BottomMenu:new(16)
+  self.queue = Queue:new(self.bottomMenu)
+  self.character = Character:new(Position:new(0,0))
+  self.rightMenu = rightMenu:new()
+
   --------------------------------
   -- attach all object to delegate, in this case the input handler
   --------------------------------
-  self.inputHandler = inputHandler:new(self.platformContext)
+  self.inputHandler = inputHandler:new(self.platformContext, self.queue, self.character, self.rightMenu)
   self.gameEventListener:attach(self.inputHandler)
+  self.map = map:new()
   return self.class()
 end
 
@@ -27,11 +40,16 @@ end
 -- as of right now.
 -----------------------------------------------------------
 local function load()
------------------------
+  -----------------------
   -- call load on all resources e.g.
-  -- UI:load() 
------------------------
+  -- UI:load()
+  -----------------------
   ProggGame.inputHandler:load()
+  ProggGame.map:load()
+  ProggGame.bottomMenu:load()
+  ProggGame.bottomMenu:show()
+  ProggGame.rightMenu:load()
+  ProggGame.rightMenu:show()
 end
 
 -----------------------
@@ -49,9 +67,9 @@ end
 --Updates the parts of the game
 ------------------------
 function ProggGame:update()
------------------------
---Calls update on all objects, e.g.
---UI:update()
+  -----------------------
+  --Calls update on all objects, e.g.
+  --UI:update()
   self.inputHandler:show()
 end
 
