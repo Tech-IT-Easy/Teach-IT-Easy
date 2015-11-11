@@ -16,18 +16,6 @@ highlight = nill
 -- Available commands
 commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
 
--- images
-move = gfx.loadpng('data/progg_game_icons/arrow_up.png')
-turnLeft = gfx.loadpng('data/progg_game_icons/turn_left.png')
-turnRight = gfx.loadpng('data/progg_game_icons/turn_right.png')
-action = gfx.loadpng('data/progg_game_icons/action.png')
-ifWall = gfx.loadpng('data/progg_game_icons/if_wall.png')
-loop = gfx.loadpng('data/progg_game_icons/loop.png')
-p1 = gfx.loadpng('data/progg_game_icons/P1.png')
-p2 = gfx.loadpng('data/progg_game_icons/P2.png')
-local images = { ["move"]=move, ["turn-left"]=turnLeft, ["turn-right"]=turnRight, ["action"]=action,
-    ["if-wall"]=ifWall, ["loop"]=loop, ["P1"]=p1, ["P2"]=p2 }
-
 
 -------------------------------------
 -- Creates the Right-hand screen in the programming game
@@ -37,6 +25,32 @@ local images = { ["move"]=move, ["turn-left"]=turnLeft, ["turn-right"]=turnRight
 function RightMenu:new()
     --Draw right-hand side
     screen:clear({ r = 92, g = 128, b = 149 }, { x = screen:get_width() * 0.75, y = 0, w = screen:get_width() * 0.25, h = screen:get_height()*0.65 })
+    return self.class()
+end
+
+-------------------------------------
+-- Loads all images
+-- @author Vilhelm
+-------------------------------------
+function RightMenu:load()
+    self.move = gfx.loadpng('data/progg_game_icons/arrow_up.png')
+    self.turnLeft = gfx.loadpng('data/progg_game_icons/turn_left.png')
+    self.turnRight = gfx.loadpng('data/progg_game_icons/turn_right.png')
+    self.action = gfx.loadpng('data/progg_game_icons/action.png')
+    self.ifWall = gfx.loadpng('data/progg_game_icons/if_wall.png')
+    self.loop = gfx.loadpng('data/progg_game_icons/loop.png')
+    self.p1 = gfx.loadpng('data/progg_game_icons/P1.png')
+    self.p2 = gfx.loadpng('data/progg_game_icons/P2.png')
+    self.images = { ["move"]=self.move, ["turn-left"]=self.turnLeft, ["turn-right"]=self.turnRight, ["action"]=self.action,
+        ["if-wall"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2 }
+end
+
+-------------------------------------
+-- Shows all elements in the menu
+-- Also tests certain commands
+-- @author Vilhelm
+-------------------------------------
+function RightMenu:show()
     self:drawRow(1)
     self:drawRow(2)
     self:drawRow(3)
@@ -47,7 +61,6 @@ function RightMenu:new()
     self:highlight("P2")
     self:play()
     -- self:loop()
-    return self.class()
 end
 
 -------------------------------------
@@ -110,7 +123,7 @@ function RightMenu:addImage(command)
     local position=self:getPosition(command)
     local xvalue = first_column+((position-1)%3)*(command_width+row_spacing)+6
     local yvalue = first_row+math.floor((position-1)/3)*(command_height+col_spacing)+6
-    screen:copyfrom(images[command], nil, { x = xvalue, y = yvalue, w=command_width-12, h = command_height-12 }, true)
+    screen:copyfrom(self.images[command], nil, { x = xvalue, y = yvalue, w=command_width-12, h = command_height-12 }, true)
 end
 
 -------------------------------------
@@ -211,7 +224,7 @@ function RightMenu:highlight(command)
     local yvalue = first_row+math.floor((position-1)/3)*(command_height+col_spacing)
 
     self:drawBox(255,192,0,203,212,214,xvalue,yvalue,command_width,command_height)
-    screen:copyfrom(images[command], nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
+    screen:copyfrom(self.images[command], nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
     self:addSingleNumber(position)
 
     highlight = command
@@ -230,7 +243,7 @@ function RightMenu:removeHighlight(command)
     local yvalue = first_row+math.floor((position-1)/3)*(command_height+col_spacing)
 
     self:drawBox(34,59,94,203,212,214,xvalue,yvalue,command_width,command_height)
-    screen:copyfrom(images[command], nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
+    screen:copyfrom(self.images[command], nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
     self:addSingleNumber(position)
 
     highlight = nill
@@ -274,17 +287,6 @@ function RightMenu:loop()
     -- add numbers in boxes
     self:drawFullRow(4,78,113,215)
     -- image for loop symbol
-end
-
--------------------------------------
--- I'm unsure what this function was
--- meant to do /Vilhelm
---
--- Used to load images
--- @author
--------------------------------------
-function RightMenu:load()
-
 end
 
 return RightMenu

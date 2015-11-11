@@ -3,7 +3,7 @@
 --tells the parts to update.
 -------------------------------
 
-local rightmenu = require('games.Progg.RightMenu')
+local rightMenu = require('games.Progg.RightMenu')
 local bottomMenu = require('games.Progg.BottomMenu')
 local map = require('games.Progg.Map')
 
@@ -23,7 +23,7 @@ function ProggGame:new(context)
   --------------------------------
   self.inputHandler = inputHandler:new(self.platformContext)
   self.gameEventListener:attach(self.inputHandler)
-  self.rightmenu = rightmenu:new()
+  self.rightMenu = rightMenu:new()
   self.bottomMenu = bottomMenu:new(16)
   self.map = map:new()
   return self.class()
@@ -42,6 +42,8 @@ local function load()
   ProggGame.map:load()
   ProggGame.bottomMenu:load()
   ProggGame.bottomMenu:show()
+  ProggGame.rightMenu:load()
+  ProggGame.rightMenu:show()
 end
 
 -----------------------
