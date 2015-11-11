@@ -4,10 +4,10 @@ ProfileSelection = {} --MenuView:new()
 usernames = { "ERIK", "MARCUS", "TOAD" }
 
 -- images
-image1 = gfx.loadpng('data/bowser.png')
-image2 = gfx.loadpng('data/mario.png')
-image3 = gfx.loadpng('data/toad.png')
-images = { image1, image2, image3 }
+local image1 = gfx.loadpng('data/bowser.png')
+local image2 = gfx.loadpng('data/mario.png')
+local image3 = gfx.loadpng('data/toad.png')
+local images = { image1, image2, image3 }
 
 local Event = require('toolkit.Event')
 -------------------------------------

@@ -4,8 +4,7 @@
 -------------------------------
 
 local rightMenu = require('games.Progg.RightMenu')
-local bottomMenu = require('games.Progg.BottomMenu')
-local buildArea = require('games.Progg.BuildArea')
+local BottomMenu = require('games.Progg.BottomMenu')
 local map = require('games.Progg.Map')
 
 local Game = require('toolkit.Game')
@@ -22,16 +21,16 @@ local Position = require('games.Progg.Position')
 function ProggGame:new(context)
   self.platformContext = context
   self:initListener()
-  self.queue = Queue:new()
+  self.bottomMenu = BottomMenu:new(16)
+  self.queue = Queue:new(self.bottomMenu)
   self.character = Character:new(Position:new(0,0))
+  self.rightMenu = rightMenu:new()
+
   --------------------------------
   -- attach all object to delegate, in this case the input handler
   --------------------------------
-  self.inputHandler = inputHandler:new(self.platformContext, self.queue, self.character)
+  self.inputHandler = inputHandler:new(self.platformContext, self.queue, self.character, self.rightMenu)
   self.gameEventListener:attach(self.inputHandler)
-  self.rightMenu = rightMenu:new()
-  self.bottomMenu = bottomMenu:new(16)
-  self.buildArea = buildArea:new(8)
   self.map = map:new()
   return self.class()
 end
@@ -51,8 +50,6 @@ local function load()
   ProggGame.bottomMenu:show()
   ProggGame.rightMenu:load()
   ProggGame.rightMenu:show()
-  --ProggGame.buildArea:load()
-  ProggGame.buildArea:show()
 end
 
 -----------------------
