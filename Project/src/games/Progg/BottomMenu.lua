@@ -29,14 +29,12 @@ function BottomMenu:load()
     p1 = gfx.loadpng('data/progg_game_icons/P1.png')
     p2 = gfx.loadpng('data/progg_game_icons/P2.png')
     images = {["move"]=move, ["turn-left"]=turnLeft, ["turn-right"]=turnRight, ["commandname1"]=action, ["commandname2"]=ifWall, ["commandname3"]=loopStart, ["commandname4"]=p1, ["commandname5"]=p2}
-    self:drawBackground()
-    self:drawEmptySlots(self.availableSlots)
-    self:drawIcons(self.queue)
 end
 
 function BottomMenu:show()
-
-
+    self:drawBackground()
+    self:drawEmptySlots(self.availableSlots)
+    self:drawIcons(self.queue)
 end
 
 --

@@ -41,7 +41,7 @@ local function load()
   ProggGame.inputHandler:load()
   ProggGame.map:load()
   ProggGame.bottomMenu:load()
-
+  ProggGame.bottomMenu:show()
 end
 
 -----------------------
