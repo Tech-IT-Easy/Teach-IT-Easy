@@ -13,7 +13,6 @@ self.Y = y
 return self.class()
 end
 
-
 --Geters and setters of X and Y
 function Position:getX()
 
