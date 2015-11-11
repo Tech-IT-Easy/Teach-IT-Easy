@@ -32,7 +32,7 @@ function GameInputHandler:load()
 end
 
 function GameInputHandler:show()
-  screen:copyfrom(self.proggImage, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+  --screen:copyfrom(self.proggImage, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
 end
  
 --Subscribing the eventHandler to all events. Only numbers by now
