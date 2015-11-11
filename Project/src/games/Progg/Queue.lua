@@ -1,20 +1,15 @@
-------------------------------
---The queue that contains the actions the player wants to take.
---Allows others to push things to the queue, remove last (pop),
---change place of something in the queue(setPosition) and create a new queue.
-------------------------------
-local Object = require('toolkit.Object')
+-------------------------------------------------------------------
+--This is not using the toolkit.Object, instead it implements it's own OOP. But it works^^
+-------------------------------------------------------------------
 
-Queue = extends(Object.class())
+local Queue = {}
 
--------------------------------------
---Constructor creates a new instance of a queue, can take any objects
---but is meant to store actions/commands
-------------------------------------
 function Queue:new()
-  self.actions = {}
-  return self.class()
+  local newObj = {actions = {}}
+  self.__index = self
+  return setmetatable(newObj, self)
 end
+
 
 -------------------------------------
 --Adds something at the end of the queue
@@ -23,41 +18,21 @@ function Queue:push(action)
   table.insert(self.actions,action)
 end
 
+
 --------------------------------------
 --Removes the object in the queue that was added last
 --------------------------------------
 function Queue:pop()
   return table.remove(self.actions)
 end
+
+
 ----------------------------------------------------------------
 --Allows someone to switch positions for two objects in the queue
 ----------------------------------------------------------------
 function Queue:setPosition(currentPos, goalPos)
----------------
---code
----------------
+  self.actions[currentPos], self.actions[goalPos] = self.actions[goalPos], self.actions[currentPos]
 end
-
---------------------------------------------------------
--- This required keeping two copies of the queue in the queue and having functions for both.
--- Instead use getExecutionQueue to create a new queue instance in revesed order.
---
---OLD!: Used when the actions in the queue should be executed.
---It will probably send one action each time it's called,
---the one that was added first.
---------------------------------------------------------
---[[
-function Queue:execute()
-
-  if self.executionQueue == nil then
-    for i = 1, #self.actions do
-      table.insert(self.executionQueue, i, self.actions[#self.actions - i])
-    end
-  end
-
-  return table.remove(self.executionQueue)
-end
---]]
 
 
 ----------------------------------------
@@ -68,12 +43,8 @@ end
 function Queue:getExecutionQueue()
   local executionQueue = self:new()
   for i = 1, #self.actions do
-      table.insert(executionQueue.actions, i, self.actions[#self.actions - i])
+      table.insert(executionQueue.actions, i, self.actions[#self.actions - i + 1])
   end
-
-  --Just pop() with a new name
-  --function executionQueue:next() return table.remove(self) end
-
   return executionQueue
 end
 
