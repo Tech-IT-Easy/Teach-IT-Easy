@@ -20,15 +20,16 @@ end
 
 -- Used to load images
 function BottomMenu:load()
-    move = gfx.loadpng('data/progg_game_icons/arrow_up.png')
-    turnLeft = gfx.loadpng('data/progg_game_icons/turn_left.png')
-    turnRight = gfx.loadpng('data/progg_game_icons/turn_right.png')
-    action = gfx.loadpng('data/progg_game_icons/action.png')
-    ifWall = gfx.loadpng('data/progg_game_icons/if_wall.png')
-    loopStart = gfx.loadpng('data/progg_game_icons/loop.png')
-    p1 = gfx.loadpng('data/progg_game_icons/P1.png')
-    p2 = gfx.loadpng('data/progg_game_icons/P2.png')
-    images = {["move"]=move, ["turn-left"]=turnLeft, ["turn-right"]=turnRight, ["commandname1"]=action, ["commandname2"]=ifWall, ["commandname3"]=loopStart, ["commandname4"]=p1, ["commandname5"]=p2}
+    self.move = gfx.loadpng('data/progg_game_icons/arrow_up.png')
+    self.turnLeft = gfx.loadpng('data/progg_game_icons/turn_left.png')
+    self.turnRight = gfx.loadpng('data/progg_game_icons/turn_right.png')
+    self.action = gfx.loadpng('data/progg_game_icons/action.png')
+    self.ifWall = gfx.loadpng('data/progg_game_icons/if_wall.png')
+    self.loopStart = gfx.loadpng('data/progg_game_icons/loop.png')
+    self.p1 = gfx.loadpng('data/progg_game_icons/P1.png')
+    self.p2 = gfx.loadpng('data/progg_game_icons/P2.png')
+    self.images = {["move"]=self.move, ["turn-left"]=self.turnLeft, ["turn-right"]=self.turnRight,
+        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["commandname3"]=self.loopStart, ["commandname4"]=self.p1, ["commandname5"]=self.p2}
 end
 
 --Used when BottomMenu is updated
@@ -73,13 +74,6 @@ function BottomMenu:drawBackground()
     screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
 end
 
---Rearranges the positions according to the queue positions
-function BottomMenu:rearrage(queue)
-    for i, command in queue(command) do
-        self.Position[i] = queue[i]
-    end
-end
-
 
 -------------------------------------
 -- Draws the icons for the bottom left menu.
@@ -90,10 +84,10 @@ function BottomMenu:drawIcons(queue)
     for i = 1, #queue do
         if i <= 8 then
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-            screen:copyfrom(images[queue[i]], nil, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+            screen:copyfrom(self.images[queue[i]], nil, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         else
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (i-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-            screen:copyfrom(images[queue[i]], nil, { x = screen:get_width()*(0.038 + (i-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+            screen:copyfrom(self.images[queue[i]], nil, { x = screen:get_width()*(0.038 + (i-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         end
     end
 end

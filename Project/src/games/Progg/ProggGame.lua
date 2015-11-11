@@ -5,6 +5,7 @@
 
 local rightMenu = require('games.Progg.RightMenu')
 local bottomMenu = require('games.Progg.BottomMenu')
+local buildArea = require('games.Progg.BuildArea')
 local map = require('games.Progg.Map')
 
 local Game = require('toolkit.Game')
@@ -30,6 +31,7 @@ function ProggGame:new(context)
   self.gameEventListener:attach(self.inputHandler)
   self.rightMenu = rightMenu:new()
   self.bottomMenu = bottomMenu:new(16)
+  self.buildArea = buildArea:new(8)
   self.map = map:new()
   return self.class()
 end
@@ -49,6 +51,8 @@ local function load()
   ProggGame.bottomMenu:show()
   ProggGame.rightMenu:load()
   ProggGame.rightMenu:show()
+  --ProggGame.buildArea:load()
+  ProggGame.buildArea:show()
 end
 
 -----------------------
