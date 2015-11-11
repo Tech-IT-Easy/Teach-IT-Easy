@@ -11,18 +11,10 @@ local Object = require("toolkit.Object")
 local BottomMenu = extends(Object.class())
 
 
---Images
-
-
-
-BottomMenu.ImageArray={}
-BottomMenu.Position={}
-
-
 --Constructor method
 function BottomMenu:new(maxCommands)
     self.availableSlots = maxCommands
-    self.queue = {'move', 'turn-right', 'turn-right'}  -- test Queue
+    self.queue = {'move', 'turn-right', 'turn-left', 'turn-left', 'turn-right', 'turn-left', 'turn-right', 'turn-left', 'turn-left', 'turn-left', 'turn-left', 'turn-left', 'move'}  -- test Queue
     return self.class()
 end
 
@@ -39,7 +31,7 @@ function BottomMenu:load()
     images = {["move"]=move, ["turn-left"]=turnLeft, ["turn-right"]=turnRight, ["commandname1"]=action, ["commandname2"]=ifWall, ["commandname3"]=loopStart, ["commandname4"]=p1, ["commandname5"]=p2}
     self:drawBackground()
     self:drawEmptySlots(self.availableSlots)
-    self:drawImages(self.queue)
+    self:drawIcons(self.queue)
 end
 
 function BottomMenu:show()
@@ -78,8 +70,8 @@ end
 -------------------------------------
 function BottomMenu:drawBackground()
     screen:clear({r = 27, g = 39, b = 53 }, { x = 0, y = screen:get_height() * 0.65, w = screen:get_width(), h = screen:get_height() * 0.35 })
-    screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.7, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
-    screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.7, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
+    screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
+    screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
 end
 
 --Rearranges the positions according to the queue positions
@@ -95,11 +87,15 @@ end
 -- @param queue. The queue of commands. An array of strings.
 -- @author Mikael Ögren
 -------------------------------------
-function BottomMenu:drawImages(queue)
-    xPos = 6
+function BottomMenu:drawIcons(queue)
     for i = 1, #queue do
-        xPos = xPos + 18
-        screen:copyfrom(images[queue[i]], nil, { x = screen:get_width()*(0.037 + (i-1)*0.0545), y = screen:get_height()*0.742, w=screen:get_width()*0.040, h = screen:get_height()*0.070 }, true)
+        if i <= 8 then
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:copyfrom(images[queue[i]], nil, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+        else
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (i-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:copyfrom(images[queue[i]], nil, { x = screen:get_width()*(0.038 + (i-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+        end
     end
 end
 
