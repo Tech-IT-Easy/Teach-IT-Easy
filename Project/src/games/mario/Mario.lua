@@ -61,7 +61,7 @@ end
 function Mario:load()
   -- load resources 
   self.exampleActor:load()
-  print("load resouces")
+  print("load resouces1")
 end
 
 -----------------------------------------------------------
