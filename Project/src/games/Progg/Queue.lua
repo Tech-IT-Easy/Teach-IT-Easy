@@ -4,9 +4,10 @@
 
 local Queue = {}
 
-function Queue:new(newBottomMenu)
+function Queue:new(newBottomMenu, newBuildArea)
   self.bottomMenu = newBottomMenu
-  local newObj = {actions = {}}
+  self.buildArea = newBuildArea
+  local newObj = {actions = {}, loopActions = {}, p1Actions = {}, p2Actions = {}}
   self.__index = self
   return setmetatable(newObj, self)
 end
@@ -15,9 +16,21 @@ end
 -------------------------------------
 --Adds something at the end of the queue
 -------------------------------------
-function Queue:push(action)
-  table.insert(self.actions,action)
-  self.bottomMenu:drawIcons(self.actions)
+function Queue:push(action, queueType)
+
+  if queueType == "queue" then
+    table.insert(self.actions,action)
+    self.bottomMenu:setQueue(self.actions)
+  elseif queueType == "loop" then
+    table.insert(self.loopActions,action)
+    self.buildArea:setQueue(self.loopActions, queueType)
+  elseif queueType == "P1" then
+    table.insert(self.p1Actions,action)
+    self.buildArea:setQueue(self.p1Actions, queueType)
+  elseif queueType == "P2" then
+    table.insert(self.p2Actions,action)
+    self.buildArea:setQueue(self.p2Actions, queueType)
+  end
 end
 
 
