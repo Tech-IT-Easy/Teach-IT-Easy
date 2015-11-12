@@ -1,1 +1,1 @@
-require "tests.integration_testing.some_test"
+require "tests.integration_testing.test_command_and_queue"
