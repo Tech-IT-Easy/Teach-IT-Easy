@@ -1,11 +1,11 @@
 -- Add your testfiles here .
 --require "tests.src.test_main"
-require "tests.src.classes.test_MainMenu"
---require "tests.Emulator.classes.test_MenuView"
---require "tests.Emulator.classes.test_Object"
-require "tests.src.classes.test_ProfileSelection"
-require "tests.src.classes.test_CreateProfile"
-require "tests.src.classes.test_Games"
+require "tests.src.menus.test_MainMenu"
+--require "tests.Emulator.menus.test_MenuView"
+--require "tests.Emulator.menus.test_Object"
+require "tests.src.menus.test_ProfileSelection"
+require "tests.src.menus.test_CreateProfile"
+require "tests.src.menus.test_Games"
 
 require "tests.src.test_programminggame.test_Queue"
 require "tests.src.test_programminggame.test_BottomMenu"
