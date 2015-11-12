@@ -142,6 +142,8 @@ end
 -------------------------------------
 -- Adds a image for a specified
 -- command in the 9-command layout
+--
+-- @params command: command to add image for
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:addImage(command)
@@ -169,6 +171,8 @@ end
 
 -------------------------------------
 -- Adds a single numbers to the 9-command layout
+--
+-- @params position: position to add number to
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:addSingleNumber(position)
@@ -204,7 +208,7 @@ end
 
 -------------------------------------
 -- Adds the play & back text to the
--- two buttons  row in the 9-command
+-- two-buttons row in the 9-command
 -- layout
 -- @author Vilhelm
 -------------------------------------
@@ -247,6 +251,7 @@ end
 -- Needs to implement a timed call to remove
 -- the highlight again
 --
+-- @params command: command to be highlighted
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:highlight(command)
@@ -269,6 +274,8 @@ end
 -------------------------------------
 -- Removes the highlight on the command in the
 -- specified position.
+--
+-- @params command: command to be un-highlighted
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:removeHighlight(command)
