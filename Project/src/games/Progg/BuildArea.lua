@@ -30,20 +30,6 @@ function BuildArea:load()
         ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2}
 end
 
-function BuildArea:setBuildType(buildType)
-    self.buildType = buildType
-end
-
-function BuildArea:setQueue(queue, queueType)
-    if queueType == "loop" then
-        self.loopQueue = queue
-    elseif queueType == "P1" then
-        self.p1Queue = queue
-    elseif queueType == "P2" then
-        self.p2Queue = queue
-    end
-end
-
 function BuildArea:show()
     if self.buildType == "P1" then
         self:drawEmptySlots(self.availableSlots)
@@ -56,6 +42,31 @@ function BuildArea:show()
         self:drawIcons(self.loopQueue)
     end
     self:drawHeadLine()
+end
+
+-------------------------------------
+-- Sets the buildType which keeps track of which build area is to be drawn
+-- loop, P1 or P2,
+-- @author Mikael Ögren
+-------------------------------------
+function BuildArea:setBuildType(buildType)
+    self.buildType = buildType
+end
+
+-------------------------------------
+-- Sets the different queues.
+-- @param queue. An array of commands that are to be set as queue.
+-- @param queueType. Which queue is to be set, loop, P1 or P2.
+-- @author Mikael Ögren
+-------------------------------------
+function BuildArea:setQueue(queue, queueType)
+    if queueType == "loop" then
+        self.loopQueue = queue
+    elseif queueType == "P1" then
+        self.p1Queue = queue
+    elseif queueType == "P2" then
+        self.p2Queue = queue
+    end
 end
 
 -------------------------------------
@@ -99,15 +110,21 @@ function BuildArea:drawIcons(queue)
     end
 end
 
-
+-------------------------------------
+-- Draws headline dependent of if loop or any of the procedures are shown.
+-- @author Mikael Ögren
+-------------------------------------
 function BuildArea:drawHeadLine()
     if self.buildType == "loop" then
         screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.87), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.6), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+        screen:copyfrom(self.images["loop"], nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
     elseif self.buildType == "P1" then
-        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.6), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+        screen:copyfrom(self.images["P1"], nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
     elseif self.buildType == "P2" then
-        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.6), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+        screen:copyfrom(self.images["P2"], nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
     end
 end
 
