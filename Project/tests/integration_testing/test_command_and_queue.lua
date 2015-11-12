@@ -45,7 +45,7 @@ end
 
 function test_queue_with_commands()
   local class_to_mock = "games.Progg.BottomMenu"
-  package.loaded[class_to_mock]:drawIcons = nil
+  package.loaded[class_to_mock] = nil
   package.preload[class_to_mock] = nil
   -- import lemock
   local lemock = require 'lemock'
