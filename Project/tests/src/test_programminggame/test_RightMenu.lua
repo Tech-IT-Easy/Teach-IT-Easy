@@ -35,10 +35,10 @@ local function verify_mock(mc)
  end
 end
 
---[[-- Delete this function when the real test is done
+-- Delete this function when the real test is done
 function test_RightMenu_fail()
-   fail("RightMenu class and functions not tested yet!")
-end]]
+   fail("RightMenu highlight-functions not tested yet!")
+end
 
 function test_getPosition_correctCommand()
   -- command "move" is inputed
@@ -84,6 +84,8 @@ function test_RightMenu_falseCommand()
   verify_mock(mc)
 end
 
+--Need to figure out how to mock screen-methods
+--[[
 function test_highlight_correctCommand()
   -- command "move" is inputed
   local mc = create_mock(SUT)
@@ -95,7 +97,7 @@ function test_highlight_correctCommand()
   local ps = require(SUT)
 
   -- override the original functions with mocks
-  package.loaded[SUT].copyfrom = screencopyfrom
+  package.loaded[SUT].screen.copyfrom = screencopyfrom
 
   -- Tell for which arguments it should work, what it should return and how many times it should be called.
   screencopyfrom(mc.ANYARGS) ;mc :returns(nil) :anytimes()
@@ -110,4 +112,4 @@ function test_highlight_correctCommand()
   assert_equal("jump", a.highlight, "should return 'move', didn't")
 
   verify_mock(mc)
-end
+end]]
