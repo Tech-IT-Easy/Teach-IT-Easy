@@ -85,7 +85,6 @@ function test_queue_with_commands()
   local b = bb:new(ps4,nil)
   b:push(a,"queue")
 
-
   local c1 = b.actions[1]
   lunit.assert_equal(a, c1, "Did not found the correct element in the queue")
 end
