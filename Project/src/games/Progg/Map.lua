@@ -26,7 +26,10 @@ function Map:load()
   local padding = (screen:get_width()*0.75)-(self.boxheight * 8)
   self.startx = padding/2
   self.starty = self.boxheight/2
-  
+  self.innerboxheight = self.boxheight-14
+  self.boxpadding = 7
+  self.borderthickness = self.boxheight*0.07
+
 
   --screen:clear({ r = 0, g = 0, b = 0 }, { x = screen:get_width() * 0.05, y = screen:get_height()*0.05, w = screen:get_width() * 0.65, h = screen:get_height()*0.55 })
   --screen:clear({ r = 55, g = 72, b = 160 }, { x = screen:get_width() * 0.055, y = screen:get_height()*0.06, w = screen:get_width() * 0.64, h = screen:get_height()*0.532 })
@@ -43,11 +46,11 @@ function Map:load()
 
   -- Mapdata that is being displayed
   self.mapdata =
-  {0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0,}
+    {0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,}
 
   --Loop builds map
   for i = 1, 40, 1 do
@@ -70,23 +73,31 @@ function Map:square(i, type)
   local borderthickness = 5
 
   if(i<9)then
-self:drawBox(type,leftmargin +boxwidth * (i - 1) +1 *(i -1),topmargin )
-   -- screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
+    self:drawBox(type,leftmargin +boxwidth * (i - 1) +1 *(i -1),topmargin )
+    -- screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
   elseif(i<17)then
     i= i -8
-    screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
+    self:drawBox(type,leftmargin +boxwidth * (i - 1) +1 *(i -1),topmargin+boxheight+1 )
+
+    --screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
 
   elseif(i<25)then
     i= i -16
-    screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
+    self:drawBox(type,leftmargin +boxwidth * (i - 1) +1 *(i -1),topmargin+boxheight*2+1*2 )
+
+    --screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
 
   elseif(i<33)then
     i= i -24
-    screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
+    self:drawBox(type,leftmargin +boxwidth * (i - 1) +1 *(i -1),topmargin+boxheight*3+1*3 )
+
+    --screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
 
   else
     i= i -32
-    screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
+    self:drawBox(type,leftmargin +boxwidth * (i - 1) +1 *(i -1),topmargin+boxheight*4+1*4 )
+
+    --screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
 
   end
 end
@@ -94,91 +105,99 @@ end
 
 function Map:drawBox(type, xPos, yPos)
 
+  -- screen:clear({ g = 83, r = 101, b = 219 }, { x = xPos, y = yPos,w = self.boxheight, h = self.boxheight })
+  --screen:clear({ g = 200, r = 200, b = 200 }, { x = xPos+self.boxpadding, y = yPos+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+
+  if(type ~=16)then
+    self:drawStandardBox(xPos,yPos)
+  end
+
+  --[[
+  if (type ~= e) then
+    self.drawStandardBox(xPos,yPos)
+  end
+
+  if (type ==1) then
 
 
-
-if (type ~= e) then
-self.drawStandardBox(xPos,yPos)
-end
-
-    if (type ==1) then
-
-
-    elseif (type ==2) then
-
-
-
-
-    elseif (type ==3) then
-
-
-
-
-    elseif (type ==4) then
-
-
-
-    elseif (type ==5) then
-
-
-
-    elseif (type ==6) then
-
-
-
-elseif (type ==7) then
+  elseif (type ==2) then
 
 
 
 
-    elseif (type ==8) then
-
-
-
-    elseif (type ==9) then
+  elseif (type ==3) then
 
 
 
 
-    elseif (type ==9) then
+  elseif (type ==4) then
+
+
+
+  elseif (type ==5) then
+
+
+
+  elseif (type ==6) then
+
+
+
+  elseif (type ==7) then
 
 
 
 
-    elseif (type ==10) then
+  elseif (type ==8) then
+
+
+
+  elseif (type ==9) then
 
 
 
 
-    elseif (type ==11) then
-
-
-
-    elseif (type ==12) then
+  elseif (type ==9) then
 
 
 
 
-    elseif (type ==13) then
+  elseif (type ==10) then
 
 
 
-    elseif (type ==14) then
+
+  elseif (type ==11) then
 
 
 
-   elseif (type ==15) then
-
-    else (type ==16) then
+  elseif (type ==12) then
 
 
-    end
 
+
+  elseif (type ==13) then
+
+
+
+  elseif (type ==14) then
+
+
+
+  elseif (type ==15) then
+
+  else --(type ==16) then
+
+
+  end
+]]
 end
 
 function Map:drawStandardBox(xPos, yPos)
-        screen:clear({ g = 83, r = 101, b = 219 }, { x = xPos, y = yPos,w = self.boxheight, h = self.boxheight })
-     screen:clear({ g = 83, r = 101, b = 219 }, { x = xPos, y = yPos,w = self.boxheight, h = self.boxheight })
+  screen:clear({ g = 28, r = 70, b = 122 }, { x = xPos, y = yPos,w = self.boxheight, h = self.boxheight })
+  screen:clear({ g = 83, r = 101, b = 219 }, { x = xPos+self.boxpadding, y = yPos+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+
+  --screen:clear({ g = 83, r = 101, b = 219 }, { x = xPos, y = yPos,w = self.boxheight, h = self.boxheight })
+  --screen:clear({ g = 83, r = 101, b = 219 }, { x = xPos, y = yPos,w = self.boxheight, h = self.boxheight })
 end
 
 function Map:drawTopBorder(x, y)
