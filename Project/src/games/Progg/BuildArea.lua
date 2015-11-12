@@ -8,6 +8,7 @@
 
 local Object = require("toolkit.Object")
 local BuildArea = extends(Object.class())
+local RightMenu = require("games.Progg.RightMenu")
 
 function BuildArea:new(maxCommands)
     self.availableSlots = maxCommands
@@ -34,6 +35,7 @@ function BuildArea:show()
     if self.buildType == "P1" then
         self:drawEmptySlots(self.availableSlots)
         self:drawIcons(self.p1Queue)
+
     elseif self.buildType == "P2" then
         self:drawEmptySlots(self.availableSlots)
         self:drawIcons(self.p2Queue)
@@ -127,5 +129,6 @@ function BuildArea:drawHeadLine()
         screen:copyfrom(self.images["P2"], nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
     end
 end
+
 
 return BuildArea

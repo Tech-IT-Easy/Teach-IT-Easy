@@ -31,7 +31,7 @@ function ProggGame:new(context)
   --------------------------------
   -- attach all object to delegate, in this case the input handler
   --------------------------------
-  self.inputHandler = inputHandler:new(self.platformContext, self.queue, self.character, self.rightMenu, self.buildArea)
+  self.inputHandler = inputHandler:new(self.platformContext, self.queue, self.character, self.rightMenu, self.buildArea, self.bottomMenu)
   self.gameEventListener:attach(self.inputHandler)
   self.map = map:new()
   return self.class()
@@ -73,7 +73,7 @@ function ProggGame:update()
   -----------------------
   --Calls update on all objects, e.g.
   --UI:update()
-  self.bottomMenu:show()
+  self.bottomMenu:show(self.inputHandler:getinputArea())
   self.buildArea:show()
   self.inputHandler:show()
 end
