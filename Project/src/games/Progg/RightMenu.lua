@@ -53,16 +53,12 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:show()
-    self:drawRow(1)
-    self:drawRow(2)
-    self:drawRow(3)
-    self:drawFullRow(4,78,113,215)
-    self:addNumbers()
-    self:addImages()
-    self:highlight("action")
-    self:highlight("P2")
-    self:play()
-    self:loopLayout()
+    self:standardLayout()
+    --self:highlight("action")
+    --self:highlight("P2")
+    --self:play()
+    --self:loopLayout()
+    --self:buildLayout()
 end
 
 -------------------------------------
@@ -103,6 +99,30 @@ function RightMenu:drawRow(row)
 end
 
 -------------------------------------
+-- Draws two boxes covering a row
+-- Filling color is specified in rgb
+--
+-- Button corresponding to Back needs
+-- to be added
+--
+-- @author Vilhelm
+-------------------------------------
+function RightMenu:drawTwoBoxRow(row,r,g,b)
+    self:drawBox(92,128,149,92,128,149,first_column,first_row+(row-1)*(command_height+col_spacing),3*command_width+2*row_spacing,command_height)
+    self:drawBox(34,59,94,r,g,b,first_column,first_row+(row-1)*(command_height+col_spacing),(1.33)*command_width+row_spacing,command_height)
+    self:drawBox(34,59,94,r,g,b,first_column+(1.66)*command_width+row_spacing,first_row+(row-1)*(command_height+col_spacing),(1.33)*command_width+row_spacing,command_height)
+end
+
+-------------------------------------
+-- Draws a wide box covering a full row
+-- Filling color is specified in rgb
+-- @author Vilhelm
+-------------------------------------
+function RightMenu:drawFullRow(row,r,g,b)
+    self:drawBox(34,59,94,r,g,b,first_column,first_row+(row-1)*(command_height+col_spacing),3*command_width+2*row_spacing,command_height)
+end
+
+-------------------------------------
 -- Adds images for all commands
 -- to the 9-command layout
 -- @author Vilhelm
@@ -117,7 +137,7 @@ function RightMenu:addImages()
 end
 
 -------------------------------------
--- Adds a images for a specified
+-- Adds a image for a specified
 -- command in the 9-command layout
 -- @author Vilhelm
 -------------------------------------
@@ -142,9 +162,7 @@ function RightMenu:addNumbers()
     command_7:draw_over_surface(screen, "7")
     command_8:draw_over_surface(screen, "8")
     command_9:draw_over_surface(screen, "9")
-    command_play:draw_over_surface(screen, "0  Play!")
 end
-
 
 -------------------------------------
 -- Adds a single numbers to the 9-command layout
@@ -173,12 +191,24 @@ function RightMenu:addSingleNumber(position)
 end
 
 -------------------------------------
--- Draws a wide box covering a full row
--- Filling color is specified in rgb
+-- Adds the play text to the single wide
+-- button in the 9-command layout
 -- @author Vilhelm
 -------------------------------------
-function RightMenu:drawFullRow(row,r,g,b)
-    self:drawBox(34,59,94,r,g,b,first_column,first_row+(row-1)*(command_height+col_spacing),3*command_width+2*row_spacing,command_height)
+function RightMenu:addPlay()
+    command_play:draw_over_surface(screen, "0  Play!")
+end
+
+-------------------------------------
+-- Adds the play & back text to the
+-- two buttons  row in the 9-command
+-- layout
+-- @author Vilhelm
+-------------------------------------
+function RightMenu:addPlayAndBack()
+    command_0:draw_over_surface(screen, "0")
+    command_play_small:draw_over_surface(screen, "Play!")
+    command_back:draw_over_surface(screen, "Back")
 end
 
 -------------------------------------
@@ -281,6 +311,20 @@ function RightMenu:stop()
 end
 
 -------------------------------------
+-- Called to write the standard layout
+-- @author Vilhelm
+-------------------------------------
+function RightMenu:standardLayout()
+    self:drawRow(1)
+    self:drawRow(2)
+    self:drawRow(3)
+    self:drawFullRow(4,78,113,215)
+    self:addNumbers()
+    self:addPlay()
+    self:addImages()
+end
+
+-------------------------------------
 -- Called to replace buttons for loops
 -- @author Vilhelm
 -------------------------------------
@@ -300,10 +344,19 @@ function RightMenu:loopLayout()
     nr_7:draw_over_surface(screen, "7")
     nr_8:draw_over_surface(screen, "8")
     nr_9:draw_over_surface(screen, "9")
-    self:drawFullRow(4,78,113,215)
     command_play:draw_over_surface(screen, "0")
     screen:copyfrom(self.inf_loop, nil, { x = first_column+(command_width+row_spacing)+6,
         y = first_row+3*(command_height+col_spacing)+6, w=command_width-12, h = command_height-12 }, true)
+end
+
+-------------------------------------
+-- Called to replace buttons for
+-- use in the build area
+-- @author Vilhelm
+-------------------------------------
+function RightMenu:buildLayout()
+    self:drawTwoBoxRow(4,78,113,215)
+    self:addPlayAndBack()
 end
 
 return RightMenu

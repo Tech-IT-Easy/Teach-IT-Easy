@@ -60,7 +60,7 @@ function gameEventHandler:update(object,eventListener,event)
 if(event.state==Event.KEY_STATE_DOWN) then
       --Switch for all the input handling to implement
       if event.key == Event.KEY_ONE then
-     
+
       elseif event.key == Event.KEY_TWO then
         queue:push(Commands.TURN_RIGHT)
       
