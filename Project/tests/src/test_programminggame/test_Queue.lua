@@ -48,10 +48,11 @@ local SUT = 'src.games.Progg.Queue'
 
 -- -------------------------------------------------------------
 
+
 -- Tests if an object can be added to the queue
 function test_push_1()
   local a = require(SUT)
-  local queuelist = a:new()
+  local queuelist = a:new(nil)
   local queuecmd_1 = "Command_1"
 
   --Add object 'queuecmd_1' to the queue 'queuelist'
