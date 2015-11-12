@@ -5,7 +5,7 @@
 
 local Object = require("toolkit.Object")
 
-local Commands = extends(Object.class())
+local Commands = extends(Object)
 
 Commands.MOVE = "move"
 Commands.TURN_LEFT = "turn-left"
@@ -19,8 +19,9 @@ Commands.P2 = "P2"
 --Constructor to create a new command-object.
 ------------------------------------
 function Commands:new(action)
-  self.command = action
-  return self.class()
+  local o = Commands:super()
+  o.command = action
+  return Commands:init(o)
 end
 
 return Commands

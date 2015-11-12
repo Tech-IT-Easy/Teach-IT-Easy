@@ -9,11 +9,12 @@
 
 local Object = require('toolkit.Object')
 
-local Map = extends(Object.class())
+local Map = extends(Object)
 
 function Map:new()
+  local o = Map:super()
 
-  return self.class()
+  return Map:init(o)
 end
 
 

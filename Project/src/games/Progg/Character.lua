@@ -1,5 +1,5 @@
 local Object = require("toolkit.Object")
-local Character = extends(Object.class())
+local Character = extends(Object)
 local Commands = require('games.Progg.Commands')
 local Position = require('games.Progg.Position')
 
@@ -14,9 +14,10 @@ local step = 5
 --Constructor of the character
 ----
 function Character:new(newPosition)
-self.position = newPosition
-self.state = 0
-return self.class()
+local o = Character:super()
+o.position = newPosition
+o.state = 0
+return Character:init(o)
 end
 
 

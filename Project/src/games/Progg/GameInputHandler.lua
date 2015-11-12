@@ -17,7 +17,7 @@ local EventHandler = require('toolkit.EventHandler')
 local Event = require('toolkit.Event')
 local Commands = require('games.Progg.Commands')
 
-GameInputHandler = extends(Controllable.class())
+GameInputHandler = extends(Controllable)
 
 local context = nil
 local queue = nil
@@ -31,13 +31,14 @@ local inputArea = "queue" --Keeps track of if input is for the regular queue or 
 -- to be able to create new menu for PlatformContext
 -- -------------------------------------------------------
 function GameInputHandler:new(gameContext, inqueue, newCharacter, newRightMenu, newBuildArea, newBottomMenu)
+  local o = GameInputHandler:super()
   context = gameContext
   queue = inqueue
   character = newCharacter
   rightMenu = newRightMenu
   buildArea = newBuildArea
   bottomMenu = newBottomMenu
-return self.class()
+  return GameInputHandler:init(o)
 end
 
 function GameInputHandler:load()

@@ -28,30 +28,30 @@ local PlatformMenu = require('platform.PlatformMenu')
 local Event = require('toolkit.Event')
 
 
-PlatformContext = extends(Object.class())
+PlatformContext = extends(Object)
 
 -----------------------------------------------------------
 -- Platform context is responsible for all the platform things
 -----------------------------------------------------------
 function PlatformContext:new()
+  local o = PlatformContext:super()
   -- Platform contains a game which will be allocated when profile selected
-  self.game = nil
+  o.game = nil
 
   -- Platform menu
-  self.platformMenu = PlatformMenu:new()
+  o.platformMenu = PlatformMenu:new()
 
   -- Platform event listener
-  
-  self.platformEventListener = EventListener:new(self)
+  o.platformEventListener = EventListener:new(self)
   
   -- Attach menu object to listener
-  self.platformEventListener:attach(self.platformMenu)
+  o.platformEventListener:attach(o.platformMenu)
 
   --------------
   -- code
   --------------
 
-  return self.class()
+  return PlatformContext:init(o)
 end
 ------------------------------------
 --Allows a game to create a new menu, since the 

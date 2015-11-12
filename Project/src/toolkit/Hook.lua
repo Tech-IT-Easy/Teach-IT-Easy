@@ -4,10 +4,10 @@
 -- hook function in whole game
 --
 -- @Author:Created by Chuck, Aug 16,2015
--- @Author:Updated by author,date
+-- @Author:Updated by Chuck, Nov 11,2015 fit to new structure
 -----------------------------------------------------------
 local Object = require("toolkit.Object")
-local Hook = extends(Object.class())
+local Hook = extends(Object)
 
 -----------------------------------------------------------
 -- Hook function for listener when updating, which owns same parameters 

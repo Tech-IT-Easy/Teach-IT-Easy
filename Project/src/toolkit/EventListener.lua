@@ -4,29 +4,30 @@
 -- specific observers or add a chain listener.
 --
 -- @Author:Created by Chuck, Aug 16,2015
--- @Author:Updated by author,date
+-- @Author:Updated by Chuck, Nov 11,2015 fit to new structure
 -----------------------------------------------------------
 local Object = require("toolkit.Object")
 
-local EventListener = extends(Object.class())
+local EventListener = extends(Object)
 
 -----------------------------------------------------------
 -- Construct method
 -----------------------------------------------------------
 function EventListener:new(context)
+  local o = EventListener:super()
+  
   -- Object which owns this listener
-  newObject = {}
-  newObject.context = context
-  -- Objects which are registed in this listener
-  newObject.observers = {}
+  o.context = context
+  
+  -- Objects which are registered in this listener
+  o.observers = {}
   
   -- Chain listener which will be notified when this listener finishes updating
-  newObject.chainListener = nil
+  o.chainListener = nil
   
-  self.__index = self
   -- Hook for doing something before notifying
   -- self.beforeUpdateHook = nil
-  return setmetatable(newObject,self)--self.class()
+  return EventListener:init(o)
 end
 
 

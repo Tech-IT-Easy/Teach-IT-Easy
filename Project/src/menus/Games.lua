@@ -38,10 +38,11 @@ function Games:handleinput(event)
    -- proggImage = gfx.loadpng('data/ProgrammingGamePic_405.png')
     --screen:copyfrom(proggImage, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
     --proggImage:destroy()
-    PlatformContext.game = GameFactory:getGame(self.games[self.pos][1],PlatformContext)
-    PlatformContext.game:start()
-    PlatformContext.platformEventListener:remove(platformContext.platformMenu)
-    PlatformContext.platformMenu = nil
+
+    platformContext.game = GameFactory:getGame(self.games[self.pos][1],platformContext)
+    platformContext.game:start()
+    platformContext.platformEventListener:remove(platformContext.platformMenu)
+    platformContext.platformMenu = nil
     collectgarbage()
   end
   return { " " }

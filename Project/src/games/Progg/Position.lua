@@ -2,15 +2,17 @@
 
 local Object = require('toolkit.Object')
 
-Position = extends(Object.class())
+
+Position = extends(Object)
 
 local X = 0
 local Y = 0
 
 function Position:new(x,y)
-self.X = x
-self.Y = y
-return self.class()
+local o = Position:super()
+o.X = x
+o.Y = y
+return Position:init(o)
 end
 
 --Geters and setters of X and Y

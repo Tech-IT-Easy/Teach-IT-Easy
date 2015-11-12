@@ -12,7 +12,7 @@ local Game = require('toolkit.Game')
 local Hook = require('toolkit.Hook')
 local EventListener = require('toolkit.EventListener')
 local ExampleActor = require('games.mario.ExampleActor')
-local Mario = extends(Game.class())
+local Mario = extends(Game)
 
 -----------------------------------------------------------
 -- Create event listener hook to swap listen context to Mario 
@@ -36,32 +36,34 @@ local Mario = extends(Game.class())
 -- Construct method
 -----------------------------------------------------------
 function Mario:new(context)
-
+  local o = Mario:super()
   -- override hook function to make some changes for mario, we need to change platform context to game context
-  -- Add platform context 
-  self.platformContext = context
+  
   -- create all the objects related in game
+  o.exampleActor = ExampleActor:new{position={x=3,y=3},image="data/mario.png"}
   
-  self.exampleActor = ExampleActor:new()
+  -- Add platform context 
+  o.platformContext = context
+  
   -- initialize listener whose detail has been implemented in super class
-  
-  ----------------
-  -- some error I am trying to solve here. It is the connection between platform listener and game listener
-  -----------------
   self:initListener()
+  
   -- attach all object to delegate
-  self.gameEventListener:attach(self.exampleActor)
-  return self.class()
+  o.gameEventListener:attach(o.exampleActor)
+  
+  return Mario:init(o)
 end
 
 
 -----------------------------------------------------------
 -- Loading resources
 -----------------------------------------------------------
-local function load()
+function Mario:load()
   -- load resources 
-  Mario.exampleActor:load()
-  print("load resouces")
+  self.exampleActor:load()
+
+  print("load resouces2")
+
 end
 
 -----------------------------------------------------------
@@ -71,7 +73,7 @@ function Mario:start()
 
 
  
-  load()
+  self:load()
   
   -- start game
   print("start game")

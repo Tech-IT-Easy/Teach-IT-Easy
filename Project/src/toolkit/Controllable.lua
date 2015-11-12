@@ -4,11 +4,11 @@
 -- features
 --
 -- @Author:Created by Chuck, Aug 16,2015
--- @Author:Updated by author,date
+-- @Author:Updated by Chuck, Nov 11,2015 fit to new structure
 -----------------------------------------------------------
 local Object = require("toolkit.Object")
 
-local Controllable = extends(Object.class())
+local Controllable = extends(Object)
 
 -- Controllable.eventHandler = nil
 

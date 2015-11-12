@@ -7,15 +7,16 @@
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
-local BuildArea = extends(Object.class())
+local BuildArea = extends(Object)
 local RightMenu = require("games.Progg.RightMenu")
 
 function BuildArea:new(maxCommands)
-    self.availableSlots = maxCommands
-    self.loopQueue = {}
-    self.p1Queue = {}
-    self.p2Queue = {}
-    return self.class()
+    local o = BuildArea:super()
+    o.availableSlots = maxCommands
+    o.loopQueue = {}
+    o.p1Queue = {}
+    o.p2Queue = {}
+    return BuildArea:init(o)
 end
 
 function BuildArea:load()

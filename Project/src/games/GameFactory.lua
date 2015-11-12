@@ -8,7 +8,7 @@
 
 
 local Object = require('toolkit.Object')
-local GameFactory = extends(Object.class())
+local GameFactory = extends(Object)
 
 GameFactory.game = nil
 

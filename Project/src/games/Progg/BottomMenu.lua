@@ -5,16 +5,18 @@
 --
 -- @Author:Created by Mikael Ögren, Nov 04,2015
 -- @Author:Updated by Tobias Lundell, Nov 12, 2015
+-- @Author:Updated by Chuck Chu, Nov 12,2015 fit to new structure
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
-local BottomMenu = extends(Object.class())
+local BottomMenu = extends(Object)
 
 --Constructor method
 function BottomMenu:new(maxCommands)
-    self.availableSlots = maxCommands
-    self.queue = {}
-    return self.class()
+    local o = BottomMenu:super()
+    o.availableSlots = maxCommands
+    o.queue = {}
+    return BottomMenu:init(o)
 end
 
 -- Used to load images
@@ -78,10 +80,8 @@ end
 function BottomMenu:drawBackground(inputArea)
     screen:clear({r = 27, g = 39, b = 53 }, { x = 0, y = screen:get_height() * 0.65, w = screen:get_width(), h = screen:get_height() * 0.35 })
     if (inputArea == "queue") then
-        screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
         screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
     else
-        screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
         screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
     end
 end

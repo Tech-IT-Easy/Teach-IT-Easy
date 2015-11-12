@@ -7,7 +7,8 @@
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
-local RightMenu = extends(Object.class())
+
+local RightMenu = extends(Object)
 skin = require('games/Progg/progg_skin')
 
 -- Variale to keep track of a highlighted command
@@ -23,9 +24,10 @@ commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:new()
+   local o = RightMenu:super()
     --Draw right-hand side
     screen:clear({ r = 92, g = 128, b = 149 }, { x = screen:get_width() * 0.75, y = 0, w = screen:get_width() * 0.25, h = screen:get_height()*0.65 })
-    return self.class()
+    return RightMenu:init(o)
 end
 
 -------------------------------------
