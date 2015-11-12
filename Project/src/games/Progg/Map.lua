@@ -22,8 +22,14 @@ function Map:load()
   screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width()*0.75, h = screen:get_height()*0.65 }, true)
   self.background:destroy()
 
-  screen:clear({ r = 0, g = 0, b = 0 }, { x = screen:get_width() * 0.05, y = screen:get_height()*0.05, w = screen:get_width() * 0.65, h = screen:get_height()*0.55 })
-  screen:clear({ r = 55, g = 72, b = 160 }, { x = screen:get_width() * 0.055, y = screen:get_height()*0.06, w = screen:get_width() * 0.64, h = screen:get_height()*0.532 })
+  self.boxheight = (screen:get_height()*0.65)/6
+  local padding = (screen:get_width()*0.75)-(self.boxheight * 8)
+  self.startx = padding/2
+  self.starty = self.boxheight/2
+  
+
+  --screen:clear({ r = 0, g = 0, b = 0 }, { x = screen:get_width() * 0.05, y = screen:get_height()*0.05, w = screen:get_width() * 0.65, h = screen:get_height()*0.55 })
+  --screen:clear({ r = 55, g = 72, b = 160 }, { x = screen:get_width() * 0.055, y = screen:get_height()*0.06, w = screen:get_width() * 0.64, h = screen:get_height()*0.532 })
 
 
   -- 1 = free space
@@ -36,15 +42,15 @@ function Map:load()
 
 
   -- Mapdata that is being displayed
-    self.mapdata = {4, 4, 4, 4, 4, 0, 5, 0,
-                    0, 0, 0, 0, 6, 0, 5, 0,
-                    0, 0, 0, 0, 6, 0, 5, 0,
-                    0, 0, 0, 0, 6, 4, 4, 4,
-                    2, 2, 0, 0, 0, 0, 0, 0,}
+  self.mapdata = {4, 4, 4, 4, 4, 0, 5, 0,
+    0, 0, 0, 0, 6, 0, 5, 0,
+    0, 0, 0, 0, 6, 0, 5, 0,
+    0, 0, 0, 0, 6, 4, 4, 4,
+    2, 2, 0, 0, 0, 0, 0, 0,}
 
   --Loop builds map
   for i = 1, 40, 1 do
-      self:printsquare(i, self.mapdata)
+    self:square(i, self.mapdata[i])
   end
 
 end
@@ -52,6 +58,45 @@ end
 function Map:update()
 
 end
+
+function Map:square(i, type)
+
+  local boxwidth = self.boxheight
+  local boxheight = self.boxheight
+  local leftmargin = self.startx
+  local topmargin = self.starty
+  local borderthickness = 5
+
+  if(i<9)then
+self:drawBox(type,leftmargin +boxwidth * (i - 1) +1 *(i -1),topmargin )
+   -- screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
+  elseif(i<17)then
+    i= i -8
+    screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
+
+  elseif(i<25)then
+    i= i -16
+    screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
+
+  elseif(i<33)then
+    i= i -24
+    screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
+
+  else
+    i= i -32
+    screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
+
+  end
+end
+
+
+function Map:drawBox(type, x, y)
+
+end
+
+
+
+
 
 function Map:printsquare(i, mapdata)
 
@@ -63,186 +108,186 @@ function Map:printsquare(i, mapdata)
 
   if mapdata[i]==0 then
 
-  if(i<9)then
+    if(i<9)then
 
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
-  elseif(i<17)then
-  i= i -8
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
+    elseif(i<17)then
+      i= i -8
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
 
-  elseif(i<25)then
-  i= i -16
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
+    elseif(i<25)then
+      i= i -16
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
 
-  elseif(i<33)then
-  i= i -24
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
+    elseif(i<33)then
+      i= i -24
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
 
-  else
-  i= i -32
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
+    else
+      i= i -32
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
 
-  end
-  end
-
-    if mapdata[i]==2 then
- if(i<9)then
-
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
-
- elseif(i<17)then
-  i= i -8
-
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
-
-  elseif(i<25)then
-  i= i -16
-
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+2 ,w = boxwidth, h = boxheight })
-
-  elseif(i<33)then
-  i= i -24
-
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+3, w = boxwidth, h = boxheight })
-
-  else
-  i= i -32
-
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+4, w = boxwidth, h = boxheight })
-
-
-  end
+    end
   end
 
-     if mapdata[i]==3 then
+  if mapdata[i]==2 then
+    if(i<9)then
 
- if(i<9)then
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
 
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
-   screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = borderthickness })
+    elseif(i<17)then
+      i= i -8
 
- elseif(i<17)then
-  i= i -8
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = borderthickness })
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
 
-  elseif(i<25)then
-  i= i -16
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*2+2, w = boxwidth, h = borderthickness })
+    elseif(i<25)then
+      i= i -16
 
-  elseif(i<33)then
-  i= i -24
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*3+3, w = boxwidth, h = borderthickness })
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+2 ,w = boxwidth, h = boxheight })
 
-  else
-  i= i -32
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*4+4, w = boxwidth, h = borderthickness })
+    elseif(i<33)then
+      i= i -24
+
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+3, w = boxwidth, h = boxheight })
+
+    else
+      i= i -32
+
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+4, w = boxwidth, h = boxheight })
+
+
+    end
+  end
+
+  if mapdata[i]==3 then
+
+    if(i<9)then
+
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = borderthickness })
+
+    elseif(i<17)then
+      i= i -8
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = borderthickness })
+
+    elseif(i<25)then
+      i= i -16
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*2+2, w = boxwidth, h = borderthickness })
+
+    elseif(i<33)then
+      i= i -24
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*3+3, w = boxwidth, h = borderthickness })
+
+    else
+      i= i -32
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*4+4, w = boxwidth, h = borderthickness })
+
+    end
+
+
+
 
   end
 
 
 
 
+
+
+
+  if mapdata[i]==4 then
+    if(i<9)then
+
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight-borderthickness, w = boxwidth, h = borderthickness })
+
+    elseif(i<17)then
+      i= i -8
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*2+1-borderthickness, w = boxwidth, h = borderthickness })
+
+    elseif(i<25)then
+      i= i -16
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*3+2-borderthickness, w = boxwidth, h = borderthickness })
+
+    elseif(i<33)then
+      i= i -24
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*4+3-borderthickness, w = boxwidth, h = borderthickness })
+
+    else
+      i= i -32
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*5+4-borderthickness, w = boxwidth, h = borderthickness })
+
+
+    end
   end
 
 
+  if mapdata[i]==5 then
+    if(i<9)then
+
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = borderthickness, h = boxheight})
+
+    elseif(i<17)then
+      i= i -8
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = borderthickness, h = boxheight })
+
+    elseif(i<25)then
+      i= i -16
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*2+2, w = borderthickness, h = boxheight })
+
+    elseif(i<33)then
+      i= i -24
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*3+3, w = borderthickness, h = boxheight })
+
+    else
+      i= i -32
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*4+4, w = borderthickness, h = boxheight })
 
 
+    end
+  end
 
+  if mapdata[i]==6 then
+    if(i<9)then
 
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin+boxwidth+(boxwidth * (i -1))+1*(i - 1)-borderthickness, y = topmargin, w = borderthickness, h = boxheight})
 
-   if mapdata[i]==4 then
- if(i<9)then
+    elseif(i<17)then
+      i= i -8
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin+boxwidth+(boxwidth * (i -1))+1*(i - 1)-borderthickness, y= topmargin +boxheight+1, w = borderthickness, h = boxheight })
 
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
-   screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight-borderthickness, w = boxwidth, h = borderthickness })
+    elseif(i<25)then
+      i= i -16
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin+boxwidth+(boxwidth * (i -1))+1*(i - 1)-borderthickness, y=topmargin +(boxheight*2)+2,  w = borderthickness, h = boxheight })
 
- elseif(i<17)then
-  i= i -8
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*2+1-borderthickness, w = boxwidth, h = borderthickness })
+    elseif(i<33)then
+      i= i -24
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin+boxwidth+(boxwidth * (i -1))+1*(i - 1)-borderthickness, y= topmargin +(boxheight*3)+3, w = borderthickness, h = boxheight })
 
-  elseif(i<25)then
-  i= i -16
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*3+2-borderthickness, w = boxwidth, h = borderthickness })
+    else
+      i= i -32
+      screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
+      screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin+boxwidth+(boxwidth * (i -1))+1*(i - 1)-borderthickness, y= topmargin +(boxheight*4)+4, w = borderthickness, h = boxheight })
 
-  elseif(i<33)then
-  i= i -24
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*4+3-borderthickness, w = boxwidth, h = borderthickness })
-
-  else
-  i= i -32
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*5+4-borderthickness, w = boxwidth, h = borderthickness })
-
-
-end
-   end
-
-
-   if mapdata[i]==5 then
- if(i<9)then
-
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
-   screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = borderthickness, h = boxheight})
-
- elseif(i<17)then
-  i= i -8
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = borderthickness, h = boxheight })
-
-  elseif(i<25)then
-  i= i -16
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*2+2, w = borderthickness, h = boxheight })
-
-  elseif(i<33)then
-  i= i -24
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*3+3, w = borderthickness, h = boxheight })
-
-  else
-  i= i -32
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight*4+4, w = borderthickness, h = boxheight })
-
-
-end
-   end
-
-   if mapdata[i]==6 then
- if(i<9)then
-
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin +boxwidth * (i - 1) +1 *(i -1), y = topmargin, w = boxwidth, h = boxheight })
-   screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin+boxwidth+(boxwidth * (i -1))+1*(i - 1)-borderthickness, y = topmargin, w = borderthickness, h = boxheight})
-
- elseif(i<17)then
-  i= i -8
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1) +1 *(i -1), y = topmargin+boxheight+1, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin+boxwidth+(boxwidth * (i -1))+1*(i - 1)-borderthickness, y= topmargin +boxheight+1, w = borderthickness, h = boxheight })
-
-  elseif(i<25)then
-  i= i -16
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*2+1*2 ,w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin+boxwidth+(boxwidth * (i -1))+1*(i - 1)-borderthickness, y=topmargin +(boxheight*2)+2,  w = borderthickness, h = boxheight })
-
-  elseif(i<33)then
-  i= i -24
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*3+1*3, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin+boxwidth+(boxwidth * (i -1))+1*(i - 1)-borderthickness, y= topmargin +(boxheight*3)+3, w = borderthickness, h = boxheight })
-
-  else
-  i= i -32
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = leftmargin + boxwidth * (i - 1)+1 *(i -1), y = topmargin+boxheight*4+1*4, w = boxwidth, h = boxheight })
-  screen:clear({ g = 0, r = 0, b = 0 }, { x = leftmargin+boxwidth+(boxwidth * (i -1))+1*(i - 1)-borderthickness, y= topmargin +(boxheight*4)+4, w = borderthickness, h = boxheight })
-
-end
-end
+    end
+  end
 
 
 
