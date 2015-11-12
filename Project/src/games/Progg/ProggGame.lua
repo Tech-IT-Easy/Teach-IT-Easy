@@ -25,6 +25,7 @@ function ProggGame:new(context)
   self.bottomMenu = BottomMenu:new(16)
   self.buildArea = buildArea:new(16)
   self.queue = Queue:new(self.bottomMenu)
+  self.loopQueue = Queue:new(self.bottomMenu)
   self.character = Character:new(Position:new(0,0))
   self.rightMenu = rightMenu:new()
 

@@ -29,7 +29,7 @@ function BottomMenu:load()
     self.p1 = gfx.loadpng('data/progg_game_icons/P1.png')
     self.p2 = gfx.loadpng('data/progg_game_icons/P2.png')
     self.images = {["move"]=self.move, ["turn-left"]=self.turnLeft, ["turn-right"]=self.turnRight,
-        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["commandname5"]=self.p2}
+        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2}
 end
 
 --Used when BottomMenu is updated
@@ -39,10 +39,15 @@ function BottomMenu:show()
     self:drawIcons(self.queue)
 end
 
+-------------------------------------
+-- Set the queue for this class.
+-- @param queue. The queue that this class should use.
+-- @author Mikael Ögren
+-------------------------------------
 function BottomMenu:setQueue(queue)
     self.queue = queue
 end
---
+
 -------------------------------------
 -- Draw all empty command slots for current level.
 -- @param maxCommands. How many commands slots that are available to the player.
