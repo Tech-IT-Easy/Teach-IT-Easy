@@ -48,11 +48,13 @@ function test_queue_with_commands()
 
   local mc = create_mock(class_to_mock)
   local drawIcons = mc:mock()
+  local setQueue = mc:mock()
 
   --Only drawIcons need to be mocked. Reload class
   local ps=require(class_to_mock)
 
   package.loaded[class_to_mock].drawIcons = drawIcons
+  package.loaded[class_to_mock].setQueue = setQueue
 
   -- import lemock
   -- local lemock = require 'lemock'
@@ -63,18 +65,27 @@ function test_queue_with_commands()
   -- local drawIcons = mc:mock()
 
   drawIcons(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  setQueue(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   mc:replay()
 
   --local newBottomMenu = require "games.Progg.BottomMenu"
 
 
   local ps1 = require(SUT2)
-  a = ps1:new(ps1.MOVE)
+  local ps4=ps:new()
+
+  local event = require "src.toolkit.Event"
+  event.key = event.KEY_ONE
+
+  local a = ps1:new(event)
  -- a.command = a.MOVE
+ -- SUT1 =  'src.games.Progg.Queue'
+ -- SUT2 =  'src.games.Progg.Commands'
   local bb = require(SUT1)
-  b = bb:new(ps)
-  b:push(a)
+  local b = bb:new(ps4,nil)
+  b:push(a,"queue")
 
 
-
+  local c1 = b.actions[1]
+  lunit.assert_equal(a, c1, "Did not found the correct element in the queue")
 end
