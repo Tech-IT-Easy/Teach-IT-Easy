@@ -73,8 +73,8 @@ function ProggGame:update()
   -----------------------
   --Calls update on all objects, e.g.
   --UI:update()
-    self.bottomMenu:show()
-    self.buildArea:show()
+  self.bottomMenu:show()
+  self.buildArea:show()
   self.inputHandler:show()
 end
 
