@@ -11,34 +11,46 @@ local BuildArea = extends(Object.class())
 
 function BuildArea:new(maxCommands)
     self.availableSlots = maxCommands
-    self.queue = {'move', 'turn-right', 'turn-left', 'turn-left', 'turn-right', 'turn-left', 'turn-right', 'turn-left', 'turn-left', 'turn-left', 'turn-left', 'turn-left', 'move'}  -- test Queue
+    self.loopQueue = {}
+    self.p1Queue = {}
+    self.p2Queue = {}
     return self.class()
 end
 
 function BuildArea:load()
-    self.move = gfx.loadpng('data/progg_game_icons/arrow_up.png')
+ self.move = gfx.loadpng('data/progg_game_icons/arrow_up.png')
     self.turnLeft = gfx.loadpng('data/progg_game_icons/turn_left.png')
     self.turnRight = gfx.loadpng('data/progg_game_icons/turn_right.png')
     self.action = gfx.loadpng('data/progg_game_icons/action.png')
     self.ifWall = gfx.loadpng('data/progg_game_icons/if_wall.png')
-    self.loopStart = gfx.loadpng('data/progg_game_icons/loop.png')
+    self.loop = gfx.loadpng('data/progg_game_icons/loop.png')
     self.p1 = gfx.loadpng('data/progg_game_icons/P1.png')
     self.p2 = gfx.loadpng('data/progg_game_icons/P2.png')
     self.images = {["move"]=self.move, ["turn-left"]=self.turnLeft, ["turn-right"]=self.turnRight,
-        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["commandname3"]=self.loopStart, ["commandname4"]=self.p1, ["commandname5"]=self.p2}
+        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2}
 end
 
 function BuildArea:setBuildType(buildType)
     self.buildType = buildType
 end
 
+function BuildArea:setQueue(queue, queueType)
+    if queueType == "loop" then
+        self.loopQueue = queue
+    elseif queueType == "P1" then
+        self.p1Queue = queue
+    elseif queueType == "P2" then
+        self.p2Queue = queue
+    end
+end
+
 function BuildArea:show()
-    if self.buildType == "procedure" then
+    if self.buildType == "P1" then
         self:drawEmptySlots(self.availableSlots)
-        self:drawIcons(self.queue)
+        self:drawIcons(self.p1Queue)
     elseif self.buildType == "loop" then
         self:drawEmptySlots(self.availableSlots)
-        self:drawIcons(self.queue)
+        self:drawIcons(self.loopQueue)
         self:drawTimesLooped()
     end
 end
