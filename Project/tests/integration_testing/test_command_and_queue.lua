@@ -45,27 +45,36 @@ end
 
 function test_queue_with_commands()
   local class_to_mock = "games.Progg.BottomMenu"
-  package.loaded[class_to_mock] = nil
-  package.preload[class_to_mock] = nil
-  -- import lemock
-  local lemock = require 'lemock'
-  -- initiate mock controller
-  local mc = lemock.controller()
 
-
+  local mc = create_mock(class_to_mock)
   local drawIcons = mc:mock()
+
+  --Only drawIcons need to be mocked. Reload class
+  local ps=require(class_to_mock)
+
+  package.loaded[class_to_mock].drawIcons = drawIcons
+
+  -- import lemock
+  -- local lemock = require 'lemock'
+
+  -- local mc = lemock.controller()
+
+
+  -- local drawIcons = mc:mock()
 
   drawIcons(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   mc:replay()
 
-  local newBottomMenu = require "games.Progg.BottomMenu"
+  --local newBottomMenu = require "games.Progg.BottomMenu"
 
 
-  local ps = require(SUT2)
-  a = ps:new(ps.MOVE)
+  local ps1 = require(SUT2)
+  a = ps1:new(ps1.MOVE)
  -- a.command = a.MOVE
   local bb = require(SUT1)
-  b = bb:new(newBottomMenu)
+  b = bb:new(ps)
   b:push(a)
+
+
 
 end
