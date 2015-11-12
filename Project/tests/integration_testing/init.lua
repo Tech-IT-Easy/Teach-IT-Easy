@@ -1,0 +1,1 @@
+require "tests.integration_testing.some_test"
