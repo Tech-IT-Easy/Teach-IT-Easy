@@ -60,7 +60,7 @@ function RightMenu:show()
     --self:loopLayout()
     --self:buildLayout()
 end
-
+ 
 -------------------------------------
 -- Assigns commands to numbers
 --
