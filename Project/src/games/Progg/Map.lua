@@ -92,8 +92,22 @@ end
 
 function Map:drawBox(type, x, y)
 
+
+
+
 end
 
+function Map:drawStandardBox(x, y)
+end
+
+function Map:drawTopBorder(x, y)
+end
+function Map:drawBottomBorder(x, y)
+end
+function Map:drawLeftBorder(x, y)
+end
+function Map:drawRightBorder(x, y)
+end
 
 
 
@@ -288,8 +302,6 @@ function Map:printsquare(i, mapdata)
 
     end
   end
-
-
 
 
 end
