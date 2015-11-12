@@ -42,11 +42,12 @@ function Map:load()
 
 
   -- Mapdata that is being displayed
-  self.mapdata = {4, 4, 4, 4, 4, 0, 5, 0,
-    0, 0, 0, 0, 6, 0, 5, 0,
-    0, 0, 0, 0, 6, 0, 5, 0,
-    0, 0, 0, 0, 6, 4, 4, 4,
-    2, 2, 0, 0, 0, 0, 0, 0,}
+  self.mapdata =
+  {0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,}
 
   --Loop builds map
   for i = 1, 40, 1 do
@@ -63,6 +64,7 @@ function Map:square(i, type)
 
   local boxwidth = self.boxheight
   local boxheight = self.boxheight
+
   local leftmargin = self.startx
   local topmargin = self.starty
   local borderthickness = 5
@@ -90,14 +92,93 @@ self:drawBox(type,leftmargin +boxwidth * (i - 1) +1 *(i -1),topmargin )
 end
 
 
-function Map:drawBox(type, x, y)
+function Map:drawBox(type, xPos, yPos)
 
 
 
+
+if (type ~= e) then
+self.drawStandardBox(xPos,yPos)
+end
+
+    if (type ==1) then
+
+
+    elseif (type ==2) then
+
+
+
+
+    elseif (type ==3) then
+
+
+
+
+    elseif (type ==4) then
+
+
+
+    elseif (type ==5) then
+
+
+
+    elseif (type ==6) then
+
+
+
+elseif (type ==7) then
+
+
+
+
+    elseif (type ==8) then
+
+
+
+    elseif (type ==9) then
+
+
+
+
+    elseif (type ==9) then
+
+
+
+
+    elseif (type ==10) then
+
+
+
+
+    elseif (type ==11) then
+
+
+
+    elseif (type ==12) then
+
+
+
+
+    elseif (type ==13) then
+
+
+
+    elseif (type ==14) then
+
+
+
+   elseif (type ==15) then
+
+    else (type ==16) then
+
+
+    end
 
 end
 
-function Map:drawStandardBox(x, y)
+function Map:drawStandardBox(xPos, yPos)
+        screen:clear({ g = 83, r = 101, b = 219 }, { x = xPos, y = yPos,w = self.boxheight, h = self.boxheight })
+     screen:clear({ g = 83, r = 101, b = 219 }, { x = xPos, y = yPos,w = self.boxheight, h = self.boxheight })
 end
 
 function Map:drawTopBorder(x, y)
