@@ -48,11 +48,14 @@ function BuildArea:show()
     if self.buildType == "P1" then
         self:drawEmptySlots(self.availableSlots)
         self:drawIcons(self.p1Queue)
+    elseif self.buildType == "P2" then
+        self:drawEmptySlots(self.availableSlots)
+        self:drawIcons(self.p2Queue)
     elseif self.buildType == "loop" then
         self:drawEmptySlots(self.availableSlots)
         self:drawIcons(self.loopQueue)
-        self:drawTimesLooped()
     end
+    self:drawHeadLine()
 end
 
 -------------------------------------
@@ -96,8 +99,16 @@ function BuildArea:drawIcons(queue)
     end
 end
 
-function BuildArea:drawTimesLooped()
-    screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.87), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+
+function BuildArea:drawHeadLine()
+    if self.buildType == "loop" then
+        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.87), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.6), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+    elseif self.buildType == "P1" then
+        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.6), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+    elseif self.buildType == "P2" then
+        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.6), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+    end
 end
 
 return BuildArea

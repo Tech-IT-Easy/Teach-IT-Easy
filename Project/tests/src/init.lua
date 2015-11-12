@@ -9,6 +9,7 @@ require "tests.src.classes.test_Games"
 
 require "tests.src.test_programminggame.test_Queue"
 require "tests.src.test_programminggame.test_BottomMenu"
+require "tests.src.test_programminggame.test_BuildArea"
 require "tests.src.test_programminggame.test_Character"
 require "tests.src.test_programminggame.test_Commands"
 require "tests.src.test_programminggame.test_GameInputHandler"

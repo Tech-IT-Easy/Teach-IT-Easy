@@ -98,7 +98,11 @@ if(event.state==Event.KEY_STATE_DOWN) then
         rightMenu:highlight(Commands.P1)
 
       elseif event.key == Event.KEY_EIGHT then
-         
+        buildArea:setBuildType("P2")
+        queue:push(Commands.P2, inputArea)
+        inputArea = "P2"
+        rightMenu:highlight(Commands.P2)
+
       elseif event.key == Event.KEY_NINE then
       context.platformEventListener:removeChainListener()
       context:createNewMenu()

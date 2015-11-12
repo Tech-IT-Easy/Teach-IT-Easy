@@ -28,7 +28,7 @@ function Queue:push(action, queueType)
     table.insert(self.p1Actions,action)
     self.buildArea:setQueue(self.p1Actions, queueType)
   elseif queueType == "P2" then
-    table.insert(self.p2,action)
+    table.insert(self.p2Actions,action)
     self.buildArea:setQueue(self.p2Actions, queueType)
   end
 end
