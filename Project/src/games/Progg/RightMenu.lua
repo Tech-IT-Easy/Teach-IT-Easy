@@ -11,7 +11,7 @@ local RightMenu = extends(Object.class())
 skin = require('games/Progg/progg_skin')
 
 -- Variale to keep track of a highlighted command
-highlight = nill
+local highlight = nill
 
 -- Available commands
 commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
@@ -60,7 +60,7 @@ function RightMenu:show()
     --self:loopLayout()
     --self:buildLayout()
 end
- 
+
 -------------------------------------
 -- Assigns commands to numbers
 --
@@ -266,7 +266,6 @@ function RightMenu:highlight(command)
     self:drawBox(255,192,0,203,212,214,xvalue,yvalue,command_width,command_height)
     screen:copyfrom(self.images[command], nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
     self:addSingleNumber(position)
-
     highlight = command
 
 end
@@ -287,8 +286,7 @@ function RightMenu:removeHighlight(command)
     self:drawBox(34,59,94,203,212,214,xvalue,yvalue,command_width,command_height)
     screen:copyfrom(self.images[command], nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
     self:addSingleNumber(position)
-
-    highlight = nill
+    highlight = nil
 end
 
 -------------------------------------

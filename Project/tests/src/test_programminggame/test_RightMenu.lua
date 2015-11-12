@@ -85,31 +85,43 @@ function test_RightMenu_falseCommand()
 end
 
 --Need to figure out how to mock screen-methods
---[[
+
+--Doesn't work any longer after I made highlight in RightMenu local
+--(I addad a. to all highlight here as well)
 function test_highlight_correctCommand()
   -- command "move" is inputed
   local mc = create_mock(SUT)
-  -- Mock inactive and active
-  -- Create mock objects for each function to mock
-  local screencopyfrom = mc:mock()
-
-  -- In this case we want to mock 1 member functions so then we import the SUT (System under test)
   local ps = require(SUT)
-
-  -- override the original functions with mocks
-  package.loaded[SUT].screen.copyfrom = screencopyfrom
-
-  -- Tell for which arguments it should work, what it should return and how many times it should be called.
-  screencopyfrom(mc.ANYARGS) ;mc :returns(nil) :anytimes()
-
-  -- Start the testing
   mc:replay()
 
   local a = ps:new()
-  event = "move"
+  local event = "move"
+  local image_data = love.image.newImageData()
+  local var = {}
+  var.image_data = image_data
+  a.images = { ["move"]=var }
 
   a:highlight(event)
-  assert_equal("jump", a.highlight, "should return 'move', didn't")
+  assert_equal("move", a.highlight, "should return 'move', didn't")
 
   verify_mock(mc)
-end]]
+end
+
+function test_removeHighlight_correctCommand()
+  -- command "move" is inputed
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  mc:replay()
+
+  local a = ps:new()
+  local event = "move"
+  local image_data = love.image.newImageData()
+  local var = {}
+  var.image_data = image_data
+  a.images = { ["move"] = var }
+  a.highlight = "move"
+  a:removeHighlight(event)
+  assert_equal(nil, a.highlight, "should return nil, didn't")
+
+  verify_mock(mc)
+end

@@ -100,3 +100,4 @@ _G.player = require "SDK.Simulator.player"
 _G.freetype = require "SDK.Simulator.freetype"
 _G.sys = require "SDK.Simulator.sys"
 _G.script_path = ""
+_G.screen = gfx.new_surface(1280,720)
