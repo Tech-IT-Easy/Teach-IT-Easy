@@ -3,7 +3,7 @@
 -- of the marker to properly display the right menu.
 --
 -- @Author:Created by Mikael Ögren, Nov 04,2015
--- @Author:Updated by Vilhelm Granath, Nov 10, 2015
+-- @Author:Updated by Vilhelm Granath, Nov 12, 2015
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
@@ -109,6 +109,7 @@ end
 -------------------------------------
 function RightMenu:drawTwoBoxRow(row,r,g,b)
     self:drawBox(92,128,149,92,128,149,first_column,first_row+(row-1)*(command_height+col_spacing),3*command_width+2*row_spacing,command_height)
+
     self:drawBox(34,59,94,r,g,b,first_column,first_row+(row-1)*(command_height+col_spacing),(1.33)*command_width+row_spacing,command_height)
     self:drawBox(34,59,94,r,g,b,first_column+(1.66)*command_width+row_spacing,first_row+(row-1)*(command_height+col_spacing),(1.33)*command_width+row_spacing,command_height)
 end
@@ -119,6 +120,8 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:drawFullRow(row,r,g,b)
+    self:drawBox(92,128,149,92,128,149,first_column-command_width*0.10,first_row+(row-1)*(command_height+col_spacing)-command_height*0.15,command_width,command_height*0.4)
+
     self:drawBox(34,59,94,r,g,b,first_column,first_row+(row-1)*(command_height+col_spacing),3*command_width+2*row_spacing,command_height)
 end
 
@@ -279,7 +282,6 @@ function RightMenu:removeHighlight(command)
     self:addSingleNumber(position)
 
     highlight = nill
-
 end
 
 -------------------------------------
