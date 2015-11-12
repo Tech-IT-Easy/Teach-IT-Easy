@@ -4,12 +4,11 @@
 -- organized in the queue.
 --
 -- @Author:Created by Mikael Ögren, Nov 04,2015
--- @Author:Updated by author,date
+-- @Author:Updated by Tobias Lundell, Nov 12, 2015
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
 local BottomMenu = extends(Object.class())
-
 
 --Constructor method
 function BottomMenu:new(maxCommands)
@@ -33,8 +32,8 @@ function BottomMenu:load()
 end
 
 --Used when BottomMenu is updated
-function BottomMenu:show()
-    self:drawBackground()
+function BottomMenu:show(inputArea)
+    self:drawBackground(inputArea)
     self:drawEmptySlots(self.availableSlots)
     self:drawIcons(self.queue)
 end
@@ -76,10 +75,15 @@ end
 -- Draws the background for the bottom left menu
 -- @author Mikael Ögren
 -------------------------------------
-function BottomMenu:drawBackground()
+function BottomMenu:drawBackground(inputArea)
     screen:clear({r = 27, g = 39, b = 53 }, { x = 0, y = screen:get_height() * 0.65, w = screen:get_width(), h = screen:get_height() * 0.35 })
-    screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
-    screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
+    if (inputArea == "queue") then
+        screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
+        screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
+    else
+        screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
+        screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
+    end
 end
 
 
@@ -100,5 +104,6 @@ function BottomMenu:drawIcons(queue)
         end
     end
 end
+
 
 return BottomMenu

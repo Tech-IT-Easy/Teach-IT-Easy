@@ -30,12 +30,13 @@ local inputArea = "queue" --Keeps track of if input is for the regular queue or 
 -- Construct method takes the context as parameter
 -- to be able to create new menu for PlatformContext
 -- -------------------------------------------------------
-function GameInputHandler:new(gameContext, inqueue, newCharacter, newRightMenu, newBuildArea)
+function GameInputHandler:new(gameContext, inqueue, newCharacter, newRightMenu, newBuildArea, newBottomMenu)
   context = gameContext
   queue = inqueue
   character = newCharacter
   rightMenu = newRightMenu
   buildArea = newBuildArea
+  bottomMenu = newBottomMenu
 return self.class()
 end
 
@@ -114,9 +115,13 @@ if(event.state==Event.KEY_STATE_DOWN) then
       else
         inputArea = "queue"
       end
-     end
+      end
  end
  return true
+end
+
+function GameInputHandler:getinputArea()
+  return inputArea
 end
 
 GameInputHandler.eventHandler = gameEventHandler
