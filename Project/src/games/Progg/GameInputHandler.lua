@@ -23,7 +23,7 @@ local context = nil
 local queue = nil
 local character = nil
 local rightMenu = nil
-local bottomMenu
+local bottomMenu = nil
 local buildArea = nil
 local inputArea = "queue" --Keeps track of if input is for the regular queue or if we're building loop or procedures.
 -----------------------------------------------------------
@@ -49,7 +49,7 @@ function GameInputHandler:show()
 
   --screen:copyfrom(self.proggImage, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
 end
- 
+
 
 --Execute the entire queue but dosnt delete it
 function GameInputHandler:executeQueue()
@@ -67,58 +67,62 @@ gameEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_TH
 --Update function on every key input
 function gameEventHandler:update(object,eventListener,event)
 
-if(event.state==Event.KEY_STATE_DOWN) then
-      --Switch for all the input handling to implement
-      if event.key == Event.KEY_ONE then
-        queue:push(Commands.MOVE, inputArea)
-        rightMenu:highlight(Commands.MOVE)
-     
-      elseif event.key == Event.KEY_TWO then
-        queue:push(Commands.TURN_LEFT, inputArea)
-        rightMenu:highlight(Commands.TURN_LEFT)
-      
-      elseif event.key == Event.KEY_THREE then
-        queue:push(Commands.TURN_RIGHT, inputArea)
-        rightMenu:highlight(Commands.TURN_RIGHT)
+  if(event.state==Event.KEY_STATE_DOWN) then
+    --Switch for all the input handling to implement
+    if event.key == Event.KEY_ONE then
+      queue:push(Commands.MOVE, inputArea)
+      rightMenu:highlight(Commands.MOVE)
 
-      elseif event.key == Event.KEY_FOUR then
+    elseif event.key == Event.KEY_TWO then
+      queue:push(Commands.TURN_LEFT, inputArea)
+      rightMenu:highlight(Commands.TURN_LEFT)
+
+    elseif event.key == Event.KEY_THREE then
+      queue:push(Commands.TURN_RIGHT, inputArea)
+      rightMenu:highlight(Commands.TURN_RIGHT)
+
+    elseif event.key == Event.KEY_FOUR then
 
 
-      elseif event.key == Event.KEY_FIVE then
-     
-      
-      elseif event.key == Event.KEY_SIX then
-        buildArea:setBuildType("loop")
-        queue:push(Commands.LOOP, inputArea)
-        inputArea = "loop"
-        rightMenu:highlight(Commands.LOOP)
+    elseif event.key == Event.KEY_FIVE then
 
-      elseif event.key == Event.KEY_SEVEN then
-        buildArea:setBuildType("P1")
-        queue:push(Commands.P1, inputArea)
-        inputArea = "P1"
-        rightMenu:highlight(Commands.P1)
 
-      elseif event.key == Event.KEY_EIGHT then
-        buildArea:setBuildType("P2")
-        queue:push(Commands.P2, inputArea)
-        inputArea = "P2"
-        rightMenu:highlight(Commands.P2)
+    elseif event.key == Event.KEY_SIX then
+      buildArea:setBuildType("loop")
+      queue:push(Commands.LOOP, inputArea)
+      inputArea = "loop"
+      rightMenu:highlight(Commands.LOOP)
+      buildArea:setInputArea(inputArea)
 
-      elseif event.key == Event.KEY_NINE then
+    elseif event.key == Event.KEY_SEVEN then
+      buildArea:setBuildType("P1")
+      queue:push(Commands.P1, inputArea)
+      inputArea = "P1"
+      rightMenu:highlight(Commands.P1)
+      buildArea:setInputArea(inputArea)
+
+    elseif event.key == Event.KEY_EIGHT then
+      buildArea:setBuildType("P2")
+      queue:push(Commands.P2, inputArea)
+      inputArea = "P2"
+      rightMenu:highlight(Commands.P2)
+      buildArea:setInputArea(inputArea)
+
+    elseif event.key == Event.KEY_NINE then
       context.platformEventListener:removeChainListener()
       context:createNewMenu()
       context.game = nil
-          
-      elseif event.key == Event.KEY_ZERO then
+
+    elseif event.key == Event.KEY_ZERO then
       if inputArea == "queue"  then
         GameInputHandler:executeQueue()
       else
         inputArea = "queue"
+        buildArea:setInputArea(inputArea)
       end
-      end
- end
- return true
+    end
+  end
+  return true
 end
 
 function GameInputHandler:getinputArea()

@@ -30,12 +30,14 @@ function BottomMenu:load()
     self.p1 = gfx.loadpng('data/progg_game_icons/P1.png')
     self.p2 = gfx.loadpng('data/progg_game_icons/P2.png')
     self.images = {["move"]=self.move, ["turn-left"]=self.turnLeft, ["turn-right"]=self.turnRight,
-        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2}
+        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2 }
+    self.inputArea = "queue"
 end
 
 --Used when BottomMenu is updated
 function BottomMenu:show(inputArea)
-    self:drawBackground(inputArea)
+    self.inputArea = inputArea
+    self:drawBackground()
     self:drawEmptySlots(self.availableSlots)
     self:drawIcons(self.queue)
 end
@@ -56,7 +58,7 @@ end
 -------------------------------------
 function BottomMenu:drawEmptySlots(maxCommands)
     for i=1, maxCommands do
-            self:drawSingleEmptySlot(i)
+        self:drawSingleEmptySlot(i)
     end
 end
 
@@ -66,10 +68,18 @@ end
 -- @author Mikael Ögren
 -------------------------------------
 function BottomMenu:drawSingleEmptySlot(boxNmb)
-    if boxNmb <= 8 then
-        screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
+    if (self.inputArea == "queue") then
+        if boxNmb <= 8 then
+            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
+        else
+            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
+        end
     else
-        screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
+        if boxNmb <= 8 then
+            screen:clear({ r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.035 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
+        else
+            screen:clear({ r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.035 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
+        end
     end
 end
 
@@ -77,9 +87,9 @@ end
 -- Draws the background for the bottom left menu
 -- @author Mikael Ögren
 -------------------------------------
-function BottomMenu:drawBackground(inputArea)
+function BottomMenu:drawBackground()
     screen:clear({r = 27, g = 39, b = 53 }, { x = 0, y = screen:get_height() * 0.65, w = screen:get_width(), h = screen:get_height() * 0.35 })
-    if (inputArea == "queue") then
+    if (self.inputArea == "queue") then
         screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
     else
         screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
@@ -95,7 +105,7 @@ end
 function BottomMenu:drawIcons(queue)
     for i = 1, #queue do
         if i <= 8 then
-            print(queue[i])
+            --print(queue[i])
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
             screen:copyfrom(self.images[queue[i]], nil, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         else

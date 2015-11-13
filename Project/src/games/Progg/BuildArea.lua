@@ -8,7 +8,6 @@
 
 local Object = require("toolkit.Object")
 local BuildArea = extends(Object)
-local RightMenu = require("games.Progg.RightMenu")
 
 function BuildArea:new(maxCommands)
     local o = BuildArea:super()
@@ -29,7 +28,8 @@ function BuildArea:load()
     self.p1 = gfx.loadpng('data/progg_game_icons/P1.png')
     self.p2 = gfx.loadpng('data/progg_game_icons/P2.png')
     self.images = {["move"]=self.move, ["turn-left"]=self.turnLeft, ["turn-right"]=self.turnRight,
-        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2}
+        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2 }
+    self.inputArea = "queue"
 end
 
 function BuildArea:show()
@@ -56,6 +56,15 @@ function BuildArea:setBuildType(buildType)
     self.buildType = buildType
 end
 
+--------------------------------------
+-- Sets the inputArea variable to the active input area.
+-- queue, P1, P2 or loop
+-- @param inputArea. A string with the active input area name.
+-- @author Tobias Lundell, Nov 13, 2015
+--------------------------------------
+function BuildArea:setInputArea(inputArea)
+    self.inputArea = inputArea
+end
 -------------------------------------
 -- Sets the different queues.
 -- @param queue. An array of commands that are to be set as queue.
@@ -89,10 +98,18 @@ end
 -- @author Mikael Ögren
 -------------------------------------
 function BuildArea:drawSingleEmptySlot(boxNmb)
-    if boxNmb <= 8 then
-        screen:clear({r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.535 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
+    if (self.inputArea == "queue") then
+        if boxNmb <= 8 then
+            screen:clear({ r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.535 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
+        else
+            screen:clear({ r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.535 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
+        end
     else
-        screen:clear({r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.535 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
+        if boxNmb <= 8 then
+            screen:clear({ r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.535 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
+        else
+            screen:clear({ r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.535 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
+        end
     end
 end
 
