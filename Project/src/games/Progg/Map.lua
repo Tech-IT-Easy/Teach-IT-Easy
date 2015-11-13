@@ -1,4 +1,3 @@
--- Under development... feel free to add, edit, remove
 -- This class represents the game map.
 
 -- Created by IntelliJ IDEA.
@@ -11,6 +10,11 @@ local Object = require('toolkit.Object')
 
 local Map = extends(Object)
 
+-------------------------------------
+-- Creates new Map object.
+-- @return (if needed)
+-- @author name
+-------------------------------------
 function Map:new()
   local o = Map:super()
 
@@ -21,7 +25,10 @@ end
 function Map:load()
 
   self.background = gfx.loadpng('data/game_background_small.png')
-  screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width()*0.75, h = screen:get_height()*0.65 }, true)
+
+  screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width()*0.75,
+    h = screen:get_height()*0.65 }, true)
+
   self.background:destroy()
 
   self.boxheight = (screen:get_height()*0.65)/6
@@ -46,36 +53,98 @@ function Map:load()
     {9, "a", "c", 0, 0, 0, 0, 0,
       5, 5, 3, "c", 0, 0, 0, 0,
       5, 1, 0, 0, 0, 0, 0, 0,
-      5, 1, 0, 0, 0, 0, 0, 0,
+      5, 1, 0, 0, "f", 0, 0, 0,
       7, 3, 0, 0, 0, 0, 0, 0,}
 
   self.goalPos = 20
+  self.startPos = 33
+  self.charPos = 2
 
   --Loop builds map
   for i = 1, 40, 1 do
     self:square(i, self.mapdata[i])
   end
   self:setGoal(self.goalPos)
+  self:setStart(self.startPos)
+  self:setCharacter(self.charPos)
 
+end
+
+function Map:setCharacter(i)
+
+  self.image1 = gfx.loadpng('data/bowser.png')
+
+  if(i<9)then
+    screen:copyfrom(self.image1, nil, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxpadding, w = self.innerboxheight, h = self.innerboxheight }, true)
+  elseif(i<17)then
+    i= i -8
+    screen:copyfrom(self.image1, nil, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight+self.boxpadding, w = self.innerboxheight, h = self.innerboxheight}, true)
+  elseif(i<25)then
+    i= i -16
+    screen:copyfrom(self.image1, nil, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*2+self.boxpadding, w = self.innerboxheight, h = self.innerboxheight}, true)
+  elseif(i<33)then
+    i= i -24
+    screen:copyfrom(self.image1, nil, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y =self.starty+self.boxheight*3+self.boxpadding, w = self.innerboxheight, h = self.innerboxheight }, true)
+  else
+    i= i -32
+    screen:copyfrom(self.image1, nil, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y =self.starty+self.boxheight*4+self.boxpadding, w = self.innerboxheight, h = self.innerboxheight }, true)
+  end
+
+  self.image1:destroy()
 end
 
 
 function Map:setGoal(i)
 
   if(i<9)then
-    screen:clear({ g = 194, r = 225, b = 42}, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding, y = self.starty+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+    screen:clear({ g = 194, r = 225, b = 42}, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
   elseif(i<17)then
     i= i -8
-    screen:clear({ g = 194, r = 225, b = 42 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding, y = self.starty+self.boxheight+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+    screen:clear({ g = 194, r = 225, b = 42 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
   elseif(i<25)then
     i= i -16
-    screen:clear({g = 194, r = 225, b = 42 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding, y = self.starty+self.boxheight*2+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+    screen:clear({g = 194, r = 225, b = 42 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*2+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
   elseif(i<33)then
     i= i -24
-    screen:clear({ g = 194, r = 225, b = 42 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding, y = self.starty+self.boxheight*3+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+    screen:clear({ g = 194, r = 225, b = 42 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*3+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
   else
     i= i -32
-    screen:clear({ g = 194, r = 225, b = 42 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding, y = self.starty+self.boxheight*4+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+    screen:clear({ g = 194, r = 225, b = 42 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*4+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  end
+
+
+end
+function Map:setStart(i)
+
+  if(i<9)then
+    screen:clear({ g = 240, r = 19, b = 56}, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  elseif(i<17)then
+    i= i -8
+    screen:clear({ g = 240, r = 19, b = 56 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  elseif(i<25)then
+    i= i -16
+    screen:clear({g = 240, r = 19, b = 56 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*2+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  elseif(i<33)then
+    i= i -24
+    screen:clear({ g = 240, r = 19, b = 56 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*3+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  else
+    i= i -32
+    screen:clear({ g = 240, r = 19, b = 56 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*4+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
   end
 
 
@@ -162,7 +231,8 @@ end
 
 function Map:drawStandardBox(xPos, yPos)
   screen:clear({ g = 28, r = 70, b = 122 }, { x = xPos, y = yPos,w = self.boxheight, h = self.boxheight })
-  screen:clear({ g = 83, r = 101, b = 219 }, { x = xPos+self.boxpadding, y = yPos+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  screen:clear({ g = 83, r = 101, b = 219 }, { x = xPos+self.boxpadding, y = yPos+self.boxpadding,
+    w = self.innerboxheight, h = self.innerboxheight })
 end
 
 function Map:drawTopBorder(xPos, yPos)
