@@ -70,8 +70,8 @@ function test_push_2()
   local queuecmd_2 = "Command_2"
 
   -- Pushes two items to the queue
-  queuelist:push(queuecmd_1)
-  queuelist:push(queuecmd_2)
+  queuelist:push(queuecmd_1, "queue")
+  queuelist:push(queuecmd_2, "queue")
 
   -- Get the added objects from queue
   local c1 = queuelist.actions[1]
@@ -87,8 +87,8 @@ function test_delete()
     local queuecmd_1 = "Command_1"
     local queuecmd_2 = "Command_2"
 
-    queuelist:push(queuecmd_1)
-    queuelist:push(queuecmd_2)
+    queuelist:push(queuecmd_1, "queue")
+    queuelist:push(queuecmd_2, "queue")
 
 
     queuelist:pop()
@@ -104,9 +104,9 @@ function test_execute()
     local queuecmd_1 = "Command_1"
     local queuecmd_2 = "Command_2"
     local queuecmd_3 = "Command_3"
-    queuelist:push(queuecmd_1)
-    queuelist:push(queuecmd_2)
-    queuelist:push(queuecmd_3)
+    queuelist:push(queuecmd_1, "queue")
+    queuelist:push(queuecmd_2, "queue")
+    queuelist:push(queuecmd_3, "queue")
 
     -- Uncomment when execute() is implemented in Queue class
     local executedqueue = queuelist:getExecutionQueue()
@@ -132,8 +132,8 @@ function test_SetPos()
     local queuecmd_2 = "Command_2"
 
     -- Pushes two items to the queue
-    queuelist:push(queuecmd_1)
-    queuelist:push(queuecmd_2)
+    queuelist:push(queuecmd_1, "queue")
+    queuelist:push(queuecmd_2, "queue")
 
     -- Swap place of the two objects
     queuelist:setPosition(1,2)
