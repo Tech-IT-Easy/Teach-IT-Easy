@@ -14,6 +14,10 @@ function Queue:new(newBottomMenu, newBuildArea)
   o.p2Actions = {}
   if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
   if newBuildArea ~= nil then o.buildArea = newBuildArea end
+
+  -- @member buildArea:BuildArea
+  -- @member bottomMenu:BottomMenu
+
   return Queue:init(o)
 end
 

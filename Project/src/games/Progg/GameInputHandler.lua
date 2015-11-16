@@ -44,7 +44,7 @@ function GameInputHandler:new(gameContext, inqueue, newCharacter, newRightMenu, 
   -- @member character:Character
   -- @member rightMenu:RightMenu
   -- @member buildArea:BuildArea
-  -- @member botomMenu:BottomMenu
+  -- @member bottomMenu:BottomMenu
 
   context = gameContext
   queue = inqueue
