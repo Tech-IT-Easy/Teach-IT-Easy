@@ -27,7 +27,7 @@ end
 -- @param input The mapdata.
 -- @author Erik
 -------------------------------------
--- implement parameter with data
+-- implement parameter with mapdata
 function Map:load()
 
   self.background = gfx.loadpng('data/game_background_small.png')
@@ -44,15 +44,6 @@ function Map:load()
   self.innerboxheight = self.boxheight-20
   self.boxpadding = 10
   self.borderthickness = self.boxpadding/2
-
-  -- 1 = free space
-  -- 2 = all side block?
-  -- 3 = blocked above
-  -- 4 = blocked underneth
-  -- 5 = blocked to left
-  -- 6 = blocked to right
-  -- 7 = More combinations under development
-
 
   -- Mapdata that is being displayed
   self.mapdata =
@@ -74,6 +65,64 @@ function Map:load()
   self:setStart(self.startPos)
   self:setCharacter(self.charPos)
 
+end
+
+-------------------------------------
+-- Checks if character can move in wanted direction
+-- @param x Place of character
+-- @param y Place of character
+-- @param direction Wanted direction
+-- @author Erik
+-------------------------------------
+function Map:canMove(x ,y , direction)
+  if direction == "up" and self.mapdata[self:getPosition(x,y)].top == 1 then
+    return false
+  elseif direction == "left" and self.mapdata[self:getPosition(x,y)].left == 1 then
+    return false
+  elseif direction == "right" and self.mapdata[self:getPosition(x,y)].right == 1 then
+    return false
+  elseif direction == "down" and self.mapdata[self:getPosition(x,y)].bottom == 1 then
+    return false
+  else
+    return true
+  end
+end
+
+-------------------------------------
+-- Move character on map.
+-- @param x Place of character
+-- @param y Place of character
+-- @param direction Direction to move
+-- @author Erik
+-------------------------------------
+function Map:moveCharacter(x ,y , direction)
+  local pos = self:getPosition(x,y)
+  if pos ~= self.startPos then
+    self:square(pos, self.mapdata[pos])
+    if direction == "up" then
+      self:setCharacter(pos-8)
+    elseif direction == "left" then
+      self:setCharacter(pos-1)
+    elseif direction == "right" then
+      self:setCharacter(pos+1)
+    elseif direction == "down" then
+      self:setCharacter(pos+8)
+    end
+  else
+    self:setGoal(pos)
+  end
+
+end
+
+-------------------------------------
+-- Converts x and y value to position in mapdata.
+-- @param x Place of character
+-- @param y Place of character
+-- @author Erik
+-------------------------------------
+function Map:getPosition(x,y)
+  pos = x+(y-1)*8
+  return pos
 end
 
 -------------------------------------
