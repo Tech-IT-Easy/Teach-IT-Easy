@@ -39,6 +39,13 @@ local inputArea = "queue" --Keeps track of if input is for the regular queue or 
 -- -------------------------------------------------------
 function GameInputHandler:new(gameContext, inqueue, newCharacter, newRightMenu, newBuildArea, newBottomMenu)
   local o = GameInputHandler:super()
+  -- @member context:PlatformContext
+  -- @member queue:Queue
+  -- @member character:Character
+  -- @member rightMenu:RightMenu
+  -- @member buildArea:BuildArea
+  -- @member bottomMenu:BottomMenu
+
   context = gameContext
   queue = inqueue
   character = newCharacter
@@ -91,45 +98,49 @@ function gameEventHandler:update(object,eventListener,event)
     elseif event.key == Event.KEY_FOUR then
 
 
-    elseif event.key == Event.KEY_FIVE then
+      elseif event.key == Event.KEY_FIVE then
+     
+      
+      elseif event.key == Event.KEY_SIX then
+        buildArea:setBuildType("loop")
+        queue:push(Commands.LOOP, inputArea)
+        inputArea = "loop"
+        buildArea:setInputArea(inputArea)
+        bottomMenu:setInputArea(inputArea)
+        rightMenu:highlight(Commands.LOOP)
 
+      elseif event.key == Event.KEY_SEVEN then
+        buildArea:setBuildType("P1")
+        queue:push(Commands.P1, inputArea)
+        inputArea = "P1"
+        buildArea:setInputArea(inputArea)
+        bottomMenu:setInputArea(inputArea)
+        rightMenu:highlight(Commands.P1)
 
-    elseif event.key == Event.KEY_SIX then
-      buildArea:setBuildType("loop")
-      queue:push(Commands.LOOP, inputArea)
-      inputArea = "loop"
-      rightMenu:highlight(Commands.LOOP)
-      buildArea:setInputArea(inputArea)
-
-    elseif event.key == Event.KEY_SEVEN then
-      buildArea:setBuildType("P1")
-      queue:push(Commands.P1, inputArea)
-      inputArea = "P1"
-      rightMenu:highlight(Commands.P1)
-      buildArea:setInputArea(inputArea)
-
-    elseif event.key == Event.KEY_EIGHT then
-      buildArea:setBuildType("P2")
-      queue:push(Commands.P2, inputArea)
-      inputArea = "P2"
-      rightMenu:highlight(Commands.P2)
-      buildArea:setInputArea(inputArea)
+      elseif event.key == Event.KEY_EIGHT then
+        buildArea:setBuildType("P2")
+        queue:push(Commands.P2, inputArea)
+        inputArea = "P2"
+        buildArea:setInputArea(inputArea)
+        bottomMenu:setInputArea(inputArea)
+        rightMenu:highlight(Commands.P2)
 
     elseif event.key == Event.KEY_NINE then
       context.platformEventListener:removeChainListener()
       context:createNewMenu()
       context.game = nil
-
-    elseif event.key == Event.KEY_ZERO then
-      if inputArea == "queue"  then
-        GameInputHandler:executeQueue()
-      else
-        inputArea = "queue"
-        buildArea:setInputArea(inputArea)
+          
+      elseif event.key == Event.KEY_ZERO then
+          if inputArea == "queue"  then
+            GameInputHandler:executeQueue()
+          else
+            inputArea = "queue"
+          end
+          buildArea:setInputArea(inputArea)
+          bottomMenu:setInputArea(inputArea)
       end
-    end
-  end
-  return true
+ end
+ return true
 end
 
 function GameInputHandler:getinputArea()

@@ -53,7 +53,6 @@ function ProggGame:load()
   self.map:load()
   self.bottomMenu:load()
   self.buildArea:load()
-  self.buildArea:show()
   self.rightMenu:load()
   self.rightMenu:show()
 end
