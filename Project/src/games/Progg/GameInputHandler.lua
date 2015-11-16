@@ -105,18 +105,24 @@ if(event.state==Event.KEY_STATE_DOWN) then
         buildArea:setBuildType("loop")
         queue:push(Commands.LOOP, inputArea)
         inputArea = "loop"
+        buildArea:setInputArea(inputArea)
+        bottomMenu:setInputArea(inputArea)
         rightMenu:highlight(Commands.LOOP)
 
       elseif event.key == Event.KEY_SEVEN then
         buildArea:setBuildType("P1")
         queue:push(Commands.P1, inputArea)
         inputArea = "P1"
+        buildArea:setInputArea(inputArea)
+        bottomMenu:setInputArea(inputArea)
         rightMenu:highlight(Commands.P1)
 
       elseif event.key == Event.KEY_EIGHT then
         buildArea:setBuildType("P2")
         queue:push(Commands.P2, inputArea)
         inputArea = "P2"
+        buildArea:setInputArea(inputArea)
+        bottomMenu:setInputArea(inputArea)
         rightMenu:highlight(Commands.P2)
 
       elseif event.key == Event.KEY_NINE then
@@ -130,6 +136,8 @@ if(event.state==Event.KEY_STATE_DOWN) then
           else
             inputArea = "queue"
           end
+          buildArea:setInputArea(inputArea)
+          bottomMenu:setInputArea(inputArea)
       end
  end
  return true
