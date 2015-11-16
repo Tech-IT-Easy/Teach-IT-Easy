@@ -14,13 +14,37 @@ local step = 5
 --Constructor of the character
 ----
 function Character:new(newPosition)
-local o = Character:super()
-o.position = newPosition
-o.state = 0
-return Character:init(o)
+  local o = Character:super()
+  o.position = newPosition
+  o.state = 0
+  return Character:init(o)
 end
 
-
+function Character:startExecution(inqueue)
+  local queue = inqueue:getExecutionQueue()
+  for i=0, #queue.actions do
+    local act = queue:pop()
+    if act == Commands.LOOP then
+      for i =0, #queue.loopActions do
+        ----------------------------
+        -- Handle the loop queue here
+        ----------------------------
+      end
+    elseif act == Commands.P1 then
+      for i =0, #queue.p1Actions do
+        ----------------------------
+        -- Handle the procedure1 queue here
+        ----------------------------
+      end
+    elseif act == Commands.P2 then
+      for i =0, #queue.p2Actions do
+        ----------------------------
+        -- Handle the procedure2 queue here
+        ----------------------------
+      end
+    end
+  end
+end
 
 ---
 --Executes the given command
@@ -54,7 +78,7 @@ function Character:execute(command)
 end
 
 function Character:checkCollision(position, state)
-return true
+  return true
 end
 
 return Character
