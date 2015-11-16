@@ -12,8 +12,8 @@ local Map = extends(Object)
 
 -------------------------------------
 -- Creates new Map object.
--- @return (if needed)
--- @author name
+-- @return Map New map
+-- @author Adam
 -------------------------------------
 function Map:new()
   local o = Map:super()
@@ -22,6 +22,12 @@ function Map:new()
 end
 
 
+-------------------------------------
+-- Loads the map depending on data.
+-- @param input The mapdata.
+-- @author Erik
+-------------------------------------
+-- implement parameter with data
 function Map:load()
 
   self.background = gfx.loadpng('data/game_background_small.png')
@@ -70,6 +76,11 @@ function Map:load()
 
 end
 
+-------------------------------------
+-- Prints character to a place in map.
+-- @param i Place of character
+-- @author Erik
+-------------------------------------
 function Map:setCharacter(i)
 
   self.image1 = gfx.loadpng('data/bowser.png')
@@ -98,7 +109,11 @@ function Map:setCharacter(i)
   self.image1:destroy()
 end
 
-
+-------------------------------------
+-- Prints a tile in color of goal.
+-- @param i Place of goal
+-- @author Erik
+-------------------------------------
 function Map:setGoal(i)
 
   if(i<9)then
@@ -121,9 +136,13 @@ function Map:setGoal(i)
     screen:clear({ g = 194, r = 225, b = 42 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
       y = self.starty+self.boxheight*4+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
   end
-
-
 end
+
+-------------------------------------
+-- Prints a tile in color of start.
+-- @param i Place of start
+-- @author Erik
+-------------------------------------
 function Map:setStart(i)
 
   if(i<9)then
@@ -146,8 +165,6 @@ function Map:setStart(i)
     screen:clear({ g = 240, r = 19, b = 56 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
       y = self.starty+self.boxheight*4+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
   end
-
-
 end
 
 
@@ -155,7 +172,12 @@ function Map:update()
 
 end
 
-
+-------------------------------------
+-- Calculates x and y of tile.
+-- @param i Place of tile
+-- @param type The type of tile to be printed
+-- @author Erik
+-------------------------------------
 function Map:square(i, type)
   if(i<9)then
     self:drawBox(type,self.startx +self.boxheight * (i - 1),self.starty )
@@ -176,7 +198,13 @@ function Map:square(i, type)
 
 end
 
-
+-------------------------------------
+-- Prints a tile on the board.
+-- @param type The type of tile to be printed
+-- @param xPos X placement of tile
+-- @param yPos Y placement of tile
+-- @author Erik
+-------------------------------------
 function Map:drawBox(type, xPos, yPos)
 
   if(type ~="f")then
@@ -229,23 +257,55 @@ function Map:drawBox(type, xPos, yPos)
 
 end
 
+-------------------------------------
+-- Prints a standard tile with inner box to the board.
+-- @param xPos X placement of tile
+-- @param yPos Y placement of tile
+-- @author Erik
+-------------------------------------
 function Map:drawStandardBox(xPos, yPos)
   screen:clear({ g = 28, r = 70, b = 122 }, { x = xPos, y = yPos,w = self.boxheight, h = self.boxheight })
   screen:clear({ g = 83, r = 101, b = 219 }, { x = xPos+self.boxpadding, y = yPos+self.boxpadding,
     w = self.innerboxheight, h = self.innerboxheight })
 end
 
+-------------------------------------
+-- Prints a border on the top of the tile.
+-- @param xPos X placement of tile
+-- @param yPos Y placement of tile
+-- @author Erik
+-------------------------------------
 function Map:drawTopBorder(xPos, yPos)
   screen:clear({ g = 255, r = 255, b = 255 }, { x = xPos, y =yPos ,w = self.boxheight, h = self.borderthickness })
-
 end
+
+-------------------------------------
+-- Prints a border on the bottom of the tile.
+-- @param xPos X placement of tile
+-- @param yPos Y placement of tile
+-- @author Erik
+-------------------------------------
 function Map:drawBottomBorder(xPos, yPos)
   yPos = yPos+self.boxheight-self.borderthickness
   screen:clear({ g = 255, r = 255, b = 255 }, { x = xPos, y =yPos ,w = self.boxheight, h = self.borderthickness })
 end
+
+-------------------------------------
+-- Prints a border on the left side of the tile.
+-- @param xPos X placement of tile
+-- @param yPos Y placement of tile
+-- @author Erik
+-------------------------------------
 function Map:drawLeftBorder(xPos, yPos)
   screen:clear({ g = 255, r = 255, b = 255 }, { x = xPos, y = yPos,w = self.borderthickness, h = self.boxheight })
 end
+
+-------------------------------------
+-- Prints a border on the right side of the tile.
+-- @param xPos X placement of tile
+-- @param yPos Y placement of tile
+-- @author Erik
+-------------------------------------
 function Map:drawRightBorder(xPos, yPos)
   xPos = xPos+self.boxheight-self.borderthickness
   screen:clear({ g = 255, r = 255, b = 255 }, { x = xPos, y = yPos,w = self.borderthickness, h = self.boxheight })

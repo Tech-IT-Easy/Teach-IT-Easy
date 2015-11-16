@@ -39,11 +39,12 @@ function PlatformContext:new()
   o.game = nil
 
   -- Platform menu
+  -- @member platformMenu:PlatformMenu
   o.platformMenu = PlatformMenu:new()
 
   -- Platform event listener
   o.platformEventListener = EventListener:new(self)
-  
+
   -- Attach menu object to listener
   o.platformEventListener:attach(o.platformMenu)
 
@@ -54,7 +55,7 @@ function PlatformContext:new()
   return PlatformContext:init(o)
 end
 ------------------------------------
---Allows a game to create a new menu, since the 
+--Allows a game to create a new menu, since the
 --old menu is discarded when game is created.
 ------------------------------------
 function PlatformContext:createNewMenu()
@@ -66,14 +67,14 @@ function PlatformContext:createNewMenu()
 end
 
 -----------------------------------------------------------
--- Load resources,such as images to platform context 
+-- Load resources,such as images to platform context
 -----------------------------------------------------------
 function PlatformContext:load()
 
-  -- self.platformMenu:loadImage()
-  --------------
-  -- code
-  --------------
+-- self.platformMenu:loadImage()
+--------------
+-- code
+--------------
 end
 
 ----------------------------------------------------------
@@ -84,7 +85,7 @@ function PlatformContext:show()
   -- code
   --------------
   self.platformMenu:show()
-  
+
   gfx.update()
 end
 
@@ -97,7 +98,7 @@ function PlatformContext:update()
   if self.game ~= nil then
     self.game:update()
   end
-  
+
   if self.platformMenu ~= nil then
     self.platformMenu:update()
   end
