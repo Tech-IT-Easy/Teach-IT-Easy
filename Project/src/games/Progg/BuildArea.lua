@@ -17,21 +17,34 @@ function BuildArea:new(maxCommands)
     o.p1Queue = {}
     o.p2Queue = {}
     o.drawBuildArea = newDrawBuildArea:new()
+    o.inputArea = "queue"
     return BuildArea:init(o)
 end
 
 function BuildArea:load()
 end
 
+-------------------------------------
+-- Sets the active input area
+-- @param inputArea. The active input area.
+-- @author Tobias Lundell
+-------------------------------------
+function BuildArea:setInputArea(inputArea)
+    self.inputArea = inputArea
+end
+
 function BuildArea:show()
+
+    self.drawBuildArea:EmptySlots(self.availableSlots, self.inputArea)
+
     if self.buildType == "P1" then
-        self.drawBuildArea:EmptySlots(self.availableSlots)
+        --self.drawBuildArea:EmptySlots(self.availableSlots)
         self.drawBuildArea:Icons(self.p1Queue, self.images)
     elseif self.buildType == "P2" then
-        self.drawBuildArea:EmptySlots(self.availableSlots)
+       -- self.drawBuildArea:EmptySlots(self.availableSlots)
         self.drawBuildArea:Icons(self.p2Queue, self.images)
     elseif self.buildType == "loop" then
-        self.drawBuildArea:EmptySlots(self.availableSlots)
+       -- self.drawBuildArea:EmptySlots(self.availableSlots)
         self.drawBuildArea:Icons(self.loopQueue, self.images)
     end
     self.drawBuildArea:HeadLine(self.images, self.buildType)

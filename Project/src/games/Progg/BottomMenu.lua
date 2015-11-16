@@ -20,6 +20,7 @@ function BottomMenu:new(maxCommands)
     o.availableSlots = maxCommands
     o.queue = {}
     o.drawBottomMenu = newDrawBottomMenu:new()
+    o.inputArea = "queue"
     return BottomMenu:init(o)
 end
 
@@ -27,15 +28,23 @@ end
 function BottomMenu:load()
 end
 
+--------------------------------------------
+-- Sets the active input area
+-- @param inputArea.
+-- @ author Tobias Lundell
+--------------------------------------------
+function BottomMenu:setInputArea(inputArea)
+    self.inputArea = inputArea
+end
 ---------------------------------------------
 -- Used when BottomMenu is updated
 -- @param inputArea. Can be queue, loop, P1 or P2. Determines what area should be drawn.
 -- @author Mikael Ögren
 --------------------------------------------
-function BottomMenu:show(inputArea)
+function BottomMenu:show()
     --collectgarbage()
-    self.drawBottomMenu:background(inputArea)
-    self.drawBottomMenu:emptySlots(self.availableSlots)
+    self.drawBottomMenu:background(self.inputArea)
+    self.drawBottomMenu:emptySlots(self.availableSlots, self.inputArea)
     self.drawBottomMenu:icons(self.queue)
 end
 
