@@ -7,13 +7,16 @@
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
-
-local RightMenu = extends(Object)
+local Controllable = require("toolkit.Controllable")
+local RightMenu = extends(Controllable)
 skin = require('games/Progg/progg_skin')
+local Commands = require('games.Progg.Commands')
+local Event = require('toolkit.Event')
+local EventHandler = require('toolkit.EventHandler')
 local drawRightMenu = require('games/Progg/DrawRightMenu')
 
 -- Variale to keep track of a highlighted command
-local highlight = nill
+local highlight = nil
 
 -- Available commands
 commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
@@ -68,9 +71,7 @@ function RightMenu:highlight(command)
     if highlight ~= nil then
         self:removeHighlight(highlight)
     end
-    print("look here")
     print(command)
-    print("stop looking")
     self.draw:drawHighlight(command)
 
     highlight = command

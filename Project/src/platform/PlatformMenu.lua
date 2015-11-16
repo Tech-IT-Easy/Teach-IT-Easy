@@ -98,7 +98,7 @@ function menuEventHandler:update(object,eventListener,event)
     local temp = object.currentview:handleinput(event)
     if temp[1] ~= " " then object:changeview(temp) end
   collectgarbage()
-end
+end 
  
 end
 

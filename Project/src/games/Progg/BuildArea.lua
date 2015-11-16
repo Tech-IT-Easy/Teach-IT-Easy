@@ -17,21 +17,34 @@ function BuildArea:new(maxCommands)
     o.p1Queue = {}
     o.p2Queue = {}
     o.drawBuildArea = newDrawBuildArea:new()
+    o.inputArea = "queue"
     return BuildArea:init(o)
 end
 
 function BuildArea:load()
 end
 
+-------------------------------------
+-- Sets the active input area
+-- @param inputArea. The active input area.
+-- @author Tobias Lundell
+-------------------------------------
+function BuildArea:setInputArea(inputArea)
+    self.inputArea = inputArea
+end
+
 function BuildArea:show()
+
+    self.drawBuildArea:emptySlots(self.availableSlots, self.inputArea)
+
     if self.buildType == "P1" then
-        self.drawBuildArea:emptySlots(self.availableSlots)
+        --self.drawBuildArea:EmptySlots(self.availableSlots)
         self.drawBuildArea:icons(self.p1Queue, self.images)
     elseif self.buildType == "P2" then
-        self.drawBuildArea:emptySlots(self.availableSlots)
+       -- self.drawBuildArea:EmptySlots(self.availableSlots)
         self.drawBuildArea:icons(self.p2Queue, self.images)
     elseif self.buildType == "loop" then
-        self.drawBuildArea:emptySlots(self.availableSlots)
+       -- self.drawBuildArea:EmptySlots(self.availableSlots)
         self.drawBuildArea:icons(self.loopQueue, self.images)
     end
     self.drawBuildArea:headLine(self.buildType)
@@ -46,6 +59,15 @@ function BuildArea:setBuildType(buildType)
     self.buildType = buildType
 end
 
+--------------------------------------
+-- Sets the inputArea variable to the active input area.
+-- queue, P1, P2 or loop
+-- @param inputArea. A string with the active input area name.
+-- @author Tobias Lundell, Nov 13, 2015
+--------------------------------------
+function BuildArea:setInputArea(inputArea)
+    self.inputArea = inputArea
+end
 -------------------------------------
 -- Sets the different queues.
 -- @param queue. An array of commands that are to be set as queue.
