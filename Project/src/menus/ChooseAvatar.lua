@@ -6,7 +6,11 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-ChooseAvatar = {} --MenuView:new()
+--ChooseAvatar = {} --MenuView:new()
+
+-- Changed to extending empty super-menu
+local Super = require('toolkit.MenuSuperClass')
+ChooseAvatar = extends(Super)
 
 local Event = require('toolkit.Event')
 local CreateProfile = require('menus.CreateProfile')

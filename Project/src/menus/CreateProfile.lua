@@ -1,4 +1,7 @@
-CreateProfile = {} --MenuView:new()
+--CreateProfile = {} --MenuView:new()
+-- Changed to extending empty super-menu
+local Super = require('toolkit.MenuSuperClass')
+CreateProfile = extends(Super)
 
 local Event = require('toolkit.Event')
 local ProfileSelection = require('menus.ProfileSelection')

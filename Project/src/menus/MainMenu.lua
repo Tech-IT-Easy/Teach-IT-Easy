@@ -1,4 +1,7 @@
-MainMenu = {} --MenuView:new()
+-- MainMenu = {} --MenuView:new()
+-- Changed to extending empty super-menu
+local Super = require('toolkit.MenuSuperClass')
+MainMenu = extends(Super)
 
 local Event = require('toolkit.Event')
 -------------------------------------

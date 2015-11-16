@@ -1,4 +1,7 @@
-ProfileSelection = {} --MenuView:new()
+--ProfileSelection = {} --MenuView:new()
+-- Changed to extending empty super-menu
+local Super = require('toolkit.MenuSuperClass')
+ProfileSelection = extends(Super)
 
 --usernames
 usernames = { "ERIK", "MARCUS", "TOAD" }
