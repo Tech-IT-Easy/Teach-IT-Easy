@@ -3,9 +3,10 @@
 -- commands in the bottom menu based on how they're
 -- organized in the queue.
 --
--- @Author:Created by Mikael Ögren, Nov 04,2015
+-- @Author:Created by Mikael Ögren, Nov 04, 2015
 -- @Author:Updated by Tobias Lundell, Nov 12, 2015
--- @Author:Updated by Chuck Chu, Nov 12,2015 fit to new structure
+-- @Author:Updated by Chuck Chu, Nov 12, 2015 fit to new structure
+-- @Author:Updated by Mikael Ögren, Nov 16, 2015 Moved draw functions to DrawBottomMenu
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
