@@ -25,16 +25,6 @@ end
 
 -- Used to load images
 function BottomMenu:load()
-    self.move = gfx.loadpng('data/progg_game_icons/arrow_up.png')
-    self.turnLeft = gfx.loadpng('data/progg_game_icons/turn_left.png')
-    self.turnRight = gfx.loadpng('data/progg_game_icons/turn_right.png')
-    self.action = gfx.loadpng('data/progg_game_icons/action.png')
-    self.ifWall = gfx.loadpng('data/progg_game_icons/if_wall.png')
-    self.loop = gfx.loadpng('data/progg_game_icons/loop.png')
-    self.p1 = gfx.loadpng('data/progg_game_icons/P1.png')
-    self.p2 = gfx.loadpng('data/progg_game_icons/P2.png')
-    self.images = {["move"]=self.move, ["turn-left"]=self.turnLeft, ["turn-right"]=self.turnRight,
-        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2}
 end
 
 ---------------------------------------------
@@ -44,9 +34,9 @@ end
 --------------------------------------------
 function BottomMenu:show(inputArea)
     --collectgarbage()
-    self.drawBottomMenu:Background(inputArea)
-    self.drawBottomMenu:EmptySlots(self.availableSlots)
-    self.drawBottomMenu:Icons(self.queue, self.images)
+    self.drawBottomMenu:background(inputArea)
+    self.drawBottomMenu:emptySlots(self.availableSlots)
+    self.drawBottomMenu:icons(self.queue)
 end
 
 -------------------------------------

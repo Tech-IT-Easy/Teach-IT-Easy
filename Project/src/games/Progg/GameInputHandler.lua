@@ -111,11 +111,11 @@ if(event.state==Event.KEY_STATE_DOWN) then
       context.game = nil
           
       elseif event.key == Event.KEY_ZERO then
-      if inputArea == "queue"  then
-        GameInputHandler:executeQueue()
-      else
-        inputArea = "queue"
-      end
+          if inputArea == "queue"  then
+            GameInputHandler:executeQueue()
+          else
+            inputArea = "queue"
+          end
       end
  end
  return true
