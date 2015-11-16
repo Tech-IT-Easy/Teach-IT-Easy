@@ -28,7 +28,14 @@ local buildArea = nil
 local inputArea = "queue" --Keeps track of if input is for the regular queue or if we're building loop or procedures.
 -----------------------------------------------------------
 -- Construct method takes the context as parameter
--- to be able to create new menu for PlatformContext
+-- Constructor for the Queue
+-- @param gameContext - A pointer to the context in which the game exists
+-- @param inqueue - The queue where all the selected actions are to be stored
+-- @param newCharacter - The character in the game
+-- @param newRightMenu - An instance of the righthand menu
+-- @param newBottomMenu - The part of the display that shows the current working queue
+-- @param newBuildArea - The place where loops and procedures are edited
+-- @return a new GameInputHandler instance
 -- -------------------------------------------------------
 function GameInputHandler:new(gameContext, inqueue, newCharacter, newRightMenu, newBuildArea, newBottomMenu)
   local o = GameInputHandler:super()

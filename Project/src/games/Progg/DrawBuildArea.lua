@@ -19,9 +19,9 @@ end
 -- @param maxCommands. How many commands slots that are available to the player.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBuildArea:EmptySlots(maxCommands)
+function DrawBuildArea:emptySlots(maxCommands)
     for i=1, maxCommands do
-            self:SingleEmptySlot(i)
+            self:singleEmptySlot(i)
     end
 end
 
@@ -57,7 +57,7 @@ end
 -- @param queue. The queue of commands. An array of strings.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBuildArea:Icons(queue, images)
+function DrawBuildArea:icons(queue)
     for i = 1, #queue do
         self.image = gfx.loadpng(self:getFileName(queue[i]))
         if i <= 8 then
@@ -75,17 +75,21 @@ end
 -- Draws headline dependent of if loop or any of the procedures are shown.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBuildArea:HeadLine(images, buildType)
-    if buildType == "loop" then
-        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.87), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-        screen:copyfrom(images["loop"], nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
-    elseif buildType == "P1" then
-        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-        screen:copyfrom(images["P1"], nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
-    elseif buildType == "P2" then
-        screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-        screen:copyfrom(images["P2"], nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+function DrawBuildArea:headLine(buildType)
+    if buildType ~= nil then
+        self.image2 = gfx.loadpng(self:getFileName(buildType))
+        if buildType == "loop" then
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.87), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+            screen:copyfrom(self.image2, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+        elseif buildType == "P1" then
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+            screen:copyfrom(self.image2, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+        elseif buildType == "P2" then
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+            screen:copyfrom(self.image2, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+        end
+        self.image2:destroy()
     end
 end
 

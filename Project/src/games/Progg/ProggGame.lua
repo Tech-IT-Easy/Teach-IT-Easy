@@ -16,8 +16,11 @@ local ProggGame = extends(Game)
 local Queue = require('games.Progg.Queue')
 local Character = require('games.Progg.Character')
 local Position = require('games.Progg.Position')
+
 -----------------------------------------------------------
--- Constructor method, see toolkit.Game
+-- Constructor method, see 'toolkit.Game'
+-- @param context - A pointer to the context that the game exists in
+-- @return a new queue instance
 -----------------------------------------------------------
 function ProggGame:new(context)
   local o = ProggGame:super()
@@ -66,12 +69,10 @@ end
 
 
 ------------------------
---Updates the parts of the game
+--Updates all objects that are part of the game
+-- and are displayed on the screen
 ------------------------
 function ProggGame:update()
-  -----------------------
-  --Calls update on all objects, e.g.
-  --UI:update()
   self.bottomMenu:show(self.inputHandler:getinputArea())
   self.buildArea:show()
   self.inputHandler:show()

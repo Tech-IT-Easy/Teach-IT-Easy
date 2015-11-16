@@ -47,7 +47,7 @@ function BuildArea:show()
        -- self.drawBuildArea:EmptySlots(self.availableSlots)
         self.drawBuildArea:Icons(self.loopQueue, self.images)
     end
-    self.drawBuildArea:HeadLine(self.images, self.buildType)
+    self.drawBuildArea:headLine(self.buildType)
 end
 
 -------------------------------------
