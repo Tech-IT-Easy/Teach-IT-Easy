@@ -6,8 +6,8 @@
 -- To change this template use File | Settings | File Templates.
 --
 --Constructor method
-local object = require("toolkit.Object")
-local menuSuperClass = extends(object)
+local Controllable = require("toolkit.Controllable")
+local menuSuperClass = extends(Controllable)
 
 -----------------------------------------------
 -- All things that can be generalied from the
