@@ -224,12 +224,23 @@ function DrawRightMenu:addSingleNumber(position)
 end
 
 -------------------------------------
--- Adds the play text to the single wide
+-- Adds the play text to a single wide
 -- button in the 9-command layout
 -- @author Vilhelm
 -------------------------------------
 function DrawRightMenu:addPlay()
+    self:drawFullRow(4,78,113,215)
     command_play:draw_over_surface(screen, "0  Play!")
+end
+
+-------------------------------------
+-- Adds the stop text to a single wide
+-- button in the 9-command layout
+-- @author Vilhelm
+-------------------------------------
+function DrawRightMenu:addStop()
+    self:drawFullRow(4,245,45,120)
+    command_play:draw_over_surface(screen, "0  Stop!")
 end
 
 -------------------------------------
@@ -239,9 +250,32 @@ end
 -- @author Vilhelm
 -------------------------------------
 function DrawRightMenu:addPlayAndBack()
+    self:drawTwoBoxRow(4,78,113,215)
     command_0:draw_over_surface(screen, "0")
     command_play_small:draw_over_surface(screen, "Play!")
     command_back:draw_over_surface(screen, "Back")
+end
+
+-------------------------------------
+-- Adds numbers to the loop layout
+-- @author Vilhelm
+-------------------------------------
+function DrawRightMenu:addLoopOptions()
+    nr_1:draw_over_surface(screen, "1")
+    nr_2:draw_over_surface(screen, "2")
+    nr_3:draw_over_surface(screen, "3")
+    nr_4:draw_over_surface(screen, "4")
+    nr_5:draw_over_surface(screen, "5")
+    nr_6:draw_over_surface(screen, "6")
+    nr_7:draw_over_surface(screen, "7")
+    nr_8:draw_over_surface(screen, "8")
+    nr_9:draw_over_surface(screen, "9")
+    command_play:draw_over_surface(screen, "0")
+
+    self.image = gfx.loadpng('data/progg_game_icons/infinity_loop.png')
+    screen:copyfrom(self.image, nil, { x = first_column+(command_width+row_spacing)+6,
+        y = first_row+3*(command_height+col_spacing)+6, w=command_width-12, h = command_height-12 }, true)
+    self.image:destroy()
 end
 
 -------------------------------------

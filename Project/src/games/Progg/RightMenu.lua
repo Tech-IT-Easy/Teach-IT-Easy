@@ -52,6 +52,7 @@ function RightMenu:show()
     --self:highlight("action")
     --self:highlight("P2")
     --self:play()
+    --self:stop()
     --self:loopLayout()
     --self:buildLayout()
 end
@@ -71,7 +72,7 @@ function RightMenu:highlight(command)
     if highlight ~= nil then
         self:removeHighlight(highlight)
     end
-    print(command)
+
     self.draw:drawHighlight(command)
 
     highlight = command
@@ -105,8 +106,7 @@ function RightMenu:play()
         self:removeHighlight(highlight)
     end
 
-    self.draw:drawFullRow(4,245,45,120)
-    command_play:draw_over_surface(screen, "0  Stop!")
+    self.draw:addStop()
 end
 
 -------------------------------------
@@ -115,8 +115,7 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:stop()
-    self.draw:drawFullRow(4,78,113,215)
-    command_play:draw_over_surface(screen, "0  Play!")
+    self.draw:addPlay()
 end
 
 -------------------------------------
@@ -127,9 +126,8 @@ function RightMenu:standardLayout()
     self.draw:drawRow(1)
     self.draw:drawRow(2)
     self.draw:drawRow(3)
-    self.draw:drawFullRow(4,78,113,215)
-    self.draw:addNumbers()
     self.draw:addPlay()
+    self.draw:addNumbers()
     self.draw:addImages()
 end
 
@@ -141,24 +139,9 @@ function RightMenu:loopLayout()
     self.draw:drawRow(1)
     self.draw:drawRow(2)
     self.draw:drawRow(3)
-    -- add numbers in boxes
     self.draw:drawFullRow(4,78,113,215)
     self.draw:addNumbers()
-    nr_1:draw_over_surface(screen, "1")
-    nr_2:draw_over_surface(screen, "2")
-    nr_3:draw_over_surface(screen, "3")
-    nr_4:draw_over_surface(screen, "4")
-    nr_5:draw_over_surface(screen, "5")
-    nr_6:draw_over_surface(screen, "6")
-    nr_7:draw_over_surface(screen, "7")
-    nr_8:draw_over_surface(screen, "8")
-    nr_9:draw_over_surface(screen, "9")
-    command_play:draw_over_surface(screen, "0")
-
-    self.image = gfx.loadpng('data/progg_game_icons/infinity_loop.png')
-    screen:copyfrom(self.image, nil, { x = first_column+(command_width+row_spacing)+6,
-        y = first_row+3*(command_height+col_spacing)+6, w=command_width-12, h = command_height-12 }, true)
-    self.image:destroy()
+    self.draw:addLoopOptions()
 end
 
 -------------------------------------
@@ -167,8 +150,56 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:buildLayout()
-    self.draw:drawTwoBoxRow(4,78,113,215)
     self.draw:addPlayAndBack()
 end
+
+
+-------------------------------------
+-- Functionality related to the event listener
+-- @author Chuck
+-------------------------------------
+rightMenuEventHandler = EventHandler:new()
+rightMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1,[Event.KEY_ZERO]=1}
+
+-- Warning!!!! Use parameter "object" as a reference RightMenu,
+-----Never use RightMenu directly
+-----Never use self to refer to RightMenu
+function rightMenuEventHandler:update(object,eventListener,event)
+    if(event.state==Event.KEY_STATE_DOWN) then
+        --Switch for all the input handling to implement
+        if event.key == Event.KEY_ONE then
+            object:highlight(Commands.MOVE)
+
+        elseif event.key == Event.KEY_TWO then
+            object:highlight(Commands.TURN_LEFT)
+
+        elseif event.key == Event.KEY_THREE then
+            object:highlight(Commands.TURN_RIGHT)
+
+        elseif event.key == Event.KEY_FOUR then
+
+
+        elseif event.key == Event.KEY_FIVE then
+
+
+        elseif event.key == Event.KEY_SIX then
+            object:highlight(Commands.LOOP)
+
+        elseif event.key == Event.KEY_SEVEN then
+            object:highlight(Commands.P1)
+
+        elseif event.key == Event.KEY_EIGHT then
+            object:highlight(Commands.P2)
+
+        elseif event.key == Event.KEY_NINE then
+
+        elseif event.key == Event.KEY_ZERO then
+
+        end
+    end
+    return true
+end
+
+RightMenu.eventHandler = rightMenuEventHandler
 
 return RightMenu
