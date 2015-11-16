@@ -8,6 +8,8 @@
 
 local Object = require('toolkit.Object')
 
+local Tile = require('games.Progg.Tile')
+
 local Map = extends(Object)
 
 -------------------------------------
@@ -46,6 +48,25 @@ function Map:load()
   self.borderthickness = self.boxpadding/2
 
   -- Mapdata that is being displayed
+
+
+-- An Tile item is created of type "0"
+local temp1 = Tile:new(0)
+
+  -- Mapdata with tile objects instead of nums and strings
+  self.mapdata_tile_edition =
+  {
+    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
+    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
+    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
+    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
+    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
+  }
+
+
+
+
+
   self.mapdata =
     {9, "a", "c", 0, 0, 0, 0, 0,
       5, 5, 3, "c", 0, 0, 0, 0,
