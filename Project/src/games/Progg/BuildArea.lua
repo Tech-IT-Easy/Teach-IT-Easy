@@ -131,5 +131,4 @@ function BuildArea:drawHeadLine()
     end
 end
 
-
 return BuildArea

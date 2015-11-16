@@ -7,12 +7,15 @@
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
-
-local RightMenu = extends(Object)
+local Controllable = require("toolkit.Controllable")
+local RightMenu = extends(Controllable)
 skin = require('games/Progg/progg_skin')
+local Commands = require('games.Progg.Commands')
+local Event = require('toolkit.Event')
+local EventHandler = require('toolkit.EventHandler')
 
 -- Variale to keep track of a highlighted command
-local highlight = nill
+local highlight = nil
 
 -- Available commands
 commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
@@ -257,10 +260,11 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:highlight(command)
+    print(command.."  right menu command")
     if highlight ~= nil then
         self:removeHighlight(highlight)
     end
-
+    
     local position = self:getPosition(command)
     local xvalue = first_column+((position-1)%3)*(command_width+row_spacing)
     local yvalue = first_row+math.floor((position-1)/3)*(command_height+col_spacing)
@@ -269,7 +273,7 @@ function RightMenu:highlight(command)
     screen:copyfrom(self.images[command], nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
     self:addSingleNumber(position)
     highlight = command
-
+    print("right highlight")
 end
 
 -------------------------------------
@@ -331,6 +335,7 @@ function RightMenu:standardLayout()
     self:addNumbers()
     self:addPlay()
     self:addImages()
+    print("right menu")
 end
 
 -------------------------------------
@@ -367,5 +372,49 @@ function RightMenu:buildLayout()
     self:drawTwoBoxRow(4,78,113,215)
     self:addPlayAndBack()
 end
+
+rightMenuEventHandler = EventHandler:new()
+rightMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1,[Event.KEY_ZERO]=1}
+
+-- Warning!!!! Use parameter "object" as a reference RightMenu, 
+-----Never use RightMenu directly
+-----Never use self to refer to RightMenu
+function rightMenuEventHandler:update(object,eventListener,event)
+if(event.state==Event.KEY_STATE_DOWN) then
+      --Switch for all the input handling to implement
+      if event.key == Event.KEY_ONE then
+        object:highlight(Commands.MOVE)
+     
+      elseif event.key == Event.KEY_TWO then
+        object:highlight(Commands.TURN_LEFT)
+      
+      elseif event.key == Event.KEY_THREE then
+        object:highlight(Commands.TURN_RIGHT)
+
+      elseif event.key == Event.KEY_FOUR then
+
+
+      elseif event.key == Event.KEY_FIVE then
+     
+      
+      elseif event.key == Event.KEY_SIX then
+        object:highlight(Commands.LOOP)
+
+      elseif event.key == Event.KEY_SEVEN then
+        object:highlight(Commands.P1)
+
+      elseif event.key == Event.KEY_EIGHT then
+        object:highlight(Commands.P2)
+
+      elseif event.key == Event.KEY_NINE then
+          
+      elseif event.key == Event.KEY_ZERO then
+      
+      end
+ end
+ return true
+end
+
+RightMenu.eventHandler = rightMenuEventHandler
 
 return RightMenu
