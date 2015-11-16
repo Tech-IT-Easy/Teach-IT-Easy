@@ -39,6 +39,13 @@ local inputArea = "queue" --Keeps track of if input is for the regular queue or 
 -- -------------------------------------------------------
 function GameInputHandler:new(gameContext, inqueue, newCharacter, newRightMenu, newBuildArea, newBottomMenu)
   local o = GameInputHandler:super()
+  -- @member context:PlatformContext
+  -- @member queue:Queue
+  -- @member character:Character
+  -- @member rightMenu:RightMenu
+  -- @member buildArea:BuildArea
+  -- @member botomMenu:BottomMenu
+
   context = gameContext
   queue = inqueue
   character = newCharacter
