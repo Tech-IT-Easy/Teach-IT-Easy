@@ -11,8 +11,8 @@ local Queue = {}
 -- @author Ludwig Wikblad
 ----------------------------------------------------------------
 function Queue:new(newBottomMenu, newBuildArea)
-  self.bottomMenu = newBottomMenu
-  self.buildArea = newBuildArea
+  if newBottomMenu ~= nil then self.bottomMenu = newBottomMenu end
+  if newBuildArea ~= nil then self.buildArea = newBuildArea end
   local newObj = {actions = {}, loopActions = {}, p1Actions = {}, p2Actions = {}}
   self.__index = self
   return setmetatable(newObj, self)
@@ -30,16 +30,16 @@ function Queue:push(action, queueType)
 
   if queueType == "queue" then
     table.insert(self.actions,action)
-    self.bottomMenu:setQueue(self.actions)
+    if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self.actions) end
   elseif queueType == "loop" then
     table.insert(self.loopActions,action)
-    self.buildArea:setQueue(self.loopActions, queueType)
+    if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions, queueType) end
   elseif queueType == "P1" then
     table.insert(self.p1Actions,action)
-    self.buildArea:setQueue(self.p1Actions, queueType)
+    if self.buildArea ~= nil then self.buildArea:setQueue(self.p1Actions, queueType) end
   elseif queueType == "P2" then
     table.insert(self.p2Actions,action)
-    self.buildArea:setQueue(self.p2Actions, queueType)
+    if self.buildArea ~= nil then self.buildArea:setQueue(self.p2Actions, queueType) end
   end
 end
 
