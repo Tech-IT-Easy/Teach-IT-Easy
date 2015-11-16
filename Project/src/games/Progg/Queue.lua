@@ -1,9 +1,5 @@
--------------------------------------------------------------------
---This is not using the toolkit.Object, instead it implements it's own OOP. But it works^^
--------------------------------------------------------------------
-
-local Queue = {}
-
+local Object = require('toolkit.Object')
+local Queue = extends(Object)
 ---------------------------------------------------------------
 -- Constructor for the Queue
 -- @param newBottomMenu,newBuildArea. The places where the queue is drawn.
@@ -11,11 +7,14 @@ local Queue = {}
 -- @author Ludwig Wikblad
 ----------------------------------------------------------------
 function Queue:new(newBottomMenu, newBuildArea)
-  if newBottomMenu ~= nil then self.bottomMenu = newBottomMenu end
-  if newBuildArea ~= nil then self.buildArea = newBuildArea end
-  local newObj = {actions = {}, loopActions = {}, p1Actions = {}, p2Actions = {}}
-  self.__index = self
-  return setmetatable(newObj, self)
+  local o = Queue:super()
+  o.actions = {}
+  o.loopActions = {}
+  o.p1Actions = {}
+  o.p2Actions = {}
+  if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
+  if newBuildArea ~= nil then o.buildArea = newBuildArea end
+  return Queue:init(o)
 end
 
 
