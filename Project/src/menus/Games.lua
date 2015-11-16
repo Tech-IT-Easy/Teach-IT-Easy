@@ -1,4 +1,7 @@
-Games = {} --MenuView:new()
+--Games = {} --MenuView:new()
+-- Changed to extending empty super-menu
+local Super = require('toolkit.MenuSuperClass')
+Games = extends(Super)
 
 local Event = require('toolkit.Event')
 --added to test game
