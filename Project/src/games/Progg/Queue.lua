@@ -4,6 +4,12 @@
 
 local Queue = {}
 
+---------------------------------------------------------------
+-- Constructor for the Queue
+-- @param newBottomMenu,newBuildArea. The places where the queue is drawn.
+-- @return a new queue instance
+-- @author Ludwig Wikblad
+----------------------------------------------------------------
 function Queue:new(newBottomMenu, newBuildArea)
   self.bottomMenu = newBottomMenu
   self.buildArea = newBuildArea
@@ -15,6 +21,10 @@ end
 
 -------------------------------------
 --Adds something at the end of the queue
+-- @param action - the action to be placed in the queue,
+-- @param queueType - the table to place the action in
+-- @return a new queue instance
+-- @author Ludwig Wikblad
 -------------------------------------
 function Queue:push(action, queueType)
 
@@ -36,6 +46,8 @@ end
 
 --------------------------------------
 --Removes the object in the queue that was added last
+-- @return the removed action
+-- @author Ludwig Wikblad
 --------------------------------------
 function Queue:pop()
   return table.remove(self.actions)
@@ -44,6 +56,8 @@ end
 
 ----------------------------------------------------------------
 --Allows someone to switch positions for two objects in the queue
+-- @param currentPos, goalPos the positions of the objects that should be switched
+-- @author Ludwig Wikblad
 ----------------------------------------------------------------
 function Queue:setPosition(currentPos, goalPos)
   self.actions[currentPos], self.actions[goalPos] = self.actions[goalPos], self.actions[currentPos]
@@ -51,9 +65,12 @@ end
 
 
 ----------------------------------------
---Returns a queue in reversed order, so that another part of the program can use pop to
---go through it in execution order.
---Added a function next() to the returned queue just because it's an intuitive name.
+--Returns a queue in reversed order, so that
+-- another part of the program can use pop to
+-- go through it in execution order.
+-- @return a queue instance with all the actions
+-- in the order they will be executed (by using pop())
+-- @author Ludwig Wikblad
 ----------------------------------------
 function Queue:getExecutionQueue()
   local executionQueue = self:new()
