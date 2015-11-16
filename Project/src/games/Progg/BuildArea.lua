@@ -35,17 +35,17 @@ end
 
 function BuildArea:show()
 
-    self.drawBuildArea:EmptySlots(self.availableSlots, self.inputArea)
+    self.drawBuildArea:emptySlots(self.availableSlots, self.inputArea)
 
     if self.buildType == "P1" then
         --self.drawBuildArea:EmptySlots(self.availableSlots)
-        self.drawBuildArea:Icons(self.p1Queue, self.images)
+        self.drawBuildArea:icons(self.p1Queue, self.images)
     elseif self.buildType == "P2" then
        -- self.drawBuildArea:EmptySlots(self.availableSlots)
-        self.drawBuildArea:Icons(self.p2Queue, self.images)
+        self.drawBuildArea:icons(self.p2Queue, self.images)
     elseif self.buildType == "loop" then
        -- self.drawBuildArea:EmptySlots(self.availableSlots)
-        self.drawBuildArea:Icons(self.loopQueue, self.images)
+        self.drawBuildArea:icons(self.loopQueue, self.images)
     end
     self.drawBuildArea:headLine(self.buildType)
 end
