@@ -25,16 +25,16 @@ end
 
 function BuildArea:show()
     if self.buildType == "P1" then
-        self.drawBuildArea:EmptySlots(self.availableSlots)
-        self.drawBuildArea:Icons(self.p1Queue, self.images)
+        self.drawBuildArea:emptySlots(self.availableSlots)
+        self.drawBuildArea:icons(self.p1Queue, self.images)
     elseif self.buildType == "P2" then
-        self.drawBuildArea:EmptySlots(self.availableSlots)
-        self.drawBuildArea:Icons(self.p2Queue, self.images)
+        self.drawBuildArea:emptySlots(self.availableSlots)
+        self.drawBuildArea:icons(self.p2Queue, self.images)
     elseif self.buildType == "loop" then
-        self.drawBuildArea:EmptySlots(self.availableSlots)
-        self.drawBuildArea:Icons(self.loopQueue, self.images)
+        self.drawBuildArea:emptySlots(self.availableSlots)
+        self.drawBuildArea:icons(self.loopQueue, self.images)
     end
-    self.drawBuildArea:HeadLine(self.images, self.buildType)
+    self.drawBuildArea:headLine(self.buildType)
 end
 
 -------------------------------------
