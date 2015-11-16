@@ -37,8 +37,13 @@ function BottomMenu:load()
         ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2}
 end
 
---Used when BottomMenu is updated
+---------------------------------------------
+-- Used when BottomMenu is updated
+-- @param inputArea. Can be queue, loop, P1 or P2. Determines what area should be drawn.
+-- @author Mikael Ögren
+--------------------------------------------
 function BottomMenu:show(inputArea)
+    --collectgarbage()
     self.drawBottomMenu:Background(inputArea)
     self.drawBottomMenu:EmptySlots(self.availableSlots)
     self.drawBottomMenu:Icons(self.queue, self.images)
