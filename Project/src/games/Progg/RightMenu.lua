@@ -31,6 +31,7 @@ function RightMenu:new()
     --Draw right-hand side
     screen:clear({ r = 92, g = 128, b = 149 }, { x = screen:get_width() * 0.75, y = 0, w = screen:get_width() * 0.25, h = screen:get_height()*0.65 })
     o.draw = drawRightMenu:new()
+    o.inputArea = "queue"
     return RightMenu:init(o)
 end
 
@@ -168,6 +169,7 @@ function rightMenuEventHandler:update(object,eventListener,event)
     if(event.state==Event.KEY_STATE_DOWN) then
         --Switch for all the input handling to implement
         if event.key == Event.KEY_ONE then
+         -- if(object.inputArea)
             object:highlight(Commands.MOVE)
 
         elseif event.key == Event.KEY_TWO then
@@ -184,7 +186,9 @@ function rightMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_SIX then
             object:highlight(Commands.LOOP)
-
+            object:loopLayout()
+            object.inputArea = "loop"
+            
         elseif event.key == Event.KEY_SEVEN then
             object:highlight(Commands.P1)
 
