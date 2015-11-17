@@ -7,9 +7,7 @@
 
 
 local Object = require('toolkit.Object')
-
 local Tile = require('games.Progg.Tile')
-
 local Map = extends(Object)
 
 -------------------------------------
@@ -46,28 +44,8 @@ function Map:load()
   self.boxpadding = 10
   self.borderthickness = self.boxpadding/2
 
-  --[[
--- An Tile item is created of type "0"
-local temp1 = Tile:new(0)
-
-  -- Mapdata with tile objects instead of nums and strings
-  self.mapdata_tile_edition =
-  {
-    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
-    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
-    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
-    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
-    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
-  }
-]]
-
-
-
-
   -- Mapdata that is being displayed
-  -- set as input
-  -- Mapdata that is being displayed
-
+  -- set as input, when input is implemented
   self.mapdata =
     {9, "a", "c", 0, 0, 0, 0, 0,
       5, 5, 3, "c", 0, 0, 0, 0,
@@ -75,13 +53,13 @@ local temp1 = Tile:new(0)
       5, 1, 0, 0, "f", 0, 0, 0,
       7, 3, 0, 0, 0, 0, 0, 0,}
 
-  
-    self.tiles = {}
-    --Creating tiles from mapdata
- 
-      for i=1, #self.mapdata do
-        table.insert(self.tiles, Tile:new(self.mapdata[i]))
-      end
+
+  self.tiles = {}
+  --Creating tiles from mapdata
+
+  for i=1, #self.mapdata do
+    table.insert(self.tiles, Tile:new(self.mapdata[i]))
+  end
 
   self.goalPos = 20
   self.startPos = 33
@@ -89,7 +67,7 @@ local temp1 = Tile:new(0)
 
   --Loop builds map
   for i = 1, 40, 1 do
-    self:square(i, self.mapdata[i])
+    self:square(i, self.tiles[i])
   end
   self:setGoal(self.goalPos)
   self:setStart(self.startPos)
@@ -104,16 +82,14 @@ end
 -- @param direction Wanted direction
 -- @author Erik
 -------------------------------------
-
--- implement right solution for checking tiles. Might be self.tiles[position].top?
 function Map:canMove(x ,y , direction)
-  if direction == "up" and self.mapdata[self:getPosition(x,y)].top == 1 then
+  if direction == "up" and self.tiles[self:getPosition(x,y)].topBorder == true then
     return false
-  elseif direction == "left" and self.mapdata[self:getPosition(x,y)].left == 1 then
+  elseif direction == "left" and self.tiles[self:getPosition(x,y)].leftBorder == true then
     return false
-  elseif direction == "right" and self.mapdata[self:getPosition(x,y)].right == 1 then
+  elseif direction == "right" and self.tiles[self:getPosition(x,y)].rightBorder == true then
     return false
-  elseif direction == "down" and self.mapdata[self:getPosition(x,y)].bottom == 1 then
+  elseif direction == "down" and self.tiles[self:getPosition(x,y)].bottomBorder == true then
     return false
   else
     return true
@@ -254,26 +230,26 @@ function Map:update()
 end
 
 -------------------------------------
--- Calculates x and y of tile.
+-- Calculates x and y values of tile.
 -- @param i Place of tile
 -- @param type The type of tile to be printed
 -- @author Erik
 -------------------------------------
-function Map:square(i, type)
+function Map:square(i, tile)
   if(i<9)then
-    self:drawBox(type,self.startx +self.boxheight * (i - 1),self.starty )
+    self:drawBox(tile,self.startx +self.boxheight * (i - 1),self.starty )
   elseif(i<17)then
     i= i -8
-    self:drawBox(type,self.startx +self.boxheight * (i - 1),self.starty+self.boxheight )
+    self:drawBox(tile,self.startx +self.boxheight * (i - 1),self.starty+self.boxheight )
   elseif(i<25)then
     i= i -16
-    self:drawBox(type,self.startx +self.boxheight * (i - 1) ,self.starty+self.boxheight*2 )
+    self:drawBox(tile,self.startx +self.boxheight * (i - 1) ,self.starty+self.boxheight*2 )
   elseif(i<33)then
     i= i -24
-    self:drawBox(type,self.startx +self.boxheight * (i - 1) ,self.starty+self.boxheight*3 )
+    self:drawBox(tile,self.startx +self.boxheight * (i - 1) ,self.starty+self.boxheight*3 )
   else
     i= i -32
-    self:drawBox(type,self.startx +self.boxheight * (i - 1),self.starty+self.boxheight*4 )
+    self:drawBox(tile,self.startx +self.boxheight * (i - 1),self.starty+self.boxheight*4 )
 
   end
 
@@ -286,9 +262,26 @@ end
 -- @param yPos Y placement of tile
 -- @author Erik
 -------------------------------------
-function Map:drawBox(type, xPos, yPos)
+function Map:drawBox(tile, xPos, yPos)
 
-  if(type ~="f")then
+    if tile.active then
+    self:drawStandardBox(xPos,yPos)
+    if tile.topBorder then
+      self:drawTopBorder(xPos,yPos)
+    end
+    if tile.leftBorder then
+      self:drawLeftBorder(xPos,yPos)
+    end
+    if tile.rightBorder then
+      self:drawRightBorder(xPos,yPos)
+    end
+    if tile.bottomBorder then
+      self:drawBottomBorder(xPos,yPos)
+    end
+    end
+
+
+  --[[if(type ~="f")then
     self:drawStandardBox(xPos,yPos)
 
     if (type ==1) then
@@ -335,7 +328,7 @@ function Map:drawBox(type, xPos, yPos)
       self:drawBottomBorder(xPos, yPos)
     end
   end
-
+]]
 end
 
 -------------------------------------

@@ -33,13 +33,12 @@ function ChooseAvatar:handleinput(event)
     self.pos = self.pos - 1
   elseif (event.key == Event.KEY_ONE) then
     table.insert(usernames, CreateProfile.profilename)
-    --self.image4 = gfx.loadpng('data/bowser.png')
-    self.image4 = self.myimages[self.pos]
-    table.insert(images, self.image4)
+    local image4 = self.myimages[self.pos]
+    table.insert(images, image4)
     self.image1=nil
     self.image2=nil
     self.image3=nil
-    self.image4=nil
+    image4=nil
     self.myimages = nil
     collectgarbage()
     return { "profilesel", " " }

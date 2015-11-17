@@ -13,6 +13,7 @@ local Tile = extends(Object)
 function Tile:new(value)
 
       local o = Tile:super()
+      o.active = true
 
     if(value == 0) then
 
@@ -151,6 +152,7 @@ return Tile:init(o)
 
           if(value == "f") then
 
+        o.active = false
         o.topBorder = false
         o.bottomBorder = false
         o.leftBorder = false
