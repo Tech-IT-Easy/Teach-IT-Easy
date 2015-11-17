@@ -119,13 +119,8 @@ end
 --end
 
 function test_test()
-    local test = require("games.Progg.BottomMenu")
-    local a = test:new(16,nil)
 
-    local b = event:new("1", "down")
-    bottomMenuEventHandler:update(a,nil,b)
-    local cc = a.queue.actions[1]
-    print(cc)
-    lunit.assert_equal(a, c1, "Did not found the correct element in the queue")
+
+
 end
 
