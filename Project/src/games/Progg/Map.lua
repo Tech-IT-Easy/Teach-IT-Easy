@@ -264,7 +264,7 @@ end
 -------------------------------------
 function Map:drawBox(tile, xPos, yPos)
 
-    if tile.active then
+  if tile.active then
     self:drawStandardBox(xPos,yPos)
     if tile.topBorder then
       self:drawTopBorder(xPos,yPos)
@@ -278,57 +278,7 @@ function Map:drawBox(tile, xPos, yPos)
     if tile.bottomBorder then
       self:drawBottomBorder(xPos,yPos)
     end
-    end
-
-
-  --[[if(type ~="f")then
-    self:drawStandardBox(xPos,yPos)
-
-    if (type ==1) then
-      self:drawLeftBorder(xPos, yPos)
-    elseif (type ==2) then
-      self:drawBottomBorder(xPos, yPos)
-    elseif (type ==3) then
-      self:drawLeftBorder(xPos, yPos)
-      self:drawBottomBorder(xPos, yPos)
-    elseif (type ==4) then
-      self:drawRightBorder(xPos, yPos)
-    elseif (type ==5) then
-      self:drawRightBorder(xPos, yPos)
-      self:drawLeftBorder(xPos, yPos)
-    elseif (type ==6) then
-      self:drawRightBorder(xPos, yPos)
-      self:drawBottomBorder(xPos, yPos)
-    elseif (type ==7) then
-      self:drawRightBorder(xPos, yPos)
-      self:drawBottomBorder(xPos, yPos)
-      self:drawLeftBorder(xPos, yPos)
-    elseif (type ==8) then
-      self:drawTopBorder(xPos, yPos)
-    elseif (type ==9) then
-      self:drawTopBorder(xPos, yPos)
-      self:drawLeftBorder(xPos, yPos)
-    elseif (type =="a") then
-      self:drawTopBorder(xPos, yPos)
-      self:drawBottomBorder(xPos, yPos)
-    elseif (type =="b") then
-      self:drawTopBorder(xPos, yPos)
-      self:drawLeftBorder(xPos, yPos)
-      self:drawBottomBorder(xPos, yPos)
-    elseif (type =="c") then
-      self:drawTopBorder(xPos, yPos)
-      self:drawRightBorder(xPos, yPos)
-    elseif (type =="d") then
-      self:drawTopBorder(xPos, yPos)
-      self:drawLeftBorder(xPos, yPos)
-      self:drawRightBorder(xPos, yPos)
-    elseif (type =="e") then
-      self:drawTopBorder(xPos, yPos)
-      self:drawRightBorder(xPos, yPos)
-      self:drawBottomBorder(xPos, yPos)
-    end
   end
-]]
 end
 
 -------------------------------------

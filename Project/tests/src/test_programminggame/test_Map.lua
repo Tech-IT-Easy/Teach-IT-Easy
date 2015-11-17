@@ -656,7 +656,6 @@ function test_drawRightBorder()
 
   verify_mock(mc)
 end
-]]
 
 function test_getPosition_one()
   local mc = create_mock(SUT)
@@ -713,6 +712,134 @@ function test_moveCharacter_one()
   setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   square(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  setGoal(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  mc:replay()
+
+  a:moveCharacter(x, y, direction)
+
+  verify_mock(mc)
+end
+
+function test_moveCharacter_two()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+
+  local setCharacter = mc:mock()
+  local square = mc:mock()
+  local getPosition = mc:mock()
+  local setGoal = mc:mock()
+
+  package.loaded[SUT].setCharacter = setCharacter
+  package.loaded[SUT].square = square
+  package.loaded[SUT].getPosition = getPosition
+  package.loaded[SUT].setGoal = setGoal
+
+  local a = ps:new()
+  local x = 2 
+  local y = 2 
+  local direction = "up"
+  a.startPos = 1
+  a.mapdata= {}
+
+  setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  square(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  getPosition(mc.ANYARGS) ;mc :returns(2) :anytimes()
+  setGoal(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  mc:replay()
+
+  a:moveCharacter(x, y, direction)
+
+  verify_mock(mc)
+end
+
+function test_moveCharacter_three()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+
+  local setCharacter = mc:mock()
+  local square = mc:mock()
+  local getPosition = mc:mock()
+  local setGoal = mc:mock()
+
+  package.loaded[SUT].setCharacter = setCharacter
+  package.loaded[SUT].square = square
+  package.loaded[SUT].getPosition = getPosition
+  package.loaded[SUT].setGoal = setGoal
+
+  local a = ps:new()
+  local x = 2 
+  local y = 2 
+  local direction = "left"
+  a.startPos = 1
+  a.mapdata= {}
+
+  setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  square(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  getPosition(mc.ANYARGS) ;mc :returns(2) :anytimes()
+  setGoal(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  mc:replay()
+
+  a:moveCharacter(x, y, direction)
+
+  verify_mock(mc)
+end
+
+function test_moveCharacter_four()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+
+  local setCharacter = mc:mock()
+  local square = mc:mock()
+  local getPosition = mc:mock()
+  local setGoal = mc:mock()
+
+  package.loaded[SUT].setCharacter = setCharacter
+  package.loaded[SUT].square = square
+  package.loaded[SUT].getPosition = getPosition
+  package.loaded[SUT].setGoal = setGoal
+
+  local a = ps:new()
+  local x = 2 
+  local y = 2 
+  local direction = "right"
+  a.startPos = 1
+  a.mapdata= {}
+
+  setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  square(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  getPosition(mc.ANYARGS) ;mc :returns(2) :anytimes()
+  setGoal(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  mc:replay()
+
+  a:moveCharacter(x, y, direction)
+
+  verify_mock(mc)
+end
+
+function test_moveCharacter_five()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+
+  local setCharacter = mc:mock()
+  local square = mc:mock()
+  local getPosition = mc:mock()
+  local setGoal = mc:mock()
+
+  package.loaded[SUT].setCharacter = setCharacter
+  package.loaded[SUT].square = square
+  package.loaded[SUT].getPosition = getPosition
+  package.loaded[SUT].setGoal = setGoal
+
+  local a = ps:new()
+  local x = 2 
+  local y = 2 
+  local direction = "down"
+  a.startPos = 1
+  a.mapdata= {}
+
+  setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  square(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  getPosition(mc.ANYARGS) ;mc :returns(2) :anytimes()
   setGoal(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   mc:replay()
 
