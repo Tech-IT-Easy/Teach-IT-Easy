@@ -44,20 +44,155 @@ function teardown()
   package.preload['src.games.Progg.Tile'] = nil
 end
 
-function test_new()
+function test_input_0()
     local ps = require(SUT)
 
     local a = ps:new(0)
-
     assert_false(a.topBorder, "Should be false")
   assert_false(a.bottomBorder, "Should be false")
   assert_false(a.leftBorder, "Should be false")
   assert_false(a.rightBorder, "Should be false")
 
+end
 
+function test_input_1()
+    local ps = require(SUT)
 
+    local a = ps:new(1)
+    assert_false(a.topBorder, "Should be false")
+  assert_false(a.bottomBorder, "Should be false")
+  assert_true(a.leftBorder, "Should be true")
+  assert_false(a.rightBorder, "Should be false")
 
 end
+
+function test_input_2()
+    local ps = require(SUT)
+    local a = ps:new(2)
+    assert_false(a.topBorder, "Should be false")
+  assert_true(a.bottomBorder, "Should be true")
+  assert_false(a.leftBorder, "Should be false")
+  assert_false(a.rightBorder, "Should be false")
+end
+
+function test_input_3()
+    local ps = require(SUT)
+    local a = ps:new(3)
+    assert_false(a.topBorder, "Should be false")
+  assert_true(a.bottomBorder, "Should be true")
+  assert_true(a.leftBorder, "Should be true")
+  assert_false(a.rightBorder, "Should be false")
+end
+
+
+function test_input_4()
+    local ps = require(SUT)
+    local a = ps:new(4)
+    assert_false(a.topBorder, "Should be false")
+  assert_false(a.bottomBorder, "Should be false")
+  assert_false(a.leftBorder, "Should be false")
+  assert_true(a.rightBorder, "Should be true")
+end
+
+function test_input_5()
+    local ps = require(SUT)
+    local a = ps:new(5)
+    assert_false(a.topBorder, "Should be false")
+  assert_false(a.bottomBorder, "Should be false")
+  assert_true(a.leftBorder, "Should be true")
+  assert_true(a.rightBorder, "Should be true")
+end
+
+function test_input_6()
+    local ps = require(SUT)
+    local a = ps:new(6)
+    assert_false(a.topBorder, "Should be false")
+  assert_true(a.bottomBorder, "Should be true")
+  assert_false(a.leftBorder, "Should be false")
+  assert_true(a.rightBorder, "Should be true")
+end
+
+function test_input_7()
+    local ps = require(SUT)
+    local a = ps:new(7)
+    assert_false(a.topBorder, "Should be false")
+  assert_true(a.bottomBorder, "Should be true")
+  assert_true(a.leftBorder, "Should be true")
+  assert_true(a.rightBorder, "Should be true")
+end
+
+function test_input_8()
+    local ps = require(SUT)
+    local a = ps:new(8)
+    assert_true(a.topBorder, "Should be true")
+  assert_false(a.bottomBorder, "Should be false")
+  assert_false(a.leftBorder, "Should be false")
+  assert_false(a.rightBorder, "Should be false")
+end
+
+function test_input_9()
+    local ps = require(SUT)
+    local a = ps:new(9)
+    assert_true(a.topBorder, "Should be true")
+  assert_false(a.bottomBorder, "Should be false")
+  assert_true(a.leftBorder, "Should be true")
+  assert_false(a.rightBorder, "Should be false")
+end
+
+function test_input_a()
+    local ps = require(SUT)
+    local a = ps:new("a")
+    assert_true(a.topBorder, "Should be true")
+  assert_true(a.bottomBorder, "Should be true")
+  assert_false(a.leftBorder, "Should be false")
+  assert_false(a.rightBorder, "Should be false")
+end
+
+function test_input_b()
+    local ps = require(SUT)
+    local a = ps:new("b")
+    assert_true(a.topBorder, "Should be true")
+  assert_true(a.bottomBorder, "Should be true")
+  assert_true(a.leftBorder, "Should be true")
+  assert_false(a.rightBorder, "Should be false")
+end
+
+function test_input_c()
+    local ps = require(SUT)
+    local a = ps:new("c")
+    assert_true(a.topBorder, "Should be true")
+  assert_false(a.bottomBorder, "Should be false")
+  assert_false(a.leftBorder, "Should be false")
+  assert_true(a.rightBorder, "Should be true")
+end
+
+function test_input_d()
+    local ps = require(SUT)
+    local a = ps:new("d")
+    assert_true(a.topBorder, "Should be true")
+  assert_false(a.bottomBorder, "Should be false")
+  assert_true(a.leftBorder, "Should be true")
+  assert_true(a.rightBorder, "Should be true")
+end
+
+function test_input_e()
+    local ps = require(SUT)
+    local a = ps:new("e")
+    assert_true(a.topBorder, "Should be true")
+  assert_true(a.bottomBorder, "Should be true")
+  assert_false(a.leftBorder, "Should be false")
+  assert_true(a.rightBorder, "Should be true")
+end
+
+function test_input_f()
+    local ps = require(SUT)
+    local a = ps:new("f")
+    assert_false(a.topBorder, "Should be false")
+  assert_false(a.bottomBorder, "Should be false")
+  assert_false(a.leftBorder, "Should be false")
+  assert_false(a.rightBorder, "Should be false")
+end
+
 
 
 function test_tile_fail()
