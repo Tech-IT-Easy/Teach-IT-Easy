@@ -1,13 +1,13 @@
 --
 -- Created by IntelliJ IDEA.
--- User: Andreas Mansson
--- Date: 2015-11-16
--- Time: 22:45
+-- User: Dator
+-- Date: 2015-11-17
+-- Time: 20:49
 -- To change this template use File | Settings | File Templates.
 --
 
 lunit = require "lunit"
-module( "inttest_id_3", package.seeall, lunit.testcase )
+module( "inttest_id_4", package.seeall, lunit.testcase )
 local event = require ("src.toolkit.Event")
 
 local SUT1 = 'games.Progg.Commands'
@@ -120,8 +120,8 @@ end
 
 
 
-
-function test_adding_commands()
+--Test if character moved according to the added commands
+function test_execute_queue_1()
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
     local bottommenu = test:new(16,nil)
@@ -400,5 +400,13 @@ function test_adding_commands()
      -- Added commands
     -----------------------------------------------------------------------------------------------
 
+    --Test if character moved according to the added commands
+    test_event = event:new("0", "down") --simulates a key press on key 0
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    local pos_X = bottommenu.character.position:getX()
+    local pos_Y=bottommenu.character.position:getY()
+    lunit.assert_equal(0,pos_X ,"Did not move to the right x-coordinate")
+    lunit.assert_equal(-25,pos_Y ,"Did not move to the right x-coordinate")
 end
+
 

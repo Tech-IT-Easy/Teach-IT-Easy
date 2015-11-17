@@ -15,7 +15,7 @@
 --
 
 lunit = require "lunit"
-module( "test_id_2", package.seeall, lunit.testcase )
+module( "inttest_id_2", package.seeall, lunit.testcase )
 
 local SUT = 'src.games.Progg.Queue'
 
