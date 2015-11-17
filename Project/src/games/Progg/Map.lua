@@ -46,6 +46,7 @@ function Map:load()
   self.boxpadding = 10
   self.borderthickness = self.boxpadding/2
 
+  --[[
 -- An Tile item is created of type "0"
 local temp1 = Tile:new(0)
 
@@ -58,12 +59,12 @@ local temp1 = Tile:new(0)
     temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
     temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
   }
+]]
 
 
 
 
-
--- Mapdata that is being displayed
+  -- Mapdata that is being displayed
   -- set as input
   -- Mapdata that is being displayed
 
@@ -74,14 +75,13 @@ local temp1 = Tile:new(0)
       5, 1, 0, 0, "f", 0, 0, 0,
       7, 3, 0, 0, 0, 0, 0, 0,}
 
-  --[[
-    self.tiles = nil
+  
+    self.tiles = {}
     --Creating tiles from mapdata
  
-      for element in self.mapdata do
-        table.insert(self.tiles, Tile:new(element))
+      for i=1, #self.mapdata do
+        table.insert(self.tiles, Tile:new(self.mapdata[i]))
       end
-]]
 
   self.goalPos = 20
   self.startPos = 33
