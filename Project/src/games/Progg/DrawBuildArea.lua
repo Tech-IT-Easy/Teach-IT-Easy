@@ -31,13 +31,6 @@ end
 -- @author Mikael Ögren
 -------------------------------------
 function DrawBuildArea:singleEmptySlot(boxNmb, inputArea)
---    if boxNmb <= 8 then
---        screen:clear({r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.535 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
---    else
---        screen:clear({r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.535 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
---    end
---end
-
     if (inputArea == "queue") then
         if boxNmb <= 8 then
             screen:clear({ r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.535 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
@@ -68,6 +61,7 @@ function DrawBuildArea:icons(queue)
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.538 + (i-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         end
         self.image:destroy()
+        collectgarbage()
     end
 end
 
@@ -77,19 +71,20 @@ end
 -------------------------------------
 function DrawBuildArea:headLine(buildType)
     if buildType ~= nil then
-        self.image2 = gfx.loadpng(self:getFileName(buildType))
+        self.image = gfx.loadpng(self:getFileName(buildType))
         if buildType == "loop" then
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.87), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-            screen:copyfrom(self.image2, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
         elseif buildType == "P1" then
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-            screen:copyfrom(self.image2, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
         elseif buildType == "P2" then
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-            screen:copyfrom(self.image2, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
         end
-        self.image2:destroy()
+        self.image:destroy()
+        collectgarbage()
     end
 end
 

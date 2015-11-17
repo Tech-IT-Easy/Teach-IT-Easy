@@ -82,6 +82,7 @@ function DrawBottomMenu:icons(queue, images)
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (i-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         end
         self.image:destroy()
+        collectgarbage()
     end
 end
 
