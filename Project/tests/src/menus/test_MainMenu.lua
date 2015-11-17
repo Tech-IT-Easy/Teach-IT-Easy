@@ -329,7 +329,7 @@ function test_handleinput_left_one()
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 0
-  event.key = event.KEY_ONE
+  event.key = event.KEY_OK
   local b = a:handleinput(event)
   assert_equal("games", b[1], "should want to start game")
 end
@@ -338,7 +338,7 @@ function test_handleinput_two()
   -- checks if create is chosen if 1 is pressed
   local ps = require(SUT)
   local a = ps:new()
-  event.key = event.KEY_TWO
+  event.key = event.KEY_BACK
   local b = a:handleinput(event)
   assert_equal("profilesel", b[1], "should get create")
 end
