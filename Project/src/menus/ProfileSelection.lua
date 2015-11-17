@@ -8,8 +8,11 @@ usernames = { "ERIK", "MARCUS", "TOAD" }
 
 -- images
 local image1 = gfx.loadpng('data/bowser.png')
+image1:premultiply()
 local image2 = gfx.loadpng('data/mario.png')
+image2:premultiply()
 local image3 = gfx.loadpng('data/toad.png')
+image3:premultiply()
 images = { image1, image2, image3 }
 
 local Event = require('toolkit.Event')
