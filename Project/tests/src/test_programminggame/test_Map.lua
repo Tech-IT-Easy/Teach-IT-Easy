@@ -47,10 +47,10 @@ function test_load()
   local mc = create_mock(SUT)
 
   -- Mock renderui and printbackground
-  local square = mc:mock()
-  local setGoal = mc:mock()
-  local setStart = mc:mock()
-  local setCharacter = mc:mock()
+   local square = mc:mock()
+   local setGoal = mc:mock()
+   local setStart = mc:mock()
+   local setCharacter = mc:mock()
   --local printbackground = mc:mock()
 
   local ps = require(SUT)
@@ -59,7 +59,7 @@ function test_load()
   package.loaded[SUT].setGoal = setGoal
   package.loaded[SUT].setStart = setStart
   package.loaded[SUT].setCharacter = setCharacter
-  -- package.loaded[SUT].printbackground = printbackground
+ -- package.loaded[SUT].printbackground = printbackground
 
   square(mc.ANYARGS) ;mc :returns(nil) :times(40)
   setGoal(mc.ANYARGS) ;mc :returns(nil) :times(1)
@@ -445,26 +445,24 @@ function test_square_five()
 end
 
 --drawBox tests
---[[
 function test_drawBox_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
 
   local drawStandardBox = mc:mock()
-  local drawLeftBorder = mc:mock()
-  package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawLeftBorder = drawLeftBorder
 
+  package.loaded[SUT].drawStandardBox = drawStandardBox
+
+  local ps2 = require("src.games.Progg.Tile")
   local a = ps:new()
-  local type = 1
+  local tile = ps2:new(0)
   local xPos = 200
   local yPos = 200
 
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawLeftBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   mc:replay()
 
-  a:drawBox(type, xPos, yPos)
+  a:drawBox(tile, xPos, yPos)
 
   verify_mock(mc)
 end
@@ -478,16 +476,17 @@ function test_drawBox_two()
   package.loaded[SUT].drawStandardBox = drawStandardBox
   package.loaded[SUT].drawBottomBorder = drawBottomBorder
 
+  local ps2 = require("src.games.Progg.Tile")
   local a = ps:new()
-  local type = 2
+  local tile = ps2:new(2)
   local xPos = 200
   local yPos = 200
 
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawBottomBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  drawBottomBorder(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   mc:replay()
 
-  a:drawBox(type, xPos, yPos)
+  a:drawBox(tile, xPos, yPos)
 
   verify_mock(mc)
 end
@@ -497,23 +496,22 @@ function test_drawBox_three()
   local ps = require(SUT)
 
   local drawStandardBox = mc:mock()
-  local drawBottomBorder = mc:mock()
-  local drawLeftBorder = mc:mock()
-  package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawBottomBorder = drawBottomBorder
-  package.loaded[SUT].drawLeftBorder = drawLeftBorder
+  local drawRightBorder = mc:mock()
 
+  package.loaded[SUT].drawStandardBox = drawStandardBox
+  package.loaded[SUT].drawRightBorder = drawRightBorder
+
+  local ps2 = require("src.games.Progg.Tile")
   local a = ps:new()
-  local type = 3
+  local tile = ps2:new(4)
   local xPos = 200
   local yPos = 200
 
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawBottomBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawLeftBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  drawRightBorder(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   mc:replay()
 
-  a:drawBox(type, xPos, yPos)
+  a:drawBox(tile, xPos, yPos)
 
   verify_mock(mc)
 end
@@ -523,21 +521,22 @@ function test_drawBox_four()
   local ps = require(SUT)
 
   local drawStandardBox = mc:mock()
-  local drawRightBorder = mc:mock()
+  local drawTopBorder = mc:mock()
 
   package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawRightBorder = drawRightBorder
+  package.loaded[SUT].drawTopBorder = drawTopBorder
 
+  local ps2 = require("src.games.Progg.Tile")
   local a = ps:new()
-  local type = 4
+  local tile = ps2:new(8)
   local xPos = 200
   local yPos = 200
 
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawRightBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  drawTopBorder(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   mc:replay()
 
-  a:drawBox(type, xPos, yPos)
+  a:drawBox(tile, xPos, yPos)
 
   verify_mock(mc)
 end
@@ -547,276 +546,113 @@ function test_drawBox_five()
   local ps = require(SUT)
 
   local drawStandardBox = mc:mock()
-  local drawRightBorder = mc:mock()
   local drawLeftBorder = mc:mock()
 
   package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawRightBorder = drawRightBorder
   package.loaded[SUT].drawLeftBorder = drawLeftBorder
 
+  local ps2 = require("src.games.Progg.Tile")
   local a = ps:new()
-  local type = 5
+  local tile = ps2:new(1)
   local xPos = 200
   local yPos = 200
 
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawRightBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawLeftBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  drawLeftBorder(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   mc:replay()
 
-  a:drawBox(type, xPos, yPos)
+  a:drawBox(tile, xPos, yPos)
 
   verify_mock(mc)
 end
 
-function test_drawBox_six()
+function test_drawStandardBox()
   local mc = create_mock(SUT)
   local ps = require(SUT)
 
-  local drawStandardBox = mc:mock()
-  local drawRightBorder = mc:mock()
-  local drawBottomBorder = mc:mock()
-
-  package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawRightBorder = drawRightBorder
-  package.loaded[SUT].drawBottomBorder = drawBottomBorder
-
   local a = ps:new()
-  local type = 6
   local xPos = 200
-  local yPos = 200
-
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawRightBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawBottomBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  local yPos = 200;
+  a.xPos = 200
+  a.yPos = 200
+  a.boxheight = 50;
+  a.boxpadding = 20;
+  a.innerboxheight = 40;
   mc:replay()
 
-  a:drawBox(type, xPos, yPos)
+  a:drawStandardBox(xPos, yPos)
 
   verify_mock(mc)
 end
 
-function test_drawBox_seven()
+function test_drawTopBorder()
   local mc = create_mock(SUT)
   local ps = require(SUT)
 
-  local drawStandardBox = mc:mock()
-  local drawRightBorder = mc:mock()
-  local drawBottomBorder = mc:mock()
-  local drawLeftBorder = mc:mock()
-
-  package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawRightBorder = drawRightBorder
-  package.loaded[SUT].drawBottomBorder = drawBottomBorder
-  package.loaded[SUT].drawLeftBorder = drawLeftBorder
-
   local a = ps:new()
-  local type = 7
   local xPos = 200
-  local yPos = 200
-
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawRightBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawBottomBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawLeftBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  local yPos = 200;
+  a.xPos = 200
+  a.yPos = 200
+  a.boxheight = 50;
+  a.borderthickness = 10;
   mc:replay()
 
-  a:drawBox(type, xPos, yPos)
+  a:drawTopBorder(xPos, yPos)
 
   verify_mock(mc)
 end
 
-function test_drawBox_eight()
+function test_drawBottomBorder()
   local mc = create_mock(SUT)
   local ps = require(SUT)
 
-  local drawStandardBox = mc:mock()
-  local drawTopBorder = mc:mock()
-
-  package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawTopBorder = drawTopBorder
-
   local a = ps:new()
-  local type = 8
   local xPos = 200
-  local yPos = 200
-
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawTopBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  local yPos = 200;
+  a.xPos = 200
+  a.yPos = 200
+  a.boxheight = 50;
+  a.borderthickness = 10;
   mc:replay()
 
-  a:drawBox(type, xPos, yPos)
+  a:drawBottomBorder(xPos, yPos)
 
   verify_mock(mc)
 end
 
-function test_drawBox_nine()
+function test_drawLeftBorder()
   local mc = create_mock(SUT)
   local ps = require(SUT)
 
-  local drawStandardBox = mc:mock()
-  local drawTopBorder = mc:mock()
-  local drawLeftBorder = mc:mock()
-
-  package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawTopBorder = drawTopBorder
-  package.loaded[SUT].drawLeftBorder = drawLeftBorder
-
   local a = ps:new()
-  local type = 9
   local xPos = 200
-  local yPos = 200
-
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawTopBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawLeftBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  local yPos = 200;
+  a.xPos = 200
+  a.yPos = 200
+  a.boxheight = 50;
+  a.borderthickness = 10;
   mc:replay()
 
-  a:drawBox(type, xPos, yPos)
+  a:drawLeftBorder(xPos, yPos)
 
   verify_mock(mc)
 end
 
-function test_drawBox_a()
+function test_drawRightBorder()
   local mc = create_mock(SUT)
   local ps = require(SUT)
 
-  local drawStandardBox = mc:mock()
-  local drawTopBorder = mc:mock()
-  local drawBottomBorder = mc:mock()
-
-  package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawTopBorder = drawTopBorder
-  package.loaded[SUT].drawBottomBorder = drawBottomBorder
-
   local a = ps:new()
-  local type = "a"
   local xPos = 200
-  local yPos = 200
-
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawTopBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawBottomBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
+  local yPos = 200;
+  a.xPos = 200
+  a.yPos = 200
+  a.boxheight = 50;
+  a.borderthickness = 10;
   mc:replay()
 
-  a:drawBox(type, xPos, yPos)
-
-  verify_mock(mc)
-end
-
-function test_drawBox_b()
-  local mc = create_mock(SUT)
-  local ps = require(SUT)
-
-  local drawStandardBox = mc:mock()
-  local drawTopBorder = mc:mock()
-  local drawBottomBorder = mc:mock()
-  local drawLeftBorder = mc:mock()
-
-  package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawTopBorder = drawTopBorder
-  package.loaded[SUT].drawBottomBorder = drawBottomBorder
-  package.loaded[SUT].drawLeftBorder = drawLeftBorder
-
-  local a = ps:new()
-  local type = "b"
-  local xPos = 200
-  local yPos = 200
-
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawTopBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawBottomBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawLeftBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  mc:replay()
-
-  a:drawBox(type, xPos, yPos)
-
-  verify_mock(mc)
-end
-
-function test_drawBox_c()
-  local mc = create_mock(SUT)
-  local ps = require(SUT)
-
-  local drawStandardBox = mc:mock()
-  local drawTopBorder = mc:mock()
-  local drawRightBorder = mc:mock()
-
-  package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawTopBorder = drawTopBorder
-  package.loaded[SUT].drawRightBorder = drawRightBorder
-
-  local a = ps:new()
-  local type = "c"
-  local xPos = 200
-  local yPos = 200
-
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawTopBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawRightBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  mc:replay()
-
-  a:drawBox(type, xPos, yPos)
-
-  verify_mock(mc)
-end
-
-function test_drawBox_d()
-  local mc = create_mock(SUT)
-  local ps = require(SUT)
-
-  local drawStandardBox = mc:mock()
-  local drawTopBorder = mc:mock()
-  local drawRightBorder = mc:mock()
-  local drawLeftBorder = mc:mock()
-
-  package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawTopBorder = drawTopBorder
-  package.loaded[SUT].drawRightBorder = drawRightBorder
-  package.loaded[SUT].drawLeftBorder = drawLeftBorder
-
-  local a = ps:new()
-  local type = "d"
-  local xPos = 200
-  local yPos = 200
-
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawTopBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawRightBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawLeftBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  mc:replay()
-
-  a:drawBox(type, xPos, yPos)
-
-  verify_mock(mc)
-end
-
-function test_drawBox_e()
-  local mc = create_mock(SUT)
-  local ps = require(SUT)
-
-  local drawStandardBox = mc:mock()
-  local drawTopBorder = mc:mock()
-  local drawRightBorder = mc:mock()
-  local drawBottomBorder = mc:mock()
-
-  package.loaded[SUT].drawStandardBox = drawStandardBox
-  package.loaded[SUT].drawTopBorder = drawTopBorder
-  package.loaded[SUT].drawRightBorder = drawRightBorder
-  package.loaded[SUT].drawBottomBorder = drawBottomBorder
-
-  local a = ps:new()
-  local type = "e"
-  local xPos = 200
-  local yPos = 200
-
-  drawStandardBox(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawTopBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawRightBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  drawBottomBorder(mc.ANYARGS) ;mc :returns(nil) :times(1)
-  mc:replay()
-
-  a:drawBox(type, xPos, yPos)
+  a:drawRightBorder(xPos, yPos)
 
   verify_mock(mc)
 end
