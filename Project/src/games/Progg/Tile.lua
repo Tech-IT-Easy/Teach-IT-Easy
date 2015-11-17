@@ -1,6 +1,6 @@
 -----------------------------------------------------------------
 -- Created by IntelliJ IDEA.
--- User: Adde
+-- User: Adam
 -- Date: 2015-11-16
 -- Time: 15:05
 -- This class represents a Tile object, which contains information
@@ -9,7 +9,12 @@
 local Object = require('toolkit.Object')
 
 local Tile = extends(Object)
-
+-------------------------------------
+-- Constructor for different kinds of tiles that is used by the Map class
+-- to "build" the map
+-- @param i Place of start
+-- @author Adam
+-------------------------------------
 function Tile:new(value)
 
       local o = Tile:super()
