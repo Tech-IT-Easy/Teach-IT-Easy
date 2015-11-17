@@ -8,6 +8,8 @@
 
 local Object = require('toolkit.Object')
 
+local Tile = require('games.Progg.Tile')
+
 local Map = extends(Object)
 
 -------------------------------------
@@ -34,7 +36,6 @@ function Map:load()
 
   screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width()*0.75,
     h = screen:get_height()*0.65 }, true)
-
   self.background:destroy()
 
   self.boxheight = (screen:get_height()*0.65)/6
@@ -45,7 +46,28 @@ function Map:load()
   self.boxpadding = 10
   self.borderthickness = self.boxpadding/2
 
-  -- Mapdata that is being displayed
+  
+
+
+-- An Tile item is created of type "0"
+local temp1 = Tile:new(0)
+
+  -- Mapdata with tile objects instead of nums and strings
+  self.mapdata_tile_edition =
+  {
+    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
+    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
+    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
+    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
+    temp1,temp1,temp1,temp1,temp1, temp1,temp1,temp1,
+  }
+
+
+
+
+
+-- Mapdata that is being displayed
+  -- set as input
   self.mapdata =
     {9, "a", "c", 0, 0, 0, 0, 0,
       5, 5, 3, "c", 0, 0, 0, 0,
@@ -53,9 +75,18 @@ function Map:load()
       5, 1, 0, 0, "f", 0, 0, 0,
       7, 3, 0, 0, 0, 0, 0, 0,}
 
+  --[[
+    self.tiles = nil
+    --Creating tiles from mapdata
+ 
+      for element in self.mapdata do
+        table.insert(self.tiles, Tile:new(element))
+      end
+]]
+
   self.goalPos = 20
   self.startPos = 33
-  self.charPos = 2
+  self.charPos = self.startPos
 
   --Loop builds map
   for i = 1, 40, 1 do
@@ -74,6 +105,8 @@ end
 -- @param direction Wanted direction
 -- @author Erik
 -------------------------------------
+
+-- implement right solution for checking tiles. Might be self.tiles[position].top?
 function Map:canMove(x ,y , direction)
   if direction == "up" and self.mapdata[self:getPosition(x,y)].top == 1 then
     return false
