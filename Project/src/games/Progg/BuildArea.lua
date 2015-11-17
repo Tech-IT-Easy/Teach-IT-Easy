@@ -56,6 +56,15 @@ function BuildArea:setBuildType(buildType)
     self.buildType = buildType
 end
 
+--------------------------------------
+-- Sets the inputArea variable to the active input area.
+-- queue, P1, P2 or loop
+-- @param inputArea. A string with the active input area name.
+-- @author Tobias Lundell, Nov 13, 2015
+--------------------------------------
+function BuildArea:setInputArea(inputArea)
+    self.inputArea = inputArea
+end
 -------------------------------------
 -- Sets the different queues.
 -- @param queue. An array of commands that are to be set as queue.
