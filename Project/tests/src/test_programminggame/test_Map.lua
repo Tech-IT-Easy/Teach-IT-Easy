@@ -47,10 +47,10 @@ function test_load()
   local mc = create_mock(SUT)
 
   -- Mock renderui and printbackground
-   local square = mc:mock()
-   local setGoal = mc:mock()
-   local setStart = mc:mock()
-   local setCharacter = mc:mock()
+  local square = mc:mock()
+  local setGoal = mc:mock()
+  local setStart = mc:mock()
+  local setCharacter = mc:mock()
   --local printbackground = mc:mock()
 
   local ps = require(SUT)
@@ -59,7 +59,7 @@ function test_load()
   package.loaded[SUT].setGoal = setGoal
   package.loaded[SUT].setStart = setStart
   package.loaded[SUT].setCharacter = setCharacter
- -- package.loaded[SUT].printbackground = printbackground
+  -- package.loaded[SUT].printbackground = printbackground
 
   square(mc.ANYARGS) ;mc :returns(nil) :times(40)
   setGoal(mc.ANYARGS) ;mc :returns(nil) :times(1)
@@ -445,6 +445,7 @@ function test_square_five()
 end
 
 --drawBox tests
+--[[
 function test_drawBox_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -819,6 +820,92 @@ function test_drawBox_e()
 
   verify_mock(mc)
 end
+]]
+
+function test_getPosition_one()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  mc:replay()
+
+  local a = ps:new()
+
+  local x =1
+  local y =1
+
+  local answer = a:getPosition(x,y)
+  assert_equal( 1, answer, "Wrong calculation" )
+
+  verify_mock(mc)
+end
+
+function test_getPosition_two()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  mc:replay()
+
+  local a = ps:new()
+
+  local x =3
+  local y =3
+
+  local answer = a:getPosition(x,y)
+  assert_equal( 19, answer, "Wrong calculation" )
+
+  verify_mock(mc)
+end
+
+function test_moveCharacter_one()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+
+  local setCharacter = mc:mock()
+  local square = mc:mock()
+  local getPosition = mc:mock()
+  local setGoal = mc:mock()
+
+  package.loaded[SUT].setCharacter = setCharacter
+  package.loaded[SUT].square = square
+  package.loaded[SUT].getPosition = getPosition
+  package.loaded[SUT].setGoal = setGoal
+
+  local a = ps:new()
+  local x = 2 
+  local y = 2 
+  local direction = "up"
+  a.startPos = 1
+
+  setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  square(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  setGoal(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  mc:replay()
+
+  a:moveCharacter(x, y, direction)
+
+  verify_mock(mc)
+end
+
+--[[
+function test_canMove_one()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  local ps2 = require('src.games.Progg.Tile')
+  mc:replay()
+
+  local a = ps:new()
+  local Tile = ps2:new(1)
+
+  local x =1
+  local y =1
+  local direction = "up"
+
+  local answer = a:canMove(x,y,direction)
+
+  assert_true( answer, "cant move")
+
+  verify_mock(mc)
+end
+]]
 
 -- Delete this function when the real test is done
 --[[
