@@ -119,6 +119,54 @@ end
 --end
 
 function test_test()
+    local test = require("games.Progg.BottomMenu")
+    local commands = require('games.Progg.Commands')
+    local bottommenu = test:new(16,nil)
+    local test_event
+    local bm_queue
+    local test_command
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "1"
+    test_event = event:new("1", "down") --simulates a key press on key 1
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[1]
+    print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.MOVE
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "2"
+    test_event = event:new("2", "down") --simulates a key press on key 2
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[2]
+    print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.TURN_LEFT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "3"
+    test_event = event:new("3", "down") --simulates a key press on key 3
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[3]
+    print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.TURN_RIGHT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --TO BE IMPLEMENTED WHEN BOTTOMMENU IS FULLY IMPLEMENTED!
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "4"
+--    test_event = event:new("4", "down") --simulates a key press on key 4
+--    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+--    bm_queue = bottommenu.queue.actions[4]
+--    print("Added " .. bm_queue .. " in the queue")
+--    test_command = commands.TURN_RIGHT
+--    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --TO BE IMPLEMENTED WHEN BOTTOMMENU IS FULLY IMPLEMENTED!
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "5"
+--    test_event = event:new("5", "down") --simulates a key press on key 5
+--    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+--    bm_queue = bottommenu.queue.actions[5]
+--    print("Added " .. bm_queue .. " in the queue")
+--    test_command = commands.TURN_RIGHT
+--    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
 
 
 
