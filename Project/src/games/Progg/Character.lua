@@ -75,7 +75,6 @@ end
 ---
 function Character:execute(command)
  --Moving up
- print("Executing  "..command)
     if(command == Commands.MOVE) then
       if(self:checkCollision(self.position, self.state)) then
         if(self.state ==0) then
