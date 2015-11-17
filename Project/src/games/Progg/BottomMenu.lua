@@ -33,7 +33,7 @@ function BottomMenu:new(maxCommands,gameContext)
     --queue = inQueue
     context = gameContext
     o.buildArea = buildArea:new(16)
-    o.drawBottomMenu = newDrawBottomMenu:new()
+    o.drawBottomMenu = newDrawBottomMenu:new(o.availableSlots)
     o.character = Character:new(Position:new(0,0))
     queue = Queue:new(o, o.buildArea)
     return BottomMenu:init(o)
@@ -47,7 +47,7 @@ end
 --Used when BottomMenu is updated
 function BottomMenu:show()
     self.drawBottomMenu:background(inputArea)
-    self.drawBottomMenu:emptySlots(self.availableSlots, inputArea)
+    self.drawBottomMenu:emptySlots(inputArea)
     self.drawBottomMenu:icons(self.queue)
     self.buildArea:show(inputArea)
 end

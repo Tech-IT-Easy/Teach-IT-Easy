@@ -9,8 +9,9 @@
 local Object = require("toolkit.Object")
 local DrawBottomMenu = extends(Object)
 
-function DrawBottomMenu:new()
+function DrawBottomMenu:new(availableSlots)
     local o = DrawBottomMenu:super()
+    o.maxCommands = availableSlots
     o.queue = {}
     return DrawBottomMenu:init(o)
 end
@@ -20,8 +21,8 @@ end
 -- @param maxCommands. How many commands slots that are available to the player.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBottomMenu:emptySlots(maxCommands, inputArea)
-    for i=1, maxCommands do
+function DrawBottomMenu:emptySlots(inputArea)
+    for i=1, self.maxCommands do
             self:singleEmptySlot(i, inputArea)
     end
 end
@@ -71,8 +72,13 @@ end
 -- @param queue. The queue of commands. An array of strings.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBottomMenu:icons(queue, images)
+function DrawBottomMenu:icons(queue)
     for i = 1, #queue do
+
+        if i > self.maxCommands then
+            return;
+        end
+
         self.image = gfx.loadpng(self:getFileName(queue[i]))
         if i <= 8 then
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })

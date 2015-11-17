@@ -9,8 +9,9 @@
 local Object = require("toolkit.Object")
 local DrawBuildArea = extends(Object)
 
-function DrawBuildArea:new()
+function DrawBuildArea:new(availableSlots)
     local o = DrawBuildArea:super()
+    o.maxCommands = availableSlots
     return DrawBuildArea:init(o)
 end
 
@@ -19,8 +20,8 @@ end
 -- @param maxCommands, inputArea. How many commands slots that are available to the player and the active input area.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBuildArea:emptySlots(maxCommands, inputArea)
-    for i=1, maxCommands do
+function DrawBuildArea:emptySlots(inputArea)
+    for i=1, self.maxCommands do
             self:singleEmptySlot(i, inputArea)
     end
 end
@@ -52,6 +53,10 @@ end
 -------------------------------------
 function DrawBuildArea:icons(queue)
     for i = 1, #queue do
+        if i > self.maxCommands then
+            return;
+        end
+
         self.image = gfx.loadpng(self:getFileName(queue[i]))
         if i <= 8 then
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.538 + (i-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })

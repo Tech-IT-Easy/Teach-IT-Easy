@@ -16,7 +16,7 @@ function BuildArea:new(maxCommands)
     o.loopQueue = {}
     o.p1Queue = {}
     o.p2Queue = {}
-    o.drawBuildArea = newDrawBuildArea:new()
+    o.drawBuildArea = newDrawBuildArea:new(o.availableSlots)
     o.inputArea = "queue"
     return BuildArea:init(o)
 end
