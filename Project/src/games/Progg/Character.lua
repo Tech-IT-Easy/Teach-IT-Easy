@@ -9,8 +9,7 @@ local Commands = require('games.Progg.Commands')
 local Position = require('games.Progg.Position')
 
 
--- @member Comands:Commands
--- @member Position:Position
+
 
 ----
 --0 == UP
