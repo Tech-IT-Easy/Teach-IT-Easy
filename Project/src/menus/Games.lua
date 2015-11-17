@@ -1,4 +1,7 @@
-Games = {} --MenuView:new()
+--Games = {} --MenuView:new()
+-- Changed to extending empty super-menu
+local Super = require('toolkit.MenuSuperClass')
+Games = extends(Super)
 
 local Event = require('toolkit.Event')
 --added to test game
@@ -29,9 +32,12 @@ function Games:handleinput(event)
      self.pos = self.pos + 1
   elseif event.key == Event.KEY_LEFT and self.pos > 1 then
     self.pos = self.pos - 1
-  elseif event.key == Event.KEY_TWO then
+  elseif event.key == Event.KEY_BACK then
     return { "main", self.usernamestring }
-  elseif event.key == Event.KEY_ONE then
+--  elseif event.key == Event.KEY_TWO then
+--    return { "main", self.usernamestring }
+  elseif event.key == Event.KEY_OK then
+  --elseif event.key == Event.KEY_ONE then
 ----------------------------------------------------
 --  Launches game and discards the menu to save space
 ----------------------------------------------------

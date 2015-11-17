@@ -6,11 +6,14 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-ChooseAvatar = {} --MenuView:new()
+--ChooseAvatar = {} --MenuView:new()
+
+-- Changed to extending empty super-menu
+local Super = require('toolkit.MenuSuperClass')
+ChooseAvatar = extends(Super)
 
 local Event = require('toolkit.Event')
 local CreateProfile = require('menus.CreateProfile')
-local ProfileSelection = require('menus.ProfileSelection')
 
 function ChooseAvatar:new()
 
@@ -31,18 +34,19 @@ function ChooseAvatar:handleinput(event)
     self.pos = self.pos + 1
   elseif event.key == Event.KEY_LEFT and self.pos > 1 then
     self.pos = self.pos - 1
-  elseif (event.key == Event.KEY_ONE) then
+  elseif (event.key == Event.KEY_OK) then
     table.insert(usernames, CreateProfile.profilename)
-    local image4 = self.myimages[self.pos]
-    table.insert(images, image4)
+    self.image4 = gfx.loadpng('data/bowser.png')
+    --self.image4 = self.myimages[self.pos]
+    table.insert(self.myimages, self.image4)
     self.image1=nil
     self.image2=nil
     self.image3=nil
-    image4=nil
+    self.image4=nil
     self.myimages = nil
     collectgarbage()
     return { "profilesel", " " }
-  elseif (event.key == Event.KEY_TWO) then
+  elseif (event.key == Event.KEY_BACK) then
     CreateProfile.profilename = ""
     return { "create" }
   end

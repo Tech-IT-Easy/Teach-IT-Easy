@@ -1,4 +1,7 @@
-ProfileSelection = {} --MenuView:new()
+--ProfileSelection = {} --MenuView:new()
+-- Changed to extending empty super-menu
+local Super = require('toolkit.MenuSuperClass')
+ProfileSelection = extends(Super)
 
 --usernames
 usernames = { "ERIK", "MARCUS", "TOAD" }
@@ -47,11 +50,17 @@ function ProfileSelection:handleinput(event)
 
     self.pos = 1
 
-  elseif event.key == Event.KEY_ONE and self.pos < 5 then
+  elseif event.key == Event.KEY_OK and self.pos < 5 then
     return { "main", usernames[self.pos] }
 
-  elseif event.key == Event.KEY_ONE and self.pos == 5 then
+  elseif event.key == Event.KEY_OK and self.pos == 5 then
     return { "create" }
+
+--  elseif event.key == Event.KEY_ONE and self.pos < 5 then
+--    return { "main", usernames[self.pos] }
+
+--  elseif event.key == Event.KEY_ONE and self.pos == 5 then
+--    return { "create" }
   end
 
   return { " " }

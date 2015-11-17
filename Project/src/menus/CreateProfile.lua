@@ -1,4 +1,7 @@
-CreateProfile = {} --MenuView:new()
+--CreateProfile = {} --MenuView:new()
+-- Changed to extending empty super-menu
+local Super = require('toolkit.MenuSuperClass')
+CreateProfile = extends(Super)
 
 local Event = require('toolkit.Event')
 local ProfileSelection = require('menus.ProfileSelection')
@@ -35,11 +38,17 @@ function CreateProfile:handleinput(event)
     self.pos = self.pos + 10
   elseif event.key == Event.KEY_UP and self.pos >= 11 then
     self.pos = self.pos - 10
-  elseif event.key == Event.KEY_ONE and self.pos < 27 then
-    self.profilename = self.profilename .. self.letters[self.pos] self:updatetext()
+--  elseif event.key == Event.KEY_ONE and self.pos < 27 then
+--    self.profilename = self.profilename .. self.letters[self.pos] self:updatetext()
   elseif event.key == Event.KEY_ONE and self.pos == 27 then
     return { "chooseavatar" }
-  elseif event.key == Event.KEY_TWO then
+  elseif event.key == Event.KEY_OK and self.pos < 27 then
+    self.profilename = self.profilename .. self.letters[self.pos] self:updatetext()
+  elseif event.key == Event.KEY_OK and self.pos == 27 then
+    return { "chooseavatar" }
+--  elseif event.key == Event.KEY_TWO then
+--    return { "profilesel", " " }
+  elseif event.key == Event.KEY_BACK then
     return { "profilesel", " " }
   end
   return { " " }
