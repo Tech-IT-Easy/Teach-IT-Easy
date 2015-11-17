@@ -46,9 +46,6 @@ function Map:load()
   self.boxpadding = 10
   self.borderthickness = self.boxpadding/2
 
-  
-
-
 -- An Tile item is created of type "0"
 local temp1 = Tile:new(0)
 
@@ -68,6 +65,8 @@ local temp1 = Tile:new(0)
 
 -- Mapdata that is being displayed
   -- set as input
+  -- Mapdata that is being displayed
+
   self.mapdata =
     {9, "a", "c", 0, 0, 0, 0, 0,
       5, 5, 3, "c", 0, 0, 0, 0,
