@@ -7,10 +7,11 @@ local Object = require("toolkit.Object")
 local Character = extends(Object)
 local Commands = require('games.Progg.Commands')
 local Position = require('games.Progg.Position')
-
+local Map = require('games.Progg.Map')
 
 -- @member Comands:Commands
 -- @member Position:Position
+-- @member Map:map
 
 ----
 --0 == UP
@@ -27,6 +28,7 @@ function Character:new(newPosition)
   local o = Character:super()
   o.position = newPosition
   o.state = 0
+  o.map = Map:new()
   return Character:init(o)
 end
 
@@ -88,7 +90,7 @@ function Character:execute(command)
 end
 
 function Character:checkCollision(position, state)
-  return true
+  return self.map:canMove(position, state)
 end
 
 return Character
