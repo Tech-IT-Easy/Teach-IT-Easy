@@ -13,6 +13,10 @@ local Game = require('toolkit.Game')
 --local inputHandler = require('games.Progg.GameInputHandler')
 local ProggGame = extends(Game)
 
+
+
+
+
 local Position = require('games.Progg.Position')
 
 -----------------------------------------------------------
@@ -22,6 +26,12 @@ local Position = require('games.Progg.Position')
 -----------------------------------------------------------
 function ProggGame:new(context)
   local o = ProggGame:super()
+  
+  -- @member Position:Position
+  -- @member rightMenu:RightMenu
+  -- @member BottomMenu:BottomMenu
+  -- @member map:Map
+  
   o.bottomMenu = BottomMenu:new(16,context)
   o.rightMenu = rightMenu:new()
   o.map = map:new()
