@@ -48,7 +48,11 @@ function test_new()
     local ps = require(SUT)
 
     local a = ps:new(0)
+
     assert_false(a.topBorder, "Should be false")
+  assert_false(a.bottomBorder, "Should be false")
+  assert_false(a.leftBorder, "Should be false")
+  assert_false(a.rightBorder, "Should be false")
 
 
 
