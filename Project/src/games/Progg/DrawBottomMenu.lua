@@ -6,6 +6,7 @@
 -- To change this template use File | Settings | File Templates.
 --
 
+skin = require('menus.skin')
 local Object = require("toolkit.Object")
 local DrawBottomMenu = extends(Object)
 
@@ -92,6 +93,27 @@ function DrawBottomMenu:icons(queue)
     end
 end
 
+function DrawBottomMenu:headline(name)
+
+    left_buildarea_headline:draw_over_surface(screen, name)
+--        if buildType ~= nil then
+--        self.image = gfx.loadpng(self:getFileName(buildType))
+--        if buildType == "loop" then
+--            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.87), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+--            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+--            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+--        elseif buildType == "P1" then
+--            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+--            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+--        elseif buildType == "P2" then
+--            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+--            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+--        end
+--        self.image:destroy()
+--        collectgarbage()
+--    end
+end
+
 function DrawBottomMenu:getFileName(action)
     if action == "move" then
         return "data/progg_game_icons/arrow_up.png"
@@ -116,7 +138,6 @@ function DrawBottomMenu:getFileName(action)
 
     elseif action == "P2" then
         return "data/progg_game_icons/P2.png"
-
     end
 end
 

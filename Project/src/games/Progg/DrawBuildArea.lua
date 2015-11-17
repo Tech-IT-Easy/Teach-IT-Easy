@@ -20,11 +20,12 @@ end
 -- @param maxCommands, inputArea. How many commands slots that are available to the player and the active input area.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBuildArea:emptySlots(inputArea)
+function DrawBuildArea:emptySlots(maxCommands, inputArea)
     for i=1, self.maxCommands do
             self:singleEmptySlot(i, inputArea)
     end
 end
+
 
 -------------------------------------
 -- Draws a single empty command slot
@@ -74,21 +75,35 @@ end
 -- Draws headline dependent of if loop or any of the procedures are shown.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBuildArea:headLine(buildType)
+function DrawBuildArea:headLine(buildType, inputArea)
+
     if buildType ~= nil then
-        self.image = gfx.loadpng(self:getFileName(buildType))
+--        self.image = gfx.loadpng(self:getFileName(buildType))
         if buildType == "loop" then
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.87), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
-        elseif buildType == "P1" then
-            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
-        elseif buildType == "P2" then
-            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
-            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+            --screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+            --screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+            --right_buildarea_headline:draw_over_surface(screen, "Loop")
+        --elseif buildType == "P1" then
+--            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+--            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+            --right_buildarea_headline:draw_over_surface(screen, "P1")
+
+        --elseif buildType == "P2" then
+            --screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+            --screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)            right_buildarea_headline:draw_over_surface(screen, "Loop")
+            --right_buildarea_headline:draw_over_surface(screen, "P2")
         end
-        self.image:destroy()
+--        self.image:destroy()
+--
+--        if inputArea == buildType then
+--            screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width()*(0.53), y = screen:get_height()*0.65, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+--        else
+--            screen:clear({r = 209, g = 209, b = 209}, { x = screen:get_width()*(0.53), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
+--        end
+
+        right_buildarea_headline:draw_over_surface(screen, buildType)
+
         collectgarbage()
     end
 end

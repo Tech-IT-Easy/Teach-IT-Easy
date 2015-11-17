@@ -17,7 +17,7 @@ function BuildArea:new(maxCommands)
     o.p1Queue = {}
     o.p2Queue = {}
     o.drawBuildArea = newDrawBuildArea:new(o.availableSlots)
-    o.inputArea = "queue"
+    o.inputArea = nil
     return BuildArea:init(o)
 end
 
@@ -36,7 +36,7 @@ function BuildArea:show(inputArea)
     elseif self.buildType == "loop" then
         self.drawBuildArea:icons(self.loopQueue)
     end
-    self.drawBuildArea:headLine(self.buildType)
+    self.drawBuildArea:headLine(self.buildType, inputArea)
 end
 
 -------------------------------------

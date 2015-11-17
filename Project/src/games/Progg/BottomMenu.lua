@@ -27,16 +27,16 @@ local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 
 --Constructor method
 function BottomMenu:new(maxCommands,gameContext)
-    local o = BottomMenu:super()
-    o.availableSlots = maxCommands
-    o.queue = {}
-    --queue = inQueue
-    context = gameContext
-    o.buildArea = buildArea:new(16)
-    o.drawBottomMenu = newDrawBottomMenu:new(o.availableSlots)
-    o.character = Character:new(Position:new(0,0))
-    queue = Queue:new(o, o.buildArea)
-    return BottomMenu:init(o)
+  local o = BottomMenu:super()
+  o.availableSlots = maxCommands
+  o.queue = {}
+  --queue = inQueue
+  context = gameContext
+  o.buildArea = buildArea:new(16)
+  o.drawBottomMenu = newDrawBottomMenu:new(o.availableSlots)
+  o.character = Character:new(Position:new(0,0))
+  queue = Queue:new(o, o.buildArea)
+  return BottomMenu:init(o)
 end
 
 -- Used to load images
@@ -46,10 +46,11 @@ end
 
 --Used when BottomMenu is updated
 function BottomMenu:show()
-    self.drawBottomMenu:background(inputArea)
-    self.drawBottomMenu:emptySlots(inputArea)
-    self.drawBottomMenu:icons(self.queue)
-    self.buildArea:show(inputArea)
+  self.drawBottomMenu:background(inputArea)
+  self.drawBottomMenu:emptySlots(inputArea)
+  self.drawBottomMenu:icons(self.queue)
+  self.drawBottomMenu:headline("Main")
+  self.buildArea:show(inputArea)
 end
 
 -------------------------------------
@@ -58,7 +59,7 @@ end
 -- @author Mikael Ögren
 -------------------------------------
 function BottomMenu:setQueue(queue)
-    self.queue = queue
+  self.queue = queue
 end
 
 function BottomMenu:executeQueue()
@@ -77,57 +78,57 @@ bottomMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.
 function bottomMenuEventHandler:update(object,eventListener,event)
 
   if(event.state==Event.KEY_STATE_DOWN) then
-      --Switch for all the input handling to implement
-      if event.key == Event.KEY_ONE then
-        queue:push(Commands.MOVE, inputArea)
-        --rightMenu:highlight(Commands.MOVE)
-     
-      elseif event.key == Event.KEY_TWO then
-        queue:push(Commands.TURN_LEFT, inputArea)
-        --rightMenu:highlight(Commands.TURN_LEFT)
-      
-      elseif event.key == Event.KEY_THREE then
-        queue:push(Commands.TURN_RIGHT, inputArea)
-        --rightMenu:highlight(Commands.TURN_RIGHT)
+    --Switch for all the input handling to implement
+    if event.key == Event.KEY_ONE then
+      queue:push(Commands.MOVE, inputArea)
+      --rightMenu:highlight(Commands.MOVE)
 
-      elseif event.key == Event.KEY_FOUR then
+    elseif event.key == Event.KEY_TWO then
+      queue:push(Commands.TURN_LEFT, inputArea)
+      --rightMenu:highlight(Commands.TURN_LEFT)
+
+    elseif event.key == Event.KEY_THREE then
+      queue:push(Commands.TURN_RIGHT, inputArea)
+      --rightMenu:highlight(Commands.TURN_RIGHT)
+
+    elseif event.key == Event.KEY_FOUR then
 
 
-      elseif event.key == Event.KEY_FIVE then
-     
-      
-      elseif event.key == Event.KEY_SIX then
-        object.buildArea:setBuildType("loop")
-        queue:push(Commands.LOOP, inputArea)
-        inputArea = "loop"
-        --rightMenu:highlight(Commands.LOOP)
+    elseif event.key == Event.KEY_FIVE then
 
-      elseif event.key == Event.KEY_SEVEN then
-        object.buildArea:setBuildType("P1")
-        queue:push(Commands.P1, inputArea)
-        inputArea = "P1"
-        --rightMenu:highlight(Commands.P1)
 
-      elseif event.key == Event.KEY_EIGHT then
-        object.buildArea:setBuildType("P2")
-        queue:push(Commands.P2, inputArea)
-        inputArea = "P2"
-        --rightMenu:highlight(Commands.P2)
+    elseif event.key == Event.KEY_SIX then
+      object.buildArea:setBuildType("loop")
+      queue:push(Commands.LOOP, inputArea)
+      inputArea = "loop"
+      --rightMenu:highlight(Commands.LOOP)
 
-      elseif event.key == Event.KEY_NINE then
+    elseif event.key == Event.KEY_SEVEN then
+      object.buildArea:setBuildType("P1")
+      queue:push(Commands.P1, inputArea)
+      inputArea = "P1"
+      --rightMenu:highlight(Commands.P1)
+
+    elseif event.key == Event.KEY_EIGHT then
+      object.buildArea:setBuildType("P2")
+      queue:push(Commands.P2, inputArea)
+      inputArea = "P2"
+      --rightMenu:highlight(Commands.P2)
+
+    elseif event.key == Event.KEY_NINE then
       context.platformEventListener:removeChainListener()
       context:createNewMenu()
       context.game = nil
-          
-      elseif event.key == Event.KEY_ZERO then
+
+    elseif event.key == Event.KEY_ZERO then
       if inputArea == "queue"  then
         GameInputHandler:executeQueue()
       else
         inputArea = "queue"
       end
-      end
- end
- return true
+    end
+  end
+  return true
 end
 
 BottomMenu.eventHandler = bottomMenuEventHandler
