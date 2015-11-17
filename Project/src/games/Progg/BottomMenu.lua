@@ -18,6 +18,9 @@ local Commands = require('games.Progg.Commands')
 local buildArea = require('games.Progg.BuildArea')
 local Character = require('games.Progg.Character')
 local Queue = require('games.Progg.Queue')
+
+local Position = require('games.Progg.Position')
+
 local BottomMenu = extends(Controllable)
 
 local inputArea = "queue"

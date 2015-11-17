@@ -1,13 +1,13 @@
 --
 -- Created by IntelliJ IDEA.
--- User: johannaskolling
--- Date: 15-11-12
--- Time: 10:51
+-- User: Andreas Mansson
+-- Date: 2015-11-16
+-- Time: 22:45
 -- To change this template use File | Settings | File Templates.
 --
 
 lunit = require "lunit"
-module( "Integration_commands_queue", package.seeall, lunit.testcase )
+module( "inttest_id_1", package.seeall, lunit.testcase )
 local event = require "src.toolkit.Event"
 local SUT1 =  'src.games.Progg.Queue'
 local SUT2 =  'src.games.Progg.Commands'
