@@ -12,6 +12,7 @@ function Queue:new(newBottomMenu, newBuildArea)
   o.loopActions = {}
   o.p1Actions = {}
   o.p2Actions = {}
+  o.loopCounter = 2
   if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
   if newBuildArea ~= nil then o.buildArea = newBuildArea end
 
