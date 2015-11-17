@@ -20,29 +20,28 @@ function Character:new(newPosition)
   return Character:init(o)
 end
 
+
 function Character:startExecution(inqueue)
   local queue = inqueue:getExecutionQueue()
   for i=0, #queue.actions do
     local act = queue:pop()
     if act == Commands.LOOP then
       for i =0, #queue.loopActions do
-        ----------------------------
-        -- Handle the loop queue here
-        ----------------------------
+        act = queue.loopActions:pop()
+        self:execute(act)
       end
     elseif act == Commands.P1 then
       for i =0, #queue.p1Actions do
-        ----------------------------
-        -- Handle the procedure1 queue here
-        ----------------------------
+        act = queue.p1Actions:pop()
+        self:execute(act)
       end
     elseif act == Commands.P2 then
       for i =0, #queue.p2Actions do
-        ----------------------------
-        -- Handle the procedure2 queue here
-        ----------------------------
+        act = queue.p2Actions:pop()
+        self:execute(act)
       end
     end
+    self:execute(act)
   end
 end
 
