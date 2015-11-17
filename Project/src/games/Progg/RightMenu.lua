@@ -16,7 +16,7 @@ local EventHandler = require('toolkit.EventHandler')
 local drawRightMenu = require('games/Progg/DrawRightMenu')
 
 -- Variale to keep track of a highlighted command
-local highlight = nil
+
 
 -- Available commands
 commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
@@ -31,6 +31,7 @@ function RightMenu:new()
     --Draw right-hand side
     screen:clear({ r = 92, g = 128, b = 149 }, { x = screen:get_width() * 0.75, y = 0, w = screen:get_width() * 0.25, h = screen:get_height()*0.65 })
     o.draw = drawRightMenu:new()
+    self.currentHighlight = nil
     return RightMenu:init(o)
 end
 
@@ -69,13 +70,13 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:highlight(command)
-    if highlight ~= nil then
-        self:removeHighlight(highlight)
+    if self.currentHighlight ~= nil then
+        self:removeHighlight(self.currentHighlight)
     end
 
     self.draw:drawHighlight(command)
 
-    highlight = command
+    self.currentHighlight = command
 
 end
 
@@ -88,8 +89,7 @@ end
 -------------------------------------
 function RightMenu:removeHighlight(command)
     self.draw:drawRemoveHighlight(command)
-
-    highlight = nil
+    self.currentHighlight = nil
 end
 
 -------------------------------------
@@ -102,8 +102,8 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:play()
-    if highlight ~= nill then
-        self:removeHighlight(highlight)
+    if self.currentHighlight ~= nill then
+        self:removeHighlight(self.currentHighlight)
     end
 
     self.draw:addStop()
