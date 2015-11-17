@@ -35,25 +35,28 @@ end
 
 function Character:startExecution(inqueue)
   local queue = inqueue:getExecutionQueue()
-  for i=0, #queue.actions do
+  for i=1, #queue.actions do
     local act = queue:pop()
+    if(act~=nil)then
     if act == Commands.LOOP then
-      for i =0, #queue.loopActions do
-        act = queue.loopActions:pop()
+      for i =1, #queue.loopActions do
+        act = table.remove(queue.loopActions)
         self:execute(act)
       end
     elseif act == Commands.P1 then
-      for i =0, #queue.p1Actions do
-        act = queue.p1Actions:pop()
+      for i =1, #queue.p1Actions do
+        act = table.remove(queue.p1Actions)
         self:execute(act)
       end
     elseif act == Commands.P2 then
-      for i =0, #queue.p2Actions do
-        act = queue.p2Actions:pop()
+      for i =1, #queue.p2Actions do
+        act = table.remove(queue.p2Actions)
+        self:execute(act)
+      end
+      else
         self:execute(act)
       end
     end
-    self:execute(act)
   end
 end
 

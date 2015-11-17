@@ -72,10 +72,8 @@ function BottomMenu:setQueue(queue)
 end
 
 function BottomMenu:executeQueue()
-  local executionQueue = queue:getExecutionQueue()
-  for i = 1, #executionQueue.actions do
-    self.character:execute(executionQueue:pop())
-  end
+    self.character:startExecution(queue)
+ 
 end
 
 
@@ -131,7 +129,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
           
       elseif event.key == Event.KEY_ZERO then
       if inputArea == "queue"  then
-        GameInputHandler:executeQueue()
+        object:executeQueue()
       else
         inputArea = "queue"
       end
