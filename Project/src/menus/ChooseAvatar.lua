@@ -36,9 +36,9 @@ function ChooseAvatar:handleinput(event)
     self.pos = self.pos - 1
   elseif (event.key == Event.KEY_OK) then
     table.insert(usernames, CreateProfile.profilename)
-    self.image4 = gfx.loadpng('data/bowser.png')
-    --self.image4 = self.myimages[self.pos]
-    table.insert(self.myimages, self.image4)
+    --self.image4 = gfx.loadpng('data/bowser.png')
+    self.image4 = self.myimages[self.pos]
+    table.insert(images, self.image4)
     self.image1=nil
     self.image2=nil
     self.image3=nil
