@@ -23,12 +23,12 @@ local BottomMenu = extends(Controllable)
 local inputArea = "queue"
 local queue = nil
 local context = nil
-local drawBottomMenu = nil
 local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 
 --Constructor method
 function BottomMenu:new(maxCommands,gameContext)
     local o = BottomMenu:super()
+    o.selectingLoopCounter = false;
     o.queue = {}
     o.position = 1
     context = gameContext
@@ -63,10 +63,8 @@ function BottomMenu:setQueue(queue)
 end
 
 function BottomMenu:executeQueue()
-  local executionQueue = queue:getExecutionQueue()
-  for i = 1, #executionQueue.actions do
-    self.character:execute(executionQueue:pop())
-  end
+    self.character:startExecution(queue)
+ 
 end
 
 
@@ -80,49 +78,97 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
   if(event.state==Event.KEY_STATE_DOWN) then
       --Switch for all the input handling to implement
-      if event.key == Event.KEY_ONE then
-        queue:push(Commands.MOVE, inputArea)
-
-     
+      if event.key == Event.KEY_ONE then             
+        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+              queue.loopCounter = 1
+              object.selectingLoopCounter=false
+        else
+              queue:push(Commands.MOVE, inputArea)
+           end      
+             
       elseif event.key == Event.KEY_TWO then
-        queue:push(Commands.TURN_LEFT, inputArea)
-
-      
+        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+              queue.loopCounter = 2
+              object.selectingLoopCounter=false
+        else
+              queue:push(Commands.TURN_LEFT, inputArea)
+           end  
+             
       elseif event.key == Event.KEY_THREE then
-        queue:push(Commands.TURN_RIGHT, inputArea)
-
-
+         if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+              queue.loopCounter = 3
+              object.selectingLoopCounter=false
+        else
+              queue:push(Commands.TURN_RIGHT, inputArea)
+           end  
+           
       elseif event.key == Event.KEY_FOUR then
-
+        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+              queue.loopCounter = 4
+              object.selectingLoopCounter=false
+        else
+              --queue:push(Commands.TURN_RIGHT, inputArea)
+           end  
 
       elseif event.key == Event.KEY_FIVE then
-     
+         if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+              queue.loopCounter = 5
+              object.selectingLoopCounter=false
+        else
+              --queue:push(Commands.TURN_RIGHT, inputArea)
+           end  
       
       elseif event.key == Event.KEY_SIX then
-        object.buildArea:setBuildType("loop")
+      
+         if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+              queue.loopCounter = 6
+              object.selectingLoopCounter=false
+        else
+            object.buildArea:setBuildType("loop")
+            queue:push(Commands.LOOP, inputArea)
+            inputArea = "loop"
+            object.selectingLoopCounter=true
+         end
+         
         object.position = 17
         object.buildArea:setPosition(object.position)
-        queue:push(Commands.LOOP, inputArea)
-        inputArea = "loop"
 
       elseif event.key == Event.KEY_SEVEN then
-        object.buildArea:setBuildType("P1")
+       if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+              queue.loopCounter = 7
+              object.selectingLoopCounter=false
+       else
+          object.buildArea:setBuildType("P1")
+          queue:push(Commands.P1, inputArea)
+          inputArea = "P1"           
+       end  
+       
         object.position = 17
         object.buildArea:setPosition(object.position)
-        queue:push(Commands.P1, inputArea)
-        inputArea = "P1"
+        
 
       elseif event.key == Event.KEY_EIGHT then
-        object.buildArea:setBuildType("P2")
+        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+             queue.loopCounter = 8
+             object.selectingLoopCounter=false
+         else
+             object.buildArea:setBuildType("P2")
+             queue:push(Commands.P2, inputArea)
+             inputArea = "P2"          
+         end  
+        
         object.position = 17
-        object.buildArea:setPosition(object.position)
-        queue:push(Commands.P2, inputArea)
-        inputArea = "P2"
+        object.buildArea:setPosition(object.position) 
 
       elseif event.key == Event.KEY_NINE then
-      context.platformEventListener:removeChainListener()
-      context:createNewMenu()
-      context.game = nil
+       if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+             queue.loopCounter = 9
+             object.selectingLoopCounter=false
+         else
+             context.platformEventListener:removeChainListener()
+             context:createNewMenu()
+             context.game = nil        
+         end
 
       elseif event.key == Event.KEY_UP then
           if (object.position > 8 and object.position <= 16) or (24 < object.position <= 32) then
@@ -145,13 +191,12 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.buildArea:setPosition(object.position)
           end
       elseif event.key == Event.KEY_ZERO then
-          if inputArea == "queue"  then
-                GameInputHandler:executeQueue()
-              else
-                inputArea = "queue"
-          end
+      if inputArea == "queue"  then
+        object:executeQueue()
+      else
+        inputArea = "queue"
       end
-      print(object.position)
+      end
  end
  return true
 end

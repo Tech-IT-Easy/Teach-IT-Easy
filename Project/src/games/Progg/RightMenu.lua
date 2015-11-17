@@ -16,7 +16,7 @@ local EventHandler = require('toolkit.EventHandler')
 local drawRightMenu = require('games/Progg/DrawRightMenu')
 
 -- Variale to keep track of a highlighted command
-
+local highlight = nil
 
 -- Available commands
 commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
@@ -31,7 +31,7 @@ function RightMenu:new()
     --Draw right-hand side
     screen:clear({ r = 92, g = 128, b = 149 }, { x = screen:get_width() * 0.75, y = 0, w = screen:get_width() * 0.25, h = screen:get_height()*0.65 })
     o.draw = drawRightMenu:new()
-    self.currentHighlight = nil
+    o.inputArea = "queue"
     return RightMenu:init(o)
 end
 
@@ -70,13 +70,13 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:highlight(command)
-    if self.currentHighlight ~= nil then
-        self:removeHighlight(self.currentHighlight)
+    if highlight ~= nil then
+        self:removeHighlight(highlight)
     end
 
     self.draw:drawHighlight(command)
 
-    self.currentHighlight = command
+    highlight = command
 
 end
 
@@ -89,7 +89,8 @@ end
 -------------------------------------
 function RightMenu:removeHighlight(command)
     self.draw:drawRemoveHighlight(command)
-    self.currentHighlight = nil
+
+    highlight = nil
 end
 
 -------------------------------------
@@ -102,8 +103,8 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:play()
-    if self.currentHighlight ~= nill then
-        self:removeHighlight(self.currentHighlight)
+    if highlight ~= nill then
+        self:removeHighlight(highlight)
     end
 
     self.draw:addStop()
@@ -168,31 +169,79 @@ function rightMenuEventHandler:update(object,eventListener,event)
     if(event.state==Event.KEY_STATE_DOWN) then
         --Switch for all the input handling to implement
         if event.key == Event.KEY_ONE then
+         if(object.inputArea =="queue") then
             object:highlight(Commands.MOVE)
+         elseif(object.inputArea =="loop") then
+            object.inputArea = "queue"
+            object:standardLayout()
+         end
 
         elseif event.key == Event.KEY_TWO then
-            object:highlight(Commands.TURN_LEFT)
+        if(object.inputArea =="queue") then
+             object:highlight(Commands.TURN_LEFT)
+         elseif(object.inputArea =="loop") then
+            object.inputArea = "queue"
+            object:standardLayout()
+         end
 
         elseif event.key == Event.KEY_THREE then
-            object:highlight(Commands.TURN_RIGHT)
-
+        if(object.inputArea =="queue") then
+             object:highlight(Commands.TURN_RIGHT)
+         elseif(object.inputArea =="loop") then
+            object.inputArea = "queue"
+            object:standardLayout()
+         end
+            
         elseif event.key == Event.KEY_FOUR then
-
+          if(object.inputArea =="queue") then
+             --object:highlight()
+         elseif(object.inputArea =="loop") then
+            object.inputArea = "queue"
+            object:standardLayout()
+         end      
 
         elseif event.key == Event.KEY_FIVE then
-
+          if(object.inputArea =="queue") then
+             --object:highlight()
+         elseif(object.inputArea =="loop") then
+            object.inputArea = "queue"
+            object:standardLayout()
+         end      
 
         elseif event.key == Event.KEY_SIX then
-            object:highlight(Commands.LOOP)
-
+            if(object.inputArea =="queue") then
+             object:highlight(Commands.LOOP)
+            object:loopLayout()
+            object.inputArea = "loop"
+         elseif(object.inputArea =="loop") then
+            object.inputArea = "queue"
+            object:standardLayout()
+         end
+            
         elseif event.key == Event.KEY_SEVEN then
-            object:highlight(Commands.P1)
+        if(object.inputArea =="queue") then
+             object:highlight(Commands.P1)
+         elseif(object.inputArea =="loop") then
+            object.inputArea = "queue"
+            object:standardLayout()
+         end
+            
 
         elseif event.key == Event.KEY_EIGHT then
-            object:highlight(Commands.P2)
+          if(object.inputArea =="queue") then
+             object:highlight(Commands.P2)
+         elseif(object.inputArea =="loop") then
+            object.inputArea = "queue"
+            object:standardLayout()
+         end      
 
         elseif event.key == Event.KEY_NINE then
-
+          if(object.inputArea =="queue") then
+             --object:highlight()
+         elseif(object.inputArea =="loop") then
+            object.inputArea = "queue"
+            object:standardLayout()
+         end      
         elseif event.key == Event.KEY_ZERO then
 
         end
