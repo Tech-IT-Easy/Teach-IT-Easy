@@ -25,6 +25,7 @@ function MainMenu:handleinput(event)
 
   collectgarbage()
   self.lastpos = self.pos
+
   if event.key == Event.KEY_RIGHT and self.pos == 0 then
     self.pos = 1
   elseif event.key == Event.KEY_DOWN and self.pos > 0 and self.pos < 3 then
@@ -33,10 +34,9 @@ function MainMenu:handleinput(event)
     self.pos = self.pos - 1
   elseif event.key == Event.KEY_LEFT and self.pos > 0 and self.pos < 4 then
     self.pos = 0
-  elseif event.key == Event.KEY_ONE and self.pos == 0 then
-    return { "games", self.usernamestring }
-
-  elseif event.key == Event.KEY_TWO then
+  elseif event.key == Event.KEY_OK and self.pos == 0 then
+      return { "games", self.usernamestring }
+  elseif event.key == Event.KEY_BACK then
     return { "profilesel" }
   end
 

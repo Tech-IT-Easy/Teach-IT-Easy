@@ -30,7 +30,6 @@ end
 -- @author Vilhelm
 -------------------------------------
 function DrawRightMenu:getPosition(command)
-    print(command)
     if command == "move" then
         return 1
     elseif command == "turn-left" then
