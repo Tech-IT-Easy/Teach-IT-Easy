@@ -171,7 +171,7 @@ function test_handleinput_two_from_left()
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 1
-  event.key = event.KEY_TWO
+  event.key = event.KEY_BACK
   local b = a:handleinput(event)
   assert_equal("main", b[1], "should return main")
 end

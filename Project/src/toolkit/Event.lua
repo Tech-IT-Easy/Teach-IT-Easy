@@ -24,6 +24,8 @@ Event.KEY_SEVEN = 11
 Event.KEY_EIGHT = 12
 Event.KEY_NINE = 13
 Event.KEY_ZERO = 14
+Event.KEY_OK = 15
+Event.KEY_BACK = 16
 
 Event.KEY_STATE_DOWN = 1
 Event.KEY_STATE_UP = 2
@@ -45,7 +47,10 @@ Event.formatSystemKey = {
 ["7"] = Event.KEY_SEVEN,
 ["8"] = Event.KEY_EIGHT,
 ["9"] = Event.KEY_NINE,
-["0"] = Event.KEY_ZERO
+["0"] = Event.KEY_ZERO,
+["ok"] = Event.KEY_OK,
+["backspace"] = Event.KEY_BACK
+
 --- Other events we are interested need to be added here
 }
 

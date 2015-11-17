@@ -31,97 +31,81 @@ local function verify_mock(mc)
     mc:verify()
   end)
   if err then -- if error fail the test.
-    fail(err)
- end
+  fail(err)
+  end
 end
 
 -- Delete this function when the real test is done
-function test_RightMenu_fail()
-   fail("RightMenu highlight-functions not tested yet!")
-end
-
-function test_getPosition_correctCommand()
-  -- command "move" is inputed
-  local mc = create_mock(SUT)
-  -- Mock inactive and active
-  -- Create mock objects for each function to mock
-
-  -- In this case we want to mock 4 member functions so then we import the SUT (System under test)
-  local ps = require(SUT)
-
-
-  -- Tell for which arguments it should work, what it should return and how many times it should be called.
-
-  -- Start the testing
-  mc:replay()
-
-  local a = ps:new()
-  event = "move"
-  assert_equal(1, a:getPosition(event), "should return 1, didn't")
-
-  verify_mock(mc)
-end
-
-function test_RightMenu_falseCommand()
-  -- command "move" is inputed
-  local mc = create_mock(SUT)
-  -- Mock inactive and active
-  -- Create mock objects for each function to mock
-
-  -- In this case we want to mock 4 member functions so then we import the SUT (System under test)
-  local ps = require(SUT)
-
-
-  -- Tell for which arguments it should work, what it should return and how many times it should be called.
-
-  -- Start the testing
-  mc:replay()
-
-  local a = ps:new()
-  event = "jump"
-  assert_equal(nil, a:getPosition(event), "should return 1, didn't")
-
-  verify_mock(mc)
-end
+--[[function test_RightMenu_fail()
+  fail("RightMenu highlight-functions not tested yet!")
+end]]
 
 --Need to figure out how to mock screen-methods
 
 --Doesn't work any longer after I made highlight in RightMenu local
 --(I addad a. to all highlight here as well)
 function test_highlight_correctCommand()
-  -- command "move" is inputed
-  local mc = create_mock(SUT)
-  local ps = require(SUT)
+  local class_to_mock = "games.Progg.DrawRightMenu"
+
+  local mc = create_mock(class_to_mock)
+  local drawHighlight = mc:mock()
+  local ps=require(class_to_mock)
+  package.loaded[class_to_mock].drawHighlight = drawHighlight
+  drawHighlight(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+
   mc:replay()
 
-  local a = ps:new()
+  local ps1 = require(SUT)
+  local a = ps1:new()
   local event = "move"
-  local image_data = love.image.newImageData()
-  local var = {}
-  var.image_data = image_data
-  a.images = { ["move"]=var }
-
+  a.currentHighlight = nil
   a:highlight(event)
-  assert_equal("move", a.highlight, "should return 'move', didn't")
+  assert_equal("move", a.currentHighlight, "should return 'move', didn't")
+  verify_mock(mc)
+end
 
+function test_highlight_correctCommand_highlightActive()
+  local class_to_mock = "games.Progg.DrawRightMenu"
+
+  local mc = create_mock(class_to_mock)
+  local drawHighlight = mc:mock()
+  local ps=require(class_to_mock)
+  package.loaded[class_to_mock].drawHighlight = drawHighlight
+  drawHighlight(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+
+  local mc2 = create_mock(SUT)
+  local removeHighlight = mc2:mock()
+  local ps2=require(SUT)
+  package.loaded[SUT].removeHighlight = removeHighlight
+  removeHighlight(mc2.ANYARGS) ;mc2 :returns(nil) :anytimes()
+
+  mc2:replay()
+  mc:replay()
+
+  local a = ps2:new()
+  local event = "move"
+  a.currentHighlight = "loop"
+  a:highlight(event)
+  assert_equal("move", a.currentHighlight, "should return 'move', didn't")
   verify_mock(mc)
 end
 
 function test_removeHighlight_correctCommand()
-  -- command "move" is inputed
-  local mc = create_mock(SUT)
-  local ps = require(SUT)
+  local class_to_mock = "games.Progg.DrawRightMenu"
+
+  local mc = create_mock(class_to_mock)
+  local drawHighlight = mc:mock()
+  local ps=require(class_to_mock)
+  package.loaded[class_to_mock].drawHighlight = drawHighlight
+  drawHighlight(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+
   mc:replay()
 
-  local a = ps:new()
-  local event = "move"
-  local image_data = love.image.newImageData()
-  local var = {}
-  var.image_data = image_data
-  a.images = { ["move"] = var }
-  a.highlight = "move"
+  local ps1 = require(SUT)
+  local a = ps1:new()
+  a.currentHighlight = "loop"
+  local event = "loop"
   a:removeHighlight(event)
-  assert_equal(nil, a.highlight, "should return nil, didn't")
-
+  assert_equal(nil, a.currentHighlight, "should return nil, didn't")
   verify_mock(mc)
 end
