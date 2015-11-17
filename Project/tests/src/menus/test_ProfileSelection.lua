@@ -311,7 +311,7 @@ function test_handleinput_up_one()
   local a = ps:new()
  -- a.usernames = {"a", "b", "c"}
   a.pos = 1
-  event.key = event.KEY_ONE
+  event.key = event.KEY_OK
   local b = a:handleinput(event)
   assert_equal("ERIK", b[2], "should get username a")
   a.pos = 2
@@ -328,7 +328,7 @@ function test_handleinput_down_one()
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 5
-  event.key = event.KEY_ONE
+  event.key = event.KEY_OK
   local b = a:handleinput(event)
   assert_equal("create", b[1], "should get create")
 end

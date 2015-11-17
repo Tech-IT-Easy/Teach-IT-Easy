@@ -1,7 +1,16 @@
+-----------------------------------------------------------
+-- This class represents the character and its position in the game.
+-- @Author:Created by Mario Pizcueta, Nov 11,2015
+-- ---------------------------------
+
 local Object = require("toolkit.Object")
 local Character = extends(Object)
 local Commands = require('games.Progg.Commands')
 local Position = require('games.Progg.Position')
+
+
+-- @member Comands:Commands
+-- @member Position:Position
 
 ----
 --0 == UP
@@ -11,7 +20,8 @@ local Position = require('games.Progg.Position')
 ----
 local step = 5
 ----
---Constructor of the character
+--Constructor of the character.
+--@param: the initial position of the character
 ----
 function Character:new(newPosition)
   local o = Character:super()
@@ -47,6 +57,7 @@ end
 
 ---
 --Executes the given command
+--@param: the command to execute of class Commands
 ---
 function Character:execute(command)
  --Moving up

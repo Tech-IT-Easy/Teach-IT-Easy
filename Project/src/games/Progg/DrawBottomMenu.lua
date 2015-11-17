@@ -20,9 +20,9 @@ end
 -- @param maxCommands. How many commands slots that are available to the player.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBottomMenu:emptySlots(maxCommands)
+function DrawBottomMenu:emptySlots(maxCommands, inputArea)
     for i=1, maxCommands do
-            self:singleEmptySlot(i)
+            self:singleEmptySlot(i, inputArea)
     end
 end
 
@@ -31,13 +31,23 @@ end
 -- @param boxNmb. The number of the box being drawn.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBottomMenu:singleEmptySlot(boxNmb)
-    if boxNmb <= 8 then
-        screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
+function DrawBottomMenu:singleEmptySlot(boxNmb, inputArea)
+
+if (inputArea == "queue") then
+        if boxNmb <= 8 then
+            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
+        else
+            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
+        end
     else
-        screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
+        if boxNmb <= 8 then
+            screen:clear({ r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.035 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
+        else
+            screen:clear({ r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.035 + (boxNmb-9)*0.055), y = screen:get_height()*0.84, w = screen:get_width()*0.045, h = screen:get_height()*0.075 })
+        end
     end
 end
+
 
 -------------------------------------
 -- Draws the background for the bottom left menu
@@ -45,11 +55,12 @@ end
 -------------------------------------
 function DrawBottomMenu:background(inputArea)
     screen:clear({r = 27, g = 39, b = 53 }, { x = 0, y = screen:get_height() * 0.65, w = screen:get_width(), h = screen:get_height() * 0.35 })
-    screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
 
     if (inputArea == "queue") then
+        screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
         screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
     else
+        screen:clear({r = 209, g = 209, b = 209 }, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
         screen:clear({r = 35, g = 73, b = 120 }, { x = screen:get_width() * 0.53, y = screen:get_height() * 0.6999, w = screen:get_width() * 0.44, h = screen:get_height() * 0.25 })
     end
 end
@@ -71,6 +82,7 @@ function DrawBottomMenu:icons(queue, images)
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (i-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         end
         self.image:destroy()
+        collectgarbage()
     end
 end
 
