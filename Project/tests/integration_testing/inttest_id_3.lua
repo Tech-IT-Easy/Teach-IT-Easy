@@ -126,6 +126,9 @@ function test_test()
     local bm_queue
     local test_command
 
+    -----------------------------------------------------------------------------------------------
+     -- Adding some commands
+    -----------------------------------------------------------------------------------------------
     --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "1"
     test_event = event:new("1", "down") --simulates a key press on key 1
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
@@ -150,6 +153,11 @@ function test_test()
     test_command = commands.TURN_RIGHT
     lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
 
+    print("Commands added")
+    -----------------------------------------------------------------------------------------------
+     -- Added commands
+    -----------------------------------------------------------------------------------------------
+
     --TO BE IMPLEMENTED WHEN BOTTOMMENU IS FULLY IMPLEMENTED!
     --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "4"
 --    test_event = event:new("4", "down") --simulates a key press on key 4
@@ -168,8 +176,8 @@ function test_test()
 --    test_command = commands.TURN_RIGHT
 --    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
 
- -----------------------------------------------------------------------------------------------
-    -- Creating LOOP-action
+    -----------------------------------------------------------------------------------------------
+     -- Creating LOOP-action
     -----------------------------------------------------------------------------------------------
     --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "6"
     test_event = event:new("6", "down") --simulates a key press on key 6
@@ -219,8 +227,176 @@ function test_test()
 
     print("LOOP-action created")
     -----------------------------------------------------------------------------------------------
-    -- LOOP-action created
+     -- LOOP-action created
     -----------------------------------------------------------------------------------------------
+
+
+    -----------------------------------------------------------------------------------------------
+     -- Adding some commands
+    -----------------------------------------------------------------------------------------------
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "2"
+    test_event = event:new("2", "down") --simulates a key press on key 2
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[5]
+    print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.TURN_LEFT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "3"
+    test_event = event:new("3", "down") --simulates a key press on key 3
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[6]
+    print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.TURN_RIGHT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    print("Commands added")
+    -----------------------------------------------------------------------------------------------
+     -- Added commands
+    -----------------------------------------------------------------------------------------------
+
+    -----------------------------------------------------------------------------------------------
+     -- Creating PROCEDURE-action
+    -----------------------------------------------------------------------------------------------
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "7"
+    test_event = event:new("7", "down") --simulates a key press on key 7
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[7]
+    print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.P1
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "1"
+    --Adding MOVE-action to procedure P1
+    test_event = event:new("1", "down") --simulates a key press on key 1
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.p1Actions[1]
+    print("Added " .. bm_queue .. " in the P1-queue")
+    test_command = commands.MOVE
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "2"
+    --Adding TURN_LEFT-action to procedure P1
+    test_event = event:new("2", "down") --simulates a key press on key 2
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.p1Actions[2]
+    print("Added " .. bm_queue .. " in the P1-queue")
+    test_command = commands.TURN_LEFT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "3"
+    --Adding TURN_RIGHT-action to procedure P1
+    test_event = event:new("3", "down") --simulates a key press on key 3
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.p1Actions[3]
+    print("Added " .. bm_queue .. " in the P1-queue")
+    test_command = commands.TURN_RIGHT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Exits the procedure-mode
+    test_event = event:new("0", "down") --simulates a key press on key
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+
+    print("PROCEDURE-action created")
+    -----------------------------------------------------------------------------------------------
+     -- PROCEDURE-action created
+    -----------------------------------------------------------------------------------------------
+
+    -----------------------------------------------------------------------------------------------
+     -- Adding some commands
+    -----------------------------------------------------------------------------------------------
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "2"
+    test_event = event:new("2", "down") --simulates a key press on key 2
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[8]
+    print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.TURN_LEFT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "3"
+    test_event = event:new("3", "down") --simulates a key press on key 3
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[9]
+    print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.TURN_RIGHT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    print("Commands added")
+    -----------------------------------------------------------------------------------------------
+     -- Added commands
+    -----------------------------------------------------------------------------------------------
+
+    -----------------------------------------------------------------------------------------------
+     -- Creating PROCEDURE-action
+    -----------------------------------------------------------------------------------------------
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "7"
+    test_event = event:new("8", "down") --simulates a key press on key 7
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[10]
+    print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.P1
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "1"
+    --Adding MOVE-action to procedure P2
+    test_event = event:new("1", "down") --simulates a key press on key 1
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.p2Actions[1]
+    print("Added " .. bm_queue .. " in the P2-queue")
+    test_command = commands.MOVE
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "2"
+    --Adding TURN_LEFT-action to procedure P2
+    test_event = event:new("2", "down") --simulates a key press on key 2
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.p2Actions[2]
+    print("Added " .. bm_queue .. " in the P2-queue")
+    test_command = commands.TURN_LEFT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "3"
+    --Adding TURN_RIGHT-action to procedure P2
+    test_event = event:new("3", "down") --simulates a key press on key 3
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.p1Actions[3]
+    print("Added " .. bm_queue .. " in the P2-queue")
+    test_command = commands.TURN_RIGHT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Exits the procedure-mode
+    test_event = event:new("0", "down") --simulates a key press on key
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+
+    print("PROCEDURE-action created")
+    -----------------------------------------------------------------------------------------------
+     -- PROCEDURE-action created
+    -----------------------------------------------------------------------------------------------
+
+    -----------------------------------------------------------------------------------------------
+     -- Adding some commands
+    -----------------------------------------------------------------------------------------------
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "2"
+    test_event = event:new("2", "down") --simulates a key press on key 2
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[11]
+    print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.TURN_LEFT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "3"
+    test_event = event:new("3", "down") --simulates a key press on key 3
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[12]
+    print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.TURN_RIGHT
+    lunit.assert_equal(bm_queue, test_command, "Did not found the correct element in the queue")
+
+    print("Commands added")
+    -----------------------------------------------------------------------------------------------
+     -- Added commands
+    -----------------------------------------------------------------------------------------------
+
 
 end
 
