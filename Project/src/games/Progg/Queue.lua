@@ -34,7 +34,7 @@ function Queue:push(action, queueType)
 
   if queueType == "queue" or queueType == nil then
     table.insert(self.actions,action)
-    if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self.actions) end
+    if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self) end
   elseif queueType == "loop" then
     table.insert(self.loopActions,action)
     if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions, queueType) end

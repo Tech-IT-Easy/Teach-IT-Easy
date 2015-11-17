@@ -10,7 +10,6 @@
 -- @Author:Updated by Chuck Chu, Nov 16,2015 for removing GameInputHandler
 -----------------------------------------------------------
 
-local Object = require("toolkit.Object")
 local Controllable = require("toolkit.Controllable")
 local EventHandler = require('toolkit.EventHandler')
 local Event = require('toolkit.Event')
@@ -21,7 +20,6 @@ local Queue = require('games.Progg.Queue')
 local BottomMenu = extends(Controllable)
 
 local inputArea = "queue"
---local queue = nil
 local context = nil
 local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 
@@ -29,8 +27,6 @@ local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 function BottomMenu:new(maxCommands,gameContext)
     local o = BottomMenu:super()
     o.availableSlots = maxCommands
-    --o.queue = {}
-    --queue = inQueue
     context = gameContext
     o.buildArea = buildArea:new(16)
     o.drawBottomMenu = newDrawBottomMenu:new()
@@ -58,7 +54,7 @@ end
 function BottomMenu:show()
     self.drawBottomMenu:background(inputArea)
     self.drawBottomMenu:emptySlots(self.availableSlots, inputArea)
-    self.drawBottomMenu:icons(self.queue)
+    self.drawBottomMenu:icons(self.queue.actions)
     self.buildArea:show(inputArea)
 end
 
@@ -83,7 +79,8 @@ bottomMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.
 
 --Update function on every key input
 function bottomMenuEventHandler:update(object,eventListener,event)
-
+  if object.buildArea == nil then print("Buildarea nil") end
+  if object.character == nil then print("Character nil") end
   if(event.state==Event.KEY_STATE_DOWN) then
       --Switch for all the input handling to implement
       if event.key == Event.KEY_ONE then
