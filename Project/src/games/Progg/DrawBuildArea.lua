@@ -8,6 +8,7 @@
 
 local Object = require("toolkit.Object")
 local DrawBuildArea = extends(Object)
+skin = require('games/Progg/progg_skin')
 
 function DrawBuildArea:new()
     local o = DrawBuildArea:super()
@@ -76,6 +77,7 @@ function DrawBuildArea:headLine(buildType)
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.87), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
+            nr_on_loop:draw_over_surface(screen, "3")
         elseif buildType == "P1" then
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.55), y = screen:get_height()*0.66, w = screen:get_width()*0.080, h = screen:get_height()*0.060 })
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.57), y = screen:get_height()*0.655, w=screen:get_width()*0.04, h = screen:get_height()*0.070 }, true)
