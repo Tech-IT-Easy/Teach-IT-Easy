@@ -3,7 +3,11 @@ if ADConfig.isSimulator then
 else
   script_path = sys.root_path()
 end
-  -- varibles for placing
+
+-------------------------------------
+-- Some variables for placing objects.
+-- @author Marcus
+-------------------------------------
   prof_sel_itemy = screen:get_height() * 0.32
   prof_sel_itemheight = screen:get_height() * 0.35
   prof_sel_itemwidth = screen:get_width() * 0.19
@@ -37,10 +41,10 @@ end
 
   buildarea_headline_baseline = screen:get_height() * 0.66
 
-  --General fonts
-  --main_menu_pagename = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=main_menu_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
-
--- profile selection fonts
+-------------------------------------
+-- Freetype objects used in the profile selection page.
+-- @author Marcus
+-------------------------------------
   prof_sel_appname = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=main_menu_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
   prof_sel_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a=255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = main_menu_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
   prof_sel_addprofileplus = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.075, { x = screen:get_width() * 0.41, y = screen:get_height() * 0.877 }, script_path .. 'data/BlackoutMidnight.ttf')
@@ -53,7 +57,10 @@ end
   
   prof_sel_usernamefonts = {prof_sel_username1, prof_sel_username2, prof_sel_username3, prof_sel_username4, prof_sel_username5 }
 
-  --main menu fonts
+  -------------------------------------
+-- Freetype objects used in the main menu page.
+-- @author Marcus
+-------------------------------------
   main_menu_appname = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=main_menu_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
   main_menu_pagename = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=main_menu_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
   main_menu_username = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=main_menu_usernamebaseline}, script_path..'data/GROBOLD.ttf')
@@ -65,8 +72,10 @@ end
   main_menu_sidebuttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143,a=255}, screen:get_height() * 0.07, { x = screen:get_width()*0.65, y = (screen:get_height()*0.36) + ((screen:get_height()*0.2125)*2) }, script_path .. 'data/condensed.ttf')
 
   
-  --Game menu fonts
-
+  -------------------------------------
+-- Freetype objects used in the game selection page.
+-- @author Marcus
+-------------------------------------
   games_appname = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=games_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
   games_pagename = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.33, y=games_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
   games_username = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.035, {x= screen:get_width()*0.15, y=games_usernamebaseline}, script_path..'data/GROBOLD.ttf')
@@ -89,7 +98,10 @@ end
   games_trophiesfonts = {games_trophies1, games_trophies2, games_trophies3, games_trophies4}
 
   
-  --Create profile fonts
+  -------------------------------------
+-- Freetype objects used in the create profile page.
+-- @author Tobias
+-------------------------------------
   create_prof_appname = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=create_prof_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
   create_prof_pagename = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.275, y=create_prof_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
   
@@ -126,7 +138,10 @@ end
   
   create_prof_typed = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.1 , {x = screen:get_width() * 0.11, y=screen:get_height() * 0.3 * 1.2}, script_path..'data/BlackoutMidnight.ttf')
 
-  -- Programming game fonts
+  -------------------------------------
+-- Freetype objects used in the programming game.
+-- @author Tobias
+-------------------------------------
   left_buildarea_headline = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x = screen:get_width() * 0.05, y = buildarea_headline_baseline}, script_path.. 'data/GROBOLD.ttf')
   right_buildarea_headline = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x =screen:get_width() * 0.55, y = buildarea_headline_baseline}, script_path.. 'data/GROBOLD.ttf')
  -- prog_game_buildareafonts = {buildarea_headline_main}

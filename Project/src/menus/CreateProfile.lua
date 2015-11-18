@@ -54,7 +54,10 @@ function CreateProfile:handleinput(event)
   return { " " }
 end
 
-
+-------------------------------------
+-- Updates the currently active key on the keyboard.
+-- @author Erik/ Marcus
+-------------------------------------
 function CreateProfile:update()
   self:inactive(self.lastpos)
   self:active(self.pos)
