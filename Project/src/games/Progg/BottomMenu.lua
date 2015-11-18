@@ -51,7 +51,6 @@ function BottomMenu:load()
     self.buildArea:load(self.inputArea)
 end
 
---Used when BottomMenu is updated
 --------------------------------------------
 -- Updates the input areas in the bottom menu. Used on update.
 -- @ author Mikael Ögren; Tobias Lundell
@@ -61,9 +60,12 @@ function BottomMenu:show()
     self:updateInputArea()
     self.prevInputArea = self.inputArea
   end
-  self.drawBottomMenu:icons(self.queue.actions)
-  self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
-  self.buildArea:show(self.queue.actions)
+  if (self.inputArea ~= "queue") then
+    self.buildArea:show(self.queue.actions)
+  else
+    self.drawBottomMenu:icons(self.queue.actions)
+    self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
+  end
 end
 
 --------------------------------------------
@@ -153,7 +155,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.buildArea:setBuildType("loop")
             object.queue:push(Commands.LOOP, object.inputArea)
             object.inputArea = "loop"
-            object:updateInputArea()
             object.selectingLoopCounter=true
 
             object.prevPosition = object.position
@@ -161,7 +162,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.buildArea:setPosition(object.position)
             object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
             object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.loopQueue)
-
          end
 
 
@@ -173,7 +173,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
           object.buildArea:setBuildType("P1")
           object.queue:push(Commands.P1, object.inputArea)
           object.inputArea = "P1"
-          object:updateInputArea()
        end
 
           object.prevPosition = object.position
@@ -191,9 +190,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
              object.buildArea:setBuildType("P2")
              object.queue:push(Commands.P2, inputArea)
              object.inputArea = "P2"
-            object:updateInputArea()
          end
-
             object.prevPosition = object.position
             object.position = 17
             object.buildArea:setPosition(object.position)
@@ -220,15 +217,11 @@ function bottomMenuEventHandler:update(object,eventListener,event)
           end
       elseif event.key == Event.KEY_LEFT then
           if object.position == 17 or object.position == 25 then
-              --object:setPosition(-9)
-              --object.buildArea.drawBuildArea:clearPos(object.prevPosition, object.buildArea.loopQueue)
           elseif object.position > 1 then
               object:setPosition(-1)
           end
       elseif event.key == Event.KEY_RIGHT then
           if object.position == 8 or object.position == 16 then
-              --object:setPosition(9)
-             -- object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
           elseif object.position < 32 then
               object:setPosition(1)
           end
@@ -242,11 +235,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
             object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
             object.inputArea = "queue"
-            object:updateInputArea()
           end
       elseif event.key == Event.KEY_OK then
-          --print(object.inputArea)
-          --print(object:getQueue(object.inputArea)[object.position])
           local queuePos = object.position
           if queuePos > 16 then
               queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
@@ -254,8 +244,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
           if object:getQueue(object.inputArea)[queuePos] == "P1" or object:getQueue(object.inputArea)[queuePos] == "loop" or object:getQueue(object.inputArea)[queuePos] == "P2" then -- Makes sure you've clicked on a procedure or loop
                   object.buildArea:setBuildType(object:getQueue(object.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
                   object.inputArea = object:getQueue(object.inputArea)[queuePos]
-                  object:updateInputArea()
-
                   object.prevPosition = object.position
                   object.position = 17
                   object.buildArea:setPosition(object.position)
@@ -279,7 +267,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.queue.loopActions[i] = object.queue.loopActions[i + 1]
               end
             end
-            object:updateInputArea()
           end
       end
   end
