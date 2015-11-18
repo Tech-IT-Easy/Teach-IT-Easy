@@ -44,9 +44,9 @@ function teardown()
 end
 
 -------------------------------------
--- ??
+-- Tests the load function in the map class.
 -- @system_under_test: Map:new(), Map:load()
--- @author name: ??
+-- @author name: Marcus
 -------------------------------------
 
 function test_load()
@@ -82,9 +82,9 @@ function test_load()
 end
 
 -------------------------------------
--- ?? Set character test
+-- Set character test. Testing all possible paths.
 -- @system_under_test: Map:new(), Map:setCharacter()
--- @author name: ??
+-- @author name: Marcus
 -------------------------------------
 
 function test_setCharacter_one()
@@ -173,9 +173,9 @@ function test_setCharacter_five()
 end
 
 -------------------------------------
--- ?? Set goal test
+-- Set goal test. Tests all possible paths.
 -- @system_under_test: Map:new(), Map:setGoal()
--- @author name: ??
+-- @author name: Marcus
 -------------------------------------
 
 function test_setGoal_one()
@@ -264,9 +264,9 @@ function test_setGoal_five()
 end
 
 -------------------------------------
--- ?? Set start test
+-- Set start test. Tests all possible paths.
 -- @system_under_test: Map:new(), Map:setStart()
--- @author name: ??
+-- @author name: Marcus
 -------------------------------------
 
 function test_setStart_one()
@@ -355,9 +355,9 @@ function test_setStart_five()
 end
 
 -------------------------------------
--- ?? Square test
+-- Square test. Tests all possible paths.
 -- @system_under_test: Map:new(), Map:square(i, tile)
--- @author name: ??
+-- @author name: Marcus
 -------------------------------------
 
 function test_square_one()
@@ -471,9 +471,9 @@ function test_square_five()
 end
 
 -------------------------------------
--- ?? drawBox tests
+-- drawBox tests. Tests all possible paths.
 -- @system_under_test: Map:new(), Map:drawBox(tile, xPos, yPos)
--- @author name: ??
+-- @author name: Marcus
 -------------------------------------
 
 function test_drawBox_one()
@@ -598,9 +598,9 @@ function test_drawBox_five()
 end
 
 -------------------------------------
--- ?? dra Standard Box
+-- Tests drawStandardBox.
 -- @system_under_test: Map:new(), Map:drawStandardBox(xPos, yPos)
--- @author name: ??
+-- @author name: Marcus
 -------------------------------------
 
 function test_drawStandardBox()
@@ -623,9 +623,9 @@ function test_drawStandardBox()
 end
 
 -------------------------------------
--- ?? draw Top Border
+-- Tests drawTopBorder.
 -- @system_under_test: Map:new(), Map:drawTopBorder(xPos, yPos)
--- @author name: ??
+-- @author name: Marcus
 -------------------------------------
 
 function test_drawTopBorder()
@@ -647,9 +647,9 @@ function test_drawTopBorder()
 end
 
 -------------------------------------
--- ?? draw Bottom Border
+-- Tests drawBottomBorder
 -- @system_under_test: Map:new(), Map:drawBottomBorder(xPos, yPos)
--- @author name: ??
+-- @author name: Marcus
 -------------------------------------
 
 function test_drawBottomBorder()
@@ -671,9 +671,9 @@ function test_drawBottomBorder()
 end
 
 -------------------------------------
--- ?? draw Left Border
+-- Tests drawLeftBorder
 -- @system_under_test: Map:new(), Map:drawLeftBorder(xPos, yPos)
--- @author name: ??
+-- @author name: Marcus
 -------------------------------------
 
 function test_drawLeftBorder()
@@ -695,9 +695,9 @@ function test_drawLeftBorder()
 end
 
 -------------------------------------
--- ?? draw Right Border
+-- Tests drawRightBorder.
 -- @system_under_test: Map:new(), Map:drawRightBorder(xPos, yPos)
--- @author name: ??
+-- @author name: Marcus
 -------------------------------------
 
 function test_drawRightBorder()
