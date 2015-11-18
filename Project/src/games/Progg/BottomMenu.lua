@@ -84,7 +84,7 @@ end
 --Subscribing the eventHandler to all events.
 bottomMenuEventHandler = EventHandler:new()
 bottomMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1
-  ,[Event.KEY_ZERO]=1,[Event.KEY_UP]=1,[Event.KEY_DOWN]=1 ,[Event.KEY_LEFT]=1,[Event.KEY_RIGHT]=1 }
+  ,[Event.KEY_ZERO]=1,[Event.KEY_UP]=1,[Event.KEY_DOWN]=1 ,[Event.KEY_LEFT]=1,[Event.KEY_RIGHT]=1, [Event.KEY_OK]=1 }
 
 --Update function on every key input
 function bottomMenuEventHandler:update(object,eventListener,event)
@@ -187,7 +187,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.buildArea:setPosition(object.position)
             object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
             object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.p2Queue)
-        end
 
       elseif event.key == Event.KEY_NINE then
        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
@@ -233,11 +232,22 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.inputArea = "queue"
             object:updateInputArea()
           end
+      elseif event.key == Event.KEY_OK then
+          print(object:getQueue(object.inputArea)[object.position])
+          if object:getQueue(object.inputArea)[object.position] == "P1" or object:getQueue(object.inputArea)[object.position] == "loop" or object:getQueue(object.inputArea)[object.position] == "P2" then
+                  object.buildArea:setBuildType(object:getQueue(object.inputArea)[object.position])
+                  object.inputArea = object:getQueue(object.inputArea)[object.position]
+                  object:updateInputArea()
+
+                  object.prevPosition = object.position
+                  object.position = 17
+                  object.buildArea:setPosition(object.position)
+                  object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+                  object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+          end
       end
       print(object.position)
   end
-  return true
-end
 
 function BottomMenu:setPosition(change)
   self.prevPosition = self.position
