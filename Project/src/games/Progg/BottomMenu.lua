@@ -146,7 +146,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
               object.selectingLoopCounter=false
        else
           object.buildArea:setBuildType("P1")
-          object.push(Commands.P1, object.inputArea)
+          object.queue:push(Commands.P1, object.inputArea)
           object.inputArea = "P1"
 
           object.position = 17
@@ -196,15 +196,15 @@ function bottomMenuEventHandler:update(object,eventListener,event)
           end
       elseif event.key == Event.KEY_LEFT then
           if object.position == 17 or object.position == 25 then
-              object:setPosition(-9)
-              object.buildArea.drawBuildArea:clearPos(object.prevPosition, object.buildArea.loopQueue)
+              --object:setPosition(-9)
+              --object.buildArea.drawBuildArea:clearPos(object.prevPosition, object.buildArea.loopQueue)
           elseif object.position > 1 then
               object:setPosition(-1)
           end
       elseif event.key == Event.KEY_RIGHT then
           if object.position == 8 or object.position == 16 then
-              object:setPosition(9)
-              object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+              --object:setPosition(9)
+             -- object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
           elseif object.position < 32 then
               object:setPosition(1)
           end
@@ -212,6 +212,11 @@ function bottomMenuEventHandler:update(object,eventListener,event)
           if object.inputArea == "queue"  then
             object:executeQueue()
           else
+            object.prevPosition = object.position
+            object.position = 1
+            object.buildArea:setPosition(object.position)
+            object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+            object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
             object.inputArea = "queue"
           end
       end
@@ -232,6 +237,18 @@ function BottomMenu:isUpperRow(pos)
         return false
     else
         return true
+    end
+end
+
+function BottomMenu:getQueue(inputArea)
+    if inputArea == "queue" then
+        return self.queue.actions
+    elseif inputArea == "loop" then
+        return self.queue.loopActions
+    elseif inputArea == "P1" then
+        return self.queue.p1Actions
+    elseif inputArea == "P2" then
+        return self.queue.p2Actions
     end
 end
 
