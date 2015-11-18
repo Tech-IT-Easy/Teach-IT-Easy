@@ -34,7 +34,7 @@ function ProggGame:new(context)
   
   o.bottomMenu = BottomMenu:new(16,context)
   o.rightMenu = rightMenu:new()
-  o.map = map:new()
+  --o.map = map:new()
   --------------------------------
   -- super characters
   --------------------------------
@@ -56,7 +56,7 @@ function ProggGame:load()
   -- call load on all resources e.g.
   -- UI:load()
   -----------------------
-  self.map:load()
+  --self.map:load()
   self.bottomMenu:load()
   self.rightMenu:load()
   self.rightMenu:show()
