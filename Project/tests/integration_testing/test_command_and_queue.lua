@@ -8,9 +8,9 @@
 
 lunit = require "lunit"
 module( "Integration_commands_queue", package.seeall, lunit.testcase )
-local event = require "src.toolkit.Event"
-local SUT1 =  'src.games.Progg.Queue'
-local SUT2 =  'src.games.Progg.Commands'
+local event = require "toolkit.Event"
+local SUT1 =  'games.Progg.Queue'
+local SUT2 =  'games.Progg.Commands'
 
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
@@ -38,8 +38,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.games.Progg.Queue'] = nil
-  package.preload['src.games.Progg.Queue'] = nil
+  package.loaded['games.Progg.Queue'] = nil
+  package.preload['games.Progg.Queue'] = nil
 end
 
 --Add command to queue and check that this command exists in queue
@@ -74,13 +74,13 @@ function test_queue_with_commands()
   local ps1 = require(SUT2)
   local ps4=ps:new()
 
-  local event = require "src.toolkit.Event"
+  local event = require "toolkit.Event"
   event.key = event.KEY_ONE
 
   local a = ps1:new(event)
  -- a.command = a.MOVE
- -- SUT1 =  'src.games.Progg.Queue'
- -- SUT2 =  'src.games.Progg.Commands'
+ -- SUT1 =  'games.Progg.Queue'
+ -- SUT2 =  'games.Progg.Commands'
   local bb = require(SUT1)
   local b = bb:new(ps4,nil)
   b:push(a,"queue")

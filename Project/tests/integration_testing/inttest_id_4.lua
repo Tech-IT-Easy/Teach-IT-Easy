@@ -8,7 +8,7 @@
 
 lunit = require "lunit"
 module( "inttest_id_4", package.seeall, lunit.testcase )
-local event = require ("src.toolkit.Event")
+local event = require ("toolkit.Event")
 
 local SUT1 = 'games.Progg.Commands'
 local SUT2 = 'games.Progg.BuildArea'
@@ -44,8 +44,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.games.Progg.Queue'] = nil
-  package.preload['src.games.Progg.Queue'] = nil
+  package.loaded['games.Progg.Queue'] = nil
+  package.preload['games.Progg.Queue'] = nil
 end
 
 
@@ -74,13 +74,13 @@ end
 --    local ps1 = require(SUT1)
 --    local ps4=ps:new()
 --
---    local event = require "src.toolkit.Event"
+--    local event = require "toolkit.Event"
 --    event.key = event.KEY_ONE
 --
 --    local a = ps1:new(event)
 --    -- a.command = a.MOVE
---    -- SUT1 =  'src.games.Progg.Queue'
---    -- SUT2 =  'src.games.Progg.Commands'
+--    -- SUT1 =  'games.Progg.Queue'
+--    -- SUT2 =  'games.Progg.Commands'
 --    local bb = require(SUT4)
 --    local b = bb:new(ps4,buildarea:new(16))
 --

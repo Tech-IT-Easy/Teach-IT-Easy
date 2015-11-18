@@ -9,9 +9,9 @@
 lunit = require "lunit"
 module( "test_command_queue_bottomMenu", package.seeall, lunit.testcase )
 
-local SUT_1 = 'src.games.Progg.Queue'
-local SUT_2 = 'src.games.Progg.Commands'
-local SUT_3 = 'src.games.Progg.BottomMenu'
+local SUT_1 = 'games.Progg.Queue'
+local SUT_2 = 'games.Progg.Commands'
+local SUT_3 = 'games.Progg.BottomMenu'
 
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
@@ -39,8 +39,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.games.Progg.Queue'] = nil
-  package.preload['src.games.Progg.Queue'] = nil
+  package.loaded['games.Progg.Queue'] = nil
+  package.preload['games.Progg.Queue'] = nil
 end
 
 function test_command_queue_bottomMenu()

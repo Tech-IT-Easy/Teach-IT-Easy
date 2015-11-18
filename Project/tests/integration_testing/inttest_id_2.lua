@@ -17,7 +17,7 @@
 lunit = require "lunit"
 module( "inttest_id_2", package.seeall, lunit.testcase )
 
-local SUT = 'src.games.Progg.Queue'
+local SUT = 'games.Progg.Queue'
 
 function test_command_queue_bottomMenu()
     local class_to_mock="games.Progg.BottmMenu"
