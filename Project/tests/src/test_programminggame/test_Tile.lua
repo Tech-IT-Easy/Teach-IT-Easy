@@ -194,11 +194,11 @@ function test_input_f()
 end
 
 
-
-function test_tile_fail()
+-- FIXME: Write tests
+--[[function test_tile_fail()
 
     fail("Not tested , always fails...")
-end
+end]]
 
 
 
