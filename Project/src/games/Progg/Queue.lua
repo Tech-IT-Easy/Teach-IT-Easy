@@ -22,6 +22,9 @@ function Queue:new(newBottomMenu, newBuildArea)
   return Queue:init(o)
 end
 
+function getLoopCounter()
+  return self.loopCounter
+end
 
 -------------------------------------
 --Adds something at the end of the queue

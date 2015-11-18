@@ -3,7 +3,7 @@
 --of procedures and loops
 --
 -- @Author:Created by Mikael Ögren, Nov 11,2015
--- @Author:Updated by author,date
+-- @Author:Updated by Tobias Lundell, Nov 16, 2015
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
@@ -28,8 +28,7 @@ function BuildArea:load()
 end
 
 
-function BuildArea:show(inputArea)
-
+function BuildArea:show(inputArea, queue)
 
 
     if self.buildType == "P1" then
@@ -41,6 +40,7 @@ function BuildArea:show(inputArea)
     elseif self.buildType == "loop" then
         self.drawBuildArea:icons(self.loopQueue)
         self.drawBuildArea:highlightIcon(self.position, self.prevPos, self.loopQueue)
+        self.drawBuildArea:drawLoopCounter(queue.loopCounter)
     end
     self.drawBuildArea:headLine(self.buildType, inputArea)
 end
