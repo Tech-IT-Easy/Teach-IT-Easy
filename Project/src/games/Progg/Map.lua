@@ -27,8 +27,8 @@ end
 -- @param input The mapdata.
 -- @author Erik
 -------------------------------------
--- implement parameter with mapdata
 function Map:load()
+-- implement parameter with mapdata
 
   self.background = gfx.loadpng('data/game_background_small.png')
 
@@ -80,6 +80,8 @@ end
 -- @param x Place of character
 -- @param y Place of character
 -- @param direction Wanted direction
+-- @return true If the move is accapted
+-- @return false If the move is not accapted
 -- @author Erik
 -------------------------------------
 function Map:canMove(x ,y , direction)
@@ -126,6 +128,7 @@ end
 -- Converts x and y value to position in mapdata.
 -- @param x Place of character
 -- @param y Place of character
+-- @return pos The calculated position in table
 -- @author Erik
 -------------------------------------
 function Map:getPosition(x,y)

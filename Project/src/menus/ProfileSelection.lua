@@ -56,7 +56,7 @@ function ProfileSelection:handleinput(event)
   elseif event.key == Event.KEY_OK and self.pos < 5 then
     return { "main", usernames[self.pos] }
 
-  elseif event.key == Event.KEY_OK and self.pos == 5 then
+  elseif event.key == Event.KEY_OK and self.pos == 5 and #usernames <4 then
     return { "create" }
 
 --  elseif event.key == Event.KEY_ONE and self.pos < 5 then
