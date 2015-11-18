@@ -8,10 +8,10 @@
 
 lunit = require "lunit"
 module( "src_menus_MainMenu", package.seeall, lunit.testcase )
-local event = require "src.toolkit.Event"
+local event = require "toolkit.Event"
 
 -- System under test
-local SUT = 'src.menus.MainMenu'
+local SUT = 'menus.MainMenu'
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
   package.loaded[class_to_mock] = nil
@@ -39,8 +39,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.menus.MainMenu'] = nil
-  package.preload['src.menus.MainMenu'] = nil
+  package.loaded['menus.MainMenu'] = nil
+  package.preload['menus.MainMenu'] = nil
 end
 
 function test_loadview()

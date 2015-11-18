@@ -9,7 +9,7 @@
 lunit = require "lunit"
 module( "test_BottomMenu", package.seeall, lunit.testcase )
 
-local SUT = 'src.games.Progg.BottomMenu'
+local SUT = 'games.Progg.BottomMenu'
 
 -- Delete this function when the real test is done
 -- FIXME: Write tests

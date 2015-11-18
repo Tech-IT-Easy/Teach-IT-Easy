@@ -9,9 +9,9 @@
 
 lunit = require "lunit"
 module( "test_DrawRightMenu", package.seeall, lunit.testcase )
-my_file = require "src.games.Progg.DrawRightMenu"
+my_file = require "games.Progg.DrawRightMenu"
 
-local SUT = 'src.games.Progg.DrawRightMenu'
+local SUT = 'games.Progg.DrawRightMenu'
 
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dismiss previous mocks

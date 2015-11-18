@@ -8,9 +8,9 @@
 
 lunit = require "lunit"
 module( "src_games_Progg_Map", package.seeall, lunit.testcase )
-Map = require "src.games.Progg.Map"
+Map = require "games.Progg.Map"
 
-local SUT = 'src.games.Progg.Map'
+local SUT = 'games.Progg.Map'
 
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
@@ -39,8 +39,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.games.Progg.Map'] = nil
-  package.preload['src.games.Progg.Map'] = nil
+  package.loaded['games.Progg.Map'] = nil
+  package.preload['games.Progg.Map'] = nil
 end
 
 function test_load()
@@ -453,7 +453,7 @@ function test_drawBox_one()
 
   package.loaded[SUT].drawStandardBox = drawStandardBox
 
-  local ps2 = require("src.games.Progg.Tile")
+  local ps2 = require("games.Progg.Tile")
   local a = ps:new()
   local tile = ps2:new(0)
   local xPos = 200
@@ -476,7 +476,7 @@ function test_drawBox_two()
   package.loaded[SUT].drawStandardBox = drawStandardBox
   package.loaded[SUT].drawBottomBorder = drawBottomBorder
 
-  local ps2 = require("src.games.Progg.Tile")
+  local ps2 = require("games.Progg.Tile")
   local a = ps:new()
   local tile = ps2:new(2)
   local xPos = 200
@@ -501,7 +501,7 @@ function test_drawBox_three()
   package.loaded[SUT].drawStandardBox = drawStandardBox
   package.loaded[SUT].drawRightBorder = drawRightBorder
 
-  local ps2 = require("src.games.Progg.Tile")
+  local ps2 = require("games.Progg.Tile")
   local a = ps:new()
   local tile = ps2:new(4)
   local xPos = 200
@@ -526,7 +526,7 @@ function test_drawBox_four()
   package.loaded[SUT].drawStandardBox = drawStandardBox
   package.loaded[SUT].drawTopBorder = drawTopBorder
 
-  local ps2 = require("src.games.Progg.Tile")
+  local ps2 = require("games.Progg.Tile")
   local a = ps:new()
   local tile = ps2:new(8)
   local xPos = 200
@@ -551,7 +551,7 @@ function test_drawBox_five()
   package.loaded[SUT].drawStandardBox = drawStandardBox
   package.loaded[SUT].drawLeftBorder = drawLeftBorder
 
-  local ps2 = require("src.games.Progg.Tile")
+  local ps2 = require("games.Progg.Tile")
   local a = ps:new()
   local tile = ps2:new(1)
   local xPos = 200
@@ -851,7 +851,7 @@ end
 function test_canMove_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
-  local ps2 = require('src.games.Progg.Tile')
+  local ps2 = require('games.Progg.Tile')
   
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
@@ -878,7 +878,7 @@ end
 function test_canMove_two()
   local mc = create_mock(SUT)
   local ps = require(SUT)
-  local ps2 = require('src.games.Progg.Tile')
+  local ps2 = require('games.Progg.Tile')
   
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
@@ -905,7 +905,7 @@ end
 function test_canMove_three()
   local mc = create_mock(SUT)
   local ps = require(SUT)
-  local ps2 = require('src.games.Progg.Tile')
+  local ps2 = require('games.Progg.Tile')
   
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
@@ -932,7 +932,7 @@ end
 function test_canMove_four()
   local mc = create_mock(SUT)
   local ps = require(SUT)
-  local ps2 = require('src.games.Progg.Tile')
+  local ps2 = require('games.Progg.Tile')
   
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
@@ -960,7 +960,7 @@ end
 function test_canMove_five()
   local mc = create_mock(SUT)
   local ps = require(SUT)
-  local ps2 = require('src.games.Progg.Tile')
+  local ps2 = require('games.Progg.Tile')
   
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition

@@ -9,7 +9,7 @@
 lunit = require "lunit"
 module( "test_GameInputHandler", package.seeall, lunit.testcase )
 
-local SUT = 'src.games.Progg.GameInputHandler'
+local SUT = 'games.Progg.GameInputHandler'
 
 -- Delete this function when the real test is done
 

@@ -12,7 +12,7 @@ module( "src_games_Progg_Tile", package.seeall, lunit.testcase )
 
 
 -- System under test
-local SUT = 'src.games.Progg.Tile'
+local SUT = 'games.Progg.Tile'
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
   package.loaded[class_to_mock] = nil
@@ -40,8 +40,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.games.Progg.Tile'] = nil
-  package.preload['src.games.Progg.Tile'] = nil
+  package.loaded['games.Progg.Tile'] = nil
+  package.preload['games.Progg.Tile'] = nil
 end
 
 function test_input_0()

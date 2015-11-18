@@ -9,14 +9,14 @@
 lunit = require "lunit"
 module( "test_Character", package.seeall, lunit.testcase )
 
-local SUT = 'src.games.Progg.Character'
+local SUT = 'games.Progg.Character'
 
 
 -- Testing position of the character creation and state
 function test_Character_new()
 
     local a = require(SUT)
-    local pos = require('src.games.Progg.Position'):new(2,1)
+    local pos = require('games.Progg.Position'):new(2,1)
     local char = a:new(pos)
     local x = 2
     local y = 1
@@ -31,8 +31,8 @@ end
 function test_Character_move()
 
     local a = require(SUT)
-    local Command = require('src.games.Progg.Commands')
-    local pos = require('src.games.Progg.Position'):new(0,0)
+    local Command = require('games.Progg.Commands')
+    local pos = require('games.Progg.Position'):new(0,0)
     local char = a:new(pos)
     char:execute(Command.MOVE)
     
@@ -43,8 +43,8 @@ end
 function test_Character_turnLeft()
 
     local a = require(SUT)
-    local Command = require('src.games.Progg.Commands')
-    local pos = require('src.games.Progg.Position'):new(2,1)
+    local Command = require('games.Progg.Commands')
+    local pos = require('games.Progg.Position'):new(2,1)
     local char = a:new(pos)
     char:execute(Command.TURN_LEFT)
     
@@ -55,8 +55,8 @@ end
 function test_Character_turnRight()
 
     local a = require(SUT)
-    local Command = require('src.games.Progg.Commands')
-    local pos = require('src.games.Progg.Position'):new(2,1)
+    local Command = require('games.Progg.Commands')
+    local pos = require('games.Progg.Position'):new(2,1)
     local char = a:new(pos)
     char:execute(Command.TURN_RIGHT)
     

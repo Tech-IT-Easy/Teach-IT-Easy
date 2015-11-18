@@ -9,7 +9,7 @@
 lunit = require "lunit"
 module( "test_ProggGame", package.seeall, lunit.testcase )
 
-local SUT = 'src.games.Progg.ProggGame'
+local SUT = 'games.Progg.ProggGame'
 
 -- Delete this function when the real test is done
 
