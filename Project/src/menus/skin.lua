@@ -132,9 +132,13 @@ end
   create_prof_keyletter25 = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.04, {x = (create_prof_hspacing * 5) + create_prof_itemwidth * 4 + screen:get_width() * 0.025, y=create_prof_itemy + create_prof_itemheight * (1 + 0.5) * 2 + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')  
   create_prof_keyletter26 = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.04, {x = (create_prof_hspacing * 6) + create_prof_itemwidth * 5 + screen:get_width() * 0.025, y=create_prof_itemy + create_prof_itemheight * (1 + 0.5) * 2 + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')  
   create_prof_keyletter27 = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.04, {x = (create_prof_hspacing * 7) + create_prof_itemwidth * 6 + screen:get_width() * 0.025, y=create_prof_itemy + create_prof_itemheight * (1 + 0.5) * 2 + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')  
+  create_prof_keyletter28 = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.04, {x = (create_prof_hspacing * 8) + create_prof_itemwidth * 7 + screen:get_width() * 0.025, y=create_prof_itemy + create_prof_itemheight * (1 + 0.5) * 2 + screen:get_height() * 0.01}, script_path..'data/BlackoutMidnight.ttf')
   
-  
-  create_prof_keyletters = {create_prof_keyletter1, create_prof_keyletter2, create_prof_keyletter3, create_prof_keyletter4, create_prof_keyletter5, create_prof_keyletter6, create_prof_keyletter7, create_prof_keyletter8, create_prof_keyletter9, create_prof_keyletter10, create_prof_keyletter11, create_prof_keyletter12, create_prof_keyletter13, create_prof_keyletter14, create_prof_keyletter15, create_prof_keyletter16, create_prof_keyletter17, create_prof_keyletter18, create_prof_keyletter19, create_prof_keyletter20, create_prof_keyletter21, create_prof_keyletter22, create_prof_keyletter23, create_prof_keyletter24, create_prof_keyletter25, create_prof_keyletter26, create_prof_keyletter27}
+  create_prof_keyletters = {create_prof_keyletter1, create_prof_keyletter2, create_prof_keyletter3, create_prof_keyletter4, create_prof_keyletter5, create_prof_keyletter6,
+    create_prof_keyletter7, create_prof_keyletter8, create_prof_keyletter9, create_prof_keyletter10, create_prof_keyletter11, create_prof_keyletter12, create_prof_keyletter13,
+    create_prof_keyletter14, create_prof_keyletter15, create_prof_keyletter16, create_prof_keyletter17, create_prof_keyletter18, create_prof_keyletter19, create_prof_keyletter20,
+    create_prof_keyletter21, create_prof_keyletter22, create_prof_keyletter23, create_prof_keyletter24, create_prof_keyletter25, create_prof_keyletter26, create_prof_keyletter27,
+    create_prof_keyletter28}
   
   create_prof_typed = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.1 , {x = screen:get_width() * 0.11, y=screen:get_height() * 0.3 * 1.2}, script_path..'data/BlackoutMidnight.ttf')
 

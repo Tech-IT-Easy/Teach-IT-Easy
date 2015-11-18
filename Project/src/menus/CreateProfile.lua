@@ -16,7 +16,7 @@ function CreateProfile:new()
   self.profilename = ""
 
   --Keyboard
-  self.letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'DONE' }
+  self.letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'DONE', '<--' }
 
   return self
 end
@@ -34,7 +34,7 @@ function CreateProfile:handleinput(event)
     self.pos = self.pos + 1
   elseif event.key == Event.KEY_LEFT and self.pos > 1 then
     self.pos = self.pos - 1
-  elseif event.key == Event.KEY_DOWN and self.pos <= 17 then
+  elseif event.key == Event.KEY_DOWN and self.pos <= 18 then
     self.pos = self.pos + 10
   elseif event.key == Event.KEY_UP and self.pos >= 11 then
     self.pos = self.pos - 10
@@ -43,11 +43,16 @@ function CreateProfile:handleinput(event)
   elseif event.key == Event.KEY_ONE and self.pos == 27 then
     return { "chooseavatar" }
   elseif event.key == Event.KEY_OK and self.pos < 27 then
+    if string.len(self.profilename) ~= 10 then
     self.profilename = self.profilename .. self.letters[self.pos] self:updatetext()
+    end
   elseif event.key == Event.KEY_OK and self.pos == 27 then
     return { "chooseavatar" }
 --  elseif event.key == Event.KEY_TWO then
 --    return { "profilesel", " " }
+    elseif event.key == Event.KEY_OK and self.pos == 28 then
+    self.profilename = string.sub(self.profilename, 1, -2)
+    self:updatetext()
   elseif event.key == Event.KEY_BACK then
     return { "profilesel", " " }
   end
@@ -85,7 +90,7 @@ function CreateProfile:renderui()
   screen:clear({ g = 131, r = 0, b = 143 }, { x = 0, y = screen:get_height() * 0.55, w = screen:get_width(), h = screen:get_height() * 0.45 })
 
   self:active(1)
-  for i = 2, 27, 1 do
+  for i = 2, 28, 1 do
     self:inactive(i)
   end
 end
@@ -105,7 +110,7 @@ function CreateProfile:active(x1)
   elseif (x1 <= 26) then
     screen:clear({ g = 255, r = 255, b = 255 }, { x = (create_prof_hspacing * (x1 - 20) + create_prof_itemwidth * (x1 - 1 - 20)), y = (create_prof_itemy + create_prof_itemheight * (1 + 0.5) * 2), w = create_prof_itemwidth, h = create_prof_itemheight })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = (create_prof_hspacing * (x1 - 20) + create_prof_itemwidth * (x1 - 1 - 20)) + create_prof_itemwidth * 0.02, y = (create_prof_itemy + create_prof_itemheight * (1 + 0.5) * 2), w = create_prof_itemwidth, h = create_prof_itemheight })
-  elseif (x1 <= 27) then
+  elseif (x1 <= 28) then
     screen:clear({ g = 255, r = 255, b = 255 }, { x = (create_prof_hspacing * (x1 - 20) + create_prof_itemwidth * (x1 - 1 - 20)), y = (create_prof_itemy + create_prof_itemheight * (1 + 0.5) * 2), w = create_prof_itemwidth * 2, h = create_prof_itemheight })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = (create_prof_hspacing * (x1 - 20) + create_prof_itemwidth * (x1 - 1 - 20)) + create_prof_itemwidth * 0.02, y = (create_prof_itemy + create_prof_itemheight * (1 + 0.5) * 2), w = create_prof_itemwidth * 2, h = create_prof_itemheight })
   end
@@ -125,7 +130,7 @@ function CreateProfile:inactive(x1)
     screen:clear({ g = 228, r = 187, b = 235 }, { x = (create_prof_hspacing * (x1 - 10) + create_prof_itemwidth * (x1 - 1 - 10)), y = (create_prof_itemy + create_prof_itemheight * (1 + 0.5)), w = create_prof_itemwidth, h = create_prof_itemheight })
   elseif (x1 <= 26) then
     screen:clear({ g = 228, r = 187, b = 235 }, { x = (create_prof_hspacing * (x1 - 20) + create_prof_itemwidth * (x1 - 1 - 20)), y = (create_prof_itemy + create_prof_itemheight * (1 + 0.5) * 2), w = create_prof_itemwidth, h = create_prof_itemheight })
-  elseif (x1 == 27) then
+  elseif (x1 <= 28) then
     screen:clear({ g = 228, r = 187, b = 235 }, { x = (create_prof_hspacing * (x1 - 20) + create_prof_itemwidth * (x1 - 1 - 20)), y = (create_prof_itemy + create_prof_itemheight * (1 + 0.5) * 2), w = create_prof_itemwidth * 2, h = create_prof_itemheight })
   end
 
