@@ -19,18 +19,33 @@ function BuildArea:new(maxCommands, pos)
     o.p1Queue = {}
     o.p2Queue = {}
     o.drawBuildArea = newDrawBuildArea:new(o.availableSlots)
-    o.inputArea = nil
+ --   o.inputArea = nil
     return BuildArea:init(o)
 end
 
+-------------------------------------------------------------
+-- Load the the build area
+-- @param inputArea:String. The active input area.
+-- @author Tobias Lundell
+-------------------------------------------------------------
 function BuildArea:load(inputArea)
     self.drawBuildArea:emptySlots(self.availableSlots, inputArea)
     self.drawBuildArea:headLine(self.buildType, inputArea)
+    if self.buildType == "P1" then
+        self.drawBuildArea:allIcons(self.p1Queue)
+    elseif self.buildType == "P2" then
+        self.drawBuildArea:allIcons(self.p2Queue)
+    elseif self.buildType == "loop" then
+        self.drawBuildArea:allIcons(self.loopQueue)
+    end
 end
 
-
+-----------------------------------------------------
+-- Updates the build area. Called when changed.
+-- @param queue:Queue. The queue containing the actions to be drawn.
+-- @author Tobias Lundell
+-----------------------------------------------------
 function BuildArea:show(queue)
-
     if self.buildType == "P1" then
         self.drawBuildArea:icons(self.p1Queue)
         self.drawBuildArea:highlightIcon(self.position, self.prevPos, self.p1Queue)

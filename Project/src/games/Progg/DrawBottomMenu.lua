@@ -24,7 +24,7 @@ end
 -------------------------------------
 function DrawBottomMenu:emptySlots(inputArea)
     for i=1, self.maxCommands do
-            self:singleEmptySlot(i, inputArea)
+        self:singleEmptySlot(i, inputArea)
     end
 end
 
@@ -35,7 +35,7 @@ end
 -------------------------------------
 function DrawBottomMenu:singleEmptySlot(boxNmb, inputArea)
 
-if (inputArea == "queue") then
+    if (inputArea == "queue") then
         if boxNmb <= 8 then
             screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.035 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
         else
@@ -69,28 +69,52 @@ end
 
 
 -------------------------------------
--- Draws the icons for the bottom left menu.
+-- Draws the icon for the last added action in the queue for the bottom left menu.
 -- @param queue. The queue of commands. An array of strings.
 -- @author Mikael Ögren
 -------------------------------------
 function DrawBottomMenu:icons(queue)
 
-        if #queue > self.maxCommands then
+    if #queue > self.maxCommands then
+        return;
+    end
+    if queue[#queue] ~= nil then
+        self.image = gfx.loadpng(self:getFileName(queue[#queue]))
+        if #queue <= 8 then
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (#queue-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (#queue-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+        else
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (#queue-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (#queue-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+        end
+        self.image:destroy()
+        collectgarbage()
+    end
+end
+
+----------------------------------------
+-- Draws the icons for all the actions in the queue for the bottom left menu.
+-- @param queue:Queue. The queue of commands. An array of strings.
+-- @author Tobias Lundell
+----------------------------------------
+function DrawBottomMenu:allIcons(queue)
+    for i=1, #queue do
+        if i > self.maxCommands then
             return;
         end
-        if queue[#queue] ~= nil then
-           -- print(queue[#queue])
-            self.image = gfx.loadpng(self:getFileName(queue[#queue]))
-            if #queue <= 8 then
-                screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (#queue-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-                screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (#queue-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+        if queue[i] ~= nil then
+            self.image = gfx.loadpng(self:getFileName(queue[i]))
+            if i <= 8 then
+                screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+                screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (i-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
             else
-                screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (#queue-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-                screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (#queue-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+                screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (i-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+                screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (i-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
             end
             self.image:destroy()
             collectgarbage()
         end
+    end
 end
 
 function DrawBottomMenu:highlightIcon(pos, prevPos, queue)
@@ -98,7 +122,7 @@ function DrawBottomMenu:highlightIcon(pos, prevPos, queue)
         return;
     end
     if queue[pos] ~= nil then
-      self.image = gfx.loadpng(self:getFileName(queue[pos]))
+        self.image = gfx.loadpng(self:getFileName(queue[pos]))
         if pos <= 8 then
             screen:clear({r = 0, g = 0, b = 0 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
@@ -109,24 +133,24 @@ function DrawBottomMenu:highlightIcon(pos, prevPos, queue)
         self.image:destroy()
         collectgarbage()
     else
-       if pos <= 8 then
+        if pos <= 8 then
             screen:clear({r = 0, g = 0, b = 0 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-       else
+        else
             screen:clear({r = 0, g = 0, b = 0 }, { x = screen:get_width()*(0.038 + (pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-       end
+        end
     end
 
     if prevPos ~= nil then
-     self:clearPos(prevPos, queue)
+        self:clearPos(prevPos, queue)
     end
 end
 
 function DrawBottomMenu:clearPos(pos, queue)
-     if pos > 16 then
+    if pos > 16 then
         return;
     end
     if queue[pos] ~= nil then
-      self.image = gfx.loadpng(self:getFileName(queue[pos]))
+        self.image = gfx.loadpng(self:getFileName(queue[pos]))
         if pos <= 8 then
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
@@ -137,11 +161,11 @@ function DrawBottomMenu:clearPos(pos, queue)
         self.image:destroy()
         collectgarbage()
     else
-       if pos <= 8 then
+        if pos <= 8 then
             screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-       else
+        else
             screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.038 + (pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-       end
+        end
     end
 end
 

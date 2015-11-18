@@ -47,6 +47,9 @@ function Queue:push(action, queueType)
 
 end
 
+function Queue:getQueue()
+  return
+end
 
 --------------------------------------
 --Removes the object in the queue that was added last

@@ -19,8 +19,6 @@ local buildArea = require('games.Progg.BuildArea')
 local Character = require('games.Progg.Character')
 local Queue = require('games.Progg.Queue')
 local BottomMenu = extends(Controllable)
-
-local inputArea = "queue"
 local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 
 --Constructor method
@@ -28,6 +26,7 @@ function BottomMenu:new(maxCommands,gameContext)
     local o = BottomMenu:super()
     o.selectingLoopCounter = false;
     o.inputArea = "queue"
+    o.prevInputArea = "queue"
     o.position = 1
     o.prevPosition = nil
     context = gameContext
@@ -43,27 +42,25 @@ function BottomMenu:load()
     self.drawBottomMenu:background(self.inputArea)
     self.drawBottomMenu:emptySlots(self.inputArea)
     self.drawBottomMenu:headline("Main")
-    self.buildArea:load()
-   -- self.buildArea:show(self.inputArea, self.queue)
+    self.buildArea:load(self.inputArea)
 end
 
 --Used when BottomMenu is updated
 function BottomMenu:show()
-  if (prevInputArea ~= self.inputArea) then
+  if (self.prevInputArea ~= self.inputArea) then
     self:updateInputArea()
-    prevInputArea = self.inputArea
+    self.prevInputArea = self.inputArea
   end
-
   self.drawBottomMenu:icons(self.queue.actions)
   self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
-  self.buildArea:show(self.inputArea, self.queue.actions)
+  self.buildArea:show(self.queue.actions)
 end
 
 function BottomMenu:updateInputArea()
-  self.drawBottomMenu:background(inputArea)
-  self.drawBottomMenu:emptySlots(inputArea)
-  self.drawBottomMenu:icons(self.queue)
-  self.buildArea:load(inputArea)
+  self.drawBottomMenu:background(self.inputArea)
+  self.drawBottomMenu:emptySlots(self.inputArea)
+  self.drawBottomMenu:allIcons(self.queue.actions)
+  self.buildArea:load(self.inputarea)
 end
 
 -------------------------------------
@@ -102,7 +99,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
       elseif event.key == Event.KEY_TWO then
         if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
               object.queue.loopCounter = 2
-              object.buildArea:drawLoopCounter(object.queue.loopCounter)
               object.selectingLoopCounter=false
         else
               object.queue:push(Commands.TURN_LEFT, object.inputArea)
@@ -154,9 +150,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
               object.selectingLoopCounter=false
        else
           object.buildArea:setBuildType("P1")
-          object.push(Commands.P1, object.inputArea)
+          object.queue:push(Commands.P1, object.inputArea)
           object.inputArea = "P1"
-         object:updateInputArea()
+          object:updateInputArea()
        end
 
       object.position = 17
