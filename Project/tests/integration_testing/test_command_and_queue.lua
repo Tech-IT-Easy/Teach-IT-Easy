@@ -42,7 +42,7 @@ function teardown()
   package.preload['src.games.Progg.Queue'] = nil
 end
 
-
+--Add command to queue and check that this command exists in queue
 function test_queue_with_commands()
   local class_to_mock = "games.Progg.BottomMenu"
 
@@ -50,7 +50,7 @@ function test_queue_with_commands()
   local drawIcons = mc:mock()
   local setQueue = mc:mock()
 
-  --Only drawIcons need to be mocked. Reload class
+  --Only drawIcons in ButtomMenu need to be mocked. Reload class
   local ps=require(class_to_mock)
 
   package.loaded[class_to_mock].drawIcons = drawIcons
