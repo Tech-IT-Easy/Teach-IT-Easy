@@ -22,7 +22,6 @@ function Queue:new(newBottomMenu, newBuildArea)
   return Queue:init(o)
 end
 
-
 -------------------------------------
 --Adds something at the end of the queue
 -- @param action - the action to be placed in the queue,
@@ -48,6 +47,9 @@ function Queue:push(action, queueType)
 
 end
 
+function Queue:getQueue()
+  return
+end
 
 --------------------------------------
 --Removes the object in the queue that was added last

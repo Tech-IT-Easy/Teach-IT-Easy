@@ -35,6 +35,11 @@ local function verify_mock(mc)
   end
 end
 
+function teardown()
+  package.loaded[SUT] = nil
+  package.preload[SUT] = nil
+end
+
 -- Delete this function when the real test is done
 --[[function test_RightMenu_fail()
   fail("RightMenu highlight-functions not tested yet!")
