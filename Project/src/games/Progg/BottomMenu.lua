@@ -21,40 +21,37 @@ local Queue = require('games.Progg.Queue')
 local BottomMenu = extends(Controllable)
 
 local inputArea = "queue"
-local queue = nil
-local context = nil
 local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 
 --Constructor method
 function BottomMenu:new(maxCommands,gameContext)
     local o = BottomMenu:super()
     o.selectingLoopCounter = false;
-    o.queue = {}
+    o.inputArea = "queue"
     o.position = 1
     o.prevPosition = nil
     context = gameContext
-    print("pos: ", o.position)
     o.buildArea = buildArea:new(maxCommands, o.position)
     o.drawBottomMenu = newDrawBottomMenu:new(maxCommands)
     o.character = Character:new(Position:new(0,0))
-    queue = Queue:new(o, o.buildArea)
+    o.queue = Queue:new(o, o.buildArea)
     return BottomMenu:init(o)
 end
 
 
 function BottomMenu:load()
-    self.drawBottomMenu:background(inputArea)
-    self.drawBottomMenu:emptySlots(inputArea)
+    self.drawBottomMenu:background(self.inputArea)
+    self.drawBottomMenu:emptySlots(self.inputArea)
     self.drawBottomMenu:headline("Main")
     self.buildArea:load()
-    self.buildArea:show(inputArea, queue)
+    self.buildArea:show(self.inputArea, self.queue)
 end
 
 --Used when BottomMenu is updated
 function BottomMenu:show()
-    self.drawBottomMenu:icons(self.queue)
-    self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue)
-    self.buildArea:show(inputArea, queue)
+    self.drawBottomMenu:icons(self.queue.actions)
+    self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
+    self.buildArea:show(self.inputArea, self.queue.actions)
 end
 
 -------------------------------------
@@ -63,11 +60,11 @@ end
 -- @author Mikael Ögren
 -------------------------------------
 function BottomMenu:setQueue(queue)
-  self.queue = queue
+  self.queue.actions = queue
 end
 
 function BottomMenu:executeQueue()
-    self.character:startExecution(queue)
+    self.character:startExecution(self.queue)
 
 end
 
@@ -83,41 +80,41 @@ function bottomMenuEventHandler:update(object,eventListener,event)
   if(event.state==Event.KEY_STATE_DOWN) then
       --Switch for all the input handling to implement
       if event.key == Event.KEY_ONE then
-        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
-              queue.loopCounter = 1
+        if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
+              object.queue.loopCounter = 1
               object.selectingLoopCounter=false
         else
-              queue:push(Commands.MOVE, inputArea)
+              object.queue:push(Commands.MOVE, object.inputArea)
            end
 
       elseif event.key == Event.KEY_TWO then
-        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
-              queue.loopCounter = 2
-              buildArea:drawLoopCounter(queue.loopCounter)
+        if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
+              object.queue.loopCounter = 2
+              object.buildArea:drawLoopCounter(object.queue.loopCounter)
               object.selectingLoopCounter=false
         else
-              queue:push(Commands.TURN_LEFT, inputArea)
+              object.queue:push(Commands.TURN_LEFT, object.inputArea)
            end
 
       elseif event.key == Event.KEY_THREE then
-         if(inputArea =="loop" and object.selectingLoopCounter==true ) then
-              queue.loopCounter = 3
+         if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
+              object.queue.loopCounter = 3
               object.selectingLoopCounter=false
         else
-              queue:push(Commands.TURN_RIGHT, inputArea)
+              object.queue:push(Commands.TURN_RIGHT, object.inputArea)
            end
 
       elseif event.key == Event.KEY_FOUR then
-        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
-              queue.loopCounter = 4
+        if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
+              object.queue.loopCounter = 4
               object.selectingLoopCounter=false
         else
               --queue:push(Commands.TURN_RIGHT, inputArea)
            end
 
       elseif event.key == Event.KEY_FIVE then
-         if(inputArea =="loop" and object.selectingLoopCounter==true ) then
-              queue.loopCounter = 5
+         if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
+              object.queue.loopCounter = 5
               object.selectingLoopCounter=false
         else
               --queue:push(Commands.TURN_RIGHT, inputArea)
@@ -125,13 +122,13 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
       elseif event.key == Event.KEY_SIX then
 
-         if(inputArea =="loop" and object.selectingLoopCounter==true ) then
-              queue.loopCounter = 6
+         if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
+              object.queue.loopCounter = 6
               object.selectingLoopCounter=false
         else
             object.buildArea:setBuildType("loop")
-            queue:push(Commands.LOOP, inputArea)
-            inputArea = "loop"
+            object.queue:push(Commands.LOOP, object.inputArea)
+            object.inputArea = "loop"
             object.selectingLoopCounter=true
          end
 
@@ -139,13 +136,13 @@ function bottomMenuEventHandler:update(object,eventListener,event)
         object.buildArea:setPosition(object.position)
 
       elseif event.key == Event.KEY_SEVEN then
-       if(inputArea =="loop" and object.selectingLoopCounter==true ) then
-              queue.loopCounter = 7
+       if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
+              object.queue.loopCounter = 7
               object.selectingLoopCounter=false
        else
           object.buildArea:setBuildType("P1")
-          queue:push(Commands.P1, inputArea)
-          inputArea = "P1"
+          object.push(Commands.P1, object.inputArea)
+          object.inputArea = "P1"
        end
 
         object.position = 17
@@ -153,13 +150,13 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
 
       elseif event.key == Event.KEY_EIGHT then
-        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
-             queue.loopCounter = 8
+        if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
+             object.queue.loopCounter = 8
              object.selectingLoopCounter=false
          else
              object.buildArea:setBuildType("P2")
-             queue:push(Commands.P2, inputArea)
-             inputArea = "P2"
+             object.queue:push(Commands.P2, inputArea)
+             object.inputArea = "P2"
          end
 
         object.position = 17
@@ -167,7 +164,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
       elseif event.key == Event.KEY_NINE then
        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
-             queue.loopCounter = 9
+             object.queue.loopCounter = 9
              object.selectingLoopCounter=false
          else
              context.platformEventListener:removeChainListener()
@@ -193,15 +190,15 @@ function bottomMenuEventHandler:update(object,eventListener,event)
       elseif event.key == Event.KEY_RIGHT then
           if object.position == 8 or object.position == 16 then
               object:setPosition(9)
-              object.drawBottomMenu:clearPos(object.prevPosition, object.queue)
+              object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
           elseif object.position < 32 then
               object:setPosition(1)
           end
       elseif event.key == Event.KEY_ZERO then
-          if inputArea == "queue"  then
+          if object.inputArea == "queue"  then
             object:executeQueue()
           else
-            inputArea = "queue"
+            object.inputArea = "queue"
           end
       end
       print(object.position)
