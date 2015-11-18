@@ -12,6 +12,7 @@ function Queue:new(newBottomMenu, newBuildArea)
   o.loopActions = {}
   o.p1Actions = {}
   o.p2Actions = {}
+  o.loopCounter = 2
   if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
   if newBuildArea ~= nil then o.buildArea = newBuildArea end
 
@@ -31,7 +32,7 @@ end
 -------------------------------------
 function Queue:push(action, queueType)
 
-  if queueType == "queue" then
+  if queueType == "queue" or queueType == nil then
     table.insert(self.actions,action)
     if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self.actions) end
   elseif queueType == "loop" then
@@ -44,6 +45,7 @@ function Queue:push(action, queueType)
     table.insert(self.p2Actions,action)
     if self.buildArea ~= nil then self.buildArea:setQueue(self.p2Actions, queueType) end
   end
+
 end
 
 
@@ -79,6 +81,21 @@ function Queue:getExecutionQueue()
   local executionQueue = self:new()
   for i = 1, #self.actions do
       table.insert(executionQueue.actions, i, self.actions[#self.actions - i + 1])
+  end
+  if self.loopActions ~= nil then
+    for i = 1, #self.loopActions do
+      table.insert(executionQueue.loopActions, i, self.loopActions[#self.loopActions - i + 1])
+    end
+  end
+  if self.p1Actions ~= nil then
+    for i = 1, #self.p1Actions do
+      table.insert(executionQueue.p1Actions, i, self.p1Actions[#self.p1Actions - i + 1])
+    end
+  end
+  if self.p2Actions ~= nil then
+    for i = 1, #self.p2Actions do
+      table.insert(executionQueue.p2Actions, i, self.p2Actions[#self.p2Actions - i + 1])
+    end
   end
   return executionQueue
 end
