@@ -233,10 +233,15 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object:updateInputArea()
           end
       elseif event.key == Event.KEY_OK then
+          print(object.inputArea)
           print(object:getQueue(object.inputArea)[object.position])
-          if object:getQueue(object.inputArea)[object.position] == "P1" or object:getQueue(object.inputArea)[object.position] == "loop" or object:getQueue(object.inputArea)[object.position] == "P2" then
-                  object.buildArea:setBuildType(object:getQueue(object.inputArea)[object.position])
-                  object.inputArea = object:getQueue(object.inputArea)[object.position]
+          local queuePos = object.position
+          if queuePos > 16 then
+              queuePos = queuePos - 16
+          end
+          if object:getQueue(object.inputArea)[queuePos] == "P1" or object:getQueue(object.inputArea)[queuePos] == "loop" or object:getQueue(object.inputArea)[queuePos] == "P2" then
+                  object.buildArea:setBuildType(object:getQueue(object.inputArea)[queuePos])
+                  object.inputArea = object:getQueue(object.inputArea)[queuePos]
                   object:updateInputArea()
 
                   object.prevPosition = object.position
