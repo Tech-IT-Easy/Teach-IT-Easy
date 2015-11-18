@@ -46,7 +46,6 @@ function BottomMenu:load()
     self.drawBottomMenu:background(inputArea)
     self.drawBottomMenu:emptySlots(inputArea)
     self.drawBottomMenu:headline("Main")
-
     self.buildArea:load()
     self.buildArea:show(inputArea, queue)
 end

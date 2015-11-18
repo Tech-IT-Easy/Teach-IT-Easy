@@ -156,10 +156,6 @@ function DrawBuildArea:drawLoopCounter(counter)
   end
 end
 
------------------
--- Returns file path to the image representing an action.
--- @param action
----
 function DrawBuildArea:getFileName(action)
     if action == "move" then
         return "data/progg_game_icons/arrow_up.png"
