@@ -48,8 +48,8 @@ end
 function BottomMenu:show()
     self.drawBottomMenu:background(inputArea)
     self.drawBottomMenu:emptySlots(inputArea)
-    self.drawBottomMenu:icons(self.queue)
-    self.drawBottomMenu:highlightIcon(self.position, self.queue)
+    self.drawBottomMenu:icons(self.queue.actions)
+    self.drawBottomMenu:highlightIcon(self.position, self.queue.actions)
     self.drawBottomMenu:headline("Main")
     self.buildArea:show(inputArea)
 end
