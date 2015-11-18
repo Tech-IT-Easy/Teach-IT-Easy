@@ -46,9 +46,11 @@ function Games:handleinput(event)
     --proggImage:destroy()
 
     platformContext.game = GameFactory:getGame(self.games[self.pos][1],platformContext)
-    platformContext.game:start()
-    platformContext.platformEventListener:remove(platformContext.platformMenu)
-    platformContext.platformMenu = nil
+    if platformContext.game ~= nil then
+      platformContext.game:start()
+      platformContext.platformEventListener:remove(platformContext.platformMenu)
+      platformContext.platformMenu = nil
+    end
     collectgarbage()
   end
   return { " " }
