@@ -6,7 +6,7 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-local SUT = 'src.games.Progg.Commands'
+local SUT = 'games.Progg.Commands'
 
 lunit = require "lunit"
 module( "test_Commands", package.seeall, lunit.testcase )

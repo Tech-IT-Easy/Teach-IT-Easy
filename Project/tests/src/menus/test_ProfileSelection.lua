@@ -9,12 +9,12 @@
 
 lunit = require "lunit"
 module( "src_menus_ProfileSelection", package.seeall, lunit.testcase )
---local Object = require'src.toolkit.Object'
-local event = require "src.toolkit.Event"
+--local Object = require'toolkit.Object'
+local event = require "toolkit.Event"
 
 
 -- System under test
-local SUT = 'src.menus.ProfileSelection'
+local SUT = 'menus.ProfileSelection'
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
   package.loaded[class_to_mock] = nil
@@ -42,8 +42,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.menus.ProfileSelection'] = nil
-  package.preload['src.menus.ProfileSelection'] = nil
+  package.loaded['menus.ProfileSelection'] = nil
+  package.preload['menus.ProfileSelection'] = nil
 end
 
 function test_loadview()
@@ -311,7 +311,7 @@ function test_handleinput_up_one()
   local a = ps:new()
  -- a.usernames = {"a", "b", "c"}
   a.pos = 1
-  event.key = event.KEY_ONE
+  event.key = event.KEY_OK
   local b = a:handleinput(event)
   assert_equal("ERIK", b[2], "should get username a")
   a.pos = 2
@@ -328,7 +328,7 @@ function test_handleinput_down_one()
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 5
-  event.key = event.KEY_ONE
+  event.key = event.KEY_OK
   local b = a:handleinput(event)
   assert_equal("create", b[1], "should get create")
 end

@@ -34,7 +34,7 @@ function ChooseAvatar:handleinput(event)
     self.pos = self.pos + 1
   elseif event.key == Event.KEY_LEFT and self.pos > 1 then
     self.pos = self.pos - 1
-  elseif (event.key == Event.KEY_ONE) then
+  elseif (event.key == Event.KEY_OK) then
     table.insert(usernames, CreateProfile.profilename)
     --self.image4 = gfx.loadpng('data/bowser.png')
     self.image4 = self.myimages[self.pos]
@@ -46,7 +46,7 @@ function ChooseAvatar:handleinput(event)
     self.myimages = nil
     collectgarbage()
     return { "profilesel", " " }
-  elseif (event.key == Event.KEY_TWO) then
+  elseif (event.key == Event.KEY_BACK) then
     CreateProfile.profilename = ""
     return { "create" }
   end
@@ -66,7 +66,7 @@ end
 
 function ChooseAvatar:active(x1)
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
-  screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = image1:get_width() * 0.6, h = image1:get_height() * 0.6 }, true)
+  screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
 
 end
 
@@ -77,7 +77,7 @@ end
 -------------------------------------
 function ChooseAvatar:inactive(x1)
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
-  screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = image1:get_width() * 0.6, h = image1:get_height() * 0.6 }, true)
+  screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
 
 end
 

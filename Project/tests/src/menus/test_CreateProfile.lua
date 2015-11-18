@@ -8,11 +8,11 @@
 
 lunit = require "lunit"
 module( "src_menus_CreateProfile", package.seeall, lunit.testcase )
-my_file = require "src.menus.CreateProfile"
-local event = require "src.toolkit.Event"
+my_file = require "menus.CreateProfile"
+local event = require "toolkit.Event"
 
 -- System under test
-local SUT = 'src.menus.CreateProfile'
+local SUT = 'menus.CreateProfile'
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
   package.loaded[class_to_mock] = nil
@@ -40,8 +40,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.menus.CreateProfile'] = nil
-  package.preload['src.menus.CreateProfile'] = nil
+  package.loaded['menus.CreateProfile'] = nil
+  package.preload['menus.CreateProfile'] = nil
 end
 
 function test_loadview()
@@ -219,7 +219,7 @@ function test_handleinput_one_from_any_letter()
   a.pos = 1
   a.profilename = ""
   a.letters = { 'A', 'B', 'C', 'DONE' }
-  event.key = event.KEY_ONE
+  event.key = event.KEY_OK
   a:handleinput(event)
   assert_equal("A", a.profilename, "a should be added to profilename")
 
@@ -256,7 +256,7 @@ function test_handleinput_one_from_any_letter_to_add_new_letter_to_username()
   a.pos = 2
   a.profilename = "ABC"
   a.letters = { 'A', 'B', 'C', 'DONE' }
-  event.key = event.KEY_ONE
+  event.key = event.KEY_OK
   a:handleinput(event)
   assert_equal("ABCB", a.profilename, "a should be added to profilename")
 
@@ -289,7 +289,7 @@ function test_handleinput_one_from_pos_done()
   a.pos = 4
   a.profilename = "ABC"
   a.letters = { 'A', 'B', 'C', 'DONE' }
-  event.key = event.KEY_ONE
+  event.key = event.KEY_OK
   local b = a:handleinput(event)
   assert_equal("chooseavatar", b[1], "should return chooseavatar ")
   assert_equal("ABC", a.profilename, "profilename should be ABC")
@@ -321,7 +321,7 @@ function test_handleinput_two_from_any_pos()
 
   local a = ps:new()
   a.pos = 4
-  event.key = event.KEY_TWO
+  event.key = event.KEY_BACK
   local b = a:handleinput(event)
   assert_equal("profilesel", b[1], "should return profilesel ")
   assert_equal(" ", b[2], "should return noting")

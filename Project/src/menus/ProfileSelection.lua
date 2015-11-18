@@ -8,9 +8,12 @@ usernames = { "ERIK", "MARCUS", "TOAD" }
 
 -- images
 local image1 = gfx.loadpng('data/bowser.png')
+image1:premultiply()
 local image2 = gfx.loadpng('data/mario.png')
+image2:premultiply()
 local image3 = gfx.loadpng('data/toad.png')
-local images = { image1, image2, image3 }
+image3:premultiply()
+images = { image1, image2, image3 }
 
 local Event = require('toolkit.Event')
 -------------------------------------
@@ -50,11 +53,17 @@ function ProfileSelection:handleinput(event)
 
     self.pos = 1
 
-  elseif event.key == Event.KEY_ONE and self.pos < 5 then
+  elseif event.key == Event.KEY_OK and self.pos < 5 then
     return { "main", usernames[self.pos] }
 
-  elseif event.key == Event.KEY_ONE and self.pos == 5 then
+  elseif event.key == Event.KEY_OK and self.pos == 5 then
     return { "create" }
+
+--  elseif event.key == Event.KEY_ONE and self.pos < 5 then
+--    return { "main", usernames[self.pos] }
+
+--  elseif event.key == Event.KEY_ONE and self.pos == 5 then
+--    return { "create" }
   end
 
   return { " " }

@@ -85,7 +85,7 @@ end
 menuEventHandler = EventHandler:new()
 
 -- register interesting events, listener will only notify these events
-menuEventHandler.events = {[Event.KEY_UP] = Event.KEY_STATE_DOWN,[Event.KEY_DOWN] = Event.KEY_STATE_DOWN,[Event.KEY_RIGHT]=Event.KEY_STATE_DOWN,[Event.KEY_LEFT]=Event.KEY_STATE_DOWN,[Event.KEY_ONE]=Event.KEY_STATE_DOWN,[Event.KEY_TWO]=Event.KEY_STATE_DOWN}
+menuEventHandler.events = {[Event.KEY_UP] = Event.KEY_STATE_DOWN,[Event.KEY_DOWN] = Event.KEY_STATE_DOWN,[Event.KEY_RIGHT]=Event.KEY_STATE_DOWN,[Event.KEY_LEFT]=Event.KEY_STATE_DOWN,[Event.KEY_ONE]=Event.KEY_STATE_DOWN,[Event.KEY_TWO]=Event.KEY_STATE_DOWN, [Event.KEY_OK]=Event.KEY_STATE_DOWN, [Event.KEY_BACK]=Event.KEY_STATE_DOWN}
 
 -- override specific update method to response keyboard events, 
 function menuEventHandler:update(object,eventListener,event)

@@ -9,12 +9,12 @@
 
 lunit = require "lunit"
 module( "src_menus_Games", package.seeall, lunit.testcase )
-my_file = require "src.menus.Games"
-local event = require "src.toolkit.Event"
+my_file = require "menus.Games"
+local event = require "toolkit.Event"
 
 
 -- System under test
-local SUT = 'src.menus.Games'
+local SUT = 'menus.Games'
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
   package.loaded[class_to_mock] = nil
@@ -42,8 +42,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.menus.Games'] = nil
-  package.preload['src.menus.Games'] = nil
+  package.loaded['menus.Games'] = nil
+  package.preload['menus.Games'] = nil
 end
 
 -- tests if move right from far left posistion.
@@ -171,7 +171,7 @@ function test_handleinput_two_from_left()
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 1
-  event.key = event.KEY_TWO
+  event.key = event.KEY_BACK
   local b = a:handleinput(event)
   assert_equal("main", b[1], "should return main")
 end

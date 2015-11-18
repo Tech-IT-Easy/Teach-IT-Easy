@@ -35,14 +35,16 @@ end
   create_prof_activewidth = create_prof_itemwidth * 0.48
   create_prof_hspacing = screen:get_width() * 0.048
 
+  buildarea_headline_baseline = screen:get_height() * 0.66
+
   --General fonts
   --main_menu_pagename = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.07, {x= screen:get_width()*0.375, y=main_menu_pagenamebaseline}, script_path..'data/Chalkduster.ttf')
 
 -- profile selection fonts
   prof_sel_appname = sys.new_freetype({g=255, r=255, b=255,a=255}, screen:get_height()*0.04, {x= screen:get_width()*0.43, y=main_menu_appnamebaseline}, script_path..'data/BlackoutMidnight.ttf')
   prof_sel_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a=255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.24, y = main_menu_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
-  prof_sel_addprofileplus = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.075, { x = screen:get_width() * 0.35, y = screen:get_height() * 0.883 }, script_path .. 'data/BlackoutMidnight.ttf')
-  prof_sel_addprofilename = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.38, y = screen:get_height() * 0.88 }, script_path .. 'data/condensed.ttf')
+  prof_sel_addprofileplus = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.075, { x = screen:get_width() * 0.41, y = screen:get_height() * 0.877 }, script_path .. 'data/BlackoutMidnight.ttf')
+  prof_sel_addprofilename = sys.new_freetype({ g = 131, r = 0, b = 143,a=255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.44, y = screen:get_height() * 0.88 }, script_path .. 'data/condensed.ttf')
   prof_sel_username1 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing), y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
   prof_sel_username2 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 2) + prof_sel_itemwidth, y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
   prof_sel_username3 = sys.new_freetype({ g = 255, r = 255, b = 255,a=255 }, screen:get_height() * 0.05, { x = (prof_sel_hspacing * 3) + prof_sel_itemwidth * (2), y = prof_sel_itemy + prof_sel_itemheight * 1.05 }, script_path .. 'data/Chalkduster.ttf')
@@ -123,4 +125,8 @@ end
   create_prof_keyletters = {create_prof_keyletter1, create_prof_keyletter2, create_prof_keyletter3, create_prof_keyletter4, create_prof_keyletter5, create_prof_keyletter6, create_prof_keyletter7, create_prof_keyletter8, create_prof_keyletter9, create_prof_keyletter10, create_prof_keyletter11, create_prof_keyletter12, create_prof_keyletter13, create_prof_keyletter14, create_prof_keyletter15, create_prof_keyletter16, create_prof_keyletter17, create_prof_keyletter18, create_prof_keyletter19, create_prof_keyletter20, create_prof_keyletter21, create_prof_keyletter22, create_prof_keyletter23, create_prof_keyletter24, create_prof_keyletter25, create_prof_keyletter26, create_prof_keyletter27}
   
   create_prof_typed = sys.new_freetype({g=131, r=0, b=143, a=255}, screen:get_height()*0.1 , {x = screen:get_width() * 0.11, y=screen:get_height() * 0.3 * 1.2}, script_path..'data/BlackoutMidnight.ttf')
-  
+
+  -- Programming game fonts
+  left_buildarea_headline = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x = screen:get_width() * 0.05, y = buildarea_headline_baseline}, script_path.. 'data/GROBOLD.ttf')
+  right_buildarea_headline = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x =screen:get_width() * 0.55, y = buildarea_headline_baseline}, script_path.. 'data/GROBOLD.ttf')
+ -- prog_game_buildareafonts = {buildarea_headline_main}

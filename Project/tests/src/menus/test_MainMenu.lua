@@ -8,10 +8,10 @@
 
 lunit = require "lunit"
 module( "src_menus_MainMenu", package.seeall, lunit.testcase )
-local event = require "src.toolkit.Event"
+local event = require "toolkit.Event"
 
 -- System under test
-local SUT = 'src.menus.MainMenu'
+local SUT = 'menus.MainMenu'
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
   package.loaded[class_to_mock] = nil
@@ -39,8 +39,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.menus.MainMenu'] = nil
-  package.preload['src.menus.MainMenu'] = nil
+  package.loaded['menus.MainMenu'] = nil
+  package.preload['menus.MainMenu'] = nil
 end
 
 function test_loadview()
@@ -329,7 +329,7 @@ function test_handleinput_left_one()
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 0
-  event.key = event.KEY_ONE
+  event.key = event.KEY_OK
   local b = a:handleinput(event)
   assert_equal("games", b[1], "should want to start game")
 end
@@ -338,7 +338,7 @@ function test_handleinput_two()
   -- checks if create is chosen if 1 is pressed
   local ps = require(SUT)
   local a = ps:new()
-  event.key = event.KEY_TWO
+  event.key = event.KEY_BACK
   local b = a:handleinput(event)
   assert_equal("profilesel", b[1], "should get create")
 end
