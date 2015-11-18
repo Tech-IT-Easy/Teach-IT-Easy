@@ -112,8 +112,7 @@ function Map:moveCharacter(x ,y , direction)
   local pos = self:getPosition(x,y)
   print(pos.."   "..self.startPos.."   map[25]"..self.mapdata[25])
   if pos ~= self.startPos then
-    print("map(pos)  "..self.mapdata[pos])
-    self:square(pos, self.mapdata[pos])
+   self:square(pos, self.tiles[pos])
     if direction == Map.UP then
       self:setCharacter(pos-8)
     elseif direction == Map.LEFT then
