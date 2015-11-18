@@ -44,14 +44,26 @@ function BottomMenu:load()
     self.drawBottomMenu:emptySlots(self.inputArea)
     self.drawBottomMenu:headline("Main")
     self.buildArea:load()
-    self.buildArea:show(self.inputArea, self.queue)
+   -- self.buildArea:show(self.inputArea, self.queue)
 end
 
 --Used when BottomMenu is updated
 function BottomMenu:show()
-    self.drawBottomMenu:icons(self.queue.actions)
-    self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
-    self.buildArea:show(self.inputArea, self.queue.actions)
+  if (prevInputArea ~= self.inputArea) then
+    self:updateInputArea()
+    prevInputArea = self.inputArea
+  end
+
+  self.drawBottomMenu:icons(self.queue.actions)
+  self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
+  self.buildArea:show(self.inputArea, self.queue.actions)
+end
+
+function BottomMenu:updateInputArea()
+  self.drawBottomMenu:background(inputArea)
+  self.drawBottomMenu:emptySlots(inputArea)
+  self.drawBottomMenu:icons(self.queue)
+  self.buildArea:load(inputArea)
 end
 
 -------------------------------------
@@ -72,7 +84,7 @@ end
 --Subscribing the eventHandler to all events.
 bottomMenuEventHandler = EventHandler:new()
 bottomMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1
-    ,[Event.KEY_ZERO]=1,[Event.KEY_UP]=1,[Event.KEY_DOWN]=1 ,[Event.KEY_LEFT]=1,[Event.KEY_RIGHT]=1 }
+  ,[Event.KEY_ZERO]=1,[Event.KEY_UP]=1,[Event.KEY_DOWN]=1 ,[Event.KEY_LEFT]=1,[Event.KEY_RIGHT]=1 }
 
 --Update function on every key input
 function bottomMenuEventHandler:update(object,eventListener,event)
@@ -129,6 +141,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.buildArea:setBuildType("loop")
             object.queue:push(Commands.LOOP, object.inputArea)
             object.inputArea = "loop"
+            object:updateInputArea()
             object.selectingLoopCounter=true
 
             object.prevPosition = object.position
@@ -148,10 +161,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
           object.buildArea:setBuildType("P1")
           object.queue:push(Commands.P1, object.inputArea)
           object.inputArea = "P1"
-
-          object.position = 17
-          object.buildArea:setPosition(object.position)
-          object.buildArea.drawBuildArea:clearPos(object.prevPosition, object.buildArea.loopQueue)
+         object:updateInputArea()
+       end
 
           object.prevPosition = object.position
           object.position = 17
@@ -165,9 +176,11 @@ function bottomMenuEventHandler:update(object,eventListener,event)
              object.queue.loopCounter = 8
              object.selectingLoopCounter=false
         else
-            object.buildArea:setBuildType("P2")
-            object.queue:push(Commands.P2, inputArea)
-            object.inputArea = "P2"
+             object.buildArea:setBuildType("P2")
+             object.queue:push(Commands.P2, inputArea)
+             object.inputArea = "P2"
+            object:updateInputArea()
+         end
 
             object.prevPosition = object.position
             object.position = 17
@@ -218,6 +231,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
             object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
             object.inputArea = "queue"
+            object:updateInputArea()
           end
       end
       print(object.position)
@@ -226,9 +240,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 end
 
 function BottomMenu:setPosition(change)
-    self.prevPosition = self.position
-    self.position = self.position + change
-    self.buildArea:setPosition(self.position)
+  self.prevPosition = self.position
+  self.position = self.position + change
+  self.buildArea:setPosition(self.position)
 end
 
 
