@@ -46,6 +46,8 @@ function BottomMenu:load()
     self.drawBottomMenu:background(inputArea)
     self.drawBottomMenu:emptySlots(inputArea)
     self.drawBottomMenu:headline("Main")
+
+    self.buildArea:load()
 end
 
 --Used when BottomMenu is updated
@@ -183,13 +185,15 @@ function bottomMenuEventHandler:update(object,eventListener,event)
       elseif event.key == Event.KEY_LEFT then
           if object.position == 17 or object.position == 25 then
               object:setPosition(-9)
+              object.buildArea.drawBuildArea:clearPos(object.prevPosition, object.buildArea.loopQueue)
           elseif object.position > 1 then
               object:setPosition(-1)
           end
       elseif event.key == Event.KEY_RIGHT then
           if object.position == 8 or object.position == 16 then
               object:setPosition(9)
-          elseif object.position <= 32 then
+              object.drawBottomMenu:clearPos(object.prevPosition, object.queue)
+          elseif object.position < 32 then
               object:setPosition(1)
           end
       elseif event.key == Event.KEY_ZERO then
