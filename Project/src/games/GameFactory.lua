@@ -13,8 +13,12 @@ local GameFactory = extends(Object)
 GameFactory.game = nil
 
 GameFactory.gameMatrix = {}
-GameFactory.gameMatrix[1] = {"mario", "games.mario.Mario"}
-GameFactory.gameMatrix[2] = {"Programming", "games.Progg.ProggGame"}
+GameFactory.gameMatrix[1] = {"Programming", "games.Progg.ProggGame" }
+GameFactory.gameMatrix[2] = {"Other game", nil }
+GameFactory.gameMatrix[3] = {"Test game", nil }
+GameFactory.gameMatrix[4] = {"Pony game", nil }
+--GameFactory.gameMatrix[4] = {"Mario", "games.mario.Mario" }
+
 
 -----------------------------------------------------------
 -- Game create factory to create specific games based on profile
@@ -27,7 +31,7 @@ GameFactory.gameMatrix[2] = {"Programming", "games.Progg.ProggGame"}
 -----------------------------------------------------------
 function GameFactory:getGame(gameName,context)
   for i = 1, #self.gameMatrix, 1 do
-    if gameName == self.gameMatrix[i][1] then
+    if gameName == self.gameMatrix[i][1] and self.gameMatrix[i][2] ~= nil then
       print("Selected game: " .. self.gameMatrix[i][1] .. " importing: " .. self.gameMatrix[i][2])
       local load = require(self.gameMatrix[i][2])
       self.game = load:new(context)
