@@ -247,8 +247,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object:updateInputArea()
           end
       elseif event.key == Event.KEY_OK then
-          print(object.inputArea)
-          print(object:getQueue(object.inputArea)[object.position])
+          --print(object.inputArea)
+          --print(object:getQueue(object.inputArea)[object.position])
           local queuePos = object.position
           if queuePos > 16 then
               queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
@@ -263,6 +263,25 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                   object.buildArea:setPosition(object.position)
                   object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                   object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+          elseif object:getQueue(object.inputArea)[queuePos] ~= nil then
+            if object.inputArea == "queue" then
+             for i=queuePos, (#object.queue.actions) do
+              object.queue.actions[i] = object.queue.actions[i + 1]
+             end
+            elseif object.inputArea == "P1" then
+              for i=queuePos, (#object.queue.p1Actions) do
+                object.queue.p1Actions[i] = object.queue.p1Actions[i + 1]
+              end
+            elseif object.inputArea == "P2" then
+              for i=queuePos, (#object.queue.p2Actions) do
+                object.queue.p2Actions[i] = object.queue.p2Actions[i + 1]
+              end
+            elseif object.inputArea == "loop" then
+              for i=queuePos, (#object.queue.loopActions) do
+                object.queue.loopActions[i] = object.queue.loopActions[i + 1]
+              end
+            end
+            object:updateInputArea()
           end
       end
   end
@@ -305,7 +324,5 @@ function BottomMenu:getQueue(inputArea)
 end
 
 BottomMenu.eventHandler = bottomMenuEventHandler
-
-
 
 return BottomMenu
