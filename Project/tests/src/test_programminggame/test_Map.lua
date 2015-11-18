@@ -43,6 +43,12 @@ function teardown()
   package.preload['games.Progg.Map'] = nil
 end
 
+-------------------------------------
+-- ??
+-- @system_under_test: Map:new(), Map:load()
+-- @author name: ??
+-------------------------------------
+
 function test_load()
   local mc = create_mock(SUT)
 
@@ -75,7 +81,12 @@ function test_load()
   verify_mock(mc)
 end
 
---setCharacter tests
+-------------------------------------
+-- ?? Set character test
+-- @system_under_test: Map:new(), Map:setCharacter()
+-- @author name: ??
+-------------------------------------
+
 function test_setCharacter_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -161,7 +172,12 @@ function test_setCharacter_five()
   verify_mock(mc)
 end
 
---setGoal tests
+-------------------------------------
+-- ?? Set goal test
+-- @system_under_test: Map:new(), Map:setGoal()
+-- @author name: ??
+-------------------------------------
+
 function test_setGoal_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -247,7 +263,12 @@ function test_setGoal_five()
   verify_mock(mc)
 end
 
---setStart tests
+-------------------------------------
+-- ?? Set start test
+-- @system_under_test: Map:new(), Map:setStart()
+-- @author name: ??
+-------------------------------------
+
 function test_setStart_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -333,7 +354,12 @@ function test_setStart_five()
   verify_mock(mc)
 end
 
---square tests
+-------------------------------------
+-- ?? Square test
+-- @system_under_test: Map:new(), Map:square(i, tile)
+-- @author name: ??
+-------------------------------------
+
 function test_square_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -444,7 +470,12 @@ function test_square_five()
   verify_mock(mc)
 end
 
---drawBox tests
+-------------------------------------
+-- ?? drawBox tests
+-- @system_under_test: Map:new(), Map:drawBox(tile, xPos, yPos)
+-- @author name: ??
+-------------------------------------
+
 function test_drawBox_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -566,6 +597,12 @@ function test_drawBox_five()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- ?? dra Standard Box
+-- @system_under_test: Map:new(), Map:drawStandardBox(xPos, yPos)
+-- @author name: ??
+-------------------------------------
+
 function test_drawStandardBox()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -585,6 +622,12 @@ function test_drawStandardBox()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- ?? draw Top Border
+-- @system_under_test: Map:new(), Map:drawTopBorder(xPos, yPos)
+-- @author name: ??
+-------------------------------------
+
 function test_drawTopBorder()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -602,6 +645,12 @@ function test_drawTopBorder()
 
   verify_mock(mc)
 end
+
+-------------------------------------
+-- ?? draw Bottom Border
+-- @system_under_test: Map:new(), Map:drawBottomBorder(xPos, yPos)
+-- @author name: ??
+-------------------------------------
 
 function test_drawBottomBorder()
   local mc = create_mock(SUT)
@@ -621,6 +670,12 @@ function test_drawBottomBorder()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- ?? draw Left Border
+-- @system_under_test: Map:new(), Map:drawLeftBorder(xPos, yPos)
+-- @author name: ??
+-------------------------------------
+
 function test_drawLeftBorder()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -639,6 +694,12 @@ function test_drawLeftBorder()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- ?? draw Right Border
+-- @system_under_test: Map:new(), Map:drawRightBorder(xPos, yPos)
+-- @author name: ??
+-------------------------------------
+
 function test_drawRightBorder()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -656,6 +717,12 @@ function test_drawRightBorder()
 
   verify_mock(mc)
 end
+
+-------------------------------------
+-- ??
+-- @system_under_test: Map:new(), Map:getPosition(x,y)
+-- @author name: ??
+-------------------------------------
 
 function test_getPosition_one()
   local mc = create_mock(SUT)
@@ -688,6 +755,12 @@ function test_getPosition_two()
 
   verify_mock(mc)
 end
+
+-------------------------------------
+-- ??
+-- @system_under_test: Map:new(), Map:moveCharacter(x ,y , direction)
+-- @author name: ??
+-------------------------------------
 
 function test_moveCharacter_one()
   local mc = create_mock(SUT)
@@ -848,6 +921,12 @@ function test_moveCharacter_five()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- ??
+-- @system_under_test: Map:new(), Map:canMove(x ,y , direction)
+-- @author name: ??
+-------------------------------------
+
 function test_canMove_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -983,8 +1062,3 @@ function test_canMove_five()
 
   verify_mock(mc)
 end
--- Delete this function when the real test is done
---[[
-function test_Map_fail()
-   fail("Map class and functions not tested yet!")
-end]]
