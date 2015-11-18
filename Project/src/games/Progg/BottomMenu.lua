@@ -46,13 +46,14 @@ function BottomMenu:load()
     self.drawBottomMenu:background(inputArea)
     self.drawBottomMenu:emptySlots(inputArea)
     self.drawBottomMenu:headline("Main")
+    self.buildArea:show(inputArea, queue)
 end
 
 --Used when BottomMenu is updated
 function BottomMenu:show()
     self.drawBottomMenu:icons(self.queue)
     self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue)
-    self.buildArea:show(inputArea)
+    self.buildArea:show(inputArea, queue)
 end
 
 -------------------------------------
@@ -91,6 +92,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
       elseif event.key == Event.KEY_TWO then
         if(inputArea =="loop" and object.selectingLoopCounter==true ) then
               queue.loopCounter = 2
+              buildArea:drawLoopCounter(queue.loopCounter)
               object.selectingLoopCounter=false
         else
               queue:push(Commands.TURN_LEFT, inputArea)

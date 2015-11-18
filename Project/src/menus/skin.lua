@@ -128,5 +128,6 @@ end
 
   -- Programming game fonts
   left_buildarea_headline = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x = screen:get_width() * 0.05, y = buildarea_headline_baseline}, script_path.. 'data/GROBOLD.ttf')
-  right_buildarea_headline = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x =screen:get_width() * 0.55, y = buildarea_headline_baseline}, script_path.. 'data/GROBOLD.ttf')
- -- prog_game_buildareafonts = {buildarea_headline_main}
+  right_buildarea_headline = sys.new_freetype({g=255, r=255, b=255, a=255}, screen:get_height()*0.04, {x = screen:get_width() * 0.55, y = buildarea_headline_baseline}, script_path.. 'data/GROBOLD.ttf')
+  right_buildarea_loopcounter = sys.new_freetype({r = 78, g = 78, b = 78}, screen:get_height()*0.04, {x = screen:get_width() * 0.88, y = buildarea_headline_baseline}, script_path.. 'data/GROBOLD.ttf')
+-- prog_game_buildareafonts = {buildarea_headline_main}
