@@ -8,8 +8,6 @@ local Character = extends(Object)
 local Commands = require('games.Progg.Commands')
 local Map = require('games.Progg.Map')
 
--- @member Map:map
-
 ----
 --0 == UP
 --1 == RIGHT
@@ -18,13 +16,16 @@ local Map = require('games.Progg.Map')
 ----
 local step = 5
 ----
---Constructor of the character.
---@param: the initial position of the character
+-- Constructor of the character.
+-- @param: the initial position of the character
+-- @author Ludwig Wikblad; Mario Pizcueta
 ----
 function Character:new(newPosition)
   local o = Character:super()
+  -- @member position:Position
   o.position = newPosition
   o.state = 0
+  -- @member map:Map
   o.map = Map:new()
   return Character:init(o)
 end
@@ -68,23 +69,28 @@ function Character:startExecution(inqueue)
   end
 end
 
----
---Executes the given command
---@param: the command to execute of class Commands
+---------------------------------------
+-- Executes the given command by asking map if action
+-- is legal and then telling map to perform action
+-- @param: the command to execute of class Commands
 -- @author Mario Pizcueta
----
+---------------------------------------
 function Character:execute(command)
   --Moving up
   if(command == Commands.MOVE) then
     if(self:checkCollision(self.position, self.state)) then
       if(self.state ==0) then
        self.position:setY(self.position:getY()-step)
+        --self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
       elseif(self.state ==1) then
        self.position:setX(self.position:getX()+step)
+        --self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
       elseif(self.state ==2) then
        self.position:setY(self.position:getY()+step)
+        --self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
       elseif(self.state ==3) then
        self.position:setX(self.position:getX()-step)
+        --self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
       end
     end
   end
