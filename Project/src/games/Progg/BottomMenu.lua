@@ -71,10 +71,8 @@ end
 -- @author Tobias Lundell
 --------------------------------------------
 function BottomMenu:updateInputArea()
-  self.drawBottomMenu:background(self.inputArea)
-  self.drawBottomMenu:emptySlots(self.inputArea)
+  self:load()
   self.drawBottomMenu:allIcons(self.queue.actions)
-  self.buildArea:load(self.inputArea)
 end
 
 -------------------------------------
