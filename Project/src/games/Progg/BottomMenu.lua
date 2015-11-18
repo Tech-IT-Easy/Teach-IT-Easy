@@ -233,10 +233,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
           print(object:getQueue(object.inputArea)[object.position])
           local queuePos = object.position
           if queuePos > 16 then
-              queuePos = queuePos - 16
+              queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
           end
-          if object:getQueue(object.inputArea)[queuePos] == "P1" or object:getQueue(object.inputArea)[queuePos] == "loop" or object:getQueue(object.inputArea)[queuePos] == "P2" then
-                  object.buildArea:setBuildType(object:getQueue(object.inputArea)[queuePos])
+          if object:getQueue(object.inputArea)[queuePos] == "P1" or object:getQueue(object.inputArea)[queuePos] == "loop" or object:getQueue(object.inputArea)[queuePos] == "P2" then -- Makes sure you've clicked on a procedure or loop
+                  object.buildArea:setBuildType(object:getQueue(object.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
                   object.inputArea = object:getQueue(object.inputArea)[queuePos]
                   object:updateInputArea()
 
@@ -265,6 +265,10 @@ function BottomMenu:isUpperRow(pos)
     end
 end
 
+---
+-- Returns the queue corresponding to the inputArea
+--@author Mikael Ögren
+---
 function BottomMenu:getQueue(inputArea)
     if inputArea == "queue" then
         return self.queue.actions
