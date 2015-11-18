@@ -14,6 +14,7 @@ function BuildArea:new(maxCommands, pos)
     local o = BuildArea:super()
     o.availableSlots = maxCommands
     o.position = pos
+    o.prevPos = nil
     o.loopQueue = {}
     o.p1Queue = {}
     o.p2Queue = {}
@@ -32,13 +33,13 @@ function BuildArea:show(queue)
 
     if self.buildType == "P1" then
         self.drawBuildArea:icons(self.p1Queue)
-        self.drawBuildArea:highlightIcon(self.position, self.p1Queue)
+        self.drawBuildArea:highlightIcon(self.position, self.prevPos, self.p1Queue)
     elseif self.buildType == "P2" then
         self.drawBuildArea:icons(self.p2Queue)
-        self.drawBuildArea:highlightIcon(self.position, self.p2Queue)
+        self.drawBuildArea:highlightIcon(self.position, self.prevPos, self.p2Queue)
     elseif self.buildType == "loop" then
         self.drawBuildArea:icons(self.loopQueue)
-        self.drawBuildArea:highlightIcon(self.position, self.loopQueue)
+        self.drawBuildArea:highlightIcon(self.position, self.prevPos, self.loopQueue)
         self.drawBuildArea:drawLoopCounter(queue.loopCounter)
     end
 end
@@ -53,6 +54,7 @@ function BuildArea:setBuildType(buildType)
 end
 
 function BuildArea:setPosition(pos)
+    self.prevPos = self.position
     self.position = pos
 end
 
