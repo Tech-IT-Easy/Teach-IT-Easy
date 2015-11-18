@@ -848,19 +848,25 @@ function test_moveCharacter_five()
   verify_mock(mc)
 end
 
---[[
 function test_canMove_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('src.games.Progg.Tile')
-  mc:replay()
+  
+  local getPosition = mc:mock()
+  package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
-  local Tile = ps2:new(1)
+  local tile = ps2:new(1)
+  
 
   local x =1
   local y =1
   local direction = "up"
+  a.tiles = {tile}
+  
+  getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  mc:replay()
 
   local answer = a:canMove(x,y,direction)
 
@@ -868,8 +874,115 @@ function test_canMove_one()
 
   verify_mock(mc)
 end
-]]
 
+function test_canMove_two()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  local ps2 = require('src.games.Progg.Tile')
+  
+  local getPosition = mc:mock()
+  package.loaded[SUT].getPosition = getPosition
+
+  local a = ps:new()
+  local tile = ps2:new(8)
+  
+
+  local x =1
+  local y =1
+  local direction = "up"
+  a.tiles = {tile}
+  
+  getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  mc:replay()
+
+  local answer = a:canMove(x,y,direction)
+
+  assert_false( answer, "cant move")
+
+  verify_mock(mc)
+end
+
+function test_canMove_three()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  local ps2 = require('src.games.Progg.Tile')
+  
+  local getPosition = mc:mock()
+  package.loaded[SUT].getPosition = getPosition
+
+  local a = ps:new()
+  local tile = ps2:new(3)
+  
+
+  local x =1
+  local y =1
+  local direction = "left"
+  a.tiles = {tile}
+  
+  getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  mc:replay()
+
+  local answer = a:canMove(x,y,direction)
+
+  assert_false( answer, "cant move")
+
+  verify_mock(mc)
+end
+
+function test_canMove_four()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  local ps2 = require('src.games.Progg.Tile')
+  
+  local getPosition = mc:mock()
+  package.loaded[SUT].getPosition = getPosition
+
+  local a = ps:new()
+  local tile = ps2:new(4)
+  
+
+  local x =1
+  local y =1
+  local direction = "right"
+  a.tiles = {tile}
+  
+  getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  mc:replay()
+
+  local answer = a:canMove(x,y,direction)
+
+  assert_false( answer, "cant move")
+
+  verify_mock(mc)
+end
+
+
+function test_canMove_five()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  local ps2 = require('src.games.Progg.Tile')
+  
+  local getPosition = mc:mock()
+  package.loaded[SUT].getPosition = getPosition
+
+  local a = ps:new()
+  local tile = ps2:new(2)
+  
+
+  local x =1
+  local y =1
+  local direction = "down"
+  a.tiles = {tile}
+  
+  getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  mc:replay()
+
+  local answer = a:canMove(x,y,direction)
+
+  assert_false( answer, "cant move")
+
+  verify_mock(mc)
+end
 -- Delete this function when the real test is done
 --[[
 function test_Map_fail()

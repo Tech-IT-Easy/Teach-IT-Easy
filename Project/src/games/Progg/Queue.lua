@@ -45,6 +45,7 @@ function Queue:push(action, queueType)
     table.insert(self.p2Actions,action)
     if self.buildArea ~= nil then self.buildArea:setQueue(self.p2Actions, queueType) end
   end
+
 end
 
 

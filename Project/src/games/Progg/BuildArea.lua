@@ -10,14 +10,15 @@ local Object = require("toolkit.Object")
 local BuildArea = extends(Object)
 local newDrawBuildArea = require("games.Progg.DrawBuildArea")
 
-function BuildArea:new(maxCommands)
+function BuildArea:new(maxCommands, pos)
     local o = BuildArea:super()
     o.availableSlots = maxCommands
+    o.position = pos
     o.loopQueue = {}
     o.p1Queue = {}
     o.p2Queue = {}
-    o.drawBuildArea = newDrawBuildArea:new()
-    o.inputArea = "queue"
+    o.drawBuildArea = newDrawBuildArea:new(o.availableSlots)
+    o.inputArea = nil
     return BuildArea:init(o)
 end
 
@@ -31,12 +32,15 @@ function BuildArea:show(inputArea)
 
     if self.buildType == "P1" then
         self.drawBuildArea:icons(self.p1Queue)
+        self.drawBuildArea:highlightIcon(self.position, self.p1Queue)
     elseif self.buildType == "P2" then
         self.drawBuildArea:icons(self.p2Queue)
+        self.drawBuildArea:highlightIcon(self.position, self.p2Queue)
     elseif self.buildType == "loop" then
         self.drawBuildArea:icons(self.loopQueue)
+        self.drawBuildArea:highlightIcon(self.position, self.loopQueue)
     end
-    self.drawBuildArea:headLine(self.buildType)
+    self.drawBuildArea:headLine(self.buildType, inputArea)
 end
 
 -------------------------------------
@@ -46,6 +50,10 @@ end
 -------------------------------------
 function BuildArea:setBuildType(buildType)
     self.buildType = buildType
+end
+
+function BuildArea:setPosition(pos)
+    self.position = pos
 end
 
 --------------------------------------
