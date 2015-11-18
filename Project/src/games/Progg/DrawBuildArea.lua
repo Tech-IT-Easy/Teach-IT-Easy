@@ -98,7 +98,7 @@ end
 
 -------------------------------------
 -- Draws headline dependent of if loop or any of the procedures are shown.
--- @author Mikael Ögren
+-- @author Mikael Ögren; Tobias Lundell
 -------------------------------------
 function DrawBuildArea:headLine(buildType, inputArea)
 

@@ -118,8 +118,12 @@ function DrawBottomMenu:highlightIcon(pos, queue)
 
 end
 
+-----------------------------------------
+-- Draws a headline for the left input area in the bottom menu
+-- @param name. The string that should be drawn as headline.
+-- @author Tobias Lundell
+-----------------------------------------
 function DrawBottomMenu:headline(name)
-
     left_buildarea_headline:draw_over_surface(screen, name)
 end
 
@@ -149,8 +153,6 @@ function DrawBottomMenu:getFileName(action)
         return "data/progg_game_icons/P2.png"
     end
 end
-
-
 
 
 return DrawBottomMenu
