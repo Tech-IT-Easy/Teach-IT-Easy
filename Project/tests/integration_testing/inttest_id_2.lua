@@ -1,6 +1,6 @@
 --
 -- Created by IntelliJ IDEA.
--- User: Dator
+-- User: Andreas Mansson
 -- Date: 2015-11-16
 -- Time: 22:04
 -- To change this template use File | Settings | File Templates.

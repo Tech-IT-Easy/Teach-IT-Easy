@@ -1,16 +1,17 @@
 --
 -- Created by IntelliJ IDEA.
 -- User: Andreas Mansson
--- Date: 2015-11-16
--- Time: 22:45
+-- Date: 2015-11-12
+-- Time: 12:28
 -- To change this template use File | Settings | File Templates.
 --
 
 lunit = require "lunit"
-module( "inttest_id_1", package.seeall, lunit.testcase )
-local event = require "src.toolkit.Event"
-local SUT1 =  'src.games.Progg.Queue'
-local SUT2 =  'src.games.Progg.Commands'
+module( "test_command_queue_bottomMenu", package.seeall, lunit.testcase )
+
+local SUT_1 = 'src.games.Progg.Queue'
+local SUT_2 = 'src.games.Progg.Commands'
+local SUT_3 = 'src.games.Progg.BottomMenu'
 
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
@@ -42,49 +43,17 @@ function teardown()
   package.preload['src.games.Progg.Queue'] = nil
 end
 
---Add command to queue and check that this command exists in queue
-function test_queue_with_commands()
-  local class_to_mock = "games.Progg.BottomMenu"
+function test_command_queue_bottomMenu()
+    local class_to_mock="games.Progg.BottomMenu"
+    local mc = create_mock(class_to_mock)
 
-  local mc = create_mock(class_to_mock)
-  local drawIcons = mc:mock()
-  local setQueue = mc:mock()
+    local a = require(SUT_1)
+    local b = require(SUT_2)
+    local c = require(SUT_3)
 
-  --Only drawIcons in ButtomMenu need to be mocked. Reload class
-  local ps=require(class_to_mock)
+    local bottommenu = c:new()
+    local queue = a:new(bottommenu)
+    local object1 = b:new()
 
-  package.loaded[class_to_mock].drawIcons = drawIcons
-  package.loaded[class_to_mock].setQueue = setQueue
-
-  -- import lemock
-  -- local lemock = require 'lemock'
-
-  -- local mc = lemock.controller()
-
-
-  -- local drawIcons = mc:mock()
-
-  drawIcons(mc.ANYARGS) ;mc :returns(nil) :anytimes()
-  setQueue(mc.ANYARGS) ;mc :returns(nil) :anytimes()
-  mc:replay()
-
-  --local newBottomMenu = require "games.Progg.BottomMenu"
-
-
-  local ps1 = require(SUT2)
-  local ps4=ps:new()
-
-  local event = require "src.toolkit.Event"
-  event.key = event.KEY_ONE
-
-  local a = ps1:new(event)
- -- a.command = a.MOVE
- -- SUT1 =  'src.games.Progg.Queue'
- -- SUT2 =  'src.games.Progg.Commands'
-  local bb = require(SUT1)
-  local b = bb:new(ps4,nil)
-  b:push(a,"queue")
-
-  local c1 = b.actions[1]
-  lunit.assert_equal(a, c1, "Did not found the correct element in the queue")
+    queue:push(object1)
 end
