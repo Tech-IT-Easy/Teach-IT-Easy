@@ -79,6 +79,7 @@ function DrawBottomMenu:icons(queue)
             return;
         end
         if queue[#queue] ~= nil then
+           -- print(queue[#queue])
             self.image = gfx.loadpng(self:getFileName(queue[#queue]))
             if #queue <= 8 then
                 screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (#queue-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })

@@ -22,13 +22,13 @@ function BuildArea:new(maxCommands, pos)
     return BuildArea:init(o)
 end
 
-function BuildArea:load()
+function BuildArea:load(inputArea)
+    self.drawBuildArea:emptySlots(self.availableSlots, inputArea)
+    self.drawBuildArea:headLine(self.buildType, inputArea)
 end
 
 
-function BuildArea:show(inputArea, queue)
-
-    self.drawBuildArea:emptySlots(self.availableSlots, inputArea)
+function BuildArea:show(queue)
 
     if self.buildType == "P1" then
         self.drawBuildArea:icons(self.p1Queue)
@@ -41,7 +41,6 @@ function BuildArea:show(inputArea, queue)
         self.drawBuildArea:highlightIcon(self.position, self.loopQueue)
         self.drawBuildArea:drawLoopCounter(queue.loopCounter)
     end
-    self.drawBuildArea:headLine(self.buildType, inputArea)
 end
 
 -------------------------------------
