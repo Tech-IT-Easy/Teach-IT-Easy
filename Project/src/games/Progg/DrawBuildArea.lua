@@ -70,6 +70,11 @@ function DrawBuildArea:icons(queue)
   end
 end
 
+-----------------------------------
+-- Draws icons for all the commands in the queue.
+-- @param queue:Queue. The queue of commands. An array of strings.
+-- @author Tobias Lundell
+-----------------------------------
 function DrawBuildArea:allIcons(queue)
   if #queue > self.maxCommands then
     return;

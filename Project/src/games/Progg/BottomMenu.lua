@@ -37,7 +37,10 @@ function BottomMenu:new(maxCommands,gameContext)
     return BottomMenu:init(o)
 end
 
-
+--------------------------------------------
+-- Loads the bottom menu with the two input areas
+-- @author Mikael Ögren; Tobias Lundell
+--------------------------------------------
 function BottomMenu:load()
     self.drawBottomMenu:background(self.inputArea)
     self.drawBottomMenu:emptySlots(self.inputArea)
@@ -46,6 +49,10 @@ function BottomMenu:load()
 end
 
 --Used when BottomMenu is updated
+--------------------------------------------
+-- Updates the input areas in the bottom menu. Used on update.
+-- @ author Mikael Ögren; Tobias Lundell
+--------------------------------------------
 function BottomMenu:show()
   if (self.prevInputArea ~= self.inputArea) then
     self:updateInputArea()
@@ -56,6 +63,10 @@ function BottomMenu:show()
   self.buildArea:show(self.queue.actions)
 end
 
+--------------------------------------------
+-- Changes color of the background and icons in the input areas when changing active.
+-- @author Tobias Lundell
+--------------------------------------------
 function BottomMenu:updateInputArea()
   self.drawBottomMenu:background(self.inputArea)
   self.drawBottomMenu:emptySlots(self.inputArea)
@@ -72,6 +83,10 @@ function BottomMenu:setQueue(queue)
   self.queue.actions = queue
 end
 
+-------------------------------------
+-- Execute the queue with commands.
+-- @author Mikal Ögren
+-------------------------------------
 function BottomMenu:executeQueue()
     self.character:startExecution(self.queue)
 
@@ -247,9 +262,13 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                   object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
           end
       end
-      print(object.position)
   end
 
+--------------------------------------
+-- Sets the position in the build area
+-- @ param change:Integer. The change in position.
+-- @author Mikael Ögren
+-------------------------------------
 function BottomMenu:setPosition(change)
   self.prevPosition = self.position
   self.position = self.position + change
@@ -265,10 +284,11 @@ function BottomMenu:isUpperRow(pos)
     end
 end
 
----
+-----------------------------------
 -- Returns the queue corresponding to the inputArea
+-- @param inputArea:String. String containing the active input area.
 --@author Mikael Ögren
----
+-----------------------------------
 function BottomMenu:getQueue(inputArea)
     if inputArea == "queue" then
         return self.queue.actions

@@ -68,6 +68,11 @@ function BuildArea:setBuildType(buildType)
     self.buildType = buildType
 end
 
+-------------------------------------
+-- Sets the active position in the build area
+-- @param pos:Integer. The new position.
+-- @author Mikael Ögren
+-------------------------------------
 function BuildArea:setPosition(pos)
     self.prevPosition = self.position
     self.position = pos

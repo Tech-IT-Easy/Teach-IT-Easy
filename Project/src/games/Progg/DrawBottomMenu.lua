@@ -117,6 +117,11 @@ function DrawBottomMenu:allIcons(queue)
     end
 end
 
+----------------------------------------
+-- Highlights the active icon in the bottom menu.
+--@param pos:Integer, prevPos:Integer, queue:Queue.
+-- @author Mikael Ögren
+----------------------------------------
 function DrawBottomMenu:highlightIcon(pos, prevPos, queue)
     if pos > 16 then
         return;
@@ -145,6 +150,10 @@ function DrawBottomMenu:highlightIcon(pos, prevPos, queue)
     end
 end
 
+---------------------------------------------
+-- Clears the previous position.
+-- @param pos:Integer, queue:Queue. The position to be cleared and the queue of commands.
+---------------------------------------------
 function DrawBottomMenu:clearPos(pos, queue)
     if pos > 16 then
         return;
