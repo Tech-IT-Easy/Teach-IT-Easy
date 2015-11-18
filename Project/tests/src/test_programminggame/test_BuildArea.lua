@@ -14,6 +14,12 @@ local SUT = 'games.Progg.BuildArea'
 -- Delete this function when the real test is done
 -- FIXME: Write tests
 
+-------------------------------------
+-- Test not implemented
+-- @system_under_test: -
+-- @author name: -
+-------------------------------------
+
 --[[function test_BuildArea_fail()
    fail("BuildArea class and functions not tested yet!")
 end]]

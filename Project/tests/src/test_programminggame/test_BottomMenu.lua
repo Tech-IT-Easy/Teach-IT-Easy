@@ -13,6 +13,13 @@ local SUT = 'games.Progg.BottomMenu'
 
 -- Delete this function when the real test is done
 -- FIXME: Write tests
+
+-------------------------------------
+-- Test not implemented
+-- @system_under_test: -
+-- @author name: -
+-------------------------------------
+
 --[[
 function test_BottomMenu_fail()
    fail("BottomMenu class and functions not tested yet!")
