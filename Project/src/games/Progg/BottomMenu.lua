@@ -31,6 +31,7 @@ function BottomMenu:new(maxCommands,gameContext)
     o.selectingLoopCounter = false;
     o.queue = {}
     o.position = 1
+    o.prevPosition = nil
     context = gameContext
     print("pos: ", o.position)
     o.buildArea = buildArea:new(maxCommands, o.position)
@@ -42,15 +43,15 @@ end
 
 
 function BottomMenu:load()
+    self.drawBottomMenu:background(inputArea)
+    self.drawBottomMenu:emptySlots(inputArea)
+    self.drawBottomMenu:headline("Main")
 end
 
 --Used when BottomMenu is updated
 function BottomMenu:show()
-    self.drawBottomMenu:background(inputArea)
-    self.drawBottomMenu:emptySlots(inputArea)
     self.drawBottomMenu:icons(self.queue)
-    self.drawBottomMenu:highlightIcon(self.position, self.queue)
-    self.drawBottomMenu:headline("Main")
+    self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue)
     self.buildArea:show(inputArea)
 end
 
@@ -169,37 +170,53 @@ function bottomMenuEventHandler:update(object,eventListener,event)
              context.platformEventListener:removeChainListener()
              context:createNewMenu()
              context.game = nil
-         end
+       end
 
       elseif event.key == Event.KEY_UP then
-          if (object.position > 8 and object.position <= 16) or (24 < object.position <= 32) then
-              object.position = object.position - 8
-              object.buildArea:setPosition(object.position)
+          if  object:isUpperRow(object.position) == false then
+              object:setPosition(-8)
           end
       elseif event.key == Event.KEY_DOWN then
-          if object.position <= 8 or (16 < object.position < 25) then
-              object.position = object.position + 8
-              object.buildArea:setPosition(object.position)
+          if  object:isUpperRow(object.position) == true then
+              object:setPosition(8)
           end
       elseif event.key == Event.KEY_LEFT then
-          if object.position > 1 then
-              object.position = object.position - 1
-              object.buildArea:setPosition(object.position)
+          if object.position == 17 or object.position == 25 then
+              object:setPosition(-9)
+          elseif object.position > 1 then
+              object:setPosition(-1)
           end
       elseif event.key == Event.KEY_RIGHT then
-          if object.position <= 32 then
-            object.position = object.position + 1
-            object.buildArea:setPosition(object.position)
+          if object.position == 8 or object.position == 16 then
+              object:setPosition(9)
+          elseif object.position <= 32 then
+              object:setPosition(1)
           end
       elseif event.key == Event.KEY_ZERO then
-      if inputArea == "queue"  then
-        object:executeQueue()
-      else
-        inputArea = "queue"
+          if inputArea == "queue"  then
+            object:executeQueue()
+          else
+            inputArea = "queue"
+          end
       end
-    end
+      print(object.position)
   end
   return true
+end
+
+function BottomMenu:setPosition(change)
+    self.prevPosition = self.position
+    self.position = self.position + change
+    self.buildArea:setPosition(self.position)
+end
+
+
+function BottomMenu:isUpperRow(pos)
+    if (pos > 8 and pos <= 16) or (24 < pos and pos <= 32) then
+        return false
+    else
+        return true
+    end
 end
 
 BottomMenu.eventHandler = bottomMenuEventHandler
