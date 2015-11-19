@@ -14,7 +14,7 @@ end
 
 -------------------------------------
 -- Creates the Games menu.
--- @return games_ The created menu-object.
+-- @return self The created menu-object.
 -- @author Erik
 -------------------------------------
 function Games:new()
