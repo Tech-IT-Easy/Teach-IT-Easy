@@ -34,7 +34,7 @@ function RightMenu:new()
     o.draw = drawRightMenu:new()
     o.currentHighlight = nil
     o.inputArea = "queue"
-    o.timer = nil
+    o.highlightTimer = nil
 
     return RightMenu:init(o)
 end
