@@ -14,7 +14,7 @@ local Map = require('games.Progg.Map')
 --2 == DOWN
 --3 == LEFT
 ----
-local step = 5
+local step = 1
 ----
 -- Constructor of the character.
 -- @param: the initial position of the character
@@ -27,6 +27,7 @@ function Character:new(newPosition)
   o.state = 0
   -- @member map:Map
   o.map = Map:new()
+  o.map:load()
   return Character:init(o)
 end
 
@@ -80,17 +81,17 @@ function Character:execute(command)
   if(command == Commands.MOVE) then
     if(self:checkCollision(self.position, self.state)) then
       if(self.state ==0) then
-       self.position:setY(self.position:getY()-step)
-        --self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.position:setY(self.position:getY()-step)
       elseif(self.state ==1) then
-       self.position:setX(self.position:getX()+step)
-        --self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.position:setX(self.position:getX()+step)
       elseif(self.state ==2) then
-       self.position:setY(self.position:getY()+step)
-        --self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.position:setY(self.position:getY()+step)
       elseif(self.state ==3) then
-       self.position:setX(self.position:getX()-step)
-        --self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.position:setX(self.position:getX()-step)
       end
     end
   end
@@ -115,8 +116,8 @@ end
 -- @author Ludwig Wikblad
 -----------------------------------------------------------------
 function Character:checkCollision(position, state)
-  --return self.map:canMove(position, state)
-  return true
+  return self.map:canMove(position:getX(), position:getY(), state)
+  --return true
 end
 
 return Character

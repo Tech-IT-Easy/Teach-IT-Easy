@@ -120,10 +120,10 @@ function test_handleinput_right_from_right()
   mc:replay()
 
   local a = ps:new()
-  a.pos = 27
+  a.pos = 28
   event.key = event.KEY_RIGHT
   a:handleinput(event)
-  assert_equal(27, a.pos, "should not be able to move right from far right position")
+  assert_equal(28, a.pos, "should not be able to move right from far right position")
 
   verify_mock(mc)
 end

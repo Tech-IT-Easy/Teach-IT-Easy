@@ -110,6 +110,7 @@ function DrawRightMenu:drawRemoveHighlight(command)
     self.image:destroy()
 
     self:addSingleNumber(position)
+    gfx.update()
 end
 
 -------------------------------------

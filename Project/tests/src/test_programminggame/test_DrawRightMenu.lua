@@ -36,9 +36,10 @@ local function verify_mock(mc)
 end
 
 -------------------------------------
--- ??
+-- Testing that the getPosition returns a correct
+-- number for a command
 -- @system_under_test: DrawRightMenu:new(), DrawRightMenu:getPosition(command)
--- @author name: ??
+-- @author name: Vilhelm
 -------------------------------------
 
 function test_getPosition_correctCommand()
@@ -56,9 +57,10 @@ function test_getPosition_correctCommand()
 end
 
 -------------------------------------
--- ??
+-- Testing that the getPosition doesn't
+-- return a number for a non-existing command
 -- @system_under_test: DrawRightMenu:new(), DrawRightMenu:getPosition(command)
--- @author name: ??
+-- @author name: Vilhelm
 -------------------------------------
 
 function test_getPosition_falseCommand()
@@ -75,9 +77,10 @@ function test_getPosition_falseCommand()
 end
 
 -------------------------------------
--- ??
+-- Testing that the getPosition returns a correct
+-- file name for a command
 -- @system_under_test: DrawRightMenu:new(), DrawRightMenu:getFileName(command)
--- @author name: ??
+-- @author name: Vilhelm
 -------------------------------------
 
 function test_getFileName_correctCommand()
@@ -95,9 +98,10 @@ function test_getFileName_correctCommand()
 end
 
 -------------------------------------
--- ??
--- @system_under_test: DrawRightMenu:new(), DrawRightMenu:getPosition(command)
--- @author name: ??
+-- Testing that the getPosition doesn't return
+-- a file name for a non-existing command
+-- @system_under_test: DrawRightMenu:new(), DrawRightMenu:getFileName(command)
+-- @author name: Vilhelm
 -------------------------------------
 
 function test_getFileName_falseCommand()

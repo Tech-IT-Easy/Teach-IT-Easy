@@ -30,9 +30,12 @@ function RightMenu:new()
     local o = RightMenu:super()
     --Draw right-hand side
     screen:clear({ r = 92, g = 128, b = 149 }, { x = screen:get_width() * 0.75, y = 0, w = screen:get_width() * 0.25, h = screen:get_height()*0.65 })
+    -- @member drawRightMenu:DrawRightMenu
     o.draw = drawRightMenu:new()
-    self.currentHighlight = nil
+    o.currentHighlight = nil
     o.inputArea = "queue"
+    o.highlightTimer = nil
+
     return RightMenu:init(o)
 end
 
@@ -75,10 +78,14 @@ function RightMenu:highlight(command)
         self:removeHighlight(self.currentHighlight)
     end
 
+     callback = function(timer)
+         self:removeHighlight(self.currentHighlight)
+     end
+
     self.draw:drawHighlight(command)
 
     self.currentHighlight = command
-
+    self.highlightTimer = sys.new_timer(500, "callback")
 end
 
 -------------------------------------
@@ -91,6 +98,7 @@ end
 function RightMenu:removeHighlight(command)
     self.draw:drawRemoveHighlight(command)
     self.currentHighlight = nil
+    self.highlightTimer:stop()
 end
 
 -------------------------------------
@@ -106,7 +114,6 @@ function RightMenu:play()
     if self.currentHighlight ~= nil then
         self:removeHighlight(self.currentHighlight)
     end
-
     self.draw:addStop()
 end
 
