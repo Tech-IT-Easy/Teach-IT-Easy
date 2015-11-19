@@ -10,9 +10,9 @@ skin = require('menus.skin')
 local Object = require("toolkit.Object")
 local DrawBottomMenu = extends(Object)
 
-function DrawBottomMenu:new(availableSlots)
+function DrawBottomMenu:new(maxCommands)
     local o = DrawBottomMenu:super()
-    o.maxCommands = availableSlots
+    o.maxCommands = maxCommands
     o.queue = {}
     return DrawBottomMenu:init(o)
 end
@@ -23,7 +23,7 @@ end
 -- @author Mikael Ögren
 -------------------------------------
 function DrawBottomMenu:emptySlots(inputArea)
-    for i=1, self.maxCommands do
+    for i=1, self.maxCommands["queue"] do
         self:singleEmptySlot(i, inputArea)
     end
 end
@@ -73,9 +73,9 @@ end
 -- @param queue. The queue of commands. An array of strings.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBottomMenu:icons(queue)
+function DrawBottomMenu:icons(queue, inputArea)
 
-    if #queue > self.maxCommands then
+    if #queue > self.maxCommands[inputArea] then
         return;
     end
     if queue[#queue] ~= nil then
@@ -97,9 +97,9 @@ end
 -- @param queue:Queue. The queue of commands. An array of strings.
 -- @author Tobias Lundell
 ----------------------------------------
-function DrawBottomMenu:allIcons(queue)
+function DrawBottomMenu:allIcons(queue, inputArea)
     for i=1, #queue do
-        if i > self.maxCommands then
+        if i > self.maxCommands[inputArea] then
             return;
         end
         if queue[i] ~= nil then

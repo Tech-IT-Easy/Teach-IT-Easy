@@ -30,8 +30,7 @@ function BottomMenu:new(maxCommands,gameContext)
     o.selectingLoopCounter = false;
     o.inputArea = "queue"
     o.prevInputArea = "queue"
-    o.maxCommands = maxCommands
-    o.position = 1
+    o.position = 1     --Starting position for highlight
     o.prevPosition = nil
     context = gameContext
     o.buildArea = buildArea:new(maxCommands, o.position)
@@ -62,9 +61,9 @@ function BottomMenu:show()
         self.prevInputArea = self.inputArea
     end
     if (self.inputArea ~= "queue") then
-        self.buildArea:show(self.queue)
+        self.buildArea:show(self.queue, self.inputArea)
     else
-        self.drawBottomMenu:icons(self.queue.actions)
+        self.drawBottomMenu:icons(self.queue.actions, self.inputArea)
         self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
     end
 end
@@ -75,7 +74,7 @@ end
 --------------------------------------------
 function BottomMenu:updateInputArea()
     self:load()
-    self.drawBottomMenu:allIcons(self.queue.actions)
+    self.drawBottomMenu:allIcons(self.queue.actions, self.inputArea)
 end
 
 -------------------------------------

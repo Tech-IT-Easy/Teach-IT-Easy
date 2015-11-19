@@ -10,9 +10,9 @@ local Object = require("toolkit.Object")
 local DrawBuildArea = extends(Object)
 skin = require('games/Progg/progg_skin')
 
-function DrawBuildArea:new(availableSlots)
+function DrawBuildArea:new(maxCommands)
     local o = DrawBuildArea:super()
-    o.maxCommands = availableSlots
+    o.maxCommands = maxCommands
     return DrawBuildArea:init(o)
 end
 
@@ -21,8 +21,8 @@ end
 -- @param maxCommands, inputArea. How many commands slots that are available to the player and the active input area.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBuildArea:emptySlots(maxCommands, inputArea)
-    for i=1, self.maxCommands do
+function DrawBuildArea:emptySlots(inputArea)
+    for i=1, self.maxCommands[inputArea] do
         self:singleEmptySlot(i, inputArea)
     end
 end
@@ -52,12 +52,12 @@ end
 -- @param queue. The queue of commands. An array of strings.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBuildArea:icons(queue)
+function DrawBuildArea:icons(queue, inputArea)
     for i = 1, #queue do
-        if i > self.maxCommands then
+        if i > self.maxCommands[inputArea] then
             return
         end
-        if #queue > self.maxCommands then
+        if #queue > self.maxCommands[inputArea] then
             return;
         end
         if queue[#queue] ~= nil then
@@ -80,8 +80,8 @@ end
 -- @param queue:Queue. The queue of commands. An array of strings.
 -- @author Tobias Lundell
 -----------------------------------
-function DrawBuildArea:allIcons(queue)
-    if #queue > self.maxCommands then
+function DrawBuildArea:allIcons(queue, inputArea)
+    if #queue > self.maxCommands[inputArea] then
         return;
     end
     for i=1, #queue do
