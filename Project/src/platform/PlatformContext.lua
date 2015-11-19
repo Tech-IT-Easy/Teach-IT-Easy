@@ -116,7 +116,9 @@ function PlatformContext:process(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
   local event = Event:new(key,state)
   self.platformEventListener:update(event)
-  self:update()
+  if event.state == Event.KEY_STATE_DOWN then
+    self:update()
+  end
 end
 
 

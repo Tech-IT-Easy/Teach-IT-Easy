@@ -34,9 +34,7 @@ function RightMenu:new()
     o.draw = drawRightMenu:new()
     o.currentHighlight = nil
     o.inputArea = "queue"
-
-    --sys.new_timer(500, self:removeHighlight(self.currentHighlight))
-    --o.highlightTimer:stop()
+    o.timer = nil
 
     return RightMenu:init(o)
 end
@@ -79,11 +77,15 @@ function RightMenu:highlight(command)
     if self.currentHighlight ~= nil then
         self:removeHighlight(self.currentHighlight)
     end
-    --self.timer:start()
+
+     callback = function(timer)
+         self:removeHighlight(self.currentHighlight)
+     end
+
     self.draw:drawHighlight(command)
 
     self.currentHighlight = command
-
+    self.highlightTimer = sys.new_timer(500, "callback")
 end
 
 -------------------------------------
@@ -94,9 +96,9 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:removeHighlight(command)
-    --self.timer:stop()
     self.draw:drawRemoveHighlight(command)
     self.currentHighlight = nil
+    self.highlightTimer:stop()
 end
 
 -------------------------------------
