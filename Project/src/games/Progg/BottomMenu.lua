@@ -36,7 +36,7 @@ function BottomMenu:new(maxCommands,gameContext)
     o.buildArea = buildArea:new(maxCommands, o.position)
     o.drawBottomMenu = newDrawBottomMenu:new(maxCommands)
     o.character = Character:new(Position:new(1,5))
-    o.queue = Queue:new(o, o.buildArea)
+    o.queue = Queue:new(o, o.buildArea, maxCommands)
     return BottomMenu:init(o)
 end
 

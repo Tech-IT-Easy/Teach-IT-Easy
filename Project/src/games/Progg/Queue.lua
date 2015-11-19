@@ -6,12 +6,13 @@ local Queue = extends(Object)
 -- @return a new queue instance
 -- @author Ludwig Wikblad
 ----------------------------------------------------------------
-function Queue:new(newBottomMenu, newBuildArea)
+function Queue:new(newBottomMenu, newBuildArea, maxCommands)
   local o = Queue:super()
   o.actions = {}
   o.loopActions = {}
   o.p1Actions = {}
   o.p2Actions = {}
+  o.maxCommands = maxCommands
   o.loopCounter = 2
   if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
   if newBuildArea ~= nil then o.buildArea = newBuildArea end
@@ -31,20 +32,28 @@ end
 -------------------------------------
 function Queue:push(action, queueType)
 
-  if queueType == "queue" or queueType == nil then
-    table.insert(self.actions,action)
-    if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self) end
-  elseif queueType == "loop" then
-    table.insert(self.loopActions,action)
-    if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions, queueType) end
-  elseif queueType == "P1" then
-    table.insert(self.p1Actions,action)
-    if self.buildArea ~= nil then self.buildArea:setQueue(self.p1Actions, queueType) end
-  elseif queueType == "P2" then
-    table.insert(self.p2Actions,action)
-    if self.buildArea ~= nil then self.buildArea:setQueue(self.p2Actions, queueType) end
-  end
 
+  if queueType == "queue" or queueType == nil then
+    if self.maxCommands[queueType] > #self.actions or queueType == nil then
+        table.insert(self.actions,action)
+        if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self) end
+    end
+  elseif queueType == "loop" then
+    if self.maxCommands[queueType] > #self.loopActions then
+        table.insert(self.loopActions,action)
+        if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions, queueType) end
+    end
+  elseif queueType == "P1" then
+    if self.maxCommands[queueType] > #self.p1Actions then
+        table.insert(self.p1Actions,action)
+        if self.buildArea ~= nil then self.buildArea:setQueue(self.p1Actions, queueType) end
+    end
+  elseif queueType == "P2" then
+    if self.maxCommands[queueType] > #self.p2Actions then
+        table.insert(self.p2Actions,action)
+        if self.buildArea ~= nil then self.buildArea:setQueue(self.p2Actions, queueType) end
+    end
+  end
 end
 
 function Queue:getQueue()
