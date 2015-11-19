@@ -7,36 +7,33 @@
 --
 
 lunit = require "lunit"
-module( "inttest_id_3", package.seeall, lunit.testcase )
+module( "inttest_id_7", package.seeall, lunit.testcase )
 local event = require ("toolkit.Event")
 
-local SUT1 = 'games.Progg.Commands'
-local SUT2 = 'games.Progg.BuildArea'
-local SUT3 = 'games.Progg.Character'
-local SUT4 = 'games.Progg.Queue'
+local SUT = 'menus.Games'
 
 --Corresponds to function bottomMenuEventHandler:update(object,eventListener,event)
 --in BottomMenu
 
 local function create_mock(class_to_mock)
-  -- unload the package if loaded to dissmiss previous mocks
-  package.loaded[class_to_mock] = nil
-  package.preload[class_to_mock] = nil
-  -- import lemock
-  local lemock = require 'lemock'
-  -- initiate mock controller
-  local mc = lemock.controller()
-  return mc
+    -- unload the package if loaded to dissmiss previous mocks
+    package.loaded[class_to_mock] = nil
+    package.preload[class_to_mock] = nil
+    -- import lemock
+    local lemock = require 'lemock'
+    -- initiate mock controller
+    local mc = lemock.controller()
+    return mc
 end
 
 local function verify_mock(mc)
-  local status, err = pcall(function ()
-    -- Verify that the mocks has been called as stated.
-    mc:verify()
-  end)
-  if err then -- if error fail the test.
+    local status, err = pcall(function ()
+        -- Verify that the mocks has been called as stated.
+        mc:verify()
+    end)
+    if err then -- if error fail the test.
     fail(err)
-  end
+    end
 end
 
 function setup()
@@ -44,8 +41,17 @@ function setup()
 end
 
 function teardown()
-  package.loaded['games.Progg.Queue'] = nil
-  package.preload['games.Progg.Queue'] = nil
+    package.loaded['games.Progg.Queue'] = nil
+    package.preload['games.Progg.Queue'] = nil
+end
+
+function test_start_progg_game()
+    local test = require(SUT)
+    local it_games = test:new()
+    event.key = event.KEY_OK
+    Game:handleInput(event)
+    local h = platformContext.game
+    print(h)
 end
 
 
