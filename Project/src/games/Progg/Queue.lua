@@ -32,7 +32,7 @@ end
 -------------------------------------
 function Queue:push(action, queueType)
   if queueType == "queue" or queueType == nil then
-    if self.maxCommands[queueType] > #self.actions or queueType == nil then
+    if  queueType == nil or self.maxCommands[queueType] > #self.actions then
         table.insert(self.actions,action)
         if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self) end
     end
