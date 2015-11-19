@@ -7,15 +7,19 @@ local Event = require('toolkit.Event')
 --added to test game
 local GameFactory = require('games.GameFactory')
 
+
+function Games:mockProgress(game)
+  return math.random(1,12) .. "/12"
+end
+
 -------------------------------------
 -- Creates the Games menu.
 -- @return games_ The created menu-object.
 -- @author Erik
 -------------------------------------
 function Games:new()
-
   -- available games
-  self.games = { { "Programming", "5/12" }, { "Other game", "1/12" }, { "Test game", "12/12" }, { "Pony game", "100/100" } }
+  self.games = GameFactory.gameMatrix
   return self
 end
 
@@ -34,21 +38,13 @@ function Games:handleinput(event)
     self.pos = self.pos - 1
   elseif event.key == Event.KEY_BACK then
     return { "main", self.usernamestring }
---  elseif event.key == Event.KEY_TWO then
---    return { "main", self.usernamestring }
   elseif event.key == Event.KEY_OK then
-  --elseif event.key == Event.KEY_ONE then
-----------------------------------------------------
---  Launches game and discards the menu to save space
-----------------------------------------------------
-   -- proggImage = gfx.loadpng('data/ProgrammingGamePic_405.png')
-    --screen:copyfrom(proggImage, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-    --proggImage:destroy()
-
     platformContext.game = GameFactory:getGame(self.games[self.pos][1],platformContext)
-    platformContext.game:start()
-    platformContext.platformEventListener:remove(platformContext.platformMenu)
-    platformContext.platformMenu = nil
+    if platformContext.game ~= nil then
+      platformContext.game:start()
+      platformContext.platformEventListener:remove(platformContext.platformMenu)
+      platformContext.platformMenu = nil
+    end
     collectgarbage()
   end
   return { " " }
@@ -100,7 +96,7 @@ function Games:buttonactive(x1)
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
 
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
-  games_trophiesfonts[x1]:draw_over_surface(screen,"Trophies: " .. self.games[x1][2])
+  games_trophiesfonts[x1]:draw_over_surface(screen,"Trophies: " .. self.mockProgress(self.games[x1][2]))
 end
 
 -------------------------------------
@@ -112,7 +108,7 @@ function Games:buttoninactive(x1)
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
 
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
-  games_trophiesfonts[x1]:draw_over_surface(screen,"Trophies: " .. self.games[x1][2])
+  games_trophiesfonts[x1]:draw_over_surface(screen,"Trophies: " .. self.mockProgress(self.games[x1][2]))
 end
 
 return Games

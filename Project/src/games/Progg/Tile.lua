@@ -9,6 +9,7 @@
 local Object = require('toolkit.Object')
 
 local Tile = extends(Object)
+
 -------------------------------------
 -- Constructor for different kinds of tiles that is used by the Map class
 -- to "build" the map

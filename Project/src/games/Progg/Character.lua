@@ -8,24 +8,26 @@ local Character = extends(Object)
 local Commands = require('games.Progg.Commands')
 local Map = require('games.Progg.Map')
 
--- @member Map:map
-
 ----
 --0 == UP
 --1 == RIGHT
 --2 == DOWN
 --3 == LEFT
 ----
-local step = 5
+local step = 1
 ----
---Constructor of the character.
---@param: the initial position of the character
+-- Constructor of the character.
+-- @param: the initial position of the character
+-- @author Ludwig Wikblad; Mario Pizcueta
 ----
 function Character:new(newPosition)
   local o = Character:super()
+  -- @member position:Position
   o.position = newPosition
   o.state = 0
+  -- @member map:Map
   o.map = Map:new()
+  o.map:load()
   return Character:init(o)
 end
 
@@ -68,23 +70,28 @@ function Character:startExecution(inqueue)
   end
 end
 
----
---Executes the given command
---@param: the command to execute of class Commands
+---------------------------------------
+-- Executes the given command by asking map if action
+-- is legal and then telling map to perform action
+-- @param: the command to execute of class Commands
 -- @author Mario Pizcueta
----
+---------------------------------------
 function Character:execute(command)
   --Moving up
   if(command == Commands.MOVE) then
     if(self:checkCollision(self.position, self.state)) then
       if(self.state ==0) then
-       self.position:setY(self.position:getY()-step)
+        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.position:setY(self.position:getY()-step)
       elseif(self.state ==1) then
-       self.position:setX(self.position:getX()+step)
+        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.position:setX(self.position:getX()+step)
       elseif(self.state ==2) then
-       self.position:setY(self.position:getY()+step)
+        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.position:setY(self.position:getY()+step)
       elseif(self.state ==3) then
-       self.position:setX(self.position:getX()-step)
+        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+        self.position:setX(self.position:getX()-step)
       end
     end
   end
@@ -109,8 +116,8 @@ end
 -- @author Ludwig Wikblad
 -----------------------------------------------------------------
 function Character:checkCollision(position, state)
-  --return self.map:canMove(position, state)
-  return true
+  return self.map:canMove(position:getX(), position:getY(), state)
+  --return true
 end
 
 return Character

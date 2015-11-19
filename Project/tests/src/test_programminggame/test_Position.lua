@@ -9,7 +9,7 @@
 lunit = require "lunit"
 module( "test_Position", package.seeall, lunit.testcase )
 
-local SUT = 'src.games.Progg.Position'
+local SUT = 'games.Progg.Position'
 
 
 function test_create()

@@ -10,6 +10,11 @@ local Object = require('toolkit.Object')
 local Tile = require('games.Progg.Tile')
 local Map = extends(Object)
 
+
+Map.UP = 0
+Map.RIGHT = 1
+Map.DOWN = 2
+Map.LEFT = 3
 -------------------------------------
 -- Creates new Map object.
 -- @return Map New map
@@ -27,8 +32,8 @@ end
 -- @param input The mapdata.
 -- @author Erik
 -------------------------------------
--- implement parameter with mapdata
 function Map:load()
+-- implement parameter with mapdata
 
   self.background = gfx.loadpng('data/game_background_small.png')
 
@@ -80,16 +85,18 @@ end
 -- @param x Place of character
 -- @param y Place of character
 -- @param direction Wanted direction
+-- @return true If the move is accapted
+-- @return false If the move is not accapted
 -- @author Erik
 -------------------------------------
 function Map:canMove(x ,y , direction)
-  if direction == "up" and self.tiles[self:getPosition(x,y)].topBorder == true then
+  if direction == Map.UP and self.tiles[self:getPosition(x,y)].topBorder == true then
     return false
-  elseif direction == "left" and self.tiles[self:getPosition(x,y)].leftBorder == true then
+  elseif direction == Map.LEFT and self.tiles[self:getPosition(x,y)].leftBorder == true then
     return false
-  elseif direction == "right" and self.tiles[self:getPosition(x,y)].rightBorder == true then
+  elseif direction == Map.RIGHT and self.tiles[self:getPosition(x,y)].rightBorder == true then
     return false
-  elseif direction == "down" and self.tiles[self:getPosition(x,y)].bottomBorder == true then
+  elseif direction == Map.DOWN and self.tiles[self:getPosition(x,y)].bottomBorder == true then
     return false
   else
     return true
@@ -105,20 +112,20 @@ end
 -------------------------------------
 function Map:moveCharacter(x ,y , direction)
   local pos = self:getPosition(x,y)
-  if pos ~= self.startPos then
-    self:square(pos, self.mapdata[pos])
-    if direction == "up" then
+    if pos == self.startPos then
+      self:setStart(pos)
+    else
+     self:square(pos, self.tiles[pos])
+    end
+    if direction == Map.UP then
       self:setCharacter(pos-8)
-    elseif direction == "left" then
+    elseif direction == Map.LEFT then
       self:setCharacter(pos-1)
-    elseif direction == "right" then
+    elseif direction == Map.RIGHT then
       self:setCharacter(pos+1)
-    elseif direction == "down" then
+    elseif direction == Map.DOWN then
       self:setCharacter(pos+8)
     end
-  else
-    self:setGoal(pos)
-  end
 
 end
 
@@ -126,10 +133,11 @@ end
 -- Converts x and y value to position in mapdata.
 -- @param x Place of character
 -- @param y Place of character
+-- @return pos The calculated position in table
 -- @author Erik
 -------------------------------------
 function Map:getPosition(x,y)
-  pos = x+(y-1)*8
+  local pos = x+(y-1)*8
   return pos
 end
 

@@ -8,9 +8,9 @@
 
 lunit = require "lunit"
 module( "src_games_Progg_Map", package.seeall, lunit.testcase )
-Map = require "src.games.Progg.Map"
+Map = require "games.Progg.Map"
 
-local SUT = 'src.games.Progg.Map'
+local SUT = 'games.Progg.Map'
 
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
@@ -39,9 +39,15 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.games.Progg.Map'] = nil
-  package.preload['src.games.Progg.Map'] = nil
+  package.loaded['games.Progg.Map'] = nil
+  package.preload['games.Progg.Map'] = nil
 end
+
+-------------------------------------
+-- ??
+-- @system_under_test: Map:new(), Map:load()
+-- @author name: ??
+-------------------------------------
 
 function test_load()
   local mc = create_mock(SUT)
@@ -75,7 +81,12 @@ function test_load()
   verify_mock(mc)
 end
 
---setCharacter tests
+-------------------------------------
+-- ?? Set character test
+-- @system_under_test: Map:new(), Map:setCharacter()
+-- @author name: ??
+-------------------------------------
+
 function test_setCharacter_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -161,7 +172,12 @@ function test_setCharacter_five()
   verify_mock(mc)
 end
 
---setGoal tests
+-------------------------------------
+-- ?? Set goal test
+-- @system_under_test: Map:new(), Map:setGoal()
+-- @author name: ??
+-------------------------------------
+
 function test_setGoal_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -247,7 +263,12 @@ function test_setGoal_five()
   verify_mock(mc)
 end
 
---setStart tests
+-------------------------------------
+-- ?? Set start test
+-- @system_under_test: Map:new(), Map:setStart()
+-- @author name: ??
+-------------------------------------
+
 function test_setStart_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -333,7 +354,12 @@ function test_setStart_five()
   verify_mock(mc)
 end
 
---square tests
+-------------------------------------
+-- ?? Square test
+-- @system_under_test: Map:new(), Map:square(i, tile)
+-- @author name: ??
+-------------------------------------
+
 function test_square_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -444,7 +470,12 @@ function test_square_five()
   verify_mock(mc)
 end
 
---drawBox tests
+-------------------------------------
+-- ?? drawBox tests
+-- @system_under_test: Map:new(), Map:drawBox(tile, xPos, yPos)
+-- @author name: ??
+-------------------------------------
+
 function test_drawBox_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -453,7 +484,7 @@ function test_drawBox_one()
 
   package.loaded[SUT].drawStandardBox = drawStandardBox
 
-  local ps2 = require("src.games.Progg.Tile")
+  local ps2 = require("games.Progg.Tile")
   local a = ps:new()
   local tile = ps2:new(0)
   local xPos = 200
@@ -476,7 +507,7 @@ function test_drawBox_two()
   package.loaded[SUT].drawStandardBox = drawStandardBox
   package.loaded[SUT].drawBottomBorder = drawBottomBorder
 
-  local ps2 = require("src.games.Progg.Tile")
+  local ps2 = require("games.Progg.Tile")
   local a = ps:new()
   local tile = ps2:new(2)
   local xPos = 200
@@ -501,7 +532,7 @@ function test_drawBox_three()
   package.loaded[SUT].drawStandardBox = drawStandardBox
   package.loaded[SUT].drawRightBorder = drawRightBorder
 
-  local ps2 = require("src.games.Progg.Tile")
+  local ps2 = require("games.Progg.Tile")
   local a = ps:new()
   local tile = ps2:new(4)
   local xPos = 200
@@ -526,7 +557,7 @@ function test_drawBox_four()
   package.loaded[SUT].drawStandardBox = drawStandardBox
   package.loaded[SUT].drawTopBorder = drawTopBorder
 
-  local ps2 = require("src.games.Progg.Tile")
+  local ps2 = require("games.Progg.Tile")
   local a = ps:new()
   local tile = ps2:new(8)
   local xPos = 200
@@ -551,7 +582,7 @@ function test_drawBox_five()
   package.loaded[SUT].drawStandardBox = drawStandardBox
   package.loaded[SUT].drawLeftBorder = drawLeftBorder
 
-  local ps2 = require("src.games.Progg.Tile")
+  local ps2 = require("games.Progg.Tile")
   local a = ps:new()
   local tile = ps2:new(1)
   local xPos = 200
@@ -565,6 +596,12 @@ function test_drawBox_five()
 
   verify_mock(mc)
 end
+
+-------------------------------------
+-- ?? dra Standard Box
+-- @system_under_test: Map:new(), Map:drawStandardBox(xPos, yPos)
+-- @author name: ??
+-------------------------------------
 
 function test_drawStandardBox()
   local mc = create_mock(SUT)
@@ -585,6 +622,12 @@ function test_drawStandardBox()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- ?? draw Top Border
+-- @system_under_test: Map:new(), Map:drawTopBorder(xPos, yPos)
+-- @author name: ??
+-------------------------------------
+
 function test_drawTopBorder()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -602,6 +645,12 @@ function test_drawTopBorder()
 
   verify_mock(mc)
 end
+
+-------------------------------------
+-- ?? draw Bottom Border
+-- @system_under_test: Map:new(), Map:drawBottomBorder(xPos, yPos)
+-- @author name: ??
+-------------------------------------
 
 function test_drawBottomBorder()
   local mc = create_mock(SUT)
@@ -621,6 +670,12 @@ function test_drawBottomBorder()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- ?? draw Left Border
+-- @system_under_test: Map:new(), Map:drawLeftBorder(xPos, yPos)
+-- @author name: ??
+-------------------------------------
+
 function test_drawLeftBorder()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -639,6 +694,12 @@ function test_drawLeftBorder()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- ?? draw Right Border
+-- @system_under_test: Map:new(), Map:drawRightBorder(xPos, yPos)
+-- @author name: ??
+-------------------------------------
+
 function test_drawRightBorder()
   local mc = create_mock(SUT)
   local ps = require(SUT)
@@ -656,6 +717,12 @@ function test_drawRightBorder()
 
   verify_mock(mc)
 end
+
+-------------------------------------
+-- ??
+-- @system_under_test: Map:new(), Map:getPosition(x,y)
+-- @author name: ??
+-------------------------------------
 
 function test_getPosition_one()
   local mc = create_mock(SUT)
@@ -688,6 +755,12 @@ function test_getPosition_two()
 
   verify_mock(mc)
 end
+
+-------------------------------------
+-- ??
+-- @system_under_test: Map:new(), Map:moveCharacter(x ,y , direction)
+-- @author name: ??
+-------------------------------------
 
 function test_moveCharacter_one()
   local mc = create_mock(SUT)
@@ -848,19 +921,31 @@ function test_moveCharacter_five()
   verify_mock(mc)
 end
 
---[[
+-------------------------------------
+-- ??
+-- @system_under_test: Map:new(), Map:canMove(x ,y , direction)
+-- @author name: ??
+-------------------------------------
+
 function test_canMove_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
-  local ps2 = require('src.games.Progg.Tile')
-  mc:replay()
+  local ps2 = require('games.Progg.Tile')
+  
+  local getPosition = mc:mock()
+  package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
-  local Tile = ps2:new(1)
+  local tile = ps2:new(1)
+  
 
   local x =1
   local y =1
   local direction = "up"
+  a.tiles = {tile}
+  
+  getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  mc:replay()
 
   local answer = a:canMove(x,y,direction)
 
@@ -868,10 +953,112 @@ function test_canMove_one()
 
   verify_mock(mc)
 end
-]]
 
--- Delete this function when the real test is done
---[[
-function test_Map_fail()
-   fail("Map class and functions not tested yet!")
-end]]
+function test_canMove_two()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  local ps2 = require('games.Progg.Tile')
+  
+  local getPosition = mc:mock()
+  package.loaded[SUT].getPosition = getPosition
+
+  local a = ps:new()
+  local tile = ps2:new(8)
+  
+
+  local x =1
+  local y =1
+  local direction = "up"
+  a.tiles = {tile}
+  
+  getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  mc:replay()
+
+  local answer = a:canMove(x,y,direction)
+
+  assert_false( answer, "cant move")
+
+  verify_mock(mc)
+end
+
+function test_canMove_three()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  local ps2 = require('games.Progg.Tile')
+  
+  local getPosition = mc:mock()
+  package.loaded[SUT].getPosition = getPosition
+
+  local a = ps:new()
+  local tile = ps2:new(3)
+  
+
+  local x =1
+  local y =1
+  local direction = "left"
+  a.tiles = {tile}
+  
+  getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  mc:replay()
+
+  local answer = a:canMove(x,y,direction)
+
+  assert_false( answer, "cant move")
+
+  verify_mock(mc)
+end
+
+function test_canMove_four()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  local ps2 = require('games.Progg.Tile')
+  
+  local getPosition = mc:mock()
+  package.loaded[SUT].getPosition = getPosition
+
+  local a = ps:new()
+  local tile = ps2:new(4)
+  
+
+  local x =1
+  local y =1
+  local direction = "right"
+  a.tiles = {tile}
+  
+  getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  mc:replay()
+
+  local answer = a:canMove(x,y,direction)
+
+  assert_false( answer, "cant move")
+
+  verify_mock(mc)
+end
+
+
+function test_canMove_five()
+  local mc = create_mock(SUT)
+  local ps = require(SUT)
+  local ps2 = require('games.Progg.Tile')
+  
+  local getPosition = mc:mock()
+  package.loaded[SUT].getPosition = getPosition
+
+  local a = ps:new()
+  local tile = ps2:new(2)
+  
+
+  local x =1
+  local y =1
+  local direction = "down"
+  a.tiles = {tile}
+  
+  getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
+  mc:replay()
+
+  local answer = a:canMove(x,y,direction)
+
+  assert_false( answer, "cant move")
+
+  verify_mock(mc)
+end

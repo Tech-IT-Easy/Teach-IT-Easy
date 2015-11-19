@@ -9,7 +9,7 @@
 lunit = require "lunit"
 module( "test_Queue", package.seeall, lunit.testcase )
 
-local SUT = 'src.games.Progg.Queue'
+local SUT = 'games.Progg.Queue'
 --require "source.model.command.Queue" -- import the Queue class
 
 

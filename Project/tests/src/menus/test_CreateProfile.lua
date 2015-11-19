@@ -8,11 +8,11 @@
 
 lunit = require "lunit"
 module( "src_menus_CreateProfile", package.seeall, lunit.testcase )
-my_file = require "src.menus.CreateProfile"
-local event = require "src.toolkit.Event"
+my_file = require "menus.CreateProfile"
+local event = require "toolkit.Event"
 
 -- System under test
-local SUT = 'src.menus.CreateProfile'
+local SUT = 'menus.CreateProfile'
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
   package.loaded[class_to_mock] = nil
@@ -40,8 +40,8 @@ function setup()
 end
 
 function teardown()
-  package.loaded['src.menus.CreateProfile'] = nil
-  package.preload['src.menus.CreateProfile'] = nil
+  package.loaded['menus.CreateProfile'] = nil
+  package.preload['menus.CreateProfile'] = nil
 end
 
 function test_loadview()
@@ -120,10 +120,10 @@ function test_handleinput_right_from_right()
   mc:replay()
 
   local a = ps:new()
-  a.pos = 27
+  a.pos = 28
   event.key = event.KEY_RIGHT
   a:handleinput(event)
-  assert_equal(27, a.pos, "should not be able to move right from far right position")
+  assert_equal(28, a.pos, "should not be able to move right from far right position")
 
   verify_mock(mc)
 end

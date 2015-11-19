@@ -108,7 +108,7 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:play()
-    if self.currentHighlight ~= nill then
+    if self.currentHighlight ~= nil then
         self:removeHighlight(self.currentHighlight)
     end
     self.draw:addStop()

@@ -22,7 +22,6 @@ function Queue:new(newBottomMenu, newBuildArea)
   return Queue:init(o)
 end
 
-
 -------------------------------------
 --Adds something at the end of the queue
 -- @param action - the action to be placed in the queue,
@@ -45,8 +44,12 @@ function Queue:push(action, queueType)
     table.insert(self.p2Actions,action)
     if self.buildArea ~= nil then self.buildArea:setQueue(self.p2Actions, queueType) end
   end
+
 end
 
+function Queue:getQueue()
+  return
+end
 
 --------------------------------------
 --Removes the object in the queue that was added last

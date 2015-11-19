@@ -18,46 +18,63 @@ local Commands = require('games.Progg.Commands')
 local buildArea = require('games.Progg.BuildArea')
 local Character = require('games.Progg.Character')
 local Queue = require('games.Progg.Queue')
-local BottomMenu = extends(Controllable)
 
-local inputArea = "queue"
-local context = nil
+local Position = require('games.Progg.Position')
+
+local BottomMenu = extends(Controllable)
 local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 
 --Constructor method
 function BottomMenu:new(maxCommands,gameContext)
     local o = BottomMenu:super()
-    o.availableSlots = maxCommands
     o.selectingLoopCounter = false;
+    o.inputArea = "queue"
+    o.prevInputArea = "queue"
+    o.position = 1
+    o.prevPosition = nil
     context = gameContext
-    o.buildArea = buildArea:new(16)
-    o.drawBottomMenu = newDrawBottomMenu:new()
-    o.character = Character:new(Position:new(0,0))
+    o.buildArea = buildArea:new(maxCommands, o.position)
+    o.drawBottomMenu = newDrawBottomMenu:new(maxCommands)
+    o.character = Character:new(Position:new(1,5))
     o.queue = Queue:new(o, o.buildArea)
     return BottomMenu:init(o)
 end
 
--- Used to load images
+--------------------------------------------
+-- Loads the bottom menu with the two input areas
+-- @author Mikael Ögren; Tobias Lundell
+--------------------------------------------
 function BottomMenu:load()
-    self.buildArea:load()
-    self.move = gfx.loadpng('data/progg_game_icons/arrow_up.png')
-    self.turnLeft = gfx.loadpng('data/progg_game_icons/turn_left.png')
-    self.turnRight = gfx.loadpng('data/progg_game_icons/turn_right.png')
-    self.action = gfx.loadpng('data/progg_game_icons/action.png')
-    self.ifWall = gfx.loadpng('data/progg_game_icons/if_wall.png')
-    self.loop = gfx.loadpng('data/progg_game_icons/loop.png')
-    self.p1 = gfx.loadpng('data/progg_game_icons/P1.png')
-    self.p2 = gfx.loadpng('data/progg_game_icons/P2.png')
-    self.images = {["move"]=self.move, ["turn-left"]=self.turnLeft, ["turn-right"]=self.turnRight,
-        ["commandname1"]=self.action, ["commandname2"]=self.ifWall, ["loop"]=self.loop, ["P1"]=self.p1, ["P2"]=self.p2}
+    self.drawBottomMenu:background(self.inputArea)
+    self.drawBottomMenu:emptySlots(self.inputArea)
+    self.drawBottomMenu:headline("Main")
+    self.buildArea:load(self.inputArea)
 end
 
---Used when BottomMenu is updated
+--------------------------------------------
+-- Updates the input areas in the bottom menu. Used on update.
+-- @ author Mikael Ögren; Tobias Lundell
+--------------------------------------------
 function BottomMenu:show()
-    self.drawBottomMenu:background(inputArea)
-    self.drawBottomMenu:emptySlots(self.availableSlots, inputArea)
+  if (self.prevInputArea ~= self.inputArea) then
+    self:updateInputArea()
+    self.prevInputArea = self.inputArea
+  end
+  if (self.inputArea ~= "queue") then
+    self.buildArea:show(self.queue.actions)
+  else
     self.drawBottomMenu:icons(self.queue.actions)
-    self.buildArea:show(inputArea)
+    self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
+  end
+end
+
+--------------------------------------------
+-- Changes color of the background and icons in the input areas when changing active.
+-- @author Tobias Lundell
+--------------------------------------------
+function BottomMenu:updateInputArea()
+  self:load()
+  self.drawBottomMenu:allIcons(self.queue.actions)
 end
 
 -------------------------------------
@@ -66,18 +83,23 @@ end
 -- @author Mikael Ögren
 -------------------------------------
 function BottomMenu:setQueue(queue)
-    self.queue = queue
+  self.queue.actions = queue
 end
 
+-------------------------------------
+-- Execute the queue with commands.
+-- @author Mikal Ögren
+-------------------------------------
 function BottomMenu:executeQueue()
     self.character:startExecution(self.queue)
- 
+
 end
 
 
---Subscribing the eventHandler to all events. Only numbers by now
+--Subscribing the eventHandler to all events.
 bottomMenuEventHandler = EventHandler:new()
-bottomMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1,[Event.KEY_ZERO]=1}
+bottomMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1
+  ,[Event.KEY_ZERO]=1,[Event.KEY_UP]=1,[Event.KEY_DOWN]=1 ,[Event.KEY_LEFT]=1,[Event.KEY_RIGHT]=1, [Event.KEY_OK]=1 }
 
 --Update function on every key input
 function bottomMenuEventHandler:update(object,eventListener,event)
@@ -85,77 +107,95 @@ function bottomMenuEventHandler:update(object,eventListener,event)
   if(event.state==Event.KEY_STATE_DOWN) then
       --Switch for all the input handling to implement
       if event.key == Event.KEY_ONE then
-        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+        if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
               object.queue.loopCounter = 1
               object.selectingLoopCounter=false
         else
-              object.queue:push(Commands.MOVE, inputArea)
+              object.queue:push(Commands.MOVE, object.inputArea)
            end
 
       elseif event.key == Event.KEY_TWO then
-        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+        if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
               object.queue.loopCounter = 2
               object.selectingLoopCounter=false
         else
-              object.queue:push(Commands.TURN_LEFT, inputArea)
+              object.queue:push(Commands.TURN_LEFT, object.inputArea)
            end
 
       elseif event.key == Event.KEY_THREE then
-         if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+         if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
               object.queue.loopCounter = 3
               object.selectingLoopCounter=false
         else
-              object.queue:push(Commands.TURN_RIGHT, inputArea)
+              object.queue:push(Commands.TURN_RIGHT, object.inputArea)
            end
 
       elseif event.key == Event.KEY_FOUR then
-        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+        if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
               object.queue.loopCounter = 4
               object.selectingLoopCounter=false
         else
               --queue:push(Commands.TURN_RIGHT, inputArea)
-           end
+        end
 
       elseif event.key == Event.KEY_FIVE then
-         if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+         if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
               object.queue.loopCounter = 5
               object.selectingLoopCounter=false
         else
               --queue:push(Commands.TURN_RIGHT, inputArea)
-           end
-      
+        end
+
       elseif event.key == Event.KEY_SIX then
 
-         if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+         if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
               object.queue.loopCounter = 6
               object.selectingLoopCounter=false
         else
             object.buildArea:setBuildType("loop")
-            object.queue:push(Commands.LOOP, inputArea)
-            inputArea = "loop"
+            object.queue:push(Commands.LOOP, object.inputArea)
+            object.inputArea = "loop"
             object.selectingLoopCounter=true
-           end
+
+            object.prevPosition = object.position
+            object.position = 17
+            object.buildArea:setPosition(object.position)
+            object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+            object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.loopQueue)
+         end
 
 
       elseif event.key == Event.KEY_SEVEN then
-       if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+       if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
               object.queue.loopCounter = 7
               object.selectingLoopCounter=false
        else
           object.buildArea:setBuildType("P1")
-          object.queue:push(Commands.P1, inputArea)
-          inputArea = "P1"
+          object.queue:push(Commands.P1, object.inputArea)
+          object.inputArea = "P1"
+       end
+
+          object.prevPosition = object.position
+          object.position = 17
+          object.buildArea:setPosition(object.position)
+          object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+          object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.p1Queue)
        end
 
       elseif event.key == Event.KEY_EIGHT then
-        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+        if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
              object.queue.loopCounter = 8
              object.selectingLoopCounter=false
-         else
+        else
              object.buildArea:setBuildType("P2")
              object.queue:push(Commands.P2, inputArea)
-             inputArea = "P2"
+             object.inputArea = "P2"
          end
+            object.prevPosition = object.position
+            object.position = 17
+            object.buildArea:setPosition(object.position)
+            object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+            object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.p2Queue)
 
       elseif event.key == Event.KEY_NINE then
        if(inputArea =="loop" and object.selectingLoopCounter==true ) then
@@ -165,22 +205,109 @@ function bottomMenuEventHandler:update(object,eventListener,event)
              context.platformEventListener:removeChainListener()
              context:createNewMenu()
              context.game = nil
-         end
+       end
 
-          
+      elseif event.key == Event.KEY_UP then
+          if  object:isUpperRow(object.position) == false then
+              object:setPosition(-8)
+          end
+      elseif event.key == Event.KEY_DOWN then
+          if  object:isUpperRow(object.position) == true then
+              object:setPosition(8)
+          end
+      elseif event.key == Event.KEY_LEFT then
+          if object.position == 17 or object.position == 25 then
+          elseif object.position > 1 then
+              object:setPosition(-1)
+          end
+      elseif event.key == Event.KEY_RIGHT then
+          if object.position == 8 or object.position == 16 then
+          elseif object.position < 32 then
+              object:setPosition(1)
+          end
       elseif event.key == Event.KEY_ZERO then
-      if inputArea == "queue"  then
-        object:executeQueue()
-      else
-        inputArea = "queue"
+          if object.inputArea == "queue"  then
+            object:executeQueue()
+          else
+            object.prevPosition = object.position
+            object.position = 1
+            object.buildArea:setPosition(object.position)
+            object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+            object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+            object.inputArea = "queue"
+          end
+      elseif event.key == Event.KEY_OK then
+          local queuePos = object.position
+          if queuePos > 16 then
+              queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
+          end
+          if object:getQueue(object.inputArea)[queuePos] == "P1" or object:getQueue(object.inputArea)[queuePos] == "loop" or object:getQueue(object.inputArea)[queuePos] == "P2" then -- Makes sure you've clicked on a procedure or loop
+                  object.buildArea:setBuildType(object:getQueue(object.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
+                  object.inputArea = object:getQueue(object.inputArea)[queuePos]
+                  object.prevPosition = object.position
+                  object.position = 17
+                  object.buildArea:setPosition(object.position)
+                  object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+                  object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+          elseif object:getQueue(object.inputArea)[queuePos] ~= nil then
+            if object.inputArea == "queue" then
+             for i=queuePos, (#object.queue.actions) do
+              object.queue.actions[i] = object.queue.actions[i + 1]
+             end
+            elseif object.inputArea == "P1" then
+              for i=queuePos, (#object.queue.p1Actions) do
+                object.queue.p1Actions[i] = object.queue.p1Actions[i + 1]
+              end
+            elseif object.inputArea == "P2" then
+              for i=queuePos, (#object.queue.p2Actions) do
+                object.queue.p2Actions[i] = object.queue.p2Actions[i + 1]
+              end
+            elseif object.inputArea == "loop" then
+              for i=queuePos, (#object.queue.loopActions) do
+                object.queue.loopActions[i] = object.queue.loopActions[i + 1]
+              end
+            end
+          end
       end
-      end
- end
- return true
+  end
+
+--------------------------------------
+-- Sets the position in the build area
+-- @ param change:Integer. The change in position.
+-- @author Mikael Ögren
+-------------------------------------
+function BottomMenu:setPosition(change)
+  self.prevPosition = self.position
+  self.position = self.position + change
+  self.buildArea:setPosition(self.position)
+end
+
+
+function BottomMenu:isUpperRow(pos)
+    if (pos > 8 and pos <= 16) or (24 < pos and pos <= 32) then
+        return false
+    else
+        return true
+    end
+end
+
+-----------------------------------
+-- Returns the queue corresponding to the inputArea
+-- @param inputArea:String. String containing the active input area.
+--@author Mikael Ögren
+-----------------------------------
+function BottomMenu:getQueue(inputArea)
+    if inputArea == "queue" then
+        return self.queue.actions
+    elseif inputArea == "loop" then
+        return self.queue.loopActions
+    elseif inputArea == "P1" then
+        return self.queue.p1Actions
+    elseif inputArea == "P2" then
+        return self.queue.p2Actions
+    end
 end
 
 BottomMenu.eventHandler = bottomMenuEventHandler
-
-
 
 return BottomMenu
