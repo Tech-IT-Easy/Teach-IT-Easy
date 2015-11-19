@@ -41,9 +41,8 @@ function Character:startExecution(inqueue)
   for i=1, #queue.actions do
     local act = queue:pop()
     if(act~=nil)then
-
       if act == Commands.LOOP then
-        local nrOfIterations = queue.loopCounter
+        local nrOfIterations = inqueue.loopCounter
         for k = 1, nrOfIterations do
           for i =1, #queue.loopActions do
             act = queue.loopActions[#queue.loopActions - i + 1]
@@ -62,7 +61,6 @@ function Character:startExecution(inqueue)
           act = table.remove(queue.p2Actions)
           self:execute(act)
         end
-
       else
         self:execute(act)
       end
