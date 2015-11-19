@@ -61,7 +61,7 @@ function BottomMenu:show()
         self.prevInputArea = self.inputArea
     end
     if (self.inputArea ~= "queue") then
-        self.buildArea:show(self.queue.actions)
+        self.buildArea:show(self.queue)
     else
         self.drawBottomMenu:icons(self.queue.actions)
         self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
