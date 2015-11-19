@@ -55,7 +55,7 @@ function Map:load()
 
     -- Mapdata that is being displayed
     -- set as input, when input is implemented
-    self.mapdata =
+    self.mapdata2 =
     {
         9, "a", "c", 0, 0, 0, 0, 0,
         5, 0, 3, "c", 0, 0, 0, 0,
@@ -64,6 +64,13 @@ function Map:load()
         7, 0, 0, 0, 0, 0, 0, 0,
     }
 
+  self.file = io.open("games/Progg/levels/level"..tostring(1)..".txt", "r")
+  --self.data = self.file:read("*a")
+  self.mapdata = {}
+   for line in self.file:lines() do
+    -- print(line)
+    table.insert (self.mapdata, line)
+   end
 
     self.tiles = {}
     --Creating tiles from mapdata
