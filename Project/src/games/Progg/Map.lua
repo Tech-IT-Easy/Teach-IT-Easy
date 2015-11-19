@@ -28,7 +28,7 @@ end
 -- @author Erik
 -------------------------------------
 function Map:load()
--- implement parameter with mapdata
+  -- implement parameter with mapdata
 
   self.background = gfx.loadpng('data/game_background_small.png')
 
@@ -63,6 +63,7 @@ function Map:load()
 
   self.goalPos = 20
   self.startPos = 33
+  self.objectives = {17, 1}
   self.charPos = self.startPos
 
   --Loop builds map
@@ -73,6 +74,66 @@ function Map:load()
   self:setStart(self.startPos)
   self:setCharacter(self.charPos)
 
+  for i=1, #self.objectives, 1 do
+    self:printObjective(self.objectives[i])
+  end
+
+end
+
+-------------------------------------
+-- Prints an objective square.
+-- @param i Place of objective
+-- @author Erik
+-------------------------------------
+function Map:printObjective(i)
+  if(i<9)then
+    screen:clear({ g = 19, r = 232, b = 203}, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  elseif(i<17)then
+    i= i -8
+    screen:clear({ g = 19, r = 232, b = 203 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  elseif(i<25)then
+    i= i -16
+    screen:clear({g = 19, r = 232, b = 203 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*2+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  elseif(i<33)then
+    i= i -24
+    screen:clear({ g = 19, r = 232, b = 203 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*3+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  else
+    i= i -32
+    screen:clear({ g = 19, r = 232, b = 203 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*4+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  end
+end
+
+-------------------------------------
+-- Prints an objective square.
+-- @param i Place of objective
+-- @author Erik
+-------------------------------------
+function Map:printObjectiveAsDone(i)
+  if(i<9)then
+    screen:clear({ g = 21, r = 249, b = 28}, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  elseif(i<17)then
+    i= i -8
+    screen:clear({ g = 21, r = 249, b = 28 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  elseif(i<25)then
+    i= i -16
+    screen:clear({g = 21, r = 249, b = 28 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*2+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  elseif(i<33)then
+    i= i -24
+    screen:clear({ g = 21, r = 249, b = 28 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*3+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  else
+    i= i -32
+    screen:clear({ g = 21, r = 249, b = 28 }, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
+      y = self.starty+self.boxheight*4+self.boxpadding,w = self.innerboxheight, h = self.innerboxheight })
+  end
 end
 
 -------------------------------------
@@ -122,6 +183,12 @@ function Map:moveCharacter(x ,y , direction)
     self:setGoal(pos)
   end
 
+  for _,v in pairs(self.objectives) do
+    if v == pos then
+      self:printObjectiveAsDone(pos)
+      break
+    end
+  end
 end
 
 -------------------------------------
@@ -144,6 +211,7 @@ end
 function Map:setCharacter(i)
 
   self.image1 = gfx.loadpng('data/bowser.png')
+  self.image1:premultiply()
 
   if(i<9)then
     screen:copyfrom(self.image1, nil, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,

@@ -49,8 +49,8 @@ function ChooseAvatar:handleinput(event)
     self.pos = self.pos - 1
   elseif (event.key == Event.KEY_OK) then
     table.insert(usernames, CreateProfile.profilename)
-    self.image4 = self.myimages[self.pos]
-    table.insert(images, self.image4)
+    --self.image4 = self.myimages[self.pos]
+    table.insert(images, self.myimages[self.pos])
     self.image1=nil
     self.image2=nil
     self.image3=nil
@@ -75,8 +75,11 @@ function ChooseAvatar:loadview(input)
   self.lastpos = 1
   self.username = input
   self.image1 = gfx.loadpng('data/bowser.png')
+  self.image1:premultiply()
   self.image2 = gfx.loadpng('data/mario.png')
+  self.image2:premultiply()
   self.image3 = gfx.loadpng('data/toad.png')
+  self.image3:premultiply()
   self.myimages = { self.image1, self.image2, self.image3 }
   self:renderui()
 end
