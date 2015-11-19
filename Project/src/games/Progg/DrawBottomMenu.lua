@@ -129,19 +129,23 @@ function DrawBottomMenu:highlightIcon(pos, prevPos, queue)
     if queue[pos] ~= nil then
         self.image = gfx.loadpng(self:getFileName(queue[pos]))
         if pos <= 8 then
-            screen:clear({r = 0, g = 0, b = 0 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         else
-            screen:clear({r = 0, g = 0, b = 0 }, { x = screen:get_width()*(0.038 + (pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-9)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+            screen:clear({r = 255, g = 255, b = 251}, { x = screen:get_width()*(0.038 + (pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         end
         self.image:destroy()
         collectgarbage()
     else
         if pos <= 8 then
-            screen:clear({r = 0, g = 0, b = 0 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+            screen:clear({r = 78, g = 113, b = 215  }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
         else
-            screen:clear({r = 0, g = 0, b = 0 }, { x = screen:get_width()*(0.038 + (pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-9)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+            screen:clear({r = 78, g = 113, b = 215}, { x = screen:get_width()*(0.038 + (pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
         end
     end
 
@@ -161,19 +165,19 @@ function DrawBottomMenu:clearPos(pos, queue)
     if queue[pos] ~= nil then
         self.image = gfx.loadpng(self:getFileName(queue[pos]))
         if pos <= 8 then
-            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068})
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         else
-            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (pos-9)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068  })
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         end
         self.image:destroy()
         collectgarbage()
     else
         if pos <= 8 then
-            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
         else
-            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.038 + (pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.038 + (pos-9)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
         end
     end
 end
