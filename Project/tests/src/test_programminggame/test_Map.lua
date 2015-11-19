@@ -53,10 +53,10 @@ function test_load()
   local mc = create_mock(SUT)
 
   -- Mock renderui and printbackground
-   local square = mc:mock()
-   local setGoal = mc:mock()
-   local setStart = mc:mock()
-   local setCharacter = mc:mock()
+  local square = mc:mock()
+  local setGoal = mc:mock()
+  local setStart = mc:mock()
+  local setCharacter = mc:mock()
   --local printbackground = mc:mock()
 
   local ps = require(SUT)
@@ -65,7 +65,7 @@ function test_load()
   package.loaded[SUT].setGoal = setGoal
   package.loaded[SUT].setStart = setStart
   package.loaded[SUT].setCharacter = setCharacter
- -- package.loaded[SUT].printbackground = printbackground
+  -- package.loaded[SUT].printbackground = printbackground
 
   square(mc.ANYARGS) ;mc :returns(nil) :times(40)
   setGoal(mc.ANYARGS) ;mc :returns(nil) :times(1)
@@ -719,9 +719,9 @@ function test_drawRightBorder()
 end
 
 -------------------------------------
--- ??
+-- Test the returned value of getPosition.
 -- @system_under_test: Map:new(), Map:getPosition(x,y)
--- @author name: ??
+-- @author name: Erik
 -------------------------------------
 
 function test_getPosition_one()
@@ -757,9 +757,9 @@ function test_getPosition_two()
 end
 
 -------------------------------------
--- ??
+-- Tests all statements in moveCharacter
 -- @system_under_test: Map:new(), Map:moveCharacter(x ,y , direction)
--- @author name: ??
+-- @author name: Erik
 -------------------------------------
 
 function test_moveCharacter_one()
@@ -777,8 +777,8 @@ function test_moveCharacter_one()
   package.loaded[SUT].setGoal = setGoal
 
   local a = ps:new()
-  local x = 2 
-  local y = 2 
+  local x = 2
+  local y = 2
   local direction = "up"
   a.startPos = 1
 
@@ -808,8 +808,8 @@ function test_moveCharacter_two()
   package.loaded[SUT].setGoal = setGoal
 
   local a = ps:new()
-  local x = 2 
-  local y = 2 
+  local x = 2
+  local y = 2
   local direction = "up"
   a.startPos = 1
   a.mapdata= {}
@@ -840,8 +840,8 @@ function test_moveCharacter_three()
   package.loaded[SUT].setGoal = setGoal
 
   local a = ps:new()
-  local x = 2 
-  local y = 2 
+  local x = 2
+  local y = 2
   local direction = "left"
   a.startPos = 1
   a.mapdata= {}
@@ -872,8 +872,8 @@ function test_moveCharacter_four()
   package.loaded[SUT].setGoal = setGoal
 
   local a = ps:new()
-  local x = 2 
-  local y = 2 
+  local x = 2
+  local y = 2
   local direction = "right"
   a.startPos = 1
   a.mapdata= {}
@@ -904,8 +904,8 @@ function test_moveCharacter_five()
   package.loaded[SUT].setGoal = setGoal
 
   local a = ps:new()
-  local x = 2 
-  local y = 2 
+  local x = 2
+  local y = 2
   local direction = "down"
   a.startPos = 1
   a.mapdata= {}
@@ -922,28 +922,28 @@ function test_moveCharacter_five()
 end
 
 -------------------------------------
--- ??
+-- Tests statements in canMove
 -- @system_under_test: Map:new(), Map:canMove(x ,y , direction)
--- @author name: ??
+-- @author name: Erik
 -------------------------------------
 
 function test_canMove_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-  
+
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(1)
-  
+
 
   local x =1
   local y =1
   local direction = "up"
   a.tiles = {tile}
-  
+
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
@@ -958,19 +958,19 @@ function test_canMove_two()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-  
+
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(8)
-  
+
 
   local x =1
   local y =1
   local direction = "up"
   a.tiles = {tile}
-  
+
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
@@ -985,19 +985,19 @@ function test_canMove_three()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-  
+
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(3)
-  
+
 
   local x =1
   local y =1
   local direction = "left"
   a.tiles = {tile}
-  
+
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
@@ -1012,19 +1012,19 @@ function test_canMove_four()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-  
+
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(4)
-  
+
 
   local x =1
   local y =1
   local direction = "right"
   a.tiles = {tile}
-  
+
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
@@ -1040,19 +1040,19 @@ function test_canMove_five()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-  
+
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(2)
-  
+
 
   local x =1
   local y =1
   local direction = "down"
   a.tiles = {tile}
-  
+
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
