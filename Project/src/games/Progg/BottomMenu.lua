@@ -30,6 +30,7 @@ function BottomMenu:new(maxCommands,gameContext)
     o.selectingLoopCounter = false;
     o.inputArea = "queue"
     o.prevInputArea = "queue"
+    o.maxCommands = maxCommands
     o.position = 1
     o.prevPosition = nil
     context = gameContext
@@ -240,34 +241,13 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if queuePos > 16 then
                 queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
             end
+
             if object:getQueue(object.inputArea)[queuePos] == "P1" or object:getQueue(object.inputArea)[queuePos] == "loop" or object:getQueue(object.inputArea)[queuePos] == "P2" then -- Makes sure you've clicked on a procedure or loop
-            object.buildArea:setBuildType(object:getQueue(object.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
-            object.inputArea = object:getQueue(object.inputArea)[queuePos]
-            object.prevPosition = object.position
-            object.position = 17
-            object.buildArea:setPosition(object.position)
-            object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
-            object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+                object:enterMethod(queuePos)
             elseif object:getQueue(object.inputArea)[queuePos] ~= nil then
-                if object.inputArea == "queue" then
-                    for i=queuePos, (#object.queue.actions) do
-                        print(object.queue.actions[i + 1])
-                        object.queue.actions[i] = object.queue.actions[i + 1]
-                    end
-                elseif object.inputArea == "P1" then
-                    for i=queuePos, (#object.queue.p1Actions) do
-                        object.queue.p1Actions[i] = object.queue.p1Actions[i + 1]
-                    end
-                elseif object.inputArea == "P2" then
-                    for i=queuePos, (#object.queue.p2Actions) do
-                        object.queue.p2Actions[i] = object.queue.p2Actions[i + 1]
-                    end
-                elseif object.inputArea == "loop" then
-                    for i=queuePos, (#object.queue.loopActions) do
-                        object.queue.loopActions[i] = object.queue.loopActions[i + 1]
-                    end
-                end
+                object:deleteAction(object.position, object.inputArea)
             end
+
             object:updateInputArea()
         end
     end
@@ -284,7 +264,20 @@ function BottomMenu:setPosition(change)
     self.buildArea:setPosition(self.position)
 end
 
-
+function BottomMenu:enterMethod(queuePos)
+    self.buildArea:setBuildType(self:getQueue(self.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
+    self.inputArea = self:getQueue(self.inputArea)[queuePos]
+    self.prevPosition = self.position
+    self.position = 17
+    self.buildArea:setPosition(self.position)
+    self.drawBottomMenu:clearPos(self.prevPosition, self.queue.actions)
+    self.buildArea.drawBuildArea:clearPos(self.buildArea.prevPosition, self:getQueue(self.inputArea))
+end
+--------------------------------------
+-- Check if the current position is in the upper row.
+-- @ param change:Integer. The change in position.
+-- @author Mikael Ögren
+-------------------------------------
 function BottomMenu:isUpperRow(pos)
     if (pos > 8 and pos <= 16) or (24 < pos and pos <= 32) then
         return false
@@ -293,6 +286,24 @@ function BottomMenu:isUpperRow(pos)
     end
 end
 
+-----------------------------------
+-- Deletes the action that is currently selected.
+-- @param position:Integer. Integer representing the current position of marker in the bottom menu.
+-- @param inputArea:String. The current inputArea.
+--@author Mikael Ögren
+-----------------------------------
+function BottomMenu:deleteAction(position, inputArea)
+    local queuePos = position
+    if queuePos > 16 then
+        queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
+    end
+
+    if self:getQueue(inputArea)[queuePos] ~= nil then
+        for i=queuePos, (#self:getQueue(inputArea)) do
+            self:getQueue(inputArea)[i] = self:getQueue(inputArea)[i + 1]
+        end
+    end
+end
 -----------------------------------
 -- Returns the queue corresponding to the inputArea
 -- @param inputArea:String. String containing the active input area.
