@@ -109,7 +109,7 @@ function Map:printObjective(i)
 end
 
 -------------------------------------
--- Prints an objective square.
+-- Prints an objective square as done.
 -- @param i Place of objective
 -- @author Erik
 -------------------------------------
