@@ -13,6 +13,8 @@ local Game = extends(Object)
 
 -----------------------------------------------------------
 -- Construct method
+-- @param context:PlatformContext which specific context the game belongs to
+-- @return :Game a new instance of a game
 -----------------------------------------------------------
 function Game:new(context)
   local o = Game:super()
@@ -26,14 +28,17 @@ function Game:new(context)
   return Game:init(o)
 end
 
+-----------------------------------------
+-- Adds the Games listener as a chainListener to the PlatformContext's listener
+-- @author Chuck
+-----------------------------------------
 function Game:initListener()
   -- Default event listener
   if self.platformContext ~= nil then
     self.gameEventListener = EventListener:new(self)
-    print(self.gameEventListener)
     self.platformContext.platformEventListener:addChainListener(self.gameEventListener)
   else
-    print("add listener error");
+    print("add listener error")
   end
 end
 

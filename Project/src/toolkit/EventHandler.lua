@@ -1,5 +1,5 @@
 -----------------------------------------------------------
--- This class is supper class for the event handler, usually a
+-- This class is super class for the event handler, usually a
 -- controllable object needs this to process the specific event,
 -- for example up or left.
 --
@@ -18,10 +18,11 @@ EventHandler.events = {}
 -- Delegate for object when some event happens, it is like a 
 -- abstract method which is required to be implemented in 
 -- specific usage.
--- @object which is the object who owns this handler
--- @event which is specific event
--- @eventListener which is for future developing but now it's 
+-- @param object:Object which is the object who owns this handler
+-- @param event:Event which is specific event
+-- @param eventListener:EventListener which is for future developing but now it's
 -- not used
+-- @author Chuck
 -----------------------------------------------------------
 function EventHandler:update(object,eventListener,event)
   -- do some events process in specific object, never change here

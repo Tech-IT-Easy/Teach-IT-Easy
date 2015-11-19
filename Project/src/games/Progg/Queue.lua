@@ -2,7 +2,7 @@ local Object = require('toolkit.Object')
 local Queue = extends(Object)
 ---------------------------------------------------------------
 -- Constructor for the Queue
--- @param newBottomMenu,newBuildArea. The places where the queue is drawn.
+-- @param newBottomMenu:BottomMenu, newBuildArea:BuildArea. The places where the queue is drawn.
 -- @return a new queue instance
 -- @author Ludwig Wikblad
 ----------------------------------------------------------------
@@ -13,20 +13,18 @@ function Queue:new(newBottomMenu, newBuildArea)
   o.p1Actions = {}
   o.p2Actions = {}
   o.loopCounter = 2
-  if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
-  if newBuildArea ~= nil then o.buildArea = newBuildArea end
-
-  -- @member buildArea:BuildArea
   -- @member bottomMenu:BottomMenu
+  if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
+  -- @member buildArea:BuildArea
+  if newBuildArea ~= nil then o.buildArea = newBuildArea end
 
   return Queue:init(o)
 end
 
 -------------------------------------
 --Adds something at the end of the queue
--- @param action - the action to be placed in the queue,
--- @param queueType - the table to place the action in
--- @return a new queue instance
+-- @param action:Command - the action to be placed in the queue,
+-- @param queueType:String - the table to place the action in
 -- @author Ludwig Wikblad
 -------------------------------------
 function Queue:push(action, queueType)
@@ -52,8 +50,8 @@ function Queue:getQueue()
 end
 
 --------------------------------------
---Removes the object in the queue that was added last
--- @return the removed action
+--Removes the object that was added last in the main queue
+-- @return the removed action:Commands
 -- @author Ludwig Wikblad
 --------------------------------------
 function Queue:pop()
@@ -62,8 +60,8 @@ end
 
 
 ----------------------------------------------------------------
---Allows someone to switch positions for two objects in the queue
--- @param currentPos, goalPos the positions of the objects that should be switched
+-- Allows someone to switch positions for two objects in the queue
+-- @param currentPos:integer, goalPos:integer the positions of the objects that should be switched
 -- @author Ludwig Wikblad
 ----------------------------------------------------------------
 function Queue:setPosition(currentPos, goalPos)
@@ -72,10 +70,10 @@ end
 
 
 ----------------------------------------
---Returns a queue in reversed order, so that
+-- Returns a queue in reversed order, so that
 -- another part of the program can use pop to
 -- go through it in execution order.
--- @return a queue instance with all the actions
+-- @return a queue:Queue instance with all the actions
 -- in the order they will be executed (by using pop())
 -- @author Ludwig Wikblad
 ----------------------------------------

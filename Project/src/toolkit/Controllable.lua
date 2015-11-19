@@ -15,17 +15,19 @@ local Controllable = extends(Object)
 -----------------------------------------------------------
 -- Judge whether a event is interested by this controllable 
 -- object,this is typically used when listener notifies
--- @event which will be judged
+-- @param event:Event which will be judged
+-- @return Boolean representing objects interest in the event
 -----------------------------------------------------------
 function Controllable:interestInEvent(event)
   return self.eventHandler.events[event.key] ~= nil
 end
 
 -----------------------------------------------------------
--- Get event inform form listener
--- @listener which is the listener who send notify message,
---           it is kept for future extention
--- @event which will be judged
+-- Tells the eventHandler to react to the event
+-- Get event information from listener
+-- @param listener:EventListener which is the listener who send notify message,
+--        it is kept for future extention
+-- @param event:Event which will be judged
 -----------------------------------------------------------
 function Controllable:process(listener,event)
   self.eventHandler:update(self,listener,event)
