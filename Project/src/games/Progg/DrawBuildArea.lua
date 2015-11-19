@@ -21,9 +21,9 @@ end
 -- @param maxCommands, inputArea. How many commands slots that are available to the player and the active input area.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBuildArea:emptySlots(inputArea)
+function DrawBuildArea:emptySlots(inputArea, active)
     for i=1, self.maxCommands[inputArea] do
-        self:singleEmptySlot(i, inputArea)
+        self:singleEmptySlot(i, inputArea, active)
     end
 end
 
@@ -32,8 +32,8 @@ end
 -- @param boxNmb, inputArea. The number of the box being drawn and the active input area.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBuildArea:singleEmptySlot(boxNmb, inputArea)
-    if (inputArea == "queue") then
+function DrawBuildArea:singleEmptySlot(boxNmb, inputArea, active)
+    if (active == false) then
         if boxNmb <= 8 then
             screen:clear({ r = 235, g = 235, b = 235 }, { x = screen:get_width()*(0.535 + (boxNmb-1)*0.055), y = screen:get_height()*0.74, w = screen:get_width()*0.045, h = screen:get_height()*0.075 }) --r = 78, g = 113, b = 215
         else

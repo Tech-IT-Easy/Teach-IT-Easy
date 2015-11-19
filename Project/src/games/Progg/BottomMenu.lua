@@ -18,9 +18,7 @@ local Commands = require('games.Progg.Commands')
 local buildArea = require('games.Progg.BuildArea')
 local Character = require('games.Progg.Character')
 local Queue = require('games.Progg.Queue')
-
 local Position = require('games.Progg.Position')
-
 local BottomMenu = extends(Controllable)
 local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 
@@ -45,11 +43,15 @@ end
 -- Loads the bottom menu with the two input areas
 -- @author Mikael Ögren; Tobias Lundell
 --------------------------------------------
-function BottomMenu:load()
+function BottomMenu:load(inArea,active)
     self.drawBottomMenu:background(self.inputArea)
     self.drawBottomMenu:emptySlots(self.inputArea)
     self.drawBottomMenu:headline("Main")
-    self.buildArea:load(self.inputArea)
+    if (inArea ~= nil) then
+        self.buildArea:load(inArea, active)
+    else
+        self.buildArea:load(self.inputArea, false)
+    end
 end
 
 --------------------------------------------
@@ -58,7 +60,11 @@ end
 --------------------------------------------
 function BottomMenu:show()
     if (self.prevInputArea ~= self.inputArea) then
-        self:updateInputArea()
+        if (self.inputArea == "queue") then
+            self:updateInputArea(self.prevInputArea, false)
+        else
+            self:updateInputArea(self.inputArea, true)
+        end
         self.prevInputArea = self.inputArea
     end
     if (self.inputArea ~= "queue") then
@@ -73,8 +79,8 @@ end
 -- Changes color of the background and icons in the input areas when changing active.
 -- @author Tobias Lundell
 --------------------------------------------
-function BottomMenu:updateInputArea()
-    self:load()
+function BottomMenu:updateInputArea(inArea, active)
+    self:load(inArea, active)
     self.drawBottomMenu:allIcons(self.queue.actions, self.inputArea)
 end
 
@@ -93,7 +99,6 @@ end
 -------------------------------------
 function BottomMenu:executeQueue()
     self.character:startExecution(self.queue)
-
 end
 
 
@@ -164,7 +169,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.loopQueue)
             end
-
 
         elseif event.key == Event.KEY_SEVEN then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
