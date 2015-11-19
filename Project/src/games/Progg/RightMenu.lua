@@ -30,6 +30,7 @@ function RightMenu:new()
     local o = RightMenu:super()
     --Draw right-hand side
     screen:clear({ r = 92, g = 128, b = 149 }, { x = screen:get_width() * 0.75, y = 0, w = screen:get_width() * 0.25, h = screen:get_height()*0.65 })
+    -- @member drawRightMenu:DrawRightMenu
     o.draw = drawRightMenu:new()
     o.currentHighlight = nil
     o.inputArea = "queue"

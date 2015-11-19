@@ -45,10 +45,13 @@ end
   fail("RightMenu highlight-functions not tested yet!")
 end]]
 
---Need to figure out how to mock screen-methods
-
---Doesn't work any longer after I made highlight in RightMenu local
---(I addad a. to all highlight here as well)
+-------------------------------------
+-- Testing that the currentHighlignt variable
+-- is given the correct value when highlight is called
+-- given that the variable has no priror value
+-- @system_under_test: RightMenu:new(), RightMenu:highlight(command)
+-- @author name: Vilhelm
+-------------------------------------
 function test_highlight_correctCommand()
   local class_to_mock = "games.Progg.DrawRightMenu"
 
@@ -69,6 +72,13 @@ function test_highlight_correctCommand()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Testing that the currentHighlignt variable
+-- is given the correct value when highlight is called
+-- given that the variable already has a value
+-- @system_under_test: RightMenu:new(), RightMenu:highlight(command)
+-- @author name: Vilhelm
+-------------------------------------
 function test_highlight_correctCommand_highlightActive()
   local class_to_mock = "games.Progg.DrawRightMenu"
 
@@ -95,6 +105,12 @@ function test_highlight_correctCommand_highlightActive()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Testing that the currentHighlignt
+-- variable is reset when removeHighlight is called
+-- @system_under_test: RightMenu:new(), RightMenu:removeHighlight(command)
+-- @author name: Vilhelm
+-------------------------------------
 function test_removeHighlight_correctCommand()
   local class_to_mock = "games.Progg.DrawRightMenu"
 
