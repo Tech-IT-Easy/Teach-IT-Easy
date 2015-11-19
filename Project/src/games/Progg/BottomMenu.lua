@@ -30,6 +30,7 @@ function BottomMenu:new(maxCommands,gameContext)
     o.selectingLoopCounter = false;
     o.inputArea = "queue"
     o.prevInputArea = "queue"
+    o.maxCommands = maxCommands
     o.position = 1     --Starting position for highlight
     o.prevPosition = nil
     context = gameContext
@@ -211,17 +212,15 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object:setPosition(-8)
             end
         elseif event.key == Event.KEY_DOWN then
-            if  object:isUpperRow(object.position) == true then
+            if  object:isAllowedDown() then
                 object:setPosition(8)
             end
         elseif event.key == Event.KEY_LEFT then
-            if object.position == 17 or object.position == 25 then
-            elseif object.position > 1 then
+            if object.position > 1 and object.position ~= 17 then
                 object:setPosition(-1)
             end
         elseif event.key == Event.KEY_RIGHT then
-            if object.position == 8 or object.position == 16 then
-            elseif object.position < 32 then
+            if object:isAllowedRight() then
                 object:setPosition(1)
             end
         elseif event.key == Event.KEY_ZERO then
@@ -261,6 +260,32 @@ function BottomMenu:setPosition(change)
     self.prevPosition = self.position
     self.position = self.position + change
     self.buildArea:setPosition(self.position)
+end
+
+function BottomMenu:isAllowedRight()
+    local queuePos = self.position
+    if queuePos > 16 then
+        queuePos = queuePos - 16
+    end
+
+    if self.position < 32 and self.position ~= 16 and self.maxCommands[self.inputArea] > queuePos  then
+        return true
+    else
+        return false
+    end
+end
+
+function BottomMenu:isAllowedDown()
+    local queuePos = self.position
+    if queuePos > 16 then
+        queuePos = queuePos - 16
+    end
+
+    if  self:isUpperRow(self.position) == true and self.maxCommands[self.inputArea] >= queuePos + 8 then
+        return true
+    else
+        return false
+    end
 end
 
 function BottomMenu:enterMethod(queuePos)
