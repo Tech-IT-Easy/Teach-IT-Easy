@@ -148,35 +148,8 @@ function DrawBottomMenu:highlightIcon(pos, prevPos, queue)
     if prevPos ~= nil then
         self:clearPos(prevPos, queue)
     end
---    if pos > 16 then
---        return
---    end
---
---    if queue[pos] ~= nil then
---        self:drawBox(255,192,0,203,212,214,screen:get_width()*(0.038 + (pos-1)*0.055),screen:get_height()*0.7435,command_width,command_height)
---    end
-
 end
 
-function DrawBottomMenu:drawBox(r1,g1,b1,r2,g2,b2,x,y,w,h)
-
-    --[[if w>h
-    then
-      local f=h
-    else
-      local f=w
-    end]]
-
-    local b=3
-    local x2=x+b
-    local y2=y+b
-    local h2=h-2*b
-    local w2=w-2*b
-
-    screen:clear({ r = r1, g = g1, b = b1 }, { x = x, y = y, w = w, h = h})
-    screen:clear({ r = r2, g = g2, b = b2 }, { x = x2, y = y2, w = w2, h = h2})
-
-end
 ---------------------------------------------
 -- Clears the previous position.
 -- @param pos:Integer, queue:Queue. The position to be cleared and the queue of commands.
