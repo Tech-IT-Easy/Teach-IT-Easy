@@ -963,12 +963,12 @@ function test_canMove_two()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
-  local tile = ps2:new(8)
+  local tile = ps2:new(8) -- TopBorder = true
   
 
   local x =1
   local y =1
-  local direction = "up"
+  local direction = ps.UP
   a.tiles = {tile}
   
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
