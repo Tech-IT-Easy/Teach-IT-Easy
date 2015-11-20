@@ -24,10 +24,12 @@ function Character:new(newPosition)
   local o = Character:super()
   -- @member position:Position
   o.position = newPosition
+  o.startPosition = newPosition
   o.state = 0
   -- @member map:Map
   o.map = Map:new()
   o.map:load()
+  o.hasWon=false
   return Character:init(o)
 end
 
@@ -68,6 +70,14 @@ function Character:startExecution(inqueue)
       end -- if act ==Commands.
     end -- if act ~= nil
   end -- for j = 0
+  
+  if(self.map:isInGoal(self.position:getX(),self.position:getY()))then
+    self.hasWon = true
+  else
+    self.map:restartCharacter(self.position:getX(),self.position:getY())
+    self.position = self.startPosition
+  end
+  
 end
 
 ---------------------------------------
