@@ -10,18 +10,14 @@ local UIView = require("toolkit.UIKit.UIView")
 local UIImageView = extends(UIView)
 -- @args = {image = nonnull:UIImage,position=nonnull:{x=1,y=1}}
 function UIImageView:new(args)
-  local o = UIImageView:super()
-  o.container = args.container or nil
+  local o = UIImageView:super{frame=args.frame,container=args.container}
   --@member image
   o.image = args.image
-  --@member image position
-  o.position = args.position
   return UIImageView:init(o)
 end
 
 function UIImageView:show()
-  self:resetCoordinate()
-  screen:copyfrom(self.image.imageData, nil, {x=self.position.x,y=self.position.y,w=self.image.width,h=self.image.height}, true)
+  screen:copyfrom(self.image.imageData, nil, {x=self.position.x,y=self.position.y,w=self.frame.w,h=self.frame.h}, true)
 end
 
 return UIImageView

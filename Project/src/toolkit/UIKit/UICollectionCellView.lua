@@ -17,15 +17,16 @@ function UICollectionCellView:new(args)
   return UICollectionCellView:init(o)
 end
 
-function UICollectionCellView:adjustContent(args)
-  if(self.viewType == "UIImageView") then
-    self.view.position = {x = args.x,y = args.y}
-    self.view.image.width = args.w
-    self.view.image.height = args.h
+function UICollectionCellView:adjustContent(frame)
+  --[[if(self.viewType == "UIImageView") then
+    self.view:setFrame(args)
   elseif(self.viewType == "UIButtonView") then
     self.view:setFrame(args)
-  end
+  end]]--
   -- other types 
+  
+  self.view:setFrame(frame)
+ 
 end
 
 function UICollectionCellView:show()

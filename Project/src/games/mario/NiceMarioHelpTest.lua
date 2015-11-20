@@ -7,7 +7,7 @@ local UIImageView = require("toolkit.UIKit.UIImageView")
 local UILabelView = require("toolkit.UIKit.UILabelView")
 local UICollectionView = require("toolkit.UIKit.UICollectionView")
 local UICollectionCellView = require("toolkit.UIKit.UICollectionCellView")
-
+local UIPanelView = require("toolkit.UIKit.UIPanelView")
 
 
 function NiceMarioHelpTest:run()
@@ -29,11 +29,11 @@ function NiceMarioHelpTest:run()
   button:show()
   
   -- create a UIImageView with position and image
-  imageview = UIImageView:new{image=image,position={x=300,y=300}}
+  imageview = UIImageView:new{image=image,frame={x=300,y=300,w=image.width,h=image.height}}
   imageview:show()
   
-  -- create a UILabelView with position and lael
-  labelview = UILabelView:new{position={x=200,y=200},label=textlabel}
+  -- create a UILabelView with position and lael,w,h doesn't matter now
+  labelview = UILabelView:new{frame={x=200,y=200,w=20,h=20},label=textlabel}
   labelview:show()
   
   
@@ -46,9 +46,9 @@ function NiceMarioHelpTest:run()
   -- frame doesn't matter, layout will reset it
   button1 = UIButtonView:new{frame={x=50,y=50,w=100,h=100},borderColor={r=0,g=29,b=25},borderWidth = 6,backgroundImage=nil,label=textlabel}
   -- position doesn't matter, layout will reset it
-  imageview1 = UIImageView:new{image=image,position={x=300,y=300}}
-  imageview2 = UIImageView:new{image=image,position={x=300,y=300}}
-  imageview3 = UIImageView:new{image=image,position={x=300,y=300}}
+  imageview1 = UIImageView:new{image=image,frame={x=300,y=300,w=image.width,h=image.height}}
+  imageview2 = UIImageView:new{image=image,frame={x=300,y=300,w=image.width,h=image.height}}
+  imageview3 = UIImageView:new{image=image,frame={x=300,y=300,w=image.width,h=image.height}}
   
   -- create cell for different view and insert into specific position by given row number and col number which starting from(0,0)
   cell = UICollectionCellView:new{view=imageview,viewType="UIImageView"}
@@ -70,6 +70,30 @@ function NiceMarioHelpTest:run()
   collectionLayout:show()
   
   ---- End UICollectionView
+  
+  
+  ---- UIPanelView manages UIImageview
+  bottomPanel = UIPanelView:new{frame={x=0,y=120,w=800,h=80},backgroundColor=nil}
+  command1 = UIImageView:new{image=image,frame={x=0,y=0,w=80,h=80}}
+  command2 = UIImageView:new{image=image,frame={x=90,y=0,w=80,h=80}}
+  command3 = UIImageView:new{image=image,frame={x=180,y=0,w=80,h=80}}
+  command4 = UIImageView:new{image=image,frame={x=270,y=0,w=80,h=80}}
+  bottomPanel:addChildView(command1)
+  bottomPanel:addChildView(command2)
+  bottomPanel:addChildView(command3)
+  bottomPanel:addChildView(command4)
+  bottomPanel:show()
+  
+  ---- UIPanelView manages UIPanelView
+  bottomPanel:setFrame{x=0,y=20,w=800,h=80}
+  anotherPanel = UIPanelView:new{frame={x=300,y=500,w=800,h=200},backgroundColor={r=20,g=29,b=255}}
+  button = UIButtonView:new{frame={x=0,y=100,w=80,h=80},borderColor={r=255,g=29,b=25},borderWidth = 4,backgroundImage=image,label=textlabel}
+  anotherPanel:addChildView(bottomPanel)
+  anotherPanel:addChildView(button)
+  anotherPanel:show()
+  
+  -- UIPanelView
+  
   
   gfx.update()
 end

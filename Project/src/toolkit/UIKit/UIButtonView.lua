@@ -4,16 +4,12 @@
 --
 -- @Author:Created by Chuck, NOV 19,2015
 -----------------------------------------------------------
-local Object = require("toolkit.Object")
-local UIButtonView = extends(Object)
+local UIView = require("toolkit.UIKit.UIView")
+local UIButtonView = extends(UIView)
 
 -- args = {frame={x=1,y=1,w=50,h=50},}
 function UIButtonView:new(args)
-  local o = UIButtonView:super()
-  -- @member container which include this button
-  o.container = nil --window
-  -- @member frame consists of position and size,{x,y,w,h}
-  o.frame = args.frame
+  local o = UIButtonView:super{frame=args.frame,container=args.container}
   -- @member background image
   o.backgroundImage = args.backgroundImage or nil
   -- @member background color
@@ -32,40 +28,44 @@ function UIButtonView:new(args)
   o.labelPosition = args.labelPosition or {x=0,y=0}
   -- @member background area = frame - borderWidth
   o.backgroundArea = {
-    x = o.frame.x + o.borderWidth,
-    y = o.frame.y + o.borderWidth,
+    x = o.position.x + o.borderWidth,
+    y = o.position.y + o.borderWidth,
     w = o.frame.w - 2*o.borderWidth,
     h = o.frame.h - 2*o.borderWidth
   }
   -- @member labelData 
   -- firstly change position relative to button frame
   if o.label then
-    o.labelPosition.x = o.labelPosition.x + o.frame.x
-    o.labelPosition.y = o.labelPosition.y + o.frame.y
-    o.labelData = sys.new_freetype(o.label.color, o.label.size, o.labelPosition,o.label.font)
+    o.labelAbsolutePosition = {
+      x = o.position.x + o.labelPosition.x,
+      y = o.position.y + o.labelPosition.y
+    }
+    o.labelData = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,o.label.font)
   end
   
   return UIButtonView:init(o)
 end
 
-function UIButtonView:setFrame(frame)
-  -- update label position
-  if self.label then
-    self.labelPosition.x = self.labelPosition.x - self.frame.x + frame.x
-    self.labelPosition.y = self.labelPosition.y - self.frame.y + frame.y
-    self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelPosition,self.label.font)
-  end
-  
-  -- update frame 
-  self.frame = frame
-  
-  -- update background area
+--------------------------------------------------
+--@ override UIView method
+--since labelData needs to be created before shown
+--------------------------------------------------
+function UIButtonView:afterPositionChanges()
+
   self.backgroundArea = {
-    x = self.frame.x + self.borderWidth,
-    y = self.frame.y + self.borderWidth,
+    x = self.position.x + self.borderWidth,
+    y = self.position.y + self.borderWidth,
     w = self.frame.w - 2*self.borderWidth,
     h = self.frame.h - 2*self.borderWidth
   }
+ 
+  if self.label then
+    self.labelAbsolutePosition = {
+      x = self.position.x + self.labelPosition.x,
+      y = self.position.y + self.labelPosition.y
+    }
+    self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,self.label.font)
+  end
 end
 
 -- show the button on specific position

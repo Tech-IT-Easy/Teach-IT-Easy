@@ -37,7 +37,7 @@ function UICollectionView:fillWithCell(cell,row,col)
     self.cells[row] = {}
   end
   
-  -- adjust position and size of content
+  -- adjust frame of content view
   cell:adjustContent({
     x = self.frame.x + (self.cell.width + self.space) * col,
     y = self.frame.y + (self.cell.height + self.space) * row,
