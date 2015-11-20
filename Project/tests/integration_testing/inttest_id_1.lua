@@ -44,16 +44,93 @@ function teardown()
 end
 
 function test_command_queue_bottomMenu()
-    local class_to_mock="games.Progg.BottomMenu"
-    local mc = create_mock(class_to_mock)
-
     local a = require(SUT_1)
     local b = require(SUT_2)
     local c = require(SUT_3)
 
+
     local bottommenu = c:new()
     local queue = a:new(bottommenu)
-    local object1 = b:new()
+    local commands = b:new()
 
-    queue:push(object1)
+--    local command1=commands.MOVE
+--    local queue_cmd1 = commands:new(command1)
+--
+--    local command2=commands.MOVE
+--    local queue_cmd2 = commands:new(command2)
+--
+--    local command3=commands.TURN_LEFT
+--    local queue_cmd3 = commands:new(command3)
+--
+--    local command4=commands.TURN_RIGHT
+--    local queue_cmd4 = commands:new(command4)
+--
+--    local command5=commands.LOOP
+--    local queue_cmd5 = commands:new(command5)
+--
+--    local command5=commands.LOOP
+--    local queue_cmd5 = commands:new(command5)
+
+    local addedcommands={}
+
+    queue:push(commands.MOVE, "queue")
+    lunit.assert_equal(commands.MOVE, queue.actions[1], "Did not get the right value from the queue")
+
+    queue:push(commands.MOVE, "queue")
+    lunit.assert_equal(commands.MOVE, queue.actions[2], "Did not get the right value from the queue")
+
+    queue:push(commands.TURN_LEFT, "queue")
+    lunit.assert_equal(commands.TURN_LEFT, queue.actions[3], "Did not get the right value from the queue")
+
+    queue:push(commands.TURN_RIGHT, "queue")
+    lunit.assert_equal(commands.TURN_RIGHT, queue.actions[4], "Did not get the right value from the queue")
+
+    queue:push(commands.LOOP, "queue")
+    lunit.assert_equal(commands.LOOP, queue.actions[5], "Did not get the right value from the queue")
+
+    queue:push(commands.MOVE, "loop")
+    lunit.assert_equal(commands.MOVE, queue.loopActions[1], "Did not get the right value from the queue")
+
+    queue:push(commands.MOVE, "loop")
+    lunit.assert_equal(commands.MOVE, queue.loopActions[2], "Did not get the right value from the queue")
+
+    queue:push(commands.TURN_LEFT, "loop")
+    lunit.assert_equal(commands.TURN_LEFT, queue.loopActions[3], "Did not get the right value from the queue")
+
+    queue:push(commands.TURN_RIGHT, "loop")
+    lunit.assert_equal(commands.TURN_RIGHT, queue.loopActions[4], "Did not get the right value from the queue")
+
+    queue:push(commands.MOVE, "queue")
+    lunit.assert_equal(commands.MOVE, queue.actions[6], "Did not get the right value from the queue")
+
+    queue:push(commands.P1, "queue")
+    lunit.assert_equal(commands.P1, queue.actions[7], "Did not get the right value from the queue")
+
+    queue:push(commands.MOVE, "P1")
+    lunit.assert_equal(commands.MOVE, queue.p1Actions[1], "Did not get the right value from the queue")
+
+    queue:push(commands.MOVE, "P1")
+    lunit.assert_equal(commands.MOVE, queue.p1Actions[2], "Did not get the right value from the queue")
+
+    queue:push(commands.TURN_LEFT, "P1")
+    lunit.assert_equal(commands.TURN_LEFT, queue.p1Actions[3], "Did not get the right value from the queue")
+
+    queue:push(commands.TURN_RIGHT, "P1")
+    lunit.assert_equal(commands.TURN_RIGHT, queue.p1Actions[4], "Did not get the right value from the queue")
+
+    queue:push(commands.P2, "queue")
+    lunit.assert_equal(commands.P1, queue.actions[7], "Did not get the right value from the queue")
+
+    queue:push(commands.MOVE, "P2")
+    lunit.assert_equal(commands.MOVE, queue.p2Actions[1], "Did not get the right value from the queue")
+
+    queue:push(commands.MOVE, "P2")
+    lunit.assert_equal(commands.MOVE, queue.p2Actions[2], "Did not get the right value from the queue")
+
+    queue:push(commands.TURN_LEFT, "P2")
+    lunit.assert_equal(commands.TURN_LEFT, queue.p2Actions[3], "Did not get the right value from the queue")
+
+    queue:push(commands.TURN_RIGHT, "P2")
+    lunit.assert_equal(commands.TURN_RIGHT, queue.p2Actions[4], "Did not get the right value from the queue")
+
 end
