@@ -126,7 +126,7 @@ function Map:moveCharacter(x ,y , direction)
     elseif direction == Map.DOWN then
       self:setCharacter(pos+8)
     end
-
+    gfx.update()
 end
 
 -------------------------------------

@@ -779,7 +779,7 @@ function test_moveCharacter_one()
   local a = ps:new()
   local x = 2 
   local y = 2 
-  local direction = "up"
+  local direction = 0
   a.startPos = 1
 
   setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()

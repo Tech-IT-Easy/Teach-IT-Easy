@@ -47,6 +47,7 @@ function Character:startExecution(inqueue)
         for k = 1, nrOfIterations do
           for i =1, #queue.loopActions do
             act = queue.loopActions[#queue.loopActions - i + 1]
+            self:wait()
             self:execute(act)
           end -- for i = 1
         end -- for k = 1
@@ -54,17 +55,21 @@ function Character:startExecution(inqueue)
       elseif act == Commands.P1 then
         for i =1, #queue.p1Actions do
           act = table.remove(queue.p1Actions)
+          self:wait()
           self:execute(act)
         end-- for i = 1
 
       elseif act == Commands.P2 then
         for i =1, #queue.p2Actions do
           act = table.remove(queue.p2Actions)
+          self:wait()
           self:execute(act)
         end-- for i = 1
 
       else
+        self:wait()
         self:execute(act)
+        gfx.update()
       end -- if act ==Commands.
     end -- if act ~= nil
   end -- for j = 0
@@ -78,33 +83,44 @@ end
 ---------------------------------------
 function Character:execute(command)
   --Moving up
-  if(command == Commands.MOVE) then
-    if(self:checkCollision(self.position, self.state)) then
-      if(self.state ==0) then
-        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-        self.position:setY(self.position:getY()-step)
-      elseif(self.state ==1) then
-        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-        self.position:setX(self.position:getX()+step)
-      elseif(self.state ==2) then
-        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-        self.position:setY(self.position:getY()+step)
-      elseif(self.state ==3) then
-        self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-        self.position:setX(self.position:getX()-step)
+  --execution = function(timer)
+    if(command == Commands.MOVE) then
+      if(self:checkCollision(self.position, self.state)) then
+        if(self.state ==0) then
+          self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+          self.position:setY(self.position:getY()-step)
+        elseif(self.state ==1) then
+          self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+          self.position:setX(self.position:getX()+step)
+        elseif(self.state ==2) then
+          self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+          self.position:setY(self.position:getY()+step)
+        elseif(self.state ==3) then
+          self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
+          self.position:setX(self.position:getX()-step)
+        end
       end
     end
-  end
 
-  if(command == Commands.TURN_LEFT) then
-  --Moving left
-  self.state = (self.state -1)%4
-  end
+    if(command == Commands.TURN_LEFT) then
+    --Moving left
+    self.state = (self.state -1)%4
+    end
 
-  if(command == Commands.TURN_RIGHT) then
-  --moving right
-      self.state = (self.state +1)%4
-  end
+    if(command == Commands.TURN_RIGHT) then
+    --moving right
+        self.state = (self.state +1)%4
+    end
+    --self.executionTimer:stop()
+    --print(timer)
+  --end
+  --self.executionTimer = sys.new_timer(500, "execution")
+end
+
+function Character:wait()
+  local t = sys.time()
+   print(sys.time().."  "..t)
+  while sys.time() - t <= 1 do end
 
 end
 
