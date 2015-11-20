@@ -405,8 +405,8 @@ function test_execute_queue_1()
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
     local pos_X = bottommenu.character.position:getX()
     local pos_Y=bottommenu.character.position:getY()
-    lunit.assert_equal(0,pos_X ,"Did not move to the right x-coordinate")
-    lunit.assert_equal(-25,pos_Y ,"Did not move to the right x-coordinate")
+    lunit.assert_equal(1,pos_X ,"Did not move to the right x-coordinate")
+    lunit.assert_equal(1,pos_Y ,"Did not move to the right x-coordinate")
 end
 
 

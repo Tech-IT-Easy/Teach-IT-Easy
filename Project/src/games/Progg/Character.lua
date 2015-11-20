@@ -43,7 +43,7 @@ function Character:startExecution(inqueue)
     if(act~=nil)then
 
       if act == Commands.LOOP then
-        local nrOfIterations = queue.loopCounter
+        local nrOfIterations = inqueue.loopCounter
         for k = 1, nrOfIterations do
           for i =1, #queue.loopActions do
             act = queue.loopActions[#queue.loopActions - i + 1]

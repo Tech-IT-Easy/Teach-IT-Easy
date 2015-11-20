@@ -27,6 +27,8 @@ local EventListener = require('toolkit.EventListener')
 local PlatformMenu = require('platform.PlatformMenu')
 local Event = require('toolkit.Event')
 
+local GameProgress =require('toolkit.GameProgress')
+
 
 PlatformContext = extends(Object)
 
@@ -47,6 +49,9 @@ function PlatformContext:new()
 
   -- Attach menu object to listener
   o.platformEventListener:attach(o.platformMenu)
+
+
+  o.gameprogress = GameProgress:new()
 
   --------------
   -- code
