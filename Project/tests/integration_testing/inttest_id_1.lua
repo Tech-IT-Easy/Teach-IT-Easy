@@ -43,7 +43,7 @@ function teardown()
   package.preload['games.Progg.Queue'] = nil
 end
 
-function test_command_queue_bottomMenu()
+function test_command_queue()
     local a = require(SUT_1)
     local b = require(SUT_2)
     local c = require(SUT_3)
@@ -71,7 +71,7 @@ function test_command_queue_bottomMenu()
 --    local command5=commands.LOOP
 --    local queue_cmd5 = commands:new(command5)
 
-    local addedcommands={}
+    --local addedcommands={}
 
     queue:push(commands.MOVE, "queue")
     lunit.assert_equal(commands.MOVE, queue.actions[1], "Did not get the right value from the queue")
