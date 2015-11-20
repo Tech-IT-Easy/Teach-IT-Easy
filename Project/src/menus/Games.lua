@@ -39,6 +39,7 @@ function Games:handleinput(event)
   elseif event.key == Event.KEY_BACK then
     return { "main", self.usernamestring }
   elseif event.key == Event.KEY_OK then
+    print(platformContext)
     platformContext.game = GameFactory:getGame(self.games[self.pos][1],platformContext)
     if platformContext.game ~= nil then
       platformContext.game:start()

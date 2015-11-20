@@ -49,7 +49,6 @@ function Character:startExecution(inqueue)
             self:execute(act)
           end
         end
-
       elseif act == Commands.P1 then
         for i =1, #queue.p1Actions do
           act = table.remove(queue.p1Actions)

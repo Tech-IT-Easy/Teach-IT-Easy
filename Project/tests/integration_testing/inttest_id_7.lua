@@ -12,6 +12,7 @@ local event = require ("toolkit.Event")
 
 local SUT = 'menus.Games'
 
+
 --Corresponds to function bottomMenuEventHandler:update(object,eventListener,event)
 --in BottomMenu
 
@@ -46,12 +47,13 @@ function teardown()
 end
 
 function test_start_progg_game()
+    local PlatformContext= require("platform.PlatformContext")
+    platformContext = PlatformContext:new()
     local test = require(SUT)
     local it_games = test:new()
+    print(platformContext)
     event.key = event.KEY_OK
-    Game:handleInput(event)
-    local h = platformContext.game
-    print(h)
+    local b=it_games:handleinput(event)
 end
 
 
