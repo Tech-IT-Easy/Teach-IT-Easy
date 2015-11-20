@@ -34,7 +34,6 @@ end
 
 function UIView:setContainer(container)
   self.container = container
- 
   self:getAbsolutePosition()
 end
 

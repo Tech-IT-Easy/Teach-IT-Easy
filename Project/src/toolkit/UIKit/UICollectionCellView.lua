@@ -7,26 +7,30 @@
 -- @Author:Created by Chuck, NOV 19,2015
 -----------------------------------------------------------
 
-local Object = require("toolkit.Object")
-local UICollectionCellView = extends(Object)
+local UIView = require("toolkit.UIKit.UIView")
+local UICollectionCellView = extends(UIView)
 
 function UICollectionCellView:new(args)
-  local o = UICollectionCellView:super()
+  local o = UICollectionCellView:super{frame=nil,container=args.container}
+  --@member view that is managed by this cell
   o.view = args.view
+  --@member view type, for future developing
   o.viewType = args.viewType
   return UICollectionCellView:init(o)
 end
 
-function UICollectionCellView:adjustContent(frame)
-  --[[if(self.viewType == "UIImageView") then
-    self.view:setFrame(args)
-  elseif(self.viewType == "UIButtonView") then
-    self.view:setFrame(args)
-  end]]--
-  -- other types 
-  
-  self.view:setFrame(frame)
- 
+---- Combine setContainer and setFrame method in UIView 
+function UICollectionCellView:fitToCollection(collectionView,frame)
+  self.container = collectionView
+  self.frame = frame
+  self:getAbsolutePosition()  
+end
+
+---- @override UIView hook method to update position of child view
+function UICollectionCellView:afterPositionChanges()
+  self.view.container = self
+  self.view.frame = {x=0,y=0,w=self.frame.w,h=self.frame.h}
+  self.view:getAbsolutePosition()
 end
 
 function UICollectionCellView:show()

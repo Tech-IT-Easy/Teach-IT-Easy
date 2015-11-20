@@ -17,7 +17,7 @@ function UIPanelView:new(args)
   return UIPanelView:init(o)
 end
 
--- update position of child view
+-- @override UIView hook method to update position of child view
 function UIPanelView:afterPositionChanges()
   for _,view in pairs(self.children) do
     view:getAbsolutePosition()

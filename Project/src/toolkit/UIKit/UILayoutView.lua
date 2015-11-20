@@ -4,11 +4,11 @@
 --
 -- @Author:Created by Chuck, NOV 19,2015
 -----------------------------------------------------------
-local Object = require("toolkit.Object")
-local UILayoutView = extends(Object)
+local UIView = require("toolkit.UIKit.UIView")
+local UILayoutView = extends(UIView)
 
-function UILayoutView:new()
-  local o = UILayoutView:super()
+function UILayoutView:new(args)
+  local o = UILayoutView:super{frame=args.frame,container=args.container}
   return UILayoutView:init(o)
 end
 

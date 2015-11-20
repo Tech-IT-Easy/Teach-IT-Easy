@@ -72,10 +72,11 @@ end
 function UIButtonView:show()
   -- draw frame with border color
   -- if selected, draw with highlight
+  local positionFrame = {x=self.position.x,y=self.position.y,w=self.frame.w,h=self.frame.h}
   if self.isSelected then
-      screen:clear(self.selectedColor, self.frame)
+      screen:clear(self.selectedColor, positionFrame)
   else
-      screen:clear(self.borderColor, self.frame)
+      screen:clear(self.borderColor, positionFrame)
   end
   
   -- draw background with background color

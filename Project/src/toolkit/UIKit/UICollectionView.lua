@@ -5,13 +5,11 @@
 --
 -- @Author:Created by Chuck, NOV 19,2015
 -----------------------------------------------------------
-local Object = require("toolkit.Object")
-local UICollectionView = extends(Object)
+local UILayoutView = require("toolkit.UIKit.UILayoutView")
+local UICollectionView = extends(UILayoutView)
 -- 
 function UICollectionView:new(args)
-  local o = UICollectionView:super()
-  --@member frame {x,y,w,h}
-  o.frame = args.frame
+  local o = UICollectionView:super{frame=args.frame,container=args.container}
   --@member space between two cells
   o.space = args.space
   --@member rows
@@ -36,16 +34,18 @@ function UICollectionView:fillWithCell(cell,row,col)
   if(self.cells[row] == nil) then
     self.cells[row] = {}
   end
-  
-  -- adjust frame of content view
-  cell:adjustContent({
-    x = self.frame.x + (self.cell.width + self.space) * col,
-    y = self.frame.y + (self.cell.height + self.space) * row,
-    w = self.cell.width,
-    h = self.cell.height
-  })
-
-  self.cells[row][col] = cell
+  if cell then
+    -- set cell container is this collection view
+    cellFrame = {
+      x = (self.cell.width + self.space) * col,
+      y = (self.cell.height + self.space) * row,
+      w = self.cell.width,
+      h = self.cell.height
+    }
+    cell:fitToCollection(self,cellFrame)
+    -- adjust frame of content view based on col and row
+    self.cells[row][col] = cell
+  end
 end
 
 
