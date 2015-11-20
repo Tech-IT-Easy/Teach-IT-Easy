@@ -17,7 +17,7 @@ local Map = require('games.Progg.Map')
 local step = 1
 ----
 -- Constructor of the character.
--- @param: the initial position of the character
+-- @param the initial position:Position of the character
 -- @author Ludwig Wikblad; Mario Pizcueta
 ----
 function Character:new(newPosition)
@@ -33,44 +33,47 @@ end
 
 ----------------------------------------
 -- The logic that executes the whole queue when called.
--- @param inqueue - the queue with all the actions to be executed
+-- @param inqueue:Queue - the queue with all the actions to be executed
 -- @author Ludwig Wikblad
 ----------------------------------------
 function Character:startExecution(inqueue)
   local queue = inqueue:getExecutionQueue()
-  for i=1, #queue.actions do
+  for j=1, #queue.actions do
     local act = queue:pop()
     if(act~=nil)then
+
       if act == Commands.LOOP then
         local nrOfIterations = inqueue.loopCounter
         for k = 1, nrOfIterations do
           for i =1, #queue.loopActions do
             act = queue.loopActions[#queue.loopActions - i + 1]
             self:execute(act)
-          end
-        end
+          end -- for i = 1
+        end -- for k = 1
+
       elseif act == Commands.P1 then
         for i =1, #queue.p1Actions do
           act = table.remove(queue.p1Actions)
           self:execute(act)
-        end
+        end-- for i = 1
 
       elseif act == Commands.P2 then
         for i =1, #queue.p2Actions do
           act = table.remove(queue.p2Actions)
           self:execute(act)
-        end
+        end-- for i = 1
+
       else
         self:execute(act)
-      end
-    end
-  end
+      end -- if act ==Commands.
+    end -- if act ~= nil
+  end -- for j = 0
 end
 
 ---------------------------------------
 -- Executes the given command by asking map if action
 -- is legal and then telling map to perform action
--- @param: the command to execute of class Commands
+-- @param: the command:Commands to execute
 -- @author Mario Pizcueta
 ---------------------------------------
 function Character:execute(command)
@@ -107,8 +110,8 @@ end
 
 -----------------------------------------------------------------
 -- Calls the map to check if an action is possible to make
--- @param position - describes the characters position (x,y)
--- @param state - which direction the character is turned
+-- @param position:Position - describes the characters position (x,y)
+-- @param state:integer - which direction the character is turned
 -- @return boolean value of whether it's ok or not to take the action
 -- @author Ludwig Wikblad
 -----------------------------------------------------------------

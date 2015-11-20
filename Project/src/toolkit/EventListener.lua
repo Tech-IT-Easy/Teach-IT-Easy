@@ -11,7 +11,10 @@ local Object = require("toolkit.Object")
 local EventListener = extends(Object)
 
 -----------------------------------------------------------
--- Construct method
+-- Constructor method
+-- @param context:Context (either PlatformContext or Game)
+-- @return :EventListener new instance
+-- @Author Chuck
 -----------------------------------------------------------
 function EventListener:new(context)
   local o = EventListener:super()
@@ -32,7 +35,10 @@ end
 
 
 -----------------------------------------------------------
--- Add a chain listener to this listener
+-- Add a chain listener to this listener. It will be notified
+-- of every event this eventListener gets.
+-- @param listener:EventListener
+-- @Author Chuck
 -----------------------------------------------------------
 function EventListener:addChainListener(listener)
   self.chainListener = listener
@@ -40,6 +46,7 @@ end
 
 -----------------------------------------------------------
 -- Remove the chain listener from this listener
+-- @Author Ludwig Wikblad
 -----------------------------------------------------------
 function EventListener:removeChainListener()
   self.chainListener = nil
@@ -47,7 +54,7 @@ end
 
 -----------------------------------------------------------
 -- Attach a object to this listener
--- @object which is being attached object
+-- @param object:Object which is being attached object
 -----------------------------------------------------------
 function EventListener:attach(object)
    table.insert(self.observers,object)
@@ -55,7 +62,8 @@ end
 
 -----------------------------------------------------------
 -- Remove an object from this listener.
--- @object which is being removed
+-- @param object:Object which is being removed
+-- @Author Ludwig Wikblad
 -----------------------------------------------------------
 function EventListener:remove(object)
   for _,obj in pairs(self.observers) do
@@ -66,7 +74,8 @@ function EventListener:remove(object)
 end
 -----------------------------------------------------------
 -- Notify all the observers which has been attached to this listener
--- @events which is event currently happening
+-- @param event:Event which is event currently happening
+-- @Author Chuck
 -----------------------------------------------------------
 function EventListener:notifyAllObservers(event)
   for _,object in pairs(self.observers) do
@@ -78,8 +87,9 @@ end
 
 -----------------------------------------------------------
 -- Some event trigger this listener in specific context 
--- @context which specific context where event happens
--- @events which is event currently happening
+-- @param context:PlatformContext;Game which specific context where event happens
+-- @param event:Event which is event currently happening
+-- @author Chuck
 -----------------------------------------------------------
 function EventListener:update(event)  
   -- do some thing before notify, such as change context content
