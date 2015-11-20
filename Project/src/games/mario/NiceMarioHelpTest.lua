@@ -15,7 +15,7 @@ function NiceMarioHelpTest:run()
   textlabel = UILabel:new{text="1",color={g=255,r=0,b=0,a=200},size=50,font=UILabel.FONT_GROBOLD}
   
   -- create a UIImage
-  image = UIImage:new{imagePath="games/mario/data/arrow_up.png",imageType="png",width=200,height=200}
+  image = UIImage:new{imagePath="games/mario/data/arrow_up.png",imageType="png"}
   
   -- create a UIButtonView with label and Image
   button = UIButtonView:new{frame={x=1,y=1,w=100,h=100},borderColor={r=255,g=29,b=25},borderWidth = 6,backgroundImage=image,label=textlabel}
@@ -29,7 +29,7 @@ function NiceMarioHelpTest:run()
   button:show()
   
   -- create a UIImageView with position and image
-  imageview = UIImageView:new{image=image,frame={x=300,y=300,w=image.width,h=image.height}}
+  imageview = UIImageView:new{image=image,frame={x=300,y=300,w=200,h=200}}
   imageview:show()
   
   -- create a UILabelView with position and lael,w,h doesn't matter now
@@ -92,8 +92,10 @@ function NiceMarioHelpTest:run()
   anotherPanel:addChildView(button)
   anotherPanel:show()
   
+  bg = UIImage:new{imagePath="games/mario/data/bg.png",imageType="png"}
+  aBigPanelWithABigPicture = UIPanelView:new{frame={x=20,y=400,w=800,h=300},backgroundImage=bg}
   -- UIPanelView
-  
+  aBigPanelWithABigPicture:show()
   
   gfx.update()
 end

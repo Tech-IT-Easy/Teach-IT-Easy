@@ -35,6 +35,10 @@ function UIPanelView:show()
   -- draw background
   screen:clear(self.backgroundColor,self.globalFrame)
   
+  -- draw background image
+  if self.backgroundImage then
+    screen:copyfrom(self.backgroundImage.imageData, nil, self.globalFrame, true)
+  end
   --
   for _,view in pairs(self.children) do
     view:show()

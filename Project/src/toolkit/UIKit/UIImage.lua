@@ -23,6 +23,7 @@ function UIImage:new(args)
     o.imageData = gfx.loadjpeg(args.imagePath)
   end
   
+  --For future development, when create a UIImage object, following properties are unnecessary
   --@member image width
   o.width = args.width or o.imageData:get_width()
   
