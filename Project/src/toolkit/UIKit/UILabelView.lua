@@ -18,7 +18,7 @@ function UILabelView:new(args)
   --@member label UILabel type 
   o.label = args.label
   --@member label data 
-  o.labelData = sys.new_freetype(o.label.color, o.label.size, o.position,o.label.font)
+  o.labelData = sys.new_freetype(o.label.color, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},o.label.font)
   return UILabelView:init(o)
 end
 
@@ -26,8 +26,8 @@ function UILabelView:show()
   self.labelData:draw_over_surface(screen, self.label.text)
 end
 
-function UILabelView:afterPositionChanges()
-  self.labelData = sys.new_freetype(self.label.color, self.label.size,self.position,self.label.font)
+function UILabelView:afterUpdateGlobalFrame()
+  self.labelData = sys.new_freetype(self.label.color, self.label.size,{x = self.globalFrame.x,y = self.globalFrame.y},self.label.font)
 end
 
 return UILabelView

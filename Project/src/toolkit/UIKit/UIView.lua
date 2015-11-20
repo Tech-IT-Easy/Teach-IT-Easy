@@ -10,36 +10,37 @@ local UIView = extends(Object)
 
 function UIView:new(args)
   local o = UIView:super()
+ 
   --@member frame UIView class default frame is window screen
   o.frame = (args and args.frame) or {x = 0,y = 0,w = screen:get_width(),h = screen:get_height()}
   
   --@member container which contains this UIView,default nil which means whole window
-  o.container = (args and args.container) or {frame={x = 0,y = 0,w = screen:get_width(),h = screen:get_height()},position={x=0,y=0}}
+  o.container = (args and args.container) or {frame={x = 0,y = 0,w = screen:get_width(),h = screen:get_height()},globalFrame={x = 0,y = 0,w = screen:get_width(),h = screen:get_height()}}
   
   --@member absolute position,which should be used when show something on screen
-  o.position = {x = o.frame.x + o.container.position.x, y = o.frame.y + o.container.position.y}
+  o.globalFrame = {x = o.frame.x + o.container.globalFrame.x, y = o.frame.y + o.container.globalFrame.y,w = o.frame.w,h = o.frame.h}
   return UIView:init(o)
 end
 
-function UIView:afterPositionChanges()
+function UIView:afterUpdateGlobalFrame()
   -- code implemented by subclass
 end
 
 
-function UIView:getAbsolutePosition()
-  self.position = {x = self.frame.x + self.container.position.x, y = self.frame.y + self.container.position.y}
-  self:afterPositionChanges()
+function UIView:updateGlobalFrame()
+  self.globalFrame = {x = self.frame.x + self.container.globalFrame.x, y = self.frame.y + self.container.globalFrame.y,w = self.frame.w,h = self.frame.h}
+  self:afterUpdateGlobalFrame()
 end
 
 
 function UIView:setContainer(container)
   self.container = container
-  self:getAbsolutePosition()
+  self:updateGlobalFrame()
 end
 
 function UIView:setFrame(frame)
   self.frame = frame
-  self:getAbsolutePosition()
+  self:updateGlobalFrame()
 end
 
 WINDOW = UIView:new(nil)

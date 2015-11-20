@@ -23,14 +23,14 @@ end
 function UICollectionCellView:fitToCollection(collectionView,frame)
   self.container = collectionView
   self.frame = frame
-  self:getAbsolutePosition()  
+  self:updateGlobalFrame()  
 end
 
 ---- @override UIView hook method to update position of child view
-function UICollectionCellView:afterPositionChanges()
+function UICollectionCellView:afterUpdateGlobalFrame()
   self.view.container = self
   self.view.frame = {x=0,y=0,w=self.frame.w,h=self.frame.h}
-  self.view:getAbsolutePosition()
+  self.view:updateGlobalFrame()
 end
 
 function UICollectionCellView:show()

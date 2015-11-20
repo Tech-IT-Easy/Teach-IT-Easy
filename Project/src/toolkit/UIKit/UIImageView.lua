@@ -17,7 +17,7 @@ function UIImageView:new(args)
 end
 
 function UIImageView:show()
-  screen:copyfrom(self.image.imageData, nil, {x=self.position.x,y=self.position.y,w=self.frame.w,h=self.frame.h}, true)
+  screen:copyfrom(self.image.imageData, nil, self.globalFrame, true)
 end
 
 return UIImageView

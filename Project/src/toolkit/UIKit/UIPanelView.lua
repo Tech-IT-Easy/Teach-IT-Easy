@@ -12,15 +12,17 @@ function UIPanelView:new(args)
   local o = UIPanelView:super{frame=args.frame,container=args.container}
   --@member background color {r=2,g=2,b=3}
   o.backgroundColor = args.backgroundColor or {r=255,g=255,b=255}
+  --@member background image.Type of UIImage
+  o.backgroundImage = args.backgroundImage
   --@member 
   o.children = {}
   return UIPanelView:init(o)
 end
 
 -- @override UIView hook method to update position of child view
-function UIPanelView:afterPositionChanges()
+function UIPanelView:afterUpdateGlobalFrame()
   for _,view in pairs(self.children) do
-    view:getAbsolutePosition()
+    view:updateGlobalFrame()
   end
 end
 
@@ -31,8 +33,9 @@ end
 
 function UIPanelView:show()
   -- draw background
-  screen:clear(self.backgroundColor, {x=self.position.x,y=self.position.y,w=self.frame.w,h=self.frame.h})
-
+  screen:clear(self.backgroundColor,self.globalFrame)
+  
+  --
   for _,view in pairs(self.children) do
     view:show()
   end

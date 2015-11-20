@@ -51,7 +51,7 @@ end
 
 function UICollectionView:show()
   -- draw background
-  screen:clear(self.backgroundColor, self.frame)
+  screen:clear(self.backgroundColor, self.globalFrame)
   
   -- draw cells
   for i = 0,self.rows do

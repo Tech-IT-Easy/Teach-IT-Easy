@@ -28,8 +28,8 @@ function UIButtonView:new(args)
   o.labelPosition = args.labelPosition or {x=0,y=0}
   -- @member background area = frame - borderWidth
   o.backgroundArea = {
-    x = o.position.x + o.borderWidth,
-    y = o.position.y + o.borderWidth,
+    x = o.globalFrame.x + o.borderWidth,
+    y = o.globalFrame.y + o.borderWidth,
     w = o.frame.w - 2*o.borderWidth,
     h = o.frame.h - 2*o.borderWidth
   }
@@ -37,8 +37,8 @@ function UIButtonView:new(args)
   -- firstly change position relative to button frame
   if o.label then
     o.labelAbsolutePosition = {
-      x = o.position.x + o.labelPosition.x,
-      y = o.position.y + o.labelPosition.y
+      x = o.globalFrame.x + o.labelPosition.x,
+      y = o.globalFrame.y + o.labelPosition.y
     }
     o.labelData = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,o.label.font)
   end
@@ -50,19 +50,19 @@ end
 --@ override UIView method
 --since labelData needs to be created before shown
 --------------------------------------------------
-function UIButtonView:afterPositionChanges()
+function UIButtonView:afterUpdateGlobalFrame()
 
   self.backgroundArea = {
-    x = self.position.x + self.borderWidth,
-    y = self.position.y + self.borderWidth,
+    x = self.globalFrame.x + self.borderWidth,
+    y = self.globalFrame.y + self.borderWidth,
     w = self.frame.w - 2*self.borderWidth,
     h = self.frame.h - 2*self.borderWidth
   }
  
   if self.label then
     self.labelAbsolutePosition = {
-      x = self.position.x + self.labelPosition.x,
-      y = self.position.y + self.labelPosition.y
+      x = self.globalFrame.x + self.labelPosition.x,
+      y = self.globalFrame.y + self.labelPosition.y
     }
     self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,self.label.font)
   end
@@ -72,11 +72,10 @@ end
 function UIButtonView:show()
   -- draw frame with border color
   -- if selected, draw with highlight
-  local positionFrame = {x=self.position.x,y=self.position.y,w=self.frame.w,h=self.frame.h}
   if self.isSelected then
-      screen:clear(self.selectedColor, positionFrame)
+      screen:clear(self.selectedColor, self.globalFrame)
   else
-      screen:clear(self.borderColor, positionFrame)
+      screen:clear(self.borderColor, self.globalFrame)
   end
   
   -- draw background with background color
