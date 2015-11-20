@@ -142,6 +142,33 @@ function Map:getPosition(x,y)
 end
 
 -------------------------------------
+-- Return a bool saying if the character is in the goal.
+-- @param x Place of character
+-- @param y Place of character
+-- @return true or false 
+-- @author Mario Pizcueta
+-------------------------------------
+
+function Map:isInGoal(x,y)
+  return self:getPosition(x,y) == self.goalPos
+end
+
+-------------------------------------
+-- Restarts the character to the start position
+-- -- @param x Place of character
+-- @param y Place of character
+-- @author Mario Pizcueta
+-------------------------------------
+
+function Map:restartCharacter(x,y)
+  local pos = self:getPosition(x,y)
+  self:square(pos, self.tiles[pos])
+  self:setCharacter(self.startPos)
+
+end
+
+
+-------------------------------------
 -- Prints character to a place in map.
 -- @param i Place of character
 -- @author Erik
