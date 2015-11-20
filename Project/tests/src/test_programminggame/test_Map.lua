@@ -486,7 +486,7 @@ function test_drawBox_one()
 
   local ps2 = require("games.Progg.Tile")
   local a = ps:new()
-  local tile = ps2:new(0)
+  local tile = ps2:new("0")
   local xPos = 200
   local yPos = 200
 
@@ -509,7 +509,7 @@ function test_drawBox_two()
 
   local ps2 = require("games.Progg.Tile")
   local a = ps:new()
-  local tile = ps2:new(2)
+  local tile = ps2:new("2")
   local xPos = 200
   local yPos = 200
 
@@ -534,7 +534,7 @@ function test_drawBox_three()
 
   local ps2 = require("games.Progg.Tile")
   local a = ps:new()
-  local tile = ps2:new(4)
+  local tile = ps2:new("4")
   local xPos = 200
   local yPos = 200
 
@@ -559,7 +559,7 @@ function test_drawBox_four()
 
   local ps2 = require("games.Progg.Tile")
   local a = ps:new()
-  local tile = ps2:new(8)
+  local tile = ps2:new("8")
   local xPos = 200
   local yPos = 200
 
@@ -584,7 +584,7 @@ function test_drawBox_five()
 
   local ps2 = require("games.Progg.Tile")
   local a = ps:new()
-  local tile = ps2:new(1)
+  local tile = ps2:new("1")
   local xPos = 200
   local yPos = 200
 
