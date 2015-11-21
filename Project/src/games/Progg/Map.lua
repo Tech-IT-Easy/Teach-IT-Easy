@@ -64,13 +64,13 @@ function Map:load()
         7, 0, 0, 0, 0, 0, 0, 0,
     }
 
-  self.file = io.open("games/Progg/levels/level"..tostring(1)..".txt", "r")
-  --self.data = self.file:read("*a")
-  self.mapdata = {}
-   for line in self.file:lines() do
-    -- print(line)
-    table.insert (self.mapdata, line)
-   end
+    self.file = io.open("games/Progg/levels/level" .. tostring(1) .. ".txt", "r")
+    --self.data = self.file:read("*a")
+    self.mapdata = {}
+    for line in self.file:lines() do
+        -- print(line)
+        table.insert(self.mapdata, line)
+    end
 
     self.tiles = {}
     --Creating tiles from mapdata
@@ -93,9 +93,12 @@ function Map:load()
     self:setStart(self.startPos)
     self:setCharacter(self.charPos)
 
-    for i = 1, #self.objectives, 1 do
+    --[[
+     for i = 1, #self.objectives, 1 do
+
         self:printObjective(self.objectives[i])
     end
+    ]]
 end
 
 -------------------------------------
@@ -211,13 +214,13 @@ end
 function Map:moveCharacter(x, y, direction)
     local pos = self:getPosition(x, y)
     local isObjective = false
-    for _, v in pairs(self.inGameObjectives) do
+    --[[for _, v in pairs(self.inGameObjectives) do
         if v == pos then
             isObjective = true
             break
         end
     end
-
+]]
     if pos == self.startPos then
         self:setStart(pos)
     elseif isObjective then
