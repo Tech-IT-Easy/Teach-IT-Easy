@@ -22,7 +22,8 @@ Map.LEFT = 3
 -------------------------------------
 function Map:new()
     local o = Map:super()
-
+    o.rows = 5
+    o.columns = 8
     return Map:init(o)
 end
 
@@ -45,8 +46,8 @@ function Map:load()
     }, true)
     self.background:destroy()
 
-    self.boxheight = (screen:get_height() * 0.65) / 6
-    local padding = (screen:get_width() * 0.75) - (self.boxheight * 8)
+    self.boxheight = (screen:get_height() * 0.65) / (self.rows+1)
+    local padding = (screen:get_width() * 0.75) - (self.boxheight * self.columns)
     self.startx = padding / 2
     self.starty = self.boxheight / 2
     self.innerboxheight = self.boxheight - 20
@@ -55,6 +56,7 @@ function Map:load()
 
     -- Mapdata that is being displayed
     -- set as input, when input is implemented
+    --[[
     self.mapdata2 =
     {
         9, "a", "c", 0, 0, 0, 0, 0,
@@ -63,6 +65,7 @@ function Map:load()
         5, 0, 0, 0, "f", 0, 0, 0,
         7, 0, 0, 0, 0, 0, 0, 0,
     }
+    ]]
 
     self.file = io.open("games/Progg/levels/level" .. tostring(1) .. ".txt", "r")
     --self.data = self.file:read("*a")
@@ -81,12 +84,12 @@ function Map:load()
 
     self.goalPos = 20
     self.startPos = 33
-    self.objectives = { 17, 1 }
-    self.inGameObjectives = self.objectives
+    --self.objectives = { 17, 1 }
+    --self.inGameObjectives = self.objectives
     self.charPos = self.startPos
 
     --Loop builds map
-    for i = 1, 40, 1 do
+    for i = 1, #self.tiles, 1 do
         self:square(i, self.tiles[i])
     end
     self:setGoal(self.goalPos)
@@ -95,11 +98,12 @@ function Map:load()
 
     --[[
      for i = 1, #self.objectives, 1 do
-
         self:printObjective(self.objectives[i])
     end
     ]]
 end
+
+
 
 -------------------------------------
 -- Called by a character to activate a "broken" tile
