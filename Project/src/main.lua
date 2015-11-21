@@ -56,7 +56,7 @@ function onStart()
   platformContext:load()
   platformContext:show()  
   -- If you want to test Chuck's refactoring in Mario, uncommment this two lines
-  local NiceMarioHelpTest = require("games.mario.NiceMarioHelpTest")
-  NiceMarioHelpTest:run()
+  --local NiceMarioHelpTest = require("games.mario.NiceMarioHelpTest")
+  --NiceMarioHelpTest:run()
 end
 

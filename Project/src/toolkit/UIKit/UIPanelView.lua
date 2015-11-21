@@ -45,4 +45,8 @@ function UIPanelView:show()
   end
 end
 
+function UIPanelView:getChildViews()
+  return self.children
+end
+
 return UIPanelView

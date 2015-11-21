@@ -63,5 +63,16 @@ function UICollectionView:show()
   end
 end
 
+function UICollectionView:getChildViews()
+  local children = {}
+  for i = 0,self.rows do
+    for j = 0,self.cols do
+      if(self.cells[i]~=nil and self.cells[i][j]~=nil) then
+        children[i*self.rows+j] = self.cells[i][j].view
+      end
+    end
+  end
+  return children
+end
 
 return UICollectionView

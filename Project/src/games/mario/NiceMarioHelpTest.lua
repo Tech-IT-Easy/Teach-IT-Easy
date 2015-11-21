@@ -8,11 +8,46 @@ local UILabelView = require("toolkit.UIKit.UILabelView")
 local UICollectionView = require("toolkit.UIKit.UICollectionView")
 local UICollectionCellView = require("toolkit.UIKit.UICollectionCellView")
 local UIPanelView = require("toolkit.UIKit.UIPanelView")
-
+local List = require("toolkit.Utils.List")
+local ListNode = require("toolkit.Utils.ListNode")
+require("games.mario.data.theme")
 
 function NiceMarioHelpTest:run()
   -- create a UILabel
-  textlabel = UILabel:new{text="1",color={g=255,r=0,b=0,a=200},size=50,font=UILabel.FONT_GROBOLD}
+  
+  node1 = ListNode:new({focusWeight=10})
+  node2 = ListNode:new({focusWeight=20})
+  node3 = ListNode:new({focusWeight=15})
+  node4 = ListNode:new({focusWeight=15})
+  node5 = ListNode:new({focusWeight=80})
+  node6 = ListNode:new({focusWeight=30})
+  node7 = ListNode:new({focusWeight=59})
+  
+  function compare(node1,node2)
+    if node1.value.focusWeight < node2.value.focusWeight then return -1
+    elseif node1.value.focusWeight == node2.value.focusWeight then return 0 
+    else return 1 
+    end
+  end
+  
+  list = List:new()
+  list:push(node1,compare)
+  list:push(node2,compare)
+  list:push(node3,compare)
+  list:push(node4,compare)
+  list:push(node5,compare)
+  list:push(node6,compare)
+  list:push(node7,compare)
+  
+  iter = list.first
+  while(iter ~= list.last) do
+    print(iter.value.focusWeight)
+    iter = iter.next
+  end
+  print(iter.value.focusWeight)
+  
+  
+  textlabel = UILabel:new{text="1",color=COLOR.RED,size=50,font=UILabel.FONT_GROBOLD}
   
   -- create a UIImage
   image = UIImage:new{imagePath="games/mario/data/arrow_up.png",imageType="png"}
@@ -24,7 +59,7 @@ function NiceMarioHelpTest:run()
   --image = UIImageView:new{imagePath="data/arrow_up.png",imageType="png",width=200,height=200}
   -- create a UIButtonView with label changing text and no image but selected
   textlabel.text = "2"
-  button = UIButtonView:new{frame={x=50,y=50,w=100,h=100},borderColor={r=255,g=29,b=25},borderWidth = 6,backgroundImage=nil,label=textlabel}
+  button = UIButtonView:new{frame={x=50,y=50,w=100,h=100},borderColor={r=255,g=29,b=25},borderWidth = 16,backgroundImage=nil,label=textlabel}
   button:selected()
   button:show()
   
@@ -61,10 +96,10 @@ function NiceMarioHelpTest:run()
   collectionLayout:fillWithCell(cell2,2,1)
   
   cell3 = UICollectionCellView:new{view=imageview3,viewType="UIImageView"}
-  collectionLayout:fillWithCell(cell3,0,2)
+  collectionLayout:fillWithCell(cell3,1,2)
   
   cell3 = UICollectionCellView:new{view=button1,viewType="UIButtonView"}
-  collectionLayout:fillWithCell(cell3,0,0)
+  collectionLayout:fillWithCell(cell3,1,0)
   
   -- finally call UICollectionView:show() method will show all the Views in specific position and size
   collectionLayout:show()

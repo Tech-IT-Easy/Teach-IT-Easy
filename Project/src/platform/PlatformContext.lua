@@ -26,7 +26,7 @@ local Object = require('toolkit.Object')
 local EventListener = require('toolkit.EventListener')
 local PlatformMenu = require('platform.PlatformMenu')
 local Event = require('toolkit.Event')
-
+local UIStartWindowView = require('platform.UIStartWindowView')
 
 PlatformContext = extends(Object)
 
@@ -46,8 +46,11 @@ function PlatformContext:new()
   o.platformEventListener = EventListener:new(self)
 
   -- Attach menu object to listener
-  o.platformEventListener:attach(o.platformMenu)
-
+  -- o.platformEventListener:attach(o.platformMenu)
+  
+  o.window = UIStartWindowView
+  
+  o.platformEventListener:attach(o.window)
   --------------
   -- code
   --------------
@@ -85,7 +88,7 @@ function PlatformContext:show()
   -- code
   --------------
   self.platformMenu:show()
-
+  self.window:show()
   gfx.update()
 end
 
@@ -102,6 +105,8 @@ function PlatformContext:update()
   if self.platformMenu ~= nil then
     self.platformMenu:update()
   end
+  
+  self.window:show()
   -- code
   gfx.update()
   --collectgarbage()

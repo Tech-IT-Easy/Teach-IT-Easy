@@ -18,6 +18,8 @@ function UIButtonView:new(args)
   o.borderColor = args.borderColor or {r=0,g=0,b=0}
   -- @member border width, default is 2
   o.borderWidth = args.borderWidth or 2
+  -- @member enable focused
+  o.enableFocus = args.enableFocus or false
   -- @member marked as selected, default is false
   o.isSelected = args.isSelected or false
   -- @member hightlight color
@@ -114,6 +116,16 @@ end
 
 -- make it unSelected
 function UIButtonView:unSelected()
+  self.isSelected = false
+end
+
+-- make it focused
+function UIButtonView:focused()
+  self.isSelected = true
+end
+
+-- make it unFocused
+function UIButtonView:unFocused()
   self.isSelected = false
 end
 
