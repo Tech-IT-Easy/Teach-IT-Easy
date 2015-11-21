@@ -46,7 +46,7 @@ function Map:load()
     }, true)
     self.background:destroy()
 
-    self.boxheight = (screen:get_height() * 0.65) / (self.rows+1)
+    self.boxheight = (screen:get_height() * 0.65) / (self.rows + 1)
     local padding = (screen:get_width() * 0.75) - (self.boxheight * self.columns)
     self.startx = padding / 2
     self.starty = self.boxheight / 2
@@ -116,53 +116,69 @@ function Map:activateBox(x, y)
     for _, v in pairs(self.inGameObjectives) do
         if v == pos then
             self:printObjectiveAsDone(pos)
-            self.inGameObjectives.remove(_)
+            self.inGameObjectives.remove(v)
             break
         end
     end
 end
 
-function Map:printInnerBox(i, color)
-    if (i < 9) then
-        screen:clear(color, {
-            x = self.startx + self.boxheight * (i - 1) + self.boxpadding,
-            y = self.starty + self.boxpadding,
-            w = self.innerboxheight,
-            h = self.innerboxheight
-        })
-    elseif (i < 17) then
-        i = i - 8
-        screen:clear(color, {
-            x = self.startx + self.boxheight * (i - 1) + self.boxpadding,
-            y = self.starty + self.boxheight + self.boxpadding,
-            w = self.innerboxheight,
-            h = self.innerboxheight
-        })
-    elseif (i < 25) then
-        i = i - 16
-        screen:clear(color, {
-            x = self.startx + self.boxheight * (i - 1) + self.boxpadding,
-            y = self.starty + self.boxheight * 2 + self.boxpadding,
-            w = self.innerboxheight,
-            h = self.innerboxheight
-        })
-    elseif (i < 33) then
-        i = i - 24
-        screen:clear(color, {
-            x = self.startx + self.boxheight * (i - 1) + self.boxpadding,
-            y = self.starty + self.boxheight * 3 + self.boxpadding,
-            w = self.innerboxheight,
-            h = self.innerboxheight
-        })
+-------------------------------------
+-- Returns x placement in table(as if two dimensional)
+-- @param i Placement in table
+-- @return x Placement in a row
+-- @author Erik
+-------------------------------------
+function Map:getX(i)
+    if (i < self.columns + 1) then
+        return self.startx + self.boxheight * (i - 1)
+    elseif (i < (self.columns * 2) + 1) then
+        i = i - self.columns
+        return self.startx + self.boxheight * (i - 1)
+    elseif (i < (self.columns * 3) + 1) then
+        i = i - self.columns * 2
+        return self.startx + self.boxheight * (i - 1)
+    elseif (i < (self.columns * 4) + 1) then
+        i = i - self.columns * 3
+        return self.startx + self.boxheight * (i - 1)
     else
-        i = i - 32
-        screen:clear(color, {
-            x = self.startx + self.boxheight * (i - 1) + self.boxpadding,
-            y = self.starty + self.boxheight * 4 + self.boxpadding,
-            w = self.innerboxheight,
-            h = self.innerboxheight
-        })
+        i = i - self.columns * 4
+        return self.startx + self.boxheight * (i - 1)
     end
+end
+
+-------------------------------------
+-- Returns y placement in table(as if two dimensional)
+-- @param i Placement in table
+-- @return y Placement in a column
+-- @author Erik
+-------------------------------------
+function Map:getY(i)
+    if (i < self.columns + 1) then
+        return self.starty
+    elseif (i < (self.columns * 2) + 1) then
+        return self.starty + self.boxheight
+    elseif (i < (self.columns * 3) + 1) then
+        return self.starty + self.boxheight * 2
+    elseif (i < (self.columns * 4) + 1) then
+        return self.starty + self.boxheight * 3
+    else
+        return self.starty + self.boxheight * 4
+    end
+end
+
+-------------------------------------
+-- Prints only the inner part of an box.
+-- @param i The position of the box in the table.
+-- @param color The color of the box.
+-- @author Erik
+-------------------------------------
+function Map:printInnerBox(i, color)
+    screen:clear(color, {
+        x = self:getX(i) + self.boxpadding,
+        y = self:getY(i) + self.boxpadding,
+        w = self.innerboxheight,
+        h = self.innerboxheight
+    })
 end
 
 -------------------------------------
@@ -265,47 +281,12 @@ function Map:setCharacter(i)
     self.image1 = gfx.loadpng('data/bowser.png')
     self.image1:premultiply()
 
-    if (i < 9) then
-        screen:copyfrom(self.image1, nil, {
-            x = self.startx + self.boxheight * (i - 1) + self.boxpadding,
-            y = self.starty + self.boxpadding,
-            w = self.innerboxheight,
-            h = self.innerboxheight
-        }, true)
-    elseif (i < 17) then
-        i = i - 8
-        screen:copyfrom(self.image1, nil, {
-            x = self.startx + self.boxheight * (i - 1) + self.boxpadding,
-            y = self.starty + self.boxheight + self.boxpadding,
-            w = self.innerboxheight,
-            h = self.innerboxheight
-        }, true)
-    elseif (i < 25) then
-        i = i - 16
-        screen:copyfrom(self.image1, nil, {
-            x = self.startx + self.boxheight * (i - 1) + self.boxpadding,
-            y = self.starty + self.boxheight * 2 + self.boxpadding,
-            w = self.innerboxheight,
-            h = self.innerboxheight
-        }, true)
-    elseif (i < 33) then
-        i = i - 24
-        screen:copyfrom(self.image1, nil, {
-            x = self.startx + self.boxheight * (i - 1) + self.boxpadding,
-            y = self.starty + self.boxheight * 3 + self.boxpadding,
-            w = self.innerboxheight,
-            h = self.innerboxheight
-        }, true)
-    else
-        i = i - 32
-        screen:copyfrom(self.image1, nil, {
-            x = self.startx + self.boxheight * (i - 1) + self.boxpadding,
-            y = self.starty + self.boxheight * 4 + self.boxpadding,
-            w = self.innerboxheight,
-            h = self.innerboxheight
-        }, true)
-    end
-
+    screen:copyfrom(self.image1, nil, {
+        x = self:getX(i) + self.boxpadding,
+        y = self:getY(i) + self.boxpadding,
+        w = self.innerboxheight,
+        h = self.innerboxheight
+    }, true)
     self.image1:destroy()
 end
 
@@ -329,10 +310,6 @@ function Map:setStart(i)
     self:printInnerBox(i, wantedColor)
 end
 
-
-function Map:update()
-end
-
 -------------------------------------
 -- Calculates x and y values of tile.
 -- @param i Place of tile
@@ -340,21 +317,7 @@ end
 -- @author Erik
 -------------------------------------
 function Map:square(i, tile)
-    if (i < 9) then
-        self:drawBox(tile, self.startx + self.boxheight * (i - 1), self.starty)
-    elseif (i < 17) then
-        i = i - 8
-        self:drawBox(tile, self.startx + self.boxheight * (i - 1), self.starty + self.boxheight)
-    elseif (i < 25) then
-        i = i - 16
-        self:drawBox(tile, self.startx + self.boxheight * (i - 1), self.starty + self.boxheight * 2)
-    elseif (i < 33) then
-        i = i - 24
-        self:drawBox(tile, self.startx + self.boxheight * (i - 1), self.starty + self.boxheight * 3)
-    else
-        i = i - 32
-        self:drawBox(tile, self.startx + self.boxheight * (i - 1), self.starty + self.boxheight * 4)
-    end
+    self:drawBox(tile, self:getX(i), self:getY(i))
 end
 
 -------------------------------------
