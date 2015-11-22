@@ -15,6 +15,12 @@ Map.UP = 0
 Map.RIGHT = 1
 Map.DOWN = 2
 Map.LEFT = 3
+
+Map.STARTCOLOR = { g = 240, r = 19, b = 56 }
+Map.GOALCOLOR = { g = 194, r = 225, b = 42 }
+Map.INNERBOXCOLOR = { g = 83, r = 101, b = 219 }
+Map.OUTERBOXCOLOR = { g = 28, r = 70, b = 122 }
+Map.OBJECTIVECOLOR = { g = 9, r = 115, b = 13 }
 -------------------------------------
 -- Creates new Map object.
 -- @return Map New map
@@ -178,7 +184,7 @@ end
 -- @author Erik
 -------------------------------------
 function Map:printObjective(i)
-    local wantedColor = { g = 9, r = 115, b = 13 }
+    local wantedColor = Map.OBJECTIVECOLOR
     self:printInnerBox(i, wantedColor)
 end
 
@@ -188,7 +194,7 @@ end
 -- @author Erik
 -------------------------------------
 function Map:printObjectiveAsDone(i)
-    local wantedColor = { g = 83, r = 101, b = 219 }
+    local wantedColor = Map.INNERBOXCOLOR
     self:printInnerBox(i, wantedColor)
 end
 
@@ -287,7 +293,7 @@ end
 -- @author Erik
 -------------------------------------
 function Map:setGoal(i)
-    local wantedColor = { g = 194, r = 225, b = 42 }
+    local wantedColor = Map.GOALCOLOR
     self:printInnerBox(i, wantedColor)
 end
 
@@ -297,7 +303,7 @@ end
 -- @author Erik
 -------------------------------------
 function Map:setStart(i)
-    local wantedColor = { g = 240, r = 19, b = 56 }
+    local wantedColor = Map.STARTCOLOR
     self:printInnerBox(i, wantedColor)
 end
 
@@ -344,8 +350,8 @@ end
 -- @author Erik
 -------------------------------------
 function Map:drawStandardBox(xPos, yPos)
-    screen:clear({ g = 28, r = 70, b = 122 }, { x = xPos, y = yPos, w = self.boxheight, h = self.boxheight })
-    screen:clear({ g = 83, r = 101, b = 219 }, {
+    screen:clear(Map.OUTERBOXCOLOR, { x = xPos, y = yPos, w = self.boxheight, h = self.boxheight })
+    screen:clear(Map.INNERBOXCOLOR, {
         x = xPos + self.boxpadding,
         y = yPos + self.boxpadding,
         w = self.innerboxheight,
