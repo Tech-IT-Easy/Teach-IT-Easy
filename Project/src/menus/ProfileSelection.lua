@@ -1,19 +1,27 @@
 --ProfileSelection = {} --MenuView:new()
 -- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
+
+local Profile = require('platform.Profile')
+
 ProfileSelection = extends(Super)
 
---usernames
-usernames = { "ERIK", "MARCUS", "TOAD" }
+-- profiles
+profiles = {}
+table.insert(profiles, Profile:new("Knatte",1))
+table.insert(profiles, Profile:new("Fnatte",2))
+table.insert(profiles, Profile:new("Tjatte",3))
 
 -- images
-local image1 = gfx.loadpng('data/bowser.png')
+local image1 = gfx.loadpng(profiles[1].avatar)
 image1:premultiply()
-local image2 = gfx.loadpng('data/mario.png')
+local image2 = gfx.loadpng(profiles[2].avatar)
 image2:premultiply()
-local image3 = gfx.loadpng('data/toad.png')
+local image3 = gfx.loadpng(profiles[3].avatar)
 image3:premultiply()
-images = { image1, image2, image3 }
+
+images = { image1, image2, image3}
+
 
 local Event = require('toolkit.Event')
 -------------------------------------
@@ -39,10 +47,10 @@ function ProfileSelection:handleinput(event)
   -- each menu will have its own function to handle remote input
 
   self.lastpos = self.pos
-  if event.key == Event.KEY_RIGHT and self.pos < #usernames then
+  if event.key == Event.KEY_RIGHT and self.pos < #profiles then
     self.lastpos = self.pos
     self.pos = self.pos + 1
-  elseif event.key == Event.KEY_LEFT and self.pos > 1 and self.pos < #usernames + 1 then
+  elseif event.key == Event.KEY_LEFT and self.pos > 1 and self.pos < #profiles + 1 then
 
     self.pos = self.pos - 1
   elseif event.key == Event.KEY_DOWN then
@@ -54,9 +62,10 @@ function ProfileSelection:handleinput(event)
     self.pos = 1
 
   elseif event.key == Event.KEY_OK and self.pos < 5 then
-    return { "main", usernames[self.pos] }
+    return { "main", profiles[self.pos].name}
 
-  elseif event.key == Event.KEY_OK and self.pos == 5 and #usernames <4 then
+
+  elseif event.key == Event.KEY_OK and self.pos == 5 and #profiles <4 then
     return { "create" }
 
 --  elseif event.key == Event.KEY_ONE and self.pos < 5 then
@@ -141,9 +150,9 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:printnames()
-  for i in pairs(usernames) do
-    prof_sel_usernamefonts[i]:draw_over_surface(screen, usernames[i])
-    print (usernames[i])
+  for i in pairs(profiles) do
+    prof_sel_usernamefonts[i]:draw_over_surface(screen, profiles[i].name)
+    print (profiles[i])
   end
 
 end
