@@ -34,7 +34,7 @@ end
 -- @author Erik
 -------------------------------------
 function Map:load()
-    -- implement parameter with mapdata
+    -- implement parameter with coosing of level
 
     self.background = gfx.loadpng('data/game_background_small.png')
 
@@ -129,20 +129,13 @@ end
 -- @author Erik
 -------------------------------------
 function Map:getX(i)
-    if (i < self.columns + 1) then
-        return self.startx + self.boxheight * (i - 1)
-    elseif (i < (self.columns * 2) + 1) then
+    local searching = true
+    while searching do
         i = i - self.columns
-        return self.startx + self.boxheight * (i - 1)
-    elseif (i < (self.columns * 3) + 1) then
-        i = i - self.columns * 2
-        return self.startx + self.boxheight * (i - 1)
-    elseif (i < (self.columns * 4) + 1) then
-        i = i - self.columns * 3
-        return self.startx + self.boxheight * (i - 1)
-    else
-        i = i - self.columns * 4
-        return self.startx + self.boxheight * (i - 1)
+        if not (i > 0) then
+            i = i + self.columns
+            return self.startx + self.boxheight * (i - 1)
+        end
     end
 end
 
@@ -153,16 +146,14 @@ end
 -- @author Erik
 -------------------------------------
 function Map:getY(i)
-    if (i < self.columns + 1) then
-        return self.starty
-    elseif (i < (self.columns * 2) + 1) then
-        return self.starty + self.boxheight
-    elseif (i < (self.columns * 3) + 1) then
-        return self.starty + self.boxheight * 2
-    elseif (i < (self.columns * 4) + 1) then
-        return self.starty + self.boxheight * 3
-    else
-        return self.starty + self.boxheight * 4
+    local searching = true
+    local row = 1
+    while searching do
+        i = i - self.columns
+        if not (i > 0) then
+            return self.starty + (self.boxheight * (row - 1))
+        end
+        row = row + 1
     end
 end
 
