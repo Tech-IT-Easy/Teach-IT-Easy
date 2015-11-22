@@ -43,6 +43,33 @@ function teardown()
   package.preload['games.Progg.Map'] = nil
 end
 
+local function init_values(item, mock)
+  local lemock = require 'lemock'
+  local mc = lemock.controller()
+
+  local loadpng = mc:mock()
+  local copyfrom = mc:mock()
+  local get_width = mc:mock()
+  local get_height = mc:mock()
+
+  gfx.loadpng = loadpng
+  screen.copyfrom = copyfrom
+  screen.get_width = get_width
+  screen.get_height = get_height
+
+  loadpng(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  copyfrom(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+  get_width(mc.ANYARGS) ;mc :returns(1280) :anytimes()
+  get_height(mc.ANYARGS) ;mc :returns(720) :anytimes()
+  mc:replay()
+
+  if (mock) then
+
+  else
+
+  end
+end
+
 -------------------------------------
 -- ??
 -- @system_under_test: Map:new(), Map:load()
@@ -777,10 +804,19 @@ function test_moveCharacter_one()
   package.loaded[SUT].setGoal = setGoal
 
   local a = ps:new()
-  local x = 2 
-  local y = 2 
-  local direction = "up"
+  local x = 2
+  local y = 2
+  --local direction = "up"
+  local direction = ps.UP --FIXME
   a.startPos = 1
+
+  a.boxheight = (screen:get_height()*0.65)/6 --FIXME
+  local padding = (screen:get_width()*0.75)-(a.boxheight * 8) --FIXME
+  a.startx = padding/2 --FIXME
+  a.starty = a.boxheight/2 --FIXME
+  a.innerboxheight = a.boxheight-20--FIXME
+  a.boxpadding = 10 --FIXME
+  a.borderthickness = a.boxpadding/2 --FIXME
 
   setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   square(mc.ANYARGS) ;mc :returns(nil) :anytimes()
@@ -808,11 +844,13 @@ function test_moveCharacter_two()
   package.loaded[SUT].setGoal = setGoal
 
   local a = ps:new()
-  local x = 2 
-  local y = 2 
-  local direction = "up"
+  local x = 2
+  local y = 2
+  --local direction = "up"
+  local direction = ps.UP --FIXME
   a.startPos = 1
   a.mapdata= {}
+  a.tiles={} --FIXME
 
   setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   square(mc.ANYARGS) ;mc :returns(nil) :anytimes()
@@ -840,11 +878,13 @@ function test_moveCharacter_three()
   package.loaded[SUT].setGoal = setGoal
 
   local a = ps:new()
-  local x = 2 
-  local y = 2 
-  local direction = "left"
+  local x = 2
+  local y = 2
+  --local direction = "left"
+  local direction = ps.LEFT
   a.startPos = 1
   a.mapdata= {}
+  a.tiles={} --FIXME
 
   setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   square(mc.ANYARGS) ;mc :returns(nil) :anytimes()
@@ -872,11 +912,13 @@ function test_moveCharacter_four()
   package.loaded[SUT].setGoal = setGoal
 
   local a = ps:new()
-  local x = 2 
-  local y = 2 
-  local direction = "right"
+  local x = 2
+  local y = 2
+  --local direction = "right"
+  local direction = ps.RIGHT --FIXME
   a.startPos = 1
   a.mapdata= {}
+  a.tiles={} --FIXME
 
   setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   square(mc.ANYARGS) ;mc :returns(nil) :anytimes()
@@ -904,11 +946,13 @@ function test_moveCharacter_five()
   package.loaded[SUT].setGoal = setGoal
 
   local a = ps:new()
-  local x = 2 
-  local y = 2 
-  local direction = "down"
+  local x = 2
+  local y = 2
+  --local direction = "down"
+  local direction = ps.DOWN --FIXME
   a.startPos = 1
   a.mapdata= {}
+  a.tiles={} --FIXME
 
   setCharacter(mc.ANYARGS) ;mc :returns(nil) :anytimes()
   square(mc.ANYARGS) ;mc :returns(nil) :anytimes()
@@ -931,19 +975,20 @@ function test_canMove_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-  
+
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(1)
-  
+
 
   local x =1
   local y =1
-  local direction = "up"
+  --local direction = "up"
+  local direction = ps.UP --FIXME
   a.tiles = {tile}
-  
+
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
@@ -968,7 +1013,8 @@ function test_canMove_two()
 
   local x =1
   local y =1
-  local direction = "up"
+  --local direction = "up"
+  local direction = ps.UP --FIXME
   a.tiles = {tile}
   
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
@@ -985,19 +1031,20 @@ function test_canMove_three()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-  
+
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(3)
-  
+
 
   local x =1
   local y =1
-  local direction = "left"
+  --local direction = "left"
+  local direction = ps.LEFT --FIXME
   a.tiles = {tile}
-  
+
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
@@ -1012,19 +1059,20 @@ function test_canMove_four()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-  
+
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(4)
-  
+
 
   local x =1
   local y =1
-  local direction = "right"
+  --local direction = "right"
+  local direction = ps.RIGHT --FIXME
   a.tiles = {tile}
-  
+
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
@@ -1040,19 +1088,20 @@ function test_canMove_five()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-  
+
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(2)
-  
+
 
   local x =1
   local y =1
-  local direction = "down"
+  --local direction = "down"
+  local direction = ps.DOWN --FIXME
   a.tiles = {tile}
-  
+
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
