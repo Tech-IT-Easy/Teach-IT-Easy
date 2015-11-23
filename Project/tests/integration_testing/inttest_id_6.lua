@@ -122,7 +122,7 @@ end
 function test_execute_queue_3()
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new(16,nil)
+    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },nil)
     local test_event
     local bm_queue
     local test_command
@@ -180,6 +180,6 @@ function test_execute_queue_3()
     local pos_X = bottommenu.character.position:getX()
     local pos_Y=bottommenu.character.position:getY()
     lunit.assert_equal(1,pos_X ,"Did not move to the right x-coordinate")
-    lunit.assert_equal(4,pos_Y ,"Did not move to the right x-coordinate")
+    lunit.assert_equal(5,pos_Y ,"Did not move to the right x-coordinate")
 end
 

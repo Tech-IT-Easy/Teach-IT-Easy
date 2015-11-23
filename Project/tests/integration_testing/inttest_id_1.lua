@@ -50,8 +50,7 @@ function test_command_queue()
 
 
     local bottommenu = c:new()
-    local queue = a:new(bottommenu)
-    a.maxCommands = 16
+    local queue = a:new(nil, nil, {["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
     local commands = b:new()
 
 --    local command1=commands.MOVE
