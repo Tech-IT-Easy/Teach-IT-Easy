@@ -1,24 +1,25 @@
 --CreateProfile = {} --MenuView:new()
 -- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
-CreateProfile = extends(Super)
+local CreateProfile = extends(Super)
 
 local Event = require('toolkit.Event')
 local ProfileSelection = require('menus.ProfileSelection')
 
 -------------------------------------
 -- Creates the Create profile-menu.
--- @return self. The created menu-object.
+-- @return self:CreateProfile The created menu-object.
 -- @author Erik/ Marcus
 -------------------------------------
 function CreateProfile:new()
+  local o = CreateProfile:super()
   --Profile name
-  self.profilename = ""
+  o.profilename = ""
 
   --Keyboard
-  self.letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'DONE', '<--' }
+  o.letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'DONE', '<--' }
 
-  return self
+  return CreateProfile:init(o)
 end
 
 -------------------------------------

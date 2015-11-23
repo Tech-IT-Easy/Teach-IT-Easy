@@ -1,16 +1,11 @@
 --Games = {} --MenuView:new()
 -- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
-Games = extends(Super)
-
+local Games = extends(Super)
+--local GameProgress = require('toolkit.GameProgress')
 local Event = require('toolkit.Event')
---added to test game
 local GameFactory = require('games.GameFactory')
 
-
-function Games:mockProgress(game)
-  return math.random(1,12) .. "/12"
-end
 
 -------------------------------------
 -- Creates the Games menu.
@@ -18,10 +13,14 @@ end
 -- @author Erik
 -------------------------------------
 function Games:new()
+  local o = Games:super()
+  --@member gameFactory:GameFactory
+  o.gameFactory = GameFactory:new()
   -- available games
-  self.games = GameFactory.gameMatrix
-  return self
+  o.games = o.gameFactory.gameMatrix
+  return Games:init(o)
 end
+
 
 -------------------------------------
 -- Handles the button-click sent from main.
@@ -39,7 +38,7 @@ function Games:handleinput(event)
   elseif event.key == Event.KEY_BACK then
     return { "main", self.usernamestring }
   elseif event.key == Event.KEY_OK then
-    platformContext.game = GameFactory:getGame(self.games[self.pos][1],platformContext)
+    platformContext.game = self.gameFactory:getGame(self.games[self.pos][1],platformContext)
     if platformContext.game ~= nil then
       platformContext.game:start()
       platformContext.platformEventListener:remove(platformContext.platformMenu)
@@ -96,7 +95,7 @@ function Games:buttonactive(x1)
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
 
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
-  games_trophiesfonts[x1]:draw_over_surface(screen,"Trophies: " .. self.mockProgress(self.games[x1][2]))
+  games_trophiesfonts[x1]:draw_over_surface(screen,"Trophies: " .. platformContext.gameprogress:getprogress(self.games[x1][2]))
 end
 
 -------------------------------------
@@ -108,7 +107,7 @@ function Games:buttoninactive(x1)
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
 
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
-  games_trophiesfonts[x1]:draw_over_surface(screen,"Trophies: " .. self.mockProgress(self.games[x1][2]))
+  games_trophiesfonts[x1]:draw_over_surface(screen,"Trophies: " .. platformContext.gameprogress:getprogress(self.games[x1][2]))
 end
 
 return Games

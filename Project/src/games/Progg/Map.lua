@@ -17,7 +17,7 @@ Map.DOWN = 2
 Map.LEFT = 3
 -------------------------------------
 -- Creates new Map object.
--- @return Map New map
+-- @return map:Map a new instance of Map
 -- @author Adam
 -------------------------------------
 function Map:new()
@@ -28,8 +28,8 @@ end
 
 
 -------------------------------------
--- Loads the map depending on data.
--- @param input The mapdata.
+-- Loads the map depending on data. "Hard-coded" 23/11
+-- @param input The mapdata. Not used 23/11
 -- @author Erik
 -------------------------------------
 function Map:load()
@@ -63,6 +63,7 @@ function Map:load()
   --Creating tiles from mapdata
 
   for i=1, #self.mapdata do
+    --@member tiles:Tile
     table.insert(self.tiles, Tile:new(self.mapdata[i]))
   end
 
@@ -126,7 +127,7 @@ function Map:moveCharacter(x ,y , direction)
     elseif direction == Map.DOWN then
       self:setCharacter(pos+8)
     end
-
+    gfx.update()
 end
 
 -------------------------------------
@@ -140,6 +141,33 @@ function Map:getPosition(x,y)
   local pos = x+(y-1)*8
   return pos
 end
+
+-------------------------------------
+-- Return a bool saying if the character is in the goal.
+-- @param x Place of character
+-- @param y Place of character
+-- @return true or false 
+-- @author Mario Pizcueta
+-------------------------------------
+
+function Map:isInGoal(x,y)
+  return self:getPosition(x,y) == self.goalPos
+end
+
+-------------------------------------
+-- Restarts the character to the start position
+-- @param x Place of character
+-- @param y Place of character
+-- @author Mario Pizcueta
+-------------------------------------
+
+function Map:restartCharacter(x,y)
+  local pos = self:getPosition(x,y)
+  self:square(pos, self.tiles[pos])
+  self:setCharacter(self.startPos)
+
+end
+
 
 -------------------------------------
 -- Prints character to a place in map.
@@ -240,7 +268,7 @@ end
 -------------------------------------
 -- Calculates x and y values of tile.
 -- @param i Place of tile
--- @param type The type of tile to be printed
+-- @param tile:Tile The type of tile to be printed
 -- @author Erik
 -------------------------------------
 function Map:square(i, tile)

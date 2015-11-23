@@ -5,30 +5,19 @@
 
 local rightMenu = require('games.Progg.RightMenu')
 local BottomMenu = require('games.Progg.BottomMenu')
-
-local map = require('games.Progg.Map')
-
 local Game = require('toolkit.Game')
 --Will have to include the classes of the other components here
---local inputHandler = require('games.Progg.GameInputHandler')
 local ProggGame = extends(Game)
 
 
-
-
-
-local Position = require('games.Progg.Position')
-
 -----------------------------------------------------------
--- Constructor method, see 'toolkit.Game'
--- @param context - A pointer to the context that the game exists in
--- @return a new queue instance
+-- Constructor method, see 'toolkit.Game'. Called by GameFactory.
+-- @param context:PlatformContext - A pointer to the context that the game exists in
+-- @return a new game:ProggGame instance
 -----------------------------------------------------------
 function ProggGame:new(context)
   local o = ProggGame:super()
-  
-  -- @member Position:Position
-  -- @member rightMenu:RightMenu
+
   -- @member BottomMenu:BottomMenu
   -- @member map:Map
   o.bottomMenu = BottomMenu:new({["queue"] = 9, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },context)
@@ -49,6 +38,7 @@ end
 -----------------------------------------------------------
 -- Loading resources, only called when the game starts
 -- as of right now.
+-- @author Ludwig Wikblad, changed by others when needed
 -----------------------------------------------------------
 function ProggGame:load()
   -----------------------
@@ -64,6 +54,7 @@ end
 
 -----------------------
 --When the platform launches the game it calls this function
+-- @author Chuck
 -----------------------
 function ProggGame:start()
   self:load()
@@ -76,6 +67,7 @@ end
 ------------------------
 --Updates all objects that are part of the game
 -- and are displayed on the screen
+-- @author Chuck
 ------------------------
 function ProggGame:update()
   -----------------------

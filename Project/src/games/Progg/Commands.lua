@@ -17,6 +17,10 @@ Commands.P1 = "P1"
 Commands.P2 = "P2"
 -------------------------------------
 --Constructor to create a new command-object.
+-- Not currently used 19/11
+-- @param action:Commands the action to save in the command
+-- @return command:Commands
+-- @author Vilhelm Granath
 ------------------------------------
 function Commands:new(action)
   local o = Commands:super()

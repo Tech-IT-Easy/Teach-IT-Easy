@@ -5,7 +5,6 @@
 -- Time: 09:36
 -- To change this template use File | Settings | File Templates.
 --
---Constructor method
 local Controllable = require("toolkit.Controllable")
 local menuSuperClass = extends(Controllable)
 
