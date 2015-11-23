@@ -126,7 +126,7 @@ function Map:moveCharacter(x ,y , direction)
     elseif direction == Map.DOWN then
       self:setCharacter(pos+8)
     end
-
+    gfx.update()
 end
 
 -------------------------------------
@@ -140,6 +140,33 @@ function Map:getPosition(x,y)
   local pos = x+(y-1)*8
   return pos
 end
+
+-------------------------------------
+-- Return a bool saying if the character is in the goal.
+-- @param x Place of character
+-- @param y Place of character
+-- @return true or false 
+-- @author Mario Pizcueta
+-------------------------------------
+
+function Map:isInGoal(x,y)
+  return self:getPosition(x,y) == self.goalPos
+end
+
+-------------------------------------
+-- Restarts the character to the start position
+-- -- @param x Place of character
+-- @param y Place of character
+-- @author Mario Pizcueta
+-------------------------------------
+
+function Map:restartCharacter(x,y)
+  local pos = self:getPosition(x,y)
+  self:square(pos, self.tiles[pos])
+  self:setCharacter(self.startPos)
+
+end
+
 
 -------------------------------------
 -- Prints character to a place in map.
