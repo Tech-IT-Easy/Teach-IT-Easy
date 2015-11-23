@@ -93,6 +93,8 @@ end
 
 --------------------------------------------
 -- Changes color of the background and icons in the input areas when changing active.
+-- @param inArea:String. The input area to change color of.
+-- @param active:Boolean. True if the input area is active, false if inactive.
 -- @author Tobias Lundell
 --------------------------------------------
 function BottomMenu:updateInputArea(inArea, active)
@@ -305,6 +307,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             local queuePos = object.position
             if queuePos > 16 then
                 queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
+
             end
             if object.isMovingAction == true then
                 object:moveAction(object.posActionToMove, object.position)
