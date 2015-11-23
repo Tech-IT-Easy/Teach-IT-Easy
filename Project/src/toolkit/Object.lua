@@ -10,7 +10,7 @@
 -----------------------------------------------------------
 -- Implement inheritance feature in Lua. Create a new class 
 -- that inherits from a base class
--- @baseClass which is inherited
+-- @param baseClass which is inherited
 -----------------------------------------------------------
 function extends( baseClass )
   -- create a new blank class 

@@ -14,25 +14,17 @@ local Game = require('toolkit.Game')
 local ProggGame = extends(Game)
 
 
-
-
-
-local Position = require('games.Progg.Position')
-
 -----------------------------------------------------------
--- Constructor method, see 'toolkit.Game'
--- @param context - A pointer to the context that the game exists in
--- @return a new queue instance
+-- Constructor method, see 'toolkit.Game'. Called by GameFactory.
+-- @param context:PlatformContext - A pointer to the context that the game exists in
+-- @return a new game:ProggGame instance
 -----------------------------------------------------------
 function ProggGame:new(context)
   local o = ProggGame:super()
-  
-  -- @member Position:Position
-  -- @member rightMenu:RightMenu
+
   -- @member BottomMenu:BottomMenu
-  -- @member map:Map
-  
   o.bottomMenu = BottomMenu:new(16,context)
+  -- @member rightMenu:RightMenu
   o.rightMenu = rightMenu:new()
   --o.map = map:new()
   --------------------------------
@@ -50,6 +42,7 @@ end
 -----------------------------------------------------------
 -- Loading resources, only called when the game starts
 -- as of right now.
+-- @author Ludwig Wikblad, changed by others when needed
 -----------------------------------------------------------
 function ProggGame:load()
   -----------------------
