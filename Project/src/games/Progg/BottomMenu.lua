@@ -241,7 +241,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
 
             if object:getQueue(object.inputArea)[queuePos] == "P1" or object:getQueue(object.inputArea)[queuePos] == "loop" or object:getQueue(object.inputArea)[queuePos] == "P2" then -- Makes sure you've clicked on a procedure or loop
-                object:enterMethod(queuePos)
+                object:enterMethod()
             elseif object:getQueue(object.inputArea)[queuePos] ~= nil then
                 object:deleteAction(object.position, object.inputArea)
             end
@@ -288,7 +288,11 @@ function BottomMenu:isAllowedDown()
     end
 end
 
-function BottomMenu:enterMethod(queuePos)
+function BottomMenu:enterMethod()
+    local queuePos = self.position
+        if queuePos > 16 then
+            queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
+        end
     self.buildArea:setBuildType(self:getQueue(self.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
     self.inputArea = self:getQueue(self.inputArea)[queuePos]
     self.prevPosition = self.position
