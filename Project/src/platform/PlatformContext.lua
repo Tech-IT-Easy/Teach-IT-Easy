@@ -46,7 +46,7 @@ function PlatformContext:new()
   o.platformEventListener = EventListener:new(self)
 
   -- Attach menu object to listener
-  -- o.platformEventListener:attach(o.platformMenu)
+  o.platformEventListener:attach(o.platformMenu)
   
   o.window = UIStartWindowView
   
@@ -88,7 +88,7 @@ function PlatformContext:show()
   -- code
   --------------
   self.platformMenu:show()
-  self.window:show()
+  --self.window:show()
   gfx.update()
 end
 
