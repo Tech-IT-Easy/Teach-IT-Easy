@@ -294,15 +294,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object:updateInputArea()
             else
             object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
---            if object:getQueue(object.inputArea)[queuePos] == "P1" or object:getQueue(object.inputArea)[queuePos] == "loop" or object:getQueue(object.inputArea)[queuePos] == "P2" then -- Makes sure you've clicked on a procedure or loop
---                object:enterMethod()
---                object:updateInputArea(self.inputArea, true)
---            elseif object:getQueue(object.inputArea)[queuePos] ~= nil then
---                print("InputArea: ", object.inputArea)
---                object:deleteAction(object.position, object.inputArea)
---                object:updateInputArea(self.inputArea, true)
---            end
-
             end
         end
     end
