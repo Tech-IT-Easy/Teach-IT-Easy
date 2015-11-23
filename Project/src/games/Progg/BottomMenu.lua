@@ -118,7 +118,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.queue.loopCounter = 1
                 object.selectingLoopCounter=false
             elseif object.selectingActionEdit~= nil then
-                print("Allow to move action")
+                object.moveAction()
                 object.selectingActionEdit = nil
             else
                 object.queue:push(Commands.MOVE, object.inputArea)
@@ -376,6 +376,14 @@ function BottomMenu:deleteAction(position, inputArea)
             self:getQueue(inputArea)[i] = self:getQueue(inputArea)[i + 1]
         end
     end
+end
+
+function BottomMenu:moveAction(epilogue)
+    if epilogue == false then
+        local queuePos = self.position
+        if queuePos > 16 then
+            queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
+        end
 end
 -----------------------------------
 -- Returns the queue corresponding to the inputArea
