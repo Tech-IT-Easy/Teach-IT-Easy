@@ -175,7 +175,7 @@ end
 -------------------------------------
 function Map:setCharacter(i)
 
-  self.image1 = gfx.loadpng('data/bowser.png')
+  self.image1 = gfx.loadpng('data/avatar_down.png')
 
   if(i<9)then
     screen:copyfrom(self.image1, nil, { x = self.startx +self.boxheight * (i - 1)+self.boxpadding,
