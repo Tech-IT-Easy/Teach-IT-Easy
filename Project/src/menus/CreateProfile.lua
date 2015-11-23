@@ -11,15 +11,18 @@ local ProfileSelection = require('menus.ProfileSelection')
 -- @return self:CreateProfile The created menu-object.
 -- @author Erik/ Marcus
 -------------------------------------
+
+-- Must use ".self" otherwise it crashes in simulator when
+-- trying to create profile, unknown reason why.. // Adam
 function CreateProfile:new()
   local o = CreateProfile:super()
   --Profile name
-  o.profilename = ""
+  self.profilename = ""
 
   --Keyboard
-  o.letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'DONE', '<--' }
+  self.letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'DONE', '<--' }
 
-  return CreateProfile:init(o)
+  return self
 end
 
 -------------------------------------
