@@ -11,8 +11,9 @@ local Hook = extends(Object)
 
 -----------------------------------------------------------
 -- Hook function for listener when updating, which owns same parameters 
--- @context which specific context where event happens
--- @events which is event currently happening
+-- @param context:PlatformContext which specific context where event happens
+-- @param event:Event which is event currently happening
+-- @author Chuck
 -----------------------------------------------------------
 function Hook:beforeListenerUpdate(conext,event)
   -- do some events process in specific object, never change here
