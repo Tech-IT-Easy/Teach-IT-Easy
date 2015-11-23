@@ -15,15 +15,21 @@ function UIButtonView:new(args)
   -- @member background color
   o.backgroundColor = args.backgroundColor or {r=255,g=255,b=255}
   -- @member border color
-  o.borderColor = args.borderColor or {r=0,g=0,b=0}
+  o.borderColor = args.borderColor or args.backgroundColor
   -- @member border width, default is 2
-  o.borderWidth = args.borderWidth or 2
+  o.borderWidth = args.borderWidth or 0
   -- @member enable focused
   o.enableFocus = args.enableFocus or false
   -- @member marked as selected, default is false
   o.isSelected = args.isSelected or false
   -- @member hightlight color
   o.selectedColor = args.selectedColor or {r=0,g=100,b=255}
+  -- @member marked as selected, default is false
+  o.isFocused = args.isFocused or false
+  -- @member focused color
+  o.focusedColor = args.focusedColor or {r=0,g=100,b=255}
+  -- @member focused background color 
+  
   -- @member label
   o.label = args.label or nil
   -- @member label position
@@ -73,12 +79,20 @@ end
 -- show the button on specific position
 function UIButtonView:show()
   -- draw frame with border color
+  if self.borderWidth ~= 0 then
+    screen:clear(self.borderColor, self.globalFrame)
+  end
+  
   -- if selected, draw with highlight
   if self.isSelected then
       screen:clear(self.selectedColor, self.globalFrame)
-  else
-      screen:clear(self.borderColor, self.globalFrame)
   end
+  
+  -- if selected, draw with highlight
+  if self.isFocused then
+      screen:clear(self.focusedColor, self.globalFrame)
+  end
+  
   
   -- draw background with background color
   screen:clear(self.backgroundColor, self.backgroundArea)
@@ -121,12 +135,12 @@ end
 
 -- make it focused
 function UIButtonView:focused()
-  self.isSelected = true
+  self.isFocused = true
 end
 
 -- make it unFocused
 function UIButtonView:unFocused()
-  self.isSelected = false
+  self.isFocused = false
 end
 
 return UIButtonView

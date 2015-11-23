@@ -14,7 +14,7 @@ function UIWindowView:new(args)
   --@member window toolbar, for future development
   --o.toolbar = UIToolBar:new(nil)
   --@member window body which is a blank panel filling with whole window
-  o.body = UIPanelView:new{container=o}--[[frame=frame-o.toolbar.frame]]--
+  o.body = UIPanelView:new{container=o,backgroundImage = args.backgroundImage,backgroundColor=args.backgroundColor}--[[frame=frame-o.toolbar.frame]]--
   --@member delegate for events process
   --o.footbarHeight = args.footbarHeight or 20
   --o.footbar = UIPanelView:new{frame={x = 0,y = self.frame.h-o.footbarHeight,w = self.frame.w,h = o.footbarHeight},container = o}
@@ -100,6 +100,8 @@ function UIWindowView:process(listener,event)
     self:moveToPreFocus()
   elseif event.key == Event.KEY_RIGHT and event.state == Event.KEY_STATE_DOWN then
     self:moveToNextFocus()
+  elseif event.key == Event.KEY_OK and event.state == Event.KEY_STATE_DOWN then
+    self.delegate:onOKEvent(focusingView)
   end
 end
 
