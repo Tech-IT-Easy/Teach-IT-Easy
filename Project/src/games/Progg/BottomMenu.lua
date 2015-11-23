@@ -24,7 +24,15 @@ local Position = require('games.Progg.Position')
 local BottomMenu = extends(Controllable)
 local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 
---Constructor method
+-------------------------------------------------
+-- Constructor method for the BottomMenu.
+-- @param maxCommands:integer determines how many
+--         commands can be drawn at once
+-- @param gameContext:PlatformContext as a pointer to the context
+--          in which the game exists
+-- @return bottomMenu:BottomMenu a new instance of BottomMenu
+-- @author Mikael Ögren; Tobias Lundell;
+-------------------------------------------------
 function BottomMenu:new(maxCommands,gameContext)
     local o = BottomMenu:super()
     o.selectingLoopCounter = false;
@@ -32,10 +40,15 @@ function BottomMenu:new(maxCommands,gameContext)
     o.prevInputArea = "queue"
     o.position = 1
     o.prevPosition = nil
-    context = gameContext
+    -- @member context:PlatformContext
+    o.context = gameContext
+    -- @member buildArea:BuildArea
     o.buildArea = buildArea:new(maxCommands, o.position)
+    -- @member drawBottomMenu:DrawBottomMenu
     o.drawBottomMenu = newDrawBottomMenu:new(maxCommands)
+    -- @member character:Character
     o.character = Character:new(Position:new(1,5))
+    -- @member queue:Queue
     o.queue = Queue:new(o, o.buildArea)
     return BottomMenu:init(o)
 end
@@ -101,7 +114,11 @@ bottomMenuEventHandler = EventHandler:new()
 bottomMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1
     ,[Event.KEY_ZERO]=1,[Event.KEY_UP]=1,[Event.KEY_DOWN]=1 ,[Event.KEY_LEFT]=1,[Event.KEY_RIGHT]=1, [Event.KEY_OK]=1 }
 
---Update function on every key input
+----------------------------------------
+-- Update function on every key input
+-- @param object:BottomMenu a pointer to the BottomMenu that "owns" this handler.
+-- @param eventListener:EventListener a pointer to the listener that called this function.
+-- @param event:Event the event that caused the function to be called
 function bottomMenuEventHandler:update(object,eventListener,event)
 
     if(event.state==Event.KEY_STATE_DOWN) then
@@ -187,7 +204,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingLoopCounter=false
             else
                 object.buildArea:setBuildType("P2")
-                object.queue:push(Commands.P2, inputArea)
+                object.queue:push(Commands.P2, object.inputArea)
                 object.inputArea = "P2"
 
                 object.prevPosition = object.position
@@ -197,21 +214,21 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.p2Queue)
             end
         elseif event.key == Event.KEY_NINE then
-            if(inputArea =="loop" and object.selectingLoopCounter==true ) then
+            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 9
                 object.selectingLoopCounter=false
             else
-                context.platformEventListener:removeChainListener()
-                context:createNewMenu()
-                context.game = nil
+                object.context.platformEventListener:removeChainListener()
+                object.context:createNewMenu()
+                object.context.game = nil
             end
 
         elseif event.key == Event.KEY_UP then
-            if  object:isUpperRow(object.position) == false then
+            if not object:isUpperRow(object.position) then
                 object:setPosition(-8)
             end
         elseif event.key == Event.KEY_DOWN then
-            if  object:isUpperRow(object.position) == true then
+            if  object:isUpperRow(object.position) then
                 object:setPosition(8)
             end
         elseif event.key == Event.KEY_LEFT then
@@ -284,7 +301,12 @@ function BottomMenu:setPosition(change)
     self.buildArea:setPosition(self.position)
 end
 
-
+---------------------------------------------
+-- Checksi if the marked position is in the top row.
+-- Used when navigating the queue with arrow keyes
+-- @param pos:integer the position of the marker in the queue
+-- @return boolean representing if the marker is in the top row.
+-- @author Mikael Ögren
 function BottomMenu:isUpperRow(pos)
     if (pos > 8 and pos <= 16) or (24 < pos and pos <= 32) then
         return false
