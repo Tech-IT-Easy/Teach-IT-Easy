@@ -9,21 +9,16 @@
 local Object = require("toolkit.Object")
 local Controllable = require("toolkit.Controllable")
 local RightMenu = extends(Controllable)
-skin = require('games/Progg/progg_skin')
+local skin = require('games/Progg/progg_skin')
 local Commands = require('games.Progg.Commands')
 local Event = require('toolkit.Event')
 local EventHandler = require('toolkit.EventHandler')
 local drawRightMenu = require('games/Progg/DrawRightMenu')
 
--- Variale to keep track of a highlighted command
-
-
--- Available commands
-commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
 
 -------------------------------------
 -- Creates the Right-hand screen in the programming game
--- @return self. The created object.
+-- @return rightMenu:RightMenu The created object.
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:new()
@@ -70,7 +65,7 @@ end
 -- Needs to implement a timed call to remove
 -- the highlight again
 --
--- @params command: command to be highlighted
+-- @params command:Commands to be highlighted
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:highlight(command)
@@ -92,7 +87,7 @@ end
 -- Removes the highlight on the command in the
 -- specified position.
 --
--- @params command: command to be un-highlighted
+-- @params command:Commands to be un-highlighted
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:removeHighlight(command)
@@ -172,6 +167,12 @@ rightMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.K
 -- Warning!!!! Use parameter "object" as a reference RightMenu,
 -----Never use RightMenu directly
 -----Never use self to refer to RightMenu
+
+------------------------------------------
+-- Handles all input to the rightMenu.
+-- @param object:RightMenu the rightMenu that owns this handler
+-- @param eventListener:EventListener
+-- @param event:Event the event that trigered the function call
 function rightMenuEventHandler:update(object,eventListener,event)
     if(event.state==Event.KEY_STATE_DOWN) then
         --Switch for all the input handling to implement

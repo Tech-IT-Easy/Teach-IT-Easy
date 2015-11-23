@@ -32,6 +32,9 @@ platformContext = PlatformContext:new()
 
 -----------------------------------------------------------
 -- Listen keyboard events and trigger platform context listener
+-- @param key The key from the remote/keyboard that was activated
+-- @param state The state of the key, i.e. up, down or repeat
+-- @author Chuck
 -----------------------------------------------------------
 function onKey(key,state)
   -- ADLogger.trace("OnKey("..key..","..state..")")
@@ -45,6 +48,7 @@ end
 -----------------------------------------------------------
 -- System start only once where platform loads resources and
 -- show start screen
+-- @author Chuck
 -----------------------------------------------------------
 function onStart()
   

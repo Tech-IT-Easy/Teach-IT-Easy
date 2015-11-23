@@ -1,7 +1,7 @@
 --Games = {} --MenuView:new()
 -- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
-Games = extends(Super)
+local Games = extends(Super)
 --local GameProgress = require('toolkit.GameProgress')
 local Event = require('toolkit.Event')
 local GameFactory = require('games.GameFactory')
@@ -13,9 +13,12 @@ local GameFactory = require('games.GameFactory')
 -- @author Erik
 -------------------------------------
 function Games:new()
+  local o = Games:super()
+  --@member gameFactory:GameFactory
+  o.gameFactory = GameFactory:new()
   -- available games
-  self.games = GameFactory.gameMatrix
-  return self
+  o.games = o.gameFactory.gameMatrix
+  return Games:init(o)
 end
 
 
@@ -35,8 +38,7 @@ function Games:handleinput(event)
   elseif event.key == Event.KEY_BACK then
     return { "main", self.usernamestring }
   elseif event.key == Event.KEY_OK then
-    print(platformContext)
-    platformContext.game = GameFactory:getGame(self.games[self.pos][1],platformContext)
+    platformContext.game = self.gameFactory:getGame(self.games[self.pos][1],platformContext)
     if platformContext.game ~= nil then
       platformContext.game:start()
       platformContext.platformEventListener:remove(platformContext.platformMenu)

@@ -1,3 +1,7 @@
+----------------------------------------
+-- Sets the configurations for the emulator window.
+-- @author Zenterio
+----------------------------------------
 function love.conf(t)
     
     t.console = true

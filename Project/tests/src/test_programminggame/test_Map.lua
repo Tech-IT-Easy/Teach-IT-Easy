@@ -975,20 +975,20 @@ function test_canMove_one()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-
+  
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(1)
-
+  
 
   local x =1
   local y =1
   --local direction = "up"
   local direction = ps.UP --FIXME
   a.tiles = {tile}
-
+  
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
@@ -1008,13 +1008,12 @@ function test_canMove_two()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
-  local tile = ps2:new(8)
+  local tile = ps2:new(8) -- TopBorder = true
   
 
   local x =1
   local y =1
-  --local direction = "up"
-  local direction = ps.UP --FIXME
+  local direction = ps.UP
   a.tiles = {tile}
   
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
@@ -1031,20 +1030,20 @@ function test_canMove_three()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-
+  
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(3)
-
+  
 
   local x =1
   local y =1
   --local direction = "left"
   local direction = ps.LEFT --FIXME
   a.tiles = {tile}
-
+  
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
@@ -1059,20 +1058,20 @@ function test_canMove_four()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-
+  
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(4)
-
+  
 
   local x =1
   local y =1
   --local direction = "right"
   local direction = ps.RIGHT --FIXME
   a.tiles = {tile}
-
+  
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 
@@ -1088,20 +1087,20 @@ function test_canMove_five()
   local mc = create_mock(SUT)
   local ps = require(SUT)
   local ps2 = require('games.Progg.Tile')
-
+  
   local getPosition = mc:mock()
   package.loaded[SUT].getPosition = getPosition
 
   local a = ps:new()
   local tile = ps2:new(2)
-
+  
 
   local x =1
   local y =1
   --local direction = "down"
   local direction = ps.DOWN --FIXME
   a.tiles = {tile}
-
+  
   getPosition(mc.ANYARGS) ;mc :returns(1) :anytimes()
   mc:replay()
 

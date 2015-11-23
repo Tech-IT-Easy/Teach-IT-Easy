@@ -2,16 +2,18 @@ local Object = require('toolkit.Object')
 local Queue = extends(Object)
 ---------------------------------------------------------------
 -- Constructor for the Queue
--- @param newBottomMenu:BottomMenu, newBuildArea:BuildArea. The places where the queue is drawn.
--- @return a new queue instance
+-- @param newBottomMenu:BottomMenu The place where the queue is drawn.
+-- @param newBuildArea:BuildArea. The places where the loops and procedures are edited.
+-- @return queue:Queue a new queue instance
 -- @author Ludwig Wikblad
 ----------------------------------------------------------------
-function Queue:new(newBottomMenu, newBuildArea)
+function Queue:new(newBottomMenu, newBuildArea, maxCommands)
   local o = Queue:super()
   o.actions = {}
   o.loopActions = {}
   o.p1Actions = {}
   o.p2Actions = {}
+  o.maxCommands = maxCommands
   o.loopCounter = 2
   -- @member bottomMenu:BottomMenu
   if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
@@ -22,27 +24,33 @@ function Queue:new(newBottomMenu, newBuildArea)
 end
 
 -------------------------------------
---Adds something at the end of the queue
+-- Adds something at the end of the queue
 -- @param action:Command - the action to be placed in the queue,
 -- @param queueType:String - the table to place the action in
 -- @author Ludwig Wikblad
 -------------------------------------
 function Queue:push(action, queueType)
-
   if queueType == "queue" or queueType == nil then
-    table.insert(self.actions,action)
-    if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self) end
+    if  queueType == nil or self.maxCommands[queueType] > #self.actions then
+        table.insert(self.actions,action)
+        if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self) end
+    end
   elseif queueType == "loop" then
-    table.insert(self.loopActions,action)
-    if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions, queueType) end
+    if self.maxCommands[queueType] > #self.loopActions then
+        table.insert(self.loopActions,action)
+        if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions, queueType) end
+    end
   elseif queueType == "P1" then
-    table.insert(self.p1Actions,action)
-    if self.buildArea ~= nil then self.buildArea:setQueue(self.p1Actions, queueType) end
+    if self.maxCommands[queueType] > #self.p1Actions then
+        table.insert(self.p1Actions,action)
+        if self.buildArea ~= nil then self.buildArea:setQueue(self.p1Actions, queueType) end
+    end
   elseif queueType == "P2" then
-    table.insert(self.p2Actions,action)
-    if self.buildArea ~= nil then self.buildArea:setQueue(self.p2Actions, queueType) end
+    if self.maxCommands[queueType] > #self.p2Actions then
+        table.insert(self.p2Actions,action)
+        if self.buildArea ~= nil then self.buildArea:setQueue(self.p2Actions, queueType) end
+    end
   end
-
 end
 
 function Queue:getQueue()
@@ -50,7 +58,7 @@ function Queue:getQueue()
 end
 
 --------------------------------------
---Removes the object that was added last in the main queue
+-- Removes the object that was added last in the main queue
 -- @return the removed action:Commands
 -- @author Ludwig Wikblad
 --------------------------------------
