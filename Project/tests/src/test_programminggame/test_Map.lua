@@ -91,6 +91,7 @@ function test_setCharacter_one()
 
     local a = ps:new()
     local input = 8
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -108,6 +109,7 @@ function test_setCharacter_two()
 
     local a = ps:new()
     local input = 16
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -125,6 +127,7 @@ function test_setCharacter_three()
 
     local a = ps:new()
     local input = 24
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -142,6 +145,7 @@ function test_setCharacter_four()
 
     local a = ps:new()
     local input = 32
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -159,6 +163,7 @@ function test_setCharacter_five()
 
     local a = ps:new()
     local input = 33
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -181,6 +186,7 @@ function test_setGoal_one()
 
     local a = ps:new()
     local input = 8
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -198,6 +204,7 @@ function test_setGoal_two()
 
     local a = ps:new()
     local input = 16
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -215,6 +222,7 @@ function test_setGoal_three()
 
     local a = ps:new()
     local input = 24
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -232,6 +240,7 @@ function test_setGoal_four()
 
     local a = ps:new()
     local input = 32
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -249,6 +258,7 @@ function test_setGoal_five()
 
     local a = ps:new()
     local input = 33
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -271,6 +281,7 @@ function test_setStart_one()
 
     local a = ps:new()
     local input = 8
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -288,6 +299,7 @@ function test_setStart_two()
 
     local a = ps:new()
     local input = 16
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -305,6 +317,7 @@ function test_setStart_three()
 
     local a = ps:new()
     local input = 24
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -322,6 +335,7 @@ function test_setStart_four()
 
     local a = ps:new()
     local input = 32
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -339,6 +353,7 @@ function test_setStart_five()
 
     local a = ps:new()
     local input = 33
+    a.columns = 8
     a.boxheight = 50
     a.startx = 200
     a.starty = 200
@@ -364,6 +379,7 @@ function test_square_one()
     local a = ps:new()
     local type = 1
     local input = 8
+    a.columns = 8
     a.startx = 200
     a.starty = 200
     a.boxheight = 50
@@ -386,6 +402,7 @@ function test_square_two()
     local a = ps:new()
     local type = 1
     local input = 16
+    a.columns = 8
     a.startx = 200
     a.starty = 200
     a.boxheight = 50
@@ -408,6 +425,7 @@ function test_square_three()
     local a = ps:new()
     local type = 1
     local input = 24
+    a.columns = 8
     a.startx = 200
     a.starty = 200
     a.boxheight = 50
@@ -430,6 +448,7 @@ function test_square_four()
     local a = ps:new()
     local type = 1
     local input = 32
+    a.columns = 8
     a.startx = 200
     a.starty = 200
     a.boxheight = 50
@@ -452,6 +471,7 @@ function test_square_five()
     local a = ps:new()
     local type = 1
     local input = 33
+    a.columns = 8
     a.startx = 200
     a.starty = 200
     a.boxheight = 50
