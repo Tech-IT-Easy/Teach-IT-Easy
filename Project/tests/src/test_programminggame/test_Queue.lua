@@ -66,7 +66,7 @@ end
 function test_push_2()
   local a = require(SUT)
   local queuelist = a:new()
-  a.maxCommands = 16
+  queuelist.maxCommands = {["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 }--FIXME
   local queuecmd_1 = "Command_1"
   local queuecmd_2 = "Command_2"
 
@@ -85,6 +85,7 @@ end
 -- Tests if the element last added can be deleted, presumes that add() functions works in adding element, as it is tested above
 function test_delete()
     local queuelist = require(SUT):new()
+    queuelist.maxCommands = {["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 }--FIXME
     local queuecmd_1 = "Command_1"
     local queuecmd_2 = "Command_2"
 
@@ -102,6 +103,7 @@ end
 -- Tests if elements in queue can be collected from first element to last
 function test_execute()
     local queuelist = require(SUT):new()
+    queuelist.maxCommands = {["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 }--FIXME
     local queuecmd_1 = "Command_1"
     local queuecmd_2 = "Command_2"
     local queuecmd_3 = "Command_3"
@@ -129,6 +131,7 @@ end
 function test_SetPos()
     local a = require(SUT)
     local queuelist = a:new()
+    queuelist.maxCommands = {["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 }--FIXME
     local queuecmd_1 = "Command_1"
     local queuecmd_2 = "Command_2"
 
