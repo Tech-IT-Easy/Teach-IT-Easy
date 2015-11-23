@@ -128,6 +128,7 @@ bottomMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.
 -- @param object:BottomMenu a pointer to the BottomMenu that "owns" this handler.
 -- @param eventListener:EventListener a pointer to the listener that called this function.
 -- @param event:Event the event that caused the function to be called
+-----------------------------------------
 function bottomMenuEventHandler:update(object,eventListener,event)
 
     if(event.state==Event.KEY_STATE_DOWN) then
@@ -327,6 +328,11 @@ function BottomMenu:setPosition(change)
     self.buildArea:setPosition(self.position)
 end
 
+---------------------------------------------
+-- Checks if marker is allowed to go to the right from the current position.
+-- Returns true if allowed and false otherwise.
+-- @author Mikael Ögren
+-----------------------------------------
 function BottomMenu:isAllowedRight()
     local queuePos = self.position
     if queuePos > 16 then
@@ -340,6 +346,11 @@ function BottomMenu:isAllowedRight()
     end
 end
 
+---------------------------------------------
+-- Checks if marker is allowed to go down from the current position.
+-- Returns true if allowed and false otherwise.
+-- @author Mikael Ögren
+-----------------------------------------
 function BottomMenu:isAllowedDown()
     local queuePos = self.position
     if queuePos > 16 then
@@ -353,6 +364,10 @@ function BottomMenu:isAllowedDown()
     end
 end
 
+---------------------------------------------
+-- Enters the method (loop, P1 or P2) currently marked
+-- @author Mikael Ögren
+-----------------------------------------
 function BottomMenu:enterMethod()
     local queuePos = self.position
         if queuePos > 16 then
@@ -366,17 +381,14 @@ function BottomMenu:enterMethod()
     self.drawBottomMenu:clearPos(self.prevPosition, self.queue.actions)
     self.buildArea.drawBuildArea:clearPos(self.buildArea.prevPosition, self:getQueue(self.inputArea))
 end
---------------------------------------
--- Check if the current position is in the upper row.
--- @ param change:Integer. The change in position.
--- @author Mikael Ögren
--------------------------------------
+
 ---------------------------------------------
--- Checksi if the marked position is in the top row.
+-- Checks if the marked position is in the top row.
 -- Used when navigating the queue with arrow keyes
 -- @param pos:integer the position of the marker in the queue
 -- @return boolean representing if the marker is in the top row.
 -- @author Mikael Ögren
+-----------------------------------------
 function BottomMenu:isUpperRow(pos)
     if (pos > 8 and pos <= 16) or (24 < pos and pos <= 32) then
         return false
@@ -404,6 +416,12 @@ function BottomMenu:deleteAction(position, inputArea)
     end
 end
 
+-----------------------------------
+-- Moves an action in the queue.
+-- @param positionOne:Integer. The position (in the menu, not in the queue) of the action to be moved.
+-- @param positionTwo:Integer. The position (in the menu, not in the queue) where the action is to be moved.
+--@author Mikael Ögren
+-----------------------------------
 function BottomMenu:moveAction(positionOne, positionTwo)
     local queuePosOne = positionOne
     local queuePosTwo = positionTwo
@@ -429,6 +447,7 @@ function BottomMenu:moveAction(positionOne, positionTwo)
 
     self.actionToMove = nil
 end
+
 -----------------------------------
 -- Returns the queue corresponding to the inputArea
 -- @param inputArea:String. String containing the active input area.
