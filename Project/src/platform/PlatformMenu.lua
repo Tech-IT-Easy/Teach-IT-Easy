@@ -6,11 +6,9 @@
 -- @Author:Updated by Tobias, Nov 02, 2015
 -----------------------------------------------------------
 
-local Object = require('toolkit.Object')
 local EventHandler = require('toolkit.EventHandler')
 local Event = require('toolkit.Event')
 local Controllable = require('toolkit.Controllable')
-local GameFactory = require('games.GameFactory')
 
 local PlatformMenu = extends(Controllable)
 
@@ -24,7 +22,9 @@ local background = gfx.loadpng("data/background_h720.png")
 local ChooseAvatar = require('menus.ChooseAvatar')
 
 -----------------------------------------------------------
--- Construct method
+-- Constructor method
+-- @return :PlatformMenu a new instance of PlatformMenu
+-- @author Chuck
 -----------------------------------------------------------
 function PlatformMenu:new()
   local o = PlatformMenu:super()
@@ -37,6 +37,7 @@ end
 
 -----------------------------------------------------------
 -- Loads the current view to the screen
+-- @author Chuck
 -----------------------------------------------------------
 function PlatformMenu:show()
   -- example code
@@ -81,9 +82,9 @@ end
 -----------------------------------------------------------
 -- Menu event handler for some keyboard input, when creating 
 -- a handler, you need to do a few the steps as follow
--- @object which will be operated, usually it is 
+-- @param object:PlatformMenu which will be operated, usually it is
 --          the class that contain this handler, here is menu
--- @event which is event currently happening 
+-- @param event:Event which is event currently happening
 -----------------------------------------------------------
 
 -- create a event delegate for menu

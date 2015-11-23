@@ -5,6 +5,13 @@
 local Object = require('toolkit.Object')
 local Profile = extends(Object)
 
+-------------------------------------
+-- Constructor method
+-- @param name:String the name of the profile
+-- @param avatarNum:integer a representation of the avatar images
+-- @return :Progile a new instance of Profile
+-- @author Adam
+-------------------------------------
 function Profile:new(name, avatarNum)
         local o = Profile:super()
         o.name = name

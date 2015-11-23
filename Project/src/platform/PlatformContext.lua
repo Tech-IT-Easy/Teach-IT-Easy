@@ -3,6 +3,7 @@
 -- to create menu and all the objects related to platform
 -- and to control the screen showing of all objects or
 -- update screen
+-- Platform context is responsible for all the platform things
 --
 -- @Author:Created by Chuck, Aug 16,2015
 -- @Author:Updated by author,date
@@ -33,7 +34,9 @@ local GameProgress =require('toolkit.GameProgress')
 PlatformContext = extends(Object)
 
 -----------------------------------------------------------
--- Platform context is responsible for all the platform things
+-- Constructor method
+--@return :PlatformMenu a new instance of PlatformMenu
+-- @author Chuck
 -----------------------------------------------------------
 function PlatformContext:new()
   local o = PlatformContext:super()
@@ -45,12 +48,13 @@ function PlatformContext:new()
   o.platformMenu = PlatformMenu:new()
 
   -- Platform event listener
+  -- @member platformEventListener:EventListener
   o.platformEventListener = EventListener:new(self)
 
   -- Attach menu object to listener
   o.platformEventListener:attach(o.platformMenu)
 
-
+  -- @member gameProgress:GameProgress
   o.gameprogress = GameProgress:new()
 
   --------------
@@ -62,6 +66,7 @@ end
 ------------------------------------
 --Allows a game to create a new menu, since the
 --old menu is discarded when game is created.
+-- @author Ludwig Wikblad
 ------------------------------------
 function PlatformContext:createNewMenu()
   if self.platformMenu == nil then
@@ -73,6 +78,7 @@ end
 
 -----------------------------------------------------------
 -- Load resources,such as images to platform context
+-- @author Chuck
 -----------------------------------------------------------
 function PlatformContext:load()
 
@@ -84,6 +90,7 @@ end
 
 ----------------------------------------------------------
 -- Show something on the screen when starting
+-- @author Chuck
 ----------------------------------------------------------
 function PlatformContext:show()
   --------------
@@ -98,6 +105,7 @@ end
 
 ----------------------------------------------------------
 -- Update the screen when something happens
+-- @author Chuck
 ----------------------------------------------------------
 function PlatformContext:update()
   if self.game ~= nil then
@@ -115,7 +123,9 @@ end
 ----------------------------------------------------------
 -- Accept event and inform its event listener
 -- there is something happening, after which it update itself
--- @event key event
+-- @param key The key that was pressed
+-- @param state the state of the key, i.e. up, down or repeat
+-- @author Chuck
 ----------------------------------------------------------
 function PlatformContext:process(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
