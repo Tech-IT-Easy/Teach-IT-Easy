@@ -28,8 +28,8 @@ end
 -- @param inputArea:String. The active input area.
 -- @author Tobias Lundell
 -------------------------------------------------------------
-function BuildArea:load(inputArea)
-    self.drawBuildArea:emptySlots(inputArea)
+function BuildArea:load(inputArea, active)
+    self.drawBuildArea:emptySlots(inputArea, active)
     self.drawBuildArea:headLine(self.buildType, inputArea)
     if self.buildType == "P1" then
         self.drawBuildArea:allIcons(self.p1Queue, inputArea)

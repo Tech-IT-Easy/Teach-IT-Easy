@@ -31,8 +31,6 @@ end
 -- @author Ludwig Wikblad
 -------------------------------------
 function Queue:push(action, queueType)
-
-
   if queueType == "queue" or queueType == nil then
     if  queueType == nil or self.maxCommands[queueType] > #self.actions then
         table.insert(self.actions,action)
