@@ -66,6 +66,7 @@ end
 function test_push_2()
   local a = require(SUT)
   local queuelist = a:new()
+  a.maxCommands = 16
   local queuecmd_1 = "Command_1"
   local queuecmd_2 = "Command_2"
 

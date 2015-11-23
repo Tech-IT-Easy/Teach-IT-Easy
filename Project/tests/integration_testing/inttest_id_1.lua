@@ -7,7 +7,7 @@
 --
 
 lunit = require "lunit"
-module( "test_command_queue_bottomMenu", package.seeall, lunit.testcase )
+module( "inttest_id_1", package.seeall, lunit.testcase )
 
 local SUT_1 = 'games.Progg.Queue'
 local SUT_2 = 'games.Progg.Commands'
@@ -51,6 +51,7 @@ function test_command_queue()
 
     local bottommenu = c:new()
     local queue = a:new(bottommenu)
+    a.maxCommands = 16
     local commands = b:new()
 
 --    local command1=commands.MOVE
