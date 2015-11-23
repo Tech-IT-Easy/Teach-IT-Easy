@@ -28,8 +28,6 @@ Map.OBJECTIVECOLOR = { g = 9, r = 115, b = 13 }
 -------------------------------------
 function Map:new()
     local o = Map:super()
-    o.rows = 5
-    o.columns = 8
     return Map:init(o)
 end
 
@@ -52,6 +50,16 @@ function Map:load()
     }, true)
     self.background:destroy()
 
+    -- Variables of level, should be read from file?
+    self.rows = 5
+    self.columns = 8
+    self.goalPos = 20
+    self.startPos = 33
+    self.charPos = self.startPos
+    --self.objectives = { 17, 1 }
+    --self.inGameObjectives = self.objectives
+
+    -- Calculates variables of map
     self.boxheight = (screen:get_height() * 0.65) / (self.rows + 1)
     local padding = (screen:get_width() * 0.75) - (self.boxheight * self.columns)
     self.startx = padding / 2
@@ -88,11 +96,6 @@ function Map:load()
         table.insert(self.tiles, Tile:new(self.mapdata[i]))
     end
 
-    self.goalPos = 20
-    self.startPos = 33
-    --self.objectives = { 17, 1 }
-    --self.inGameObjectives = self.objectives
-    self.charPos = self.startPos
 
     --Loop builds map
     for i = 1, #self.tiles, 1 do
