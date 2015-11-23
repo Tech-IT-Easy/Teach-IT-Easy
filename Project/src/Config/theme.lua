@@ -8,6 +8,5 @@ COLOR = {
 
 IMAGE = {
   PLATFORM_BACKGROUND = {imagePath="data/background.png",imageType="png"}
-
 }
 

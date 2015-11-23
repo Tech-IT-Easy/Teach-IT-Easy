@@ -11,7 +11,7 @@ local UIPanelView = extends(UIView)
 function UIPanelView:new(args)
   local o = UIPanelView:super{frame=args.frame,container=args.container}
   --@member background color {r=2,g=2,b=3}
-  o.backgroundColor = args.backgroundColor or {r=255,g=255,b=255}
+  o.backgroundColor = args.backgroundColor-- or {r=255,g=255,b=255}
   --@member background image.Type of UIImage
   o.backgroundImage = args.backgroundImage
   --@member 
@@ -33,8 +33,9 @@ end
 
 function UIPanelView:show()
   -- draw background
-  screen:clear(self.backgroundColor,self.globalFrame)
-  
+  if self.backgroundColor then
+    screen:clear(self.backgroundColor,self.globalFrame)
+  end
   -- draw background image
   if self.backgroundImage then
     screen:copyfrom(self.backgroundImage.imageData, nil, self.globalFrame, true)

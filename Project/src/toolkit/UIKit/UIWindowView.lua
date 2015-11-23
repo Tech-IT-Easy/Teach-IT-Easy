@@ -2,7 +2,7 @@ local UIView = require("toolkit.UIKit.UIView")
 local List = require("toolkit.Utils.List")
 local ListNode = require("toolkit.Utils.ListNode")
 local UIPanelView = require("toolkit.UIKit.UIPanelView")
-local Event = require("toolkit.Event")
+
 --local Controllable = require("toolkit.Controllable")
 
 local UIWindowView = extends(UIView)
@@ -80,11 +80,8 @@ function UIWindowView:moveToNextFocus()
     self.focusingView = self.focusList:nextNode().view
   end
 end
------------------------------------------------------------
--- Judge whether a event is interested by this controllable
--- object,this is typically used when listener notifies
--- @event which will be judged
------------------------------------------------------------
+
+--[[
 function UIWindowView:interestInEvent(event)
   return true
 end
@@ -104,5 +101,6 @@ function UIWindowView:process(listener,event)
     self.delegate:onOKEvent(focusingView)
   end
 end
+]]-- move to controller
 
 return UIWindowView
