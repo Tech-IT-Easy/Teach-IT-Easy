@@ -84,11 +84,16 @@ function Map:load()
     self.file = io.open("games/Progg/levels/level" .. tostring(1) .. ".txt", "r")
     --self.data = self.file:read("*a")
     self.mapdata = {}
+    self.filedata = ""
     for line in self.file:lines() do
         -- print(line)
-        table.insert(self.mapdata, line)
+        self.filedata = self.filedata..line
     end
 
+     for i = 1, #self.filedata do
+    local c = self.filedata:sub(i,i)
+        table.insert(self.mapdata, c)
+    end
     self.tiles = {}
     --Creating tiles from mapdata
 
