@@ -53,10 +53,6 @@ end
 -- @author Mikael Ögren
 -------------------------------------
 function DrawBuildArea:icons(queue, inputArea)
-    for i = 1, #queue do
-        if i > self.maxCommands[inputArea] then
-            return
-        end
         if #queue > self.maxCommands[inputArea] then
             return;
         end
@@ -72,7 +68,6 @@ function DrawBuildArea:icons(queue, inputArea)
             self.image:destroy()
             collectgarbage()
         end
-    end
 end
 
 -----------------------------------
