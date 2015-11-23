@@ -17,7 +17,7 @@ Map.DOWN = 2
 Map.LEFT = 3
 -------------------------------------
 -- Creates new Map object.
--- @return Map New map
+-- @return map:Map a new instance of Map
 -- @author Adam
 -------------------------------------
 function Map:new()
@@ -28,8 +28,8 @@ end
 
 
 -------------------------------------
--- Loads the map depending on data.
--- @param input The mapdata.
+-- Loads the map depending on data. "Hard-coded" 23/11
+-- @param input The mapdata. Not used 23/11
 -- @author Erik
 -------------------------------------
 function Map:load()
@@ -63,6 +63,7 @@ function Map:load()
   --Creating tiles from mapdata
 
   for i=1, #self.mapdata do
+    --@member tiles:Tile
     table.insert(self.tiles, Tile:new(self.mapdata[i]))
   end
 
@@ -155,7 +156,7 @@ end
 
 -------------------------------------
 -- Restarts the character to the start position
--- -- @param x Place of character
+-- @param x Place of character
 -- @param y Place of character
 -- @author Mario Pizcueta
 -------------------------------------
@@ -267,7 +268,7 @@ end
 -------------------------------------
 -- Calculates x and y values of tile.
 -- @param i Place of tile
--- @param type The type of tile to be printed
+-- @param tile:Tile The type of tile to be printed
 -- @author Erik
 -------------------------------------
 function Map:square(i, tile)

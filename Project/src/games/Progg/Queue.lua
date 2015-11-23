@@ -2,8 +2,9 @@ local Object = require('toolkit.Object')
 local Queue = extends(Object)
 ---------------------------------------------------------------
 -- Constructor for the Queue
--- @param newBottomMenu:BottomMenu, newBuildArea:BuildArea. The places where the queue is drawn.
--- @return a new queue instance
+-- @param newBottomMenu:BottomMenu The place where the queue is drawn.
+-- @param newBuildArea:BuildArea. The places where the loops and procedures are edited.
+-- @return queue:Queue a new queue instance
 -- @author Ludwig Wikblad
 ----------------------------------------------------------------
 function Queue:new(newBottomMenu, newBuildArea)
@@ -22,7 +23,7 @@ function Queue:new(newBottomMenu, newBuildArea)
 end
 
 -------------------------------------
---Adds something at the end of the queue
+-- Adds something at the end of the queue
 -- @param action:Command - the action to be placed in the queue,
 -- @param queueType:String - the table to place the action in
 -- @author Ludwig Wikblad
@@ -50,7 +51,7 @@ function Queue:getQueue()
 end
 
 --------------------------------------
---Removes the object that was added last in the main queue
+-- Removes the object that was added last in the main queue
 -- @return the removed action:Commands
 -- @author Ludwig Wikblad
 --------------------------------------
