@@ -15,6 +15,7 @@ local Map = require('games.Progg.Map')
 --3 == LEFT
 ----
 local step = 1
+local executionProgress = 0
 ----
 -- Constructor of the character.
 -- @param the initial position:Position of the character
@@ -36,53 +37,84 @@ end
 ----------------------------------------
 -- The logic that executes the whole queue when called.
 -- @param inqueue:Queue - the queue with all the actions to be executed
--- @author Ludwig Wikblad
+-- @author Ludwig Wikblad, Mario Pizcueta
 ----------------------------------------
 function Character:startExecution(inqueue)
-  local queue = inqueue:getExecutionQueue()
-  for j=1, #queue.actions do
-    local act = queue:pop()
+  self.queue = inqueue:getExecutionQueue()
+  self.j = 0 --Will keep track of number of commands. No use yet
+
+ start = function(timer)
+  if(0<#self.queue.actions or self.onP1 or self.onP2 or self.onLoop) then
+    local act
+      if(not self.onP1 and not self.onP2 and not self.onLoop)then
+      act = self.queue:pop()
+      else
+      act = "onProc"
+      end
     if(act~=nil)then
-
-      if act == Commands.LOOP then
-        local nrOfIterations = inqueue.loopCounter
-        for k = 1, nrOfIterations do
-          for i =1, #queue.loopActions do
-            act = queue.loopActions[#queue.loopActions - i + 1]
-            self:wait()
+    
+      --If the command LOOP is encounter or if its executing LOOP
+      if (act == Commands.LOOP or self.onLoop) then
+        self.onLoop = true
+        if(act == Commands.LOOP) then
+        self.nrOfIterations = inqueue.loopCounter
+        self.loopProcess = 0 --Counts the position inside the loop
+        end
+        if(self.nrOfIterations>0) then
+            act = self.queue.loopActions[#self.queue.loopActions - self.loopProcess + 1]
+            self.loopProcess = self.loopProcess+1
             self:execute(act)
-          end -- for i = 1
-        end -- for k = 1
-
-      elseif act == Commands.P1 then
-        for i =1, #queue.p1Actions do
-          act = table.remove(queue.p1Actions)
-          self:wait()
+            if(self.loopProcess>#self.queue.loopActions)then
+            self.loopProcess = 0
+            self.nrOfIterations = self.nrOfIterations-1
+            end
+        else
+          self.onLoop = false
+        end -- end of LOOP
+        
+      --If the command P1 is encounter or if its executing P1
+      elseif (act == Commands.P1 or self.onP1) then
+        self.onP1=true
+        if(0<#self.queue.p1Actions)then
+          act = table.remove(self.queue.p1Actions)
           self:execute(act)
-        end-- for i = 1
+        else
+        self.onP1=false
+        end-- end of P1
 
-      elseif act == Commands.P2 then
-        for i =1, #queue.p2Actions do
-          act = table.remove(queue.p2Actions)
-          self:wait()
+       --If the command P2 is encounter or if its executing P2
+      elseif (act == Commands.P2 or self.onP2) then
+        self.onP2=true
+        if(0<#self.queue.p2Actions)then
+          act = table.remove(self.queue.p2Actions)
           self:execute(act)
-        end-- for i = 1
+        else
+          self.onP2=false
+        end-- end of P2
 
       else
-        self:wait()
+      --If not executing any procedure or loop -> normal queue
         self:execute(act)
-        gfx.update()
       end -- if act ==Commands.
+    self.j= self.j+1; --Keeps track of of number of commands
     end -- if act ~= nil
-  end -- for j = 0
-  
-  if(self.map:isInGoal(self.position:getX(),self.position:getY()))then
-    self.hasWon = true
   else
-    self.map:restartCharacter(self.position:getX(),self.position:getY())
-    self.position = self.startPosition
+  --End of execution
+  self.executionTimer:stop()   
+     --Check if the goal has been reached
+     if(self.map:isInGoal(self.position:getX(),self.position:getY()))then
+        self.hasWon = true
+     else
+         self.map:restartCharacter(self.position:getX(),self.position:getY())
+         self.position = self.startPosition
+         gfx.update()
+     end
+  end -- end of QUEUE
+  
   end
   
+  --Sets the timer
+  self.executionTimer = sys.new_timer(500, "start")
 end
 
 ---------------------------------------
@@ -93,7 +125,6 @@ end
 ---------------------------------------
 function Character:execute(command)
   --Moving up
-  --execution = function(timer)
     if(command == Commands.MOVE) then
       if(self:checkCollision(self.position, self.state)) then
         if(self.state ==0) then
@@ -109,6 +140,11 @@ function Character:execute(command)
           self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
           self.position:setX(self.position:getX()-step)
         end
+      else --If encounter collision-> restart
+         self.executionTimer:stop()
+         self.map:restartCharacter(self.position:getX(),self.position:getY())
+         self.position = self.startPosition
+         gfx.update()
       end
     end
 
@@ -121,18 +157,8 @@ function Character:execute(command)
     --moving right
         self.state = (self.state +1)%4
     end
-    --self.executionTimer:stop()
-    --print(timer)
-  --end
-  --self.executionTimer = sys.new_timer(500, "execution")
 end
 
-function Character:wait()
-  local t = sys.time()
-   print(sys.time().."  "..t)
-  while sys.time() - t <= 1 do end
-
-end
 
 -----------------------------------------------------------------
 -- Calls the map to check if an action is possible to make
