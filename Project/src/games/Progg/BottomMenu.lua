@@ -25,6 +25,7 @@ local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 --Constructor method
 function BottomMenu:new(maxCommands,gameContext)
     local o = BottomMenu:super()
+    o.selectingEditAction = nil
     o.selectingLoopCounter = false;
     o.inputArea = "queue"
     o.prevInputArea = "queue"
@@ -116,6 +117,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 1
                 object.selectingLoopCounter=false
+            elseif object.selectingActionEdit~= nil then
+                print("Allow to move action")
+                object.selectingActionEdit = nil
             else
                 object.queue:push(Commands.MOVE, object.inputArea)
             end
@@ -124,6 +128,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 2
                 object.selectingLoopCounter=false
+            elseif object.selectingActionEdit ~= nil then
+                object:deleteAction(object.position, object.inputArea)
+                object:updateInputArea()
+                object.selectingActionEdit = nil
             else
                 object.queue:push(Commands.TURN_LEFT, object.inputArea)
             end
@@ -132,6 +140,12 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 3
                 object.selectingLoopCounter=false
+            elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2"  then
+                object:enterMethod()
+                object.seletingActionEdit = nil
+            elseif object.selectingActionEdit ~= nil then
+                print("Cannot enter command that is not a loop or procedure")
+                object.seletingActionEdit = nil
             else
                 object.queue:push(Commands.TURN_RIGHT, object.inputArea)
             end
@@ -140,6 +154,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 4
                 object.selectingLoopCounter=false
+            elseif object.selectingActionEdit ~= nil then
+                print("Not allowed while selecting edit")
             else
                 --queue:push(Commands.TURN_RIGHT, inputArea)
             end
@@ -148,6 +164,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 5
                 object.selectingLoopCounter=false
+            elseif object.selectingActionEdit ~= nil then
+                print("Not allowed while selecting edit")
             else
                 --queue:push(Commands.TURN_RIGHT, inputArea)
             end
@@ -157,6 +175,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 6
                 object.selectingLoopCounter=false
+            elseif object.selectingActionEdit ~= nil then
+                print("Not allowed while selecting edit")
             else
                 object.buildArea:setBuildType("loop")
                 object.queue:push(Commands.LOOP, object.inputArea)
@@ -174,6 +194,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 7
                 object.selectingLoopCounter=false
+            elseif object.selectingActionEdit ~= nil then
+                print("Not allowed while selecting edit")
             else
                 object.buildArea:setBuildType("P1")
                 object.queue:push(Commands.P1, object.inputArea)
@@ -190,6 +212,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 8
                 object.selectingLoopCounter=false
+            elseif object.selectingActionEdit ~= nil then
+                print("Not allowed while selecting edit")
             else
                 object.buildArea:setBuildType("P2")
                 object.queue:push(Commands.P2, inputArea)
@@ -205,6 +229,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 9
                 object.selectingLoopCounter=false
+            elseif object.selectingActionEdit ~= nil then
+                print("Not allowed while selecting edit")
             else
                 context.platformEventListener:removeChainListener()
                 context:createNewMenu()
@@ -212,23 +238,33 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
 
         elseif event.key == Event.KEY_UP then
-            if  object:isUpperRow(object.position) == false then
+            if object.selectingActionEdit ~= nil then
+                print("Not allowed while selecting edit")
+            elseif  object:isUpperRow(object.position) == false then
                 object:setPosition(-8)
             end
         elseif event.key == Event.KEY_DOWN then
-            if  object:isAllowedDown() then
+            if object.selectingActionEdit ~= nil then
+                print("Not allowed while selecting edit")
+            elseif  object:isAllowedDown() then
                 object:setPosition(8)
             end
         elseif event.key == Event.KEY_LEFT then
-            if object.position > 1 and object.position ~= 17 then
+            if object.selectingActionEdit ~= nil then
+                print("Not allowed while selecting edit")
+            elseif object.position > 1 and object.position ~= 17 then
                 object:setPosition(-1)
             end
         elseif event.key == Event.KEY_RIGHT then
-            if object:isAllowedRight() then
+            if object.selectingActionEdit ~= nil then
+                print("Not allowed while selecting edit")
+            elseif object:isAllowedRight() then
                 object:setPosition(1)
             end
         elseif event.key == Event.KEY_ZERO then
-            if object.inputArea == "queue"  then
+            if object.selectingActionEdit ~= nil then
+                print("Not allowed while selecting edit")
+            elseif object.inputArea == "queue"  then
                 object:executeQueue()
             else
                 object.prevPosition = object.position
@@ -239,18 +275,23 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.inputArea = "queue"
             end
         elseif event.key == Event.KEY_OK then
+
             local queuePos = object.position
             if queuePos > 16 then
                 queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
             end
 
-            if object:getQueue(object.inputArea)[queuePos] == "P1" or object:getQueue(object.inputArea)[queuePos] == "loop" or object:getQueue(object.inputArea)[queuePos] == "P2" then -- Makes sure you've clicked on a procedure or loop
-                object:enterMethod()
-            elseif object:getQueue(object.inputArea)[queuePos] ~= nil then
-                object:deleteAction(object.position, object.inputArea)
-            end
+            object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
+--            if object:getQueue(object.inputArea)[queuePos] == "P1" or object:getQueue(object.inputArea)[queuePos] == "loop" or object:getQueue(object.inputArea)[queuePos] == "P2" then -- Makes sure you've clicked on a procedure or loop
+--                object:enterMethod()
+--                object:updateInputArea(self.inputArea, true)
+--            elseif object:getQueue(object.inputArea)[queuePos] ~= nil then
+--                print("InputArea: ", object.inputArea)
+--                object:deleteAction(object.position, object.inputArea)
+--                object:updateInputArea(self.inputArea, true)
+--            end
 
-            object:updateInputArea()
+
         end
     end
 end
