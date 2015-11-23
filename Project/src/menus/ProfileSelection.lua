@@ -4,7 +4,9 @@ local Super = require('toolkit.MenuSuperClass')
 
 local Profile = require('platform.Profile')
 
-ProfileSelection = extends(Super)
+local ProfileSelection = extends(Super)
+
+local Event = require('toolkit.Event')
 
 -- profiles
 profiles = {}
@@ -23,17 +25,17 @@ image3:premultiply()
 images = { image1, image2, image3}
 
 
-local Event = require('toolkit.Event')
 -------------------------------------
 -- Creates the Profile selection-menu.
 -- @return self. The created menu-object.
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:new()
+  local o = ProfileSelection:super()
   -- text placing
-  self.appnamebaseline = screen:get_height() * 0.08
-  self.pagenamebaseline = screen:get_height() * 0.15
-  return self
+  o.appnamebaseline = screen:get_height() * 0.08
+  o.pagenamebaseline = screen:get_height() * 0.15
+  return ProfileSelection:init(o)
 end
 
 -------------------------------------
