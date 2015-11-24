@@ -36,6 +36,7 @@ function EventTimer:start()
     self.timer:start()
     self.isStop = false
   end
+
   ADLogger.trace("EventTimer:("..self.callback.." is started)")
 end
 
