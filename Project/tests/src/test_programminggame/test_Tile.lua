@@ -47,7 +47,7 @@ end
 function test_input_0()
     local ps = require(SUT)
 
-    local a = ps:new(0)
+    local a = ps:new("0")
     assert_false(a.topBorder, "Should be false")
   assert_false(a.bottomBorder, "Should be false")
   assert_false(a.leftBorder, "Should be false")
@@ -58,7 +58,7 @@ end
 function test_input_1()
     local ps = require(SUT)
 
-    local a = ps:new(1)
+    local a = ps:new("1")
     assert_false(a.topBorder, "Should be false")
   assert_false(a.bottomBorder, "Should be false")
   assert_true(a.leftBorder, "Should be true")
@@ -68,7 +68,7 @@ end
 
 function test_input_2()
     local ps = require(SUT)
-    local a = ps:new(2)
+    local a = ps:new("2")
     assert_false(a.topBorder, "Should be false")
   assert_true(a.bottomBorder, "Should be true")
   assert_false(a.leftBorder, "Should be false")
@@ -77,7 +77,7 @@ end
 
 function test_input_3()
     local ps = require(SUT)
-    local a = ps:new(3)
+    local a = ps:new("3")
     assert_false(a.topBorder, "Should be false")
   assert_true(a.bottomBorder, "Should be true")
   assert_true(a.leftBorder, "Should be true")
@@ -87,7 +87,7 @@ end
 
 function test_input_4()
     local ps = require(SUT)
-    local a = ps:new(4)
+    local a = ps:new("4")
     assert_false(a.topBorder, "Should be false")
   assert_false(a.bottomBorder, "Should be false")
   assert_false(a.leftBorder, "Should be false")
@@ -96,7 +96,7 @@ end
 
 function test_input_5()
     local ps = require(SUT)
-    local a = ps:new(5)
+    local a = ps:new("5")
     assert_false(a.topBorder, "Should be false")
   assert_false(a.bottomBorder, "Should be false")
   assert_true(a.leftBorder, "Should be true")
@@ -105,7 +105,7 @@ end
 
 function test_input_6()
     local ps = require(SUT)
-    local a = ps:new(6)
+    local a = ps:new("6")
     assert_false(a.topBorder, "Should be false")
   assert_true(a.bottomBorder, "Should be true")
   assert_false(a.leftBorder, "Should be false")
@@ -114,7 +114,7 @@ end
 
 function test_input_7()
     local ps = require(SUT)
-    local a = ps:new(7)
+    local a = ps:new("7")
     assert_false(a.topBorder, "Should be false")
   assert_true(a.bottomBorder, "Should be true")
   assert_true(a.leftBorder, "Should be true")
@@ -123,7 +123,7 @@ end
 
 function test_input_8()
     local ps = require(SUT)
-    local a = ps:new(8)
+    local a = ps:new("8")
     assert_true(a.topBorder, "Should be true")
   assert_false(a.bottomBorder, "Should be false")
   assert_false(a.leftBorder, "Should be false")
@@ -132,7 +132,7 @@ end
 
 function test_input_9()
     local ps = require(SUT)
-    local a = ps:new(9)
+    local a = ps:new("9")
     assert_true(a.topBorder, "Should be true")
   assert_false(a.bottomBorder, "Should be false")
   assert_true(a.leftBorder, "Should be true")

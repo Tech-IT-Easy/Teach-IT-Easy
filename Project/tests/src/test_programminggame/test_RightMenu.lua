@@ -125,6 +125,7 @@ function test_removeHighlight_correctCommand()
   local ps1 = require(SUT)
   local a = ps1:new()
   a.currentHighlight = "loop"
+  a.highlightTimer = sys.new_timer(500, "callback") --FIXME
   local event = "loop"
   a:removeHighlight(event)
   assert_equal(nil, a.currentHighlight, "should return nil, didn't")

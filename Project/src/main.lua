@@ -60,4 +60,3 @@ function onStart()
   platformContext:load()
   platformContext:show()  
 end
-

@@ -6,11 +6,9 @@
 -- @Author:Updated by Tobias, Nov 02, 2015
 -----------------------------------------------------------
 
-local Object = require('toolkit.Object')
 local EventHandler = require('toolkit.EventHandler')
 local Event = require('toolkit.Event')
 local Controllable = require('toolkit.Controllable')
-local GameFactory = require('games.GameFactory')
 
 local PlatformMenu = extends(Controllable)
 
@@ -22,9 +20,12 @@ local Games = require('menus.Games')
 skin = require('menus.skin')
 local background = gfx.loadpng("data/background_h720.png")
 local ChooseAvatar = require('menus.ChooseAvatar')
+local TrophyRoom = require('menus.TrophyRoom')
 
 -----------------------------------------------------------
--- Construct method
+-- Constructor method
+-- @return :PlatformMenu a new instance of PlatformMenu
+-- @author Chuck
 -----------------------------------------------------------
 function PlatformMenu:new()
   local o = PlatformMenu:super()
@@ -37,6 +38,7 @@ end
 
 -----------------------------------------------------------
 -- Loads the current view to the screen
+-- @author Chuck
 -----------------------------------------------------------
 function PlatformMenu:show()
   -- example code
@@ -56,10 +58,17 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function PlatformMenu:loadviews()
--- @member currentview:ProfileSelection
-  self.currentview = ProfileSelection:new()
-  self.views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games, chooseavatar=ChooseAvatar}
-  collectgarbage()
+    -- @member currentview:ProfileSelection
+    self.currentview = ProfileSelection:new()
+    self.views = {
+        profilesel = ProfileSelection,
+        main = MainMenu,
+        create = CreateProfile,
+        games = Games,
+        chooseavatar = ChooseAvatar,
+        trophy = TrophyRoom
+    }
+    collectgarbage()
 end
 
 -------------------------------------
@@ -68,22 +77,23 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function PlatformMenu:changeview(newview)
--- @member currentview:MainMenu
--- @member currentview:CreateProfile
--- @member currentview:Games
--- @member currentview:ChooseAvatar
-  self.currentview = self.views[newview[1]]:new()
-  screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-  self.currentview:loadview(newview[2])
-  collectgarbage()
+    -- @member currentview:MainMenu
+    -- @member currentview:CreateProfile
+    -- @member currentview:Games
+    -- @member currentview:ChooseAvatar
+    -- @member currentview:TrophyRoom
+    self.currentview = self.views[newview[1]]:new()
+    screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+    self.currentview:loadview(newview[2])
+    collectgarbage()
 end
 
 -----------------------------------------------------------
 -- Menu event handler for some keyboard input, when creating 
 -- a handler, you need to do a few the steps as follow
--- @object which will be operated, usually it is 
+-- @param object:PlatformMenu which will be operated, usually it is
 --          the class that contain this handler, here is menu
--- @event which is event currently happening 
+-- @param event:Event which is event currently happening
 -----------------------------------------------------------
 
 -- create a event delegate for menu
