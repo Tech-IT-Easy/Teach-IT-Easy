@@ -63,16 +63,9 @@ function BottomMenu:load(inArea,active)
     self.drawBottomMenu:background(self.inputArea)
     self.drawBottomMenu:emptySlots(self.inputArea)
     self.drawBottomMenu:headline("Main")
---[[    if (inArea ~= nil and active ~= nil ) then
-        self.buildArea:load(inArea, active)
-    else
-        self.buildArea:load(self.inputArea, false)
-    end]]
     if (inArea ~= nil and inArea ~= "queue") then
         self.buildArea:load(inArea, active)
-
     end
-
 end
 
 --------------------------------------------
