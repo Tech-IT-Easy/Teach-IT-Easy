@@ -11,6 +11,7 @@ local Tile = require('games.Progg.Tile')
 local Map = extends(Object)
 
 
+
 Map.UP = 0
 Map.RIGHT = 1
 Map.DOWN = 2
@@ -40,7 +41,7 @@ end
 -------------------------------------
 function Map:load()
 -- implement parameter with mapdata
-
+local MapData = require('games.Progg.levels.level'..'1')
   self.background = gfx.loadpng('data/game_background_small.png')
 
     screen:copyfrom(self.background, nil, {
@@ -51,46 +52,10 @@ function Map:load()
     }, true)
     self.background:destroy()
 
-    -- Variables of level, should be read from file?
-    self.rows = 5
-    self.columns = 8
-    self.goalPos = 20
-    self.startPos = 33
-    self.charPos = self.startPos
-    --self.objectives = { 17, 1 }
-    --self.inGameObjectives = self.objectives
-
-    -- Calculates variables of map
-    self.boxheight = (screen:get_height() * 0.65) / (self.rows + 1)
-    local padding = (screen:get_width() * 0.75) - (self.boxheight * self.columns)
-    self.startx = padding / 2
-    self.starty = self.boxheight / 2
-    self.innerboxheight = self.boxheight - 20
-    self.boxpadding = 10
-    self.borderthickness = self.boxpadding / 2
-
-
---[[self.mapdata =
-    {
-        "9", "a", "c", "0", "0", "0", "0", "0",
-        "5", "0", "3", "c", "0", "0", "0", "0",
-        "5", "0", "0", "7", "0", "0", "0", "0",
-        "5", "0", "0", "0", "f", "0", "0", "0",
-        "7", "0", "0", "0", "0", "0", "0", "0",
-    }
-]]
-
-   self.file = io.open("games/Progg/levels/level" .. tostring(1) .. ".txt", "r")
-    --self.data = self.file:read("*a")
     self.mapdata = {}
-    self.filedata = ""
-    for line in self.file:lines() do
-        -- print(line)
-        self.filedata = self.filedata..line
-    end
 
-     for i = 1, #self.filedata do
-    local c = self.filedata:sub(i,i)
+    for i = 1, #levelMapData do
+    local c = levelMapData:sub(i,i)
         table.insert(self.mapdata, c)
     end
 
@@ -101,10 +66,21 @@ function Map:load()
     --@member tiles:Tile
     table.insert(self.tiles, Tile:new(self.mapdata[i]))
   end
+    -- Variables of level, should be read from file?
+    self.rows = levelRows
+    self.columns = levelColumns
+    self.goalPos = levelGoalPosition
+    self.startPos = levelStartPosition
+    self.charPos = self.startPos
 
-  self.goalPos = 20
-  self.startPos = 33
-  self.charPos = self.startPos
+    -- Calculates variables of map
+    self.boxheight = (screen:get_height() * 0.65) / (self.rows + 1)
+    local padding = (screen:get_width() * 0.75) - (self.boxheight * self.columns)
+    self.startx = padding / 2
+    self.starty = self.boxheight / 2
+    self.innerboxheight = self.boxheight - 20
+    self.boxpadding = 10
+    self.borderthickness = self.boxpadding / 2
 
   --Loop builds map
   for i = 1, 40, 1 do
@@ -114,12 +90,6 @@ function Map:load()
   self:setStart(self.startPos)
   self:setCharacter(self.charPos)
 
-
-    --[[
-     for i = 1, #self.objectives, 1 do
-        self:printObjective(self.objectives[i])
-    end
-    ]]
 end
 
 
