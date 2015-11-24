@@ -20,6 +20,7 @@ local Games = require('menus.Games')
 skin = require('menus.skin')
 local background = gfx.loadpng("data/background_h720.png")
 local ChooseAvatar = require('menus.ChooseAvatar')
+local TrophyRoom = require('menus.TrophyRoom')
 
 -----------------------------------------------------------
 -- Constructor method
@@ -57,10 +58,17 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function PlatformMenu:loadviews()
--- @member currentview:ProfileSelection
-  self.currentview = ProfileSelection:new()
-  self.views = {profilesel=ProfileSelection, main=MainMenu, create=CreateProfile, games=Games, chooseavatar=ChooseAvatar}
-  collectgarbage()
+    -- @member currentview:ProfileSelection
+    self.currentview = ProfileSelection:new()
+    self.views = {
+        profilesel = ProfileSelection,
+        main = MainMenu,
+        create = CreateProfile,
+        games = Games,
+        chooseavatar = ChooseAvatar,
+        trophy = TrophyRoom
+    }
+    collectgarbage()
 end
 
 -------------------------------------
@@ -69,14 +77,15 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function PlatformMenu:changeview(newview)
--- @member currentview:MainMenu
--- @member currentview:CreateProfile
--- @member currentview:Games
--- @member currentview:ChooseAvatar
-  self.currentview = self.views[newview[1]]:new()
-  screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-  self.currentview:loadview(newview[2])
-  collectgarbage()
+    -- @member currentview:MainMenu
+    -- @member currentview:CreateProfile
+    -- @member currentview:Games
+    -- @member currentview:ChooseAvatar
+    -- @member currentview:TrophyRoom
+    self.currentview = self.views[newview[1]]:new()
+    screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+    self.currentview:loadview(newview[2])
+    collectgarbage()
 end
 
 -----------------------------------------------------------

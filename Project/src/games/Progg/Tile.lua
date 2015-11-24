@@ -19,7 +19,7 @@ function Tile:new(value)
         local o = Tile:super()
         o.active = true
 
-        if(value == 0) then
+        if(value == "0") then
                 o.topBorder = false
                 o.bottomBorder = false
                 o.leftBorder = false
@@ -27,7 +27,7 @@ function Tile:new(value)
                 return Tile:init(o)
         end
 
-        if(value == 1) then
+        if(value == "1") then
                 o.topBorder = false
                 o.bottomBorder = false
                 o.leftBorder = true
@@ -35,7 +35,7 @@ function Tile:new(value)
                 return Tile:init(o)
         end
 
-        if(value == 2) then
+        if(value == "2") then
                 o.topBorder = false
                 o.bottomBorder = true
                 o.leftBorder = false
@@ -43,7 +43,7 @@ function Tile:new(value)
                 return Tile:init(o)
         end
 
-        if(value == 3) then
+        if(value == "3") then
                 o.topBorder = false
                 o.bottomBorder = true
                 o.leftBorder = true
@@ -51,7 +51,7 @@ function Tile:new(value)
                 return Tile:init(o)
         end
 
-        if(value == 4) then
+        if(value == "4") then
                 o.topBorder = false
                 o.bottomBorder = false
                 o.leftBorder = false
@@ -59,7 +59,7 @@ function Tile:new(value)
                 return Tile:init(o)
         end
 
-        if(value == 5) then
+        if(value == "5") then
                 o.topBorder = false
                 o.bottomBorder = false
                 o.leftBorder = true
@@ -67,7 +67,7 @@ function Tile:new(value)
                 return Tile:init(o)
         end
 
-        if(value == 6) then
+        if(value == "6") then
                 o.topBorder = false
                 o.bottomBorder = true
                 o.leftBorder = false
@@ -75,7 +75,7 @@ function Tile:new(value)
                 return Tile:init(o)
         end
 
-        if(value == 7) then
+        if(value == "7") then
                 o.topBorder = false
                 o.bottomBorder = true
                 o.leftBorder = true
@@ -83,7 +83,7 @@ function Tile:new(value)
                 return Tile:init(o)
         end
 
-        if(value == 8) then
+        if(value == "8") then
                 o.topBorder = true
                 o.bottomBorder = false
                 o.leftBorder = false
@@ -91,7 +91,7 @@ function Tile:new(value)
                 return Tile:init(o)
         end
 
-        if(value == 9) then
+        if(value == "9") then
                 o.topBorder = true
                 o.bottomBorder = false
                 o.leftBorder = true
