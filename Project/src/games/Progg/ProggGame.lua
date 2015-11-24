@@ -5,12 +5,8 @@
 
 local rightMenu = require('games.Progg.RightMenu')
 local BottomMenu = require('games.Progg.BottomMenu')
-
-local map = require('games.Progg.Map')
-
 local Game = require('toolkit.Game')
 --Will have to include the classes of the other components here
---local inputHandler = require('games.Progg.GameInputHandler')
 local ProggGame = extends(Game)
 
 
@@ -23,8 +19,8 @@ function ProggGame:new(context)
   local o = ProggGame:super()
 
   -- @member BottomMenu:BottomMenu
-  o.bottomMenu = BottomMenu:new(16,context)
-  -- @member rightMenu:RightMenu
+  -- @member map:Map
+  o.bottomMenu = BottomMenu:new({["queue"] = 9, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },context)
   o.rightMenu = rightMenu:new()
   --o.map = map:new()
   --------------------------------
@@ -58,6 +54,7 @@ end
 
 -----------------------
 --When the platform launches the game it calls this function
+-- @author Chuck
 -----------------------
 function ProggGame:start()
   self:load()
@@ -70,6 +67,7 @@ end
 ------------------------
 --Updates all objects that are part of the game
 -- and are displayed on the screen
+-- @author Chuck
 ------------------------
 function ProggGame:update()
   -----------------------

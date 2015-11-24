@@ -23,24 +23,25 @@ Map.OUTERBOXCOLOR = { g = 28, r = 70, b = 122 }
 Map.OBJECTIVECOLOR = { g = 9, r = 115, b = 13 }
 -------------------------------------
 -- Creates new Map object.
--- @return Map New map
+-- @return map:Map a new instance of Map
 -- @author Adam
 -------------------------------------
 function Map:new()
-    local o = Map:super()
-    return Map:init(o)
+  local o = Map:super()
+
+  return Map:init(o)
 end
 
 
 -------------------------------------
--- Loads the map depending on data.
--- @param input The mapdata.
+-- Loads the map depending on data. "Hard-coded" 23/11
+-- @param input The mapdata. Not used 23/11
 -- @author Erik
 -------------------------------------
 function Map:load()
-    -- implement parameter with coosing of level
+-- implement parameter with mapdata
 
-    self.background = gfx.loadpng('data/game_background_small.png')
+  self.background = gfx.loadpng('data/game_background_small.png')
 
     screen:copyfrom(self.background, nil, {
         x = 0,
@@ -68,8 +69,6 @@ function Map:load()
     self.boxpadding = 10
     self.borderthickness = self.boxpadding / 2
 
-    -- Mapdata that is being displayed
-    -- set as input, when input is implemented
 
     self.mapdata2 =
     {
@@ -80,22 +79,22 @@ function Map:load()
         "7", "0", "0", "0", "0", "0", "0", "0",
     }
 
+  for i=1, #self.mapdata do
+    --@member tiles:Tile
+    table.insert(self.tiles, Tile:new(self.mapdata[i]))
+  end
 
-   --[[ self.file = io.open("games/Progg/levels/level" .. tostring(1) .. ".txt", "r")
-    --self.data = self.file:read("*a")
-    self.mapdata = {}
-    self.filedata = ""
-    for line in self.file:lines() do
-        -- print(line)
-        self.filedata = self.filedata..line
-    end
+  self.goalPos = 20
+  self.startPos = 33
+  self.charPos = self.startPos
 
-     for i = 1, #self.filedata do
-    local c = self.filedata:sub(i,i)
-        table.insert(self.mapdata, c)
-    end]]
-    self.tiles = {}
-    --Creating tiles from mapdata
+  --Loop builds map
+  for i = 1, 40, 1 do
+    self:square(i, self.tiles[i])
+  end
+  self:setGoal(self.goalPos)
+  self:setStart(self.startPos)
+  self:setCharacter(self.charPos)
 
     for i = 1, #self.mapdata2 do
         table.insert(self.tiles, Tile:new(self.mapdata2[i]))
@@ -262,6 +261,7 @@ function Map:moveCharacter(x, y, direction)
     elseif direction == Map.DOWN then
         self:setCharacter(pos + 8)
     end
+    gfx.update()
 end
 
 -------------------------------------
@@ -290,7 +290,7 @@ end
 
 -------------------------------------
 -- Restarts the character to the start position
--- -- @param x Place of character
+-- @param x Place of character
 -- @param y Place of character
 -- @author Mario Pizcueta
 -------------------------------------
@@ -309,8 +309,7 @@ end
 -------------------------------------
 function Map:setCharacter(i)
 
-    self.image1 = gfx.loadpng('data/bowser.png')
-    self.image1:premultiply()
+  self.image1 = gfx.loadpng('data/avatar_down.png')
 
     screen:copyfrom(self.image1, nil, {
         x = self:getX(i) + self.boxpadding,
@@ -341,10 +340,15 @@ function Map:setStart(i)
     self:printInnerBox(i, wantedColor)
 end
 
+
+function Map:update()
+
+end
+
 -------------------------------------
 -- Calculates x and y values of tile.
 -- @param i Place of tile
--- @param type The type of tile to be printed
+-- @param tile:Tile The type of tile to be printed
 -- @author Erik
 -------------------------------------
 function Map:square(i, tile)
@@ -436,3 +440,5 @@ function Map:drawRightBorder(xPos, yPos)
 end
 
 return Map
+
+
