@@ -70,7 +70,7 @@ function Map:load()
     self.borderthickness = self.boxpadding / 2
 
 
-    self.mapdata2 =
+    self.mapdata =
     {
         "9", "a", "c", "0", "0", "0", "0", "0",
         "5", "0", "3", "c", "0", "0", "0", "0",
@@ -78,6 +78,8 @@ function Map:load()
         "5", "0", "0", "0", "f", "0", "0", "0",
         "7", "0", "0", "0", "0", "0", "0", "0",
     }
+
+  self.tiles = {}
 
   for i=1, #self.mapdata do
     --@member tiles:Tile
@@ -96,18 +98,6 @@ function Map:load()
   self:setStart(self.startPos)
   self:setCharacter(self.charPos)
 
-    for i = 1, #self.mapdata2 do
-        table.insert(self.tiles, Tile:new(self.mapdata2[i]))
-    end
-
-
-    --Loop builds map
-    for i = 1, #self.tiles, 1 do
-        self:square(i, self.tiles[i])
-    end
-    self:setGoal(self.goalPos)
-    self:setStart(self.startPos)
-    self:setCharacter(self.charPos)
 
     --[[
      for i = 1, #self.objectives, 1 do
