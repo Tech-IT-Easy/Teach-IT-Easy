@@ -35,6 +35,7 @@ Event.KEY_STATE_BOTH = 3
 ---------------------------------
 -- A way to format a key to a Constant,
 -- for consistent use in the entire program
+-- @author Chuck
 ---------------------------------
 Event.formatSystemKey = {
 ["up"] = Event.KEY_UP,
@@ -59,6 +60,7 @@ Event.formatSystemKey = {
 ---------------------------------
 -- A way to format a state to a Constant
 -- for consistent use in the entire program
+-- @author Chuck
 ---------------------------------
 Event.formatSystemState = {
 ["up"] = Event.KEY_STATE_UP,
@@ -70,6 +72,7 @@ Event.formatSystemState = {
 -- @param key:String the pressed key
 -- @param state:String the state of the key, e.g. "up" or "down"
 -- @return event:Event new instance of an event
+-- @author Chuck
 --------------------------------------------
 function Event:new(key,state)
   local o = Event:super()

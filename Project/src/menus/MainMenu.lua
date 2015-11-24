@@ -1,7 +1,7 @@
 -- MainMenu = {} --MenuView:new()
 -- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
-MainMenu = extends(Super)
+local MainMenu = extends(Super)
 
 local Event = require('toolkit.Event')
 -------------------------------------
@@ -10,9 +10,9 @@ local Event = require('toolkit.Event')
 -- @author Erik
 -------------------------------------
 function MainMenu:new()
-
-    self.sidebuttonfonts = { main_menu_sidebuttontext1, main_menu_sidebuttontext2, main_menu_sidebuttontext3 }
-    return self
+  local o = MainMenu:super()
+    o.sidebuttonfonts = { main_menu_sidebuttontext1, main_menu_sidebuttontext2, main_menu_sidebuttontext3 }
+    return MainMenu:init(o)
 end
 
 -------------------------------------
@@ -60,6 +60,7 @@ end
 
 -------------------------------------
 -- Loads the view to the screen.
+-- @param input:String the username
 -- @author Erik
 -------------------------------------
 function MainMenu:loadview(input)
@@ -123,7 +124,7 @@ end
 
 -------------------------------------
 -- Prints an active sidebutton.
--- @param x. Which place to print button.
+-- @param x1. Which place to print button.
 -- @author Erik
 -------------------------------------
 function MainMenu:sidebuttonactive(x1)
@@ -135,7 +136,7 @@ end
 
 -------------------------------------
 -- Prints an inactive sidebutton.
--- @param x. Which place to print button.
+-- @param x1. Which place to print button.
 -- @author Erik
 -------------------------------------
 function MainMenu:sidebuttoninactive(x1)

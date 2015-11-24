@@ -1,17 +1,21 @@
 --CreateProfile = {} --MenuView:new()
 -- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
-CreateProfile = extends(Super)
+local CreateProfile = extends(Super)
 
 local Event = require('toolkit.Event')
 local ProfileSelection = require('menus.ProfileSelection')
 
 -------------------------------------
 -- Creates the Create profile-menu.
--- @return self. The created menu-object.
+-- @return self:CreateProfile The created menu-object.
 -- @author Erik/ Marcus
 -------------------------------------
+
+-- Must use ".self" otherwise it crashes in simulator when
+-- trying to create profile, unknown reason why.. // Adam
 function CreateProfile:new()
+  local o = CreateProfile:super()
   --Profile name
   self.profilename = ""
 

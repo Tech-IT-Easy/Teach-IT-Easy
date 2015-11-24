@@ -12,13 +12,13 @@ local newDrawBuildArea = require("games.Progg.DrawBuildArea")
 
 function BuildArea:new(maxCommands, pos)
     local o = BuildArea:super()
-    o.availableSlots = maxCommands
+    o.maxCommands = maxCommands
     o.position = pos
     o.prevPosition = nil
     o.loopQueue = {}
     o.p1Queue = {}
     o.p2Queue = {}
-    o.drawBuildArea = newDrawBuildArea:new(o.availableSlots)
+    o.drawBuildArea = newDrawBuildArea:new(o.maxCommands)
  --   o.inputArea = nil
     return BuildArea:init(o)
 end
@@ -28,15 +28,15 @@ end
 -- @param inputArea:String. The active input area.
 -- @author Tobias Lundell
 -------------------------------------------------------------
-function BuildArea:load(inputArea)
-    self.drawBuildArea:emptySlots(self.availableSlots, inputArea)
+function BuildArea:load(inputArea, active)
+    self.drawBuildArea:emptySlots(inputArea, active)
     self.drawBuildArea:headLine(self.buildType, inputArea)
     if self.buildType == "P1" then
-        self.drawBuildArea:allIcons(self.p1Queue)
+        self.drawBuildArea:allIcons(self.p1Queue, inputArea)
     elseif self.buildType == "P2" then
-        self.drawBuildArea:allIcons(self.p2Queue)
+        self.drawBuildArea:allIcons(self.p2Queue, inputArea)
     elseif self.buildType == "loop" then
-        self.drawBuildArea:allIcons(self.loopQueue)
+        self.drawBuildArea:allIcons(self.loopQueue, inputArea)
     end
 end
 
@@ -45,15 +45,15 @@ end
 -- @param queue:Queue. The queue containing the actions to be drawn.
 -- @author Tobias Lundell
 -----------------------------------------------------
-function BuildArea:show(queue)
+function BuildArea:show(queue, inputArea)
     if self.buildType == "P1" then
-        self.drawBuildArea:icons(self.p1Queue)
+        self.drawBuildArea:icons(self.p1Queue, inputArea)
         self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.p1Queue)
     elseif self.buildType == "P2" then
-        self.drawBuildArea:icons(self.p2Queue)
+        self.drawBuildArea:icons(self.p2Queue, inputArea)
         self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.p2Queue)
     elseif self.buildType == "loop" then
-        self.drawBuildArea:icons(self.loopQueue)
+        self.drawBuildArea:icons(self.loopQueue, inputArea)
         self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.loopQueue)
         self.drawBuildArea:drawLoopCounter(queue.loopCounter)
     end

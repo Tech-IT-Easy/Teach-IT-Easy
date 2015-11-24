@@ -6,7 +6,7 @@
 
 -- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
-ChooseAvatar = extends(Super)
+local ChooseAvatar = extends(Super)
 
 local Profile = require('platform.Profile')
 
@@ -15,12 +15,12 @@ local CreateProfile = require('menus.CreateProfile')
 
 -------------------------------------
 -- Creates a new menu
--- @return self The created menu
+-- @return self:ChooseAvatar The created menu
 -- @author Erik; Marcus
 -------------------------------------
 function ChooseAvatar:new()
-
-  return self
+  local o = ChooseAvatar:super()
+  return ChooseAvatar:init(o)
 end
 
 -------------------------------------
@@ -37,7 +37,7 @@ end
 -------------------------------------
 -- Handles the input from the user
 -- @param event The key pressed by the user
--- @return String Menu to navigate to or empty string
+-- @return menu:String to navigate to or empty string
 -- @author Erik; Marcus; Adam
 -------------------------------------
 function ChooseAvatar:handleinput(event)
@@ -64,16 +64,16 @@ end
 
 -------------------------------------
 -- Loads the menu
--- @param input The username
+-- @param input:String The username
 -- @author Erik; Marcus
 -------------------------------------
 function ChooseAvatar:loadview(input)
   self.pos = 1
   self.lastpos = 1
   self.username = input
-  self.image1 = gfx.loadpng('data/bowser.png')
-  self.image2 = gfx.loadpng('data/mario.png')
-  self.image3 = gfx.loadpng('data/toad.png')
+  self.image1 = gfx.loadpng('data/avatar_down.png')
+  self.image2 = gfx.loadpng('data/avatar_right.png')
+  self.image3 = gfx.loadpng('data/avatar_up.png')
   self.myimages = { self.image1, self.image2, self.image3 }
   self:renderui()
 end
@@ -91,7 +91,7 @@ end
 
 -------------------------------------
 -- Prints an inactive button.
--- @param x. Which position to print button at.
+-- @param x1. Which position to print button at.
 -- @author Erik
 -------------------------------------
 function ChooseAvatar:inactive(x1)

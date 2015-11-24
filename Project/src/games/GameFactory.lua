@@ -1,6 +1,6 @@
 -----------------------------------------------------------
--- This class is for creating specific games based on profile
--- which is the name of the game. 
+-- This class is for creating specific games based on
+-- the name of the game.
 -- 
 -- @Author:Created by Chuck, Aug 16,2015
 -- @Author:Updated by author,date
@@ -10,15 +10,22 @@
 local Object = require('toolkit.Object')
 local GameFactory = extends(Object)
 
-GameFactory.game = nil
-
-GameFactory.gameMatrix = {}
-GameFactory.gameMatrix[1] = {"Programming", "games.Progg.ProggGame" }
-GameFactory.gameMatrix[2] = {"Other game", nil }
-GameFactory.gameMatrix[3] = {"Test game", nil }
-GameFactory.gameMatrix[4] = {"Pony game", nil }
---GameFactory.gameMatrix[4] = {"Mario", "games.mario.Mario" }
-
+--------------------------------------
+-- Constructor method
+-- @return :GameFactory a new instance of a GameFactory
+-- @author Ludwig Wikblad
+--------------------------------------
+function GameFactory:new()
+  local o = GameFactory:super()
+  o.game = nil
+  o.gameMatrix = {}
+  o.gameMatrix[1] = {"Programming", "games.Progg.ProggGame" }
+  o.gameMatrix[2] = {"Other game", nil }
+  o.gameMatrix[3] = {"Test game", nil }
+  o.gameMatrix[4] = {"Pony game", nil }
+  --o.gameMatrix[4] = {"Mario", "games.mario.Mario" }
+  return GameFactory:init(o)
+end
 
 -----------------------------------------------------------
 -- Game create factory to create specific games based on profile
@@ -44,4 +51,4 @@ function GameFactory:getGame(gameName,context)
   return nil
 end
 
-return GameFactory:new()
+return GameFactory
