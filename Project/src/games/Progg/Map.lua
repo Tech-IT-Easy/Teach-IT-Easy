@@ -70,7 +70,7 @@ function Map:load()
     self.borderthickness = self.boxpadding / 2
 
 
-    self.mapdata =
+self.mapdata =
     {
         "9", "a", "c", "0", "0", "0", "0", "0",
         "5", "0", "3", "c", "0", "0", "0", "0",
