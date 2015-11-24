@@ -63,11 +63,16 @@ function BottomMenu:load(inArea,active)
     self.drawBottomMenu:background(self.inputArea)
     self.drawBottomMenu:emptySlots(self.inputArea)
     self.drawBottomMenu:headline("Main")
-    if (inArea ~= nil) then
+--[[    if (inArea ~= nil and active ~= nil ) then
         self.buildArea:load(inArea, active)
     else
         self.buildArea:load(self.inputArea, false)
+    end]]
+    if (inArea ~= nil and inArea ~= "queue") then
+        self.buildArea:load(inArea, active)
+
     end
+
 end
 
 --------------------------------------------
@@ -153,7 +158,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingLoopCounter=false
             elseif object.selectingActionEdit ~= nil then
                 object:deleteAction(object.position, object.inputArea)
-                object:updateInputArea()
+                object:updateInputArea(object.inputArea, true)
                 object.selectingActionEdit = nil
             elseif object.isMovingAction == true then
                 print("Not allowed while moving an action")
@@ -309,9 +314,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if object.isMovingAction == true then
                 object:moveAction(object.posActionToMove, object.position)
                 object.isMovingAction = false
-                object:updateInputArea()
+                object:updateInputArea(object.inputArea, true)
             else
-            object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
+                object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
             end
         end
     end
@@ -370,9 +375,9 @@ end
 -----------------------------------------
 function BottomMenu:enterMethod()
     local queuePos = self.position
-        if queuePos > 16 then
-            queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
-        end
+    if queuePos > 16 then
+        queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
+    end
     self.buildArea:setBuildType(self:getQueue(self.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
     self.inputArea = self:getQueue(self.inputArea)[queuePos]
     self.prevPosition = self.position
@@ -435,7 +440,7 @@ function BottomMenu:moveAction(positionOne, positionTwo)
 
     if queuePosOne > queuePosTwo then
         for i = queuePosOne, queuePosTwo + 1, -1 do
-           self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i-1]
+            self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i-1]
         end
         self:getQueue(self.inputArea)[queuePosTwo] = actionOne
     else
