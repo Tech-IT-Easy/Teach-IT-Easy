@@ -70,7 +70,7 @@ function Map:load()
     self.borderthickness = self.boxpadding / 2
 
 
-self.mapdata =
+--[[self.mapdata =
     {
         "9", "a", "c", "0", "0", "0", "0", "0",
         "5", "0", "3", "c", "0", "0", "0", "0",
@@ -78,6 +78,22 @@ self.mapdata =
         "5", "0", "0", "0", "f", "0", "0", "0",
         "7", "0", "0", "0", "0", "0", "0", "0",
     }
+]]
+
+   self.file = io.open("games/Progg/levels/level" .. tostring(1) .. ".txt", "r")
+    --self.data = self.file:read("*a")
+    self.mapdata = {}
+    self.filedata = ""
+    for line in self.file:lines() do
+        -- print(line)
+        self.filedata = self.filedata..line
+    end
+
+     for i = 1, #self.filedata do
+    local c = self.filedata:sub(i,i)
+        table.insert(self.mapdata, c)
+    end
+
 
   self.tiles = {}
 
