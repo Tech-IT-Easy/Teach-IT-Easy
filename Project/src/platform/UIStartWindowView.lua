@@ -1,3 +1,6 @@
+-- Created by chuck, now it doesn't affect anything. 
+-- Don't consider this file, just keep it.
+
 local UIWindowView = require("toolkit.UIKit.UIWindowView")
 local List = require("toolkit.Utils.List")
 local UIPanelView = require("toolkit.UIKit.UIPanelView")

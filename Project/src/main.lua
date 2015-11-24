@@ -26,7 +26,7 @@ if ADConfig.isSimulator then
 end
 
 local PlatformContext= require("platform.PlatformContext")
-local EventTimer= require("toolkit.EventTimer")
+
 -- create global a game context
 platformContext = PlatformContext:new()
 
@@ -55,24 +55,5 @@ function onStart()
   
   platformContext:load()
   platformContext:show()  
-  
-  --[[
-  timeEvent must be a global variables
-  callback must be a string type
-  ]]--
-  
-  timeEvent = function(timer)
-    print("I am timer")
-  end
-  timer = EventTimer:new{intervalMillisec=1000*1,callback="timeEvent"}
-  -- timer:start() defaultly 
-  
-  timer:stop()
-  
-  
-  
-  -- If you want to test Chuck's refactoring in Mario, uncommment this two lines
-  --local NiceMarioHelpTest = require("games.mario.NiceMarioHelpTest")
-  --NiceMarioHelpTest:run()
 end
 

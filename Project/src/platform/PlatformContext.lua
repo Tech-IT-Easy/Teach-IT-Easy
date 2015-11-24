@@ -26,8 +26,9 @@ local Object = require('toolkit.Object')
 local EventListener = require('toolkit.EventListener')
 local PlatformMenu = require('platform.PlatformMenu')
 local Event = require('toolkit.Event')
-local UIStartWindowView = require('platform.UIStartWindowView')
-local UIStartWindowController = require('platform.UIStartWindowController')
+
+local GameProgress =require('toolkit.GameProgress')
+
 
 PlatformContext = extends(Object)
 
@@ -41,17 +42,17 @@ function PlatformContext:new()
 
   -- Platform menu
   -- @member platformMenu:PlatformMenu
-  -- o.platformMenu = PlatformMenu:new()
+  o.platformMenu = PlatformMenu:new()
 
   -- Platform event listener
   o.platformEventListener = EventListener:new(self)
 
   -- Attach menu object to listener
-  --o.platformEventListener:attach(o.platformMenu)
-  
-  o.window = UIStartWindowController:new(UIStartWindowView)
-  
-  o.platformEventListener:attach(o.window)
+  o.platformEventListener:attach(o.platformMenu)
+
+
+  o.gameprogress = GameProgress:new()
+
   --------------
   -- code
   --------------
@@ -88,9 +89,8 @@ function PlatformContext:show()
   --------------
   -- code
   --------------
-  self.window:presentView()
-  --self.platformMenu:show()
-  --self.window:show()
+  self.platformMenu:show()
+
   gfx.update()
 end
 
@@ -107,8 +107,6 @@ function PlatformContext:update()
   if self.platformMenu ~= nil then
     self.platformMenu:update()
   end
-  
-  self.window:presentView()
   -- code
   gfx.update()
   --collectgarbage()
@@ -123,7 +121,9 @@ function PlatformContext:process(key,state)
   ADLogger.trace("OnKey("..key..","..state..")")
   local event = Event:new(key,state)
   self.platformEventListener:update(event)
-  self:update()
+  if event.state == Event.KEY_STATE_DOWN then
+    self:update()
+  end
 end
 
 

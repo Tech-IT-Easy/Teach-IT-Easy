@@ -1,3 +1,6 @@
+-- Created by chuck, now it doesn't affect anything. 
+-- Don't consider this file, just keep it.
+
 local UIWindowViewController = require("toolkit.UIKit.UIWindowViewController")
 local UIStartWindowController = extends(UIWindowViewController)
 
