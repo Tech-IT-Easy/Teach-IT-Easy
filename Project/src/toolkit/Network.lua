@@ -1,10 +1,9 @@
+-----------------------------------------------------------
+-- This class is handles all the network connection.
 --
--- Created by IntelliJ IDEA.
--- User: daniel
--- Date: 2015-11-24
--- Time: 00:38
--- To change this template use File | Settings | File Templates.
---
+-- @Author:Created by Daniel, Nov 24,2015
+-----------------------------------------------------------
+
 local Object = require('toolkit.Object')
 
 local http = require("socket.http")
@@ -14,14 +13,21 @@ local json = require("lib.json")
 Network = extends(Object)
 
 
-
+-----------------------------------------------------------
+-- Construct method
+-- @return :Network a new instance of a network
+-- @author Daniel
+-----------------------------------------------------------
 function Network:new()
   local o = Network:super()
-
   return Network:init(o)
 end
 
-
+-----------------------------------------------------------
+-- Makes a HTTP request and parse the data and returns the firstname.
+-- @return string with the firstname from the API request.
+-- @author Daniel
+-----------------------------------------------------------
 function Network:getFirstname()
   local t = {}
   http.request{
