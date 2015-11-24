@@ -124,7 +124,7 @@ end
 function test_adding_commands()
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 9, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },nil)
+    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },nil)
     local test_event
     local bm_queue
     local test_command
@@ -335,13 +335,9 @@ function test_adding_commands()
     --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "7"
     test_event = event:new("8", "down") --simulates a key press on key 7
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    print("Start")
     bm_queue = bottommenu.queue.actions[10]
-    print(bm_queue)
     --print("Added " .. bm_queue .. " in the queue")
     test_command = commands.P2
-    print(test_command)
-    print("End")
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
 
     --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "1"
