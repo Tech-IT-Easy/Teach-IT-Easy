@@ -167,11 +167,11 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingLoopCounter=false
             elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2"  then
                 object:enterMethod()
-                object.seletingActionEdit = nil
+                object.selectingActionEdit = nil
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while moving an action")
                 print("Cannot enter command that is not a loop or procedure")
-                object.seletingActionEdit = nil
+                object.selectingActionEdit = nil
             else
                 object.queue:push(Commands.TURN_RIGHT, object.inputArea)
             end
@@ -293,6 +293,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.inputArea == "queue"  then
                 object:executeQueue()
             else
+                if object.selectingLoopCounter == true then
+                    object.selectingLoopCounter = false
+                end
                 object.prevPosition = object.position
                 object.position = 1
                 object.buildArea:setPosition(object.position)
