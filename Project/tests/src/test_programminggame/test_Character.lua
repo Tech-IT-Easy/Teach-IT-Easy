@@ -20,8 +20,7 @@ local SUT = 'games.Progg.Character'
 function test_Character_new()
 
     local Character = require(SUT)
-    local pos = require('games.Progg.Position'):new(2,1)
-    local char = Character:new(pos)
+    local char = Character:new(2,1)
     local x = 2
     local y = 1
     local stt = 0
@@ -41,8 +40,7 @@ function test_Character_move()
 
     local Character = require(SUT)
     local Command = require('games.Progg.Commands')
-    local pos = require('games.Progg.Position'):new(1,2)
-    local char = Character:new(pos)
+    local char = Character:new(1,2)
     char:execute(Command.MOVE)
     
     lunit.assert_equal(char.position:getY(),1,"The character doesnt move forward up properly")
@@ -58,8 +56,7 @@ function test_Character_turnLeft()
 
     local Character = require(SUT)
     local Command = require('games.Progg.Commands')
-    local pos = require('games.Progg.Position'):new(2,1)
-    local char = Character:new(pos)
+    local char = Character:new(2,1)
     char:execute(Command.TURN_LEFT)
     
     lunit.assert_equal(char.state,3,"The character doesnt change state properly when turned left")
@@ -75,8 +72,7 @@ function test_Character_turnRight()
 
     local Character = require(SUT)
     local Command = require('games.Progg.Commands')
-    local pos = require('games.Progg.Position'):new(2,1)
-    local char = Character:new(pos)
+    local char = Character:new(2,1)
     char:execute(Command.TURN_RIGHT)
     
     lunit.assert_equal(char.state,1,"The character doesnt change state propperly when turned right")
