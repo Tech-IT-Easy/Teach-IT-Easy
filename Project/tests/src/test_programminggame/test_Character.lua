@@ -25,8 +25,8 @@ function test_Character_new()
     local y = 1
     local stt = 0
     
-    lunit.assert_equal(char.position:getX(),x,"The character is not created on the right position X")
-    lunit.assert_equal(char.position:getY(),y,"The character is not created on the right position Y")
+    lunit.assert_equal(char.position.x,x,"The character is not created on the right position X")
+    lunit.assert_equal(char.position.y,y,"The character is not created on the right position Y")
     lunit.assert_equal(char.state,stt,"The character is not created on the right position Y")
 end
 
@@ -43,7 +43,7 @@ function test_Character_move()
     local char = Character:new(1,2)
     char:execute(Command.MOVE)
     
-    lunit.assert_equal(char.position:getY(),1,"The character doesnt move forward up properly")
+    lunit.assert_equal(char.position.y,1,"The character doesnt move forward up properly")
 end
 
 -------------------------------------

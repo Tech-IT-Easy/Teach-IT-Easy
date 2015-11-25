@@ -403,8 +403,8 @@ function test_execute_queue_1()
     --Test if character moved according to the added commands
     test_event = event:new("0", "down") --simulates a key press on key 0
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    local pos_X = bottommenu.character.position:getX()
-    local pos_Y=bottommenu.character.position:getY()
+    local pos_X = bottommenu.character.position.x
+    local pos_Y=bottommenu.character.position.y
     lunit.assert_equal(1,pos_X ,"Did not move to the right x-coordinate")
     lunit.assert_equal(5,pos_Y ,"Did not move to the right x-coordinate")
 end
