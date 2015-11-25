@@ -198,17 +198,22 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
 
         elseif event.key == Event.KEY_SIX then
-
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 6
                 object.selectingLoopCounter=false
+
+                if object:isBuildArea() == true then
+                    print("Not allowed to add methods to build area")
+                    return;
+                end
+
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
                 object.buildArea:setBuildType("loop")
                 object.queue:push(Commands.LOOP, object.inputArea)
                 object.inputArea = "loop"
-                object.selectingLoopCounter=true
+                --object.selectingLoopCounter=true
 
                 object.prevPosition = object.position
                 object.position = 2*object.rowLength + 1
@@ -218,6 +223,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
 
         elseif event.key == Event.KEY_SEVEN then
+            if object:isBuildArea() == true then
+                print("Not allowed to add methods to build area")
+                return;
+            end
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 7
                 object.selectingLoopCounter=false
@@ -236,6 +245,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
 
         elseif event.key == Event.KEY_EIGHT then
+            if object:isBuildArea() == true then
+                print("Not allowed to add methods to build area")
+                return;
+            end
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 8
                 object.selectingLoopCounter=false
@@ -318,6 +331,15 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
             end
         end
+    end
+end
+
+function BottomMenu:isBuildArea()
+    print(self.inputArea)
+    if self.inputArea == "loop" or self.inputArea == "P1" or self.inputArea == "P2" then
+        return true
+    else
+        return false
     end
 end
 
