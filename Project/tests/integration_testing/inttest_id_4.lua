@@ -191,7 +191,7 @@ function test_execute_queue_1()
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
 
     --Select number of iteration. Selects 5 iterations in this case.
-    test_event = event:new("5", "down") --simulates a key press on key 6
+    test_event = event:new("5", "down") --simulates a key press on key 5
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
     local loopCounter = bottommenu.queue.loopCounter
     --print("Number of iterations: " .. loopCounter)

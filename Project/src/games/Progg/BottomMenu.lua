@@ -37,7 +37,7 @@ function BottomMenu:new(maxCommands,gameContext)
     o.selectingEditAction = nil
     o.isMovingAction = false
     o.posActionToMove = nil
-    o.selectingLoopCounter = false
+    o.selectingLoopCounter = true
     o.inputArea = "queue"
     o.prevInputArea = "queue"
     o.maxCommands = maxCommands
