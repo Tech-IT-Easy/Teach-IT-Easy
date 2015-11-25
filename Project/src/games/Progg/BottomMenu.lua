@@ -121,7 +121,7 @@ end
 --Subscribing the eventHandler to all events.
 bottomMenuEventHandler = EventHandler:new()
 bottomMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1
-    ,[Event.KEY_ZERO]=1,[Event.KEY_UP]=1,[Event.KEY_DOWN]=1 ,[Event.KEY_LEFT]=1,[Event.KEY_RIGHT]=1, [Event.KEY_OK]=1 }
+    ,[Event.KEY_ZERO]=1,[Event.KEY_UP]=1,[Event.KEY_DOWN]=1 ,[Event.KEY_LEFT]=1,[Event.KEY_RIGHT]=1, [Event.KEY_OK]=1,[Event.KEY_BACK]=1 }
 
 ----------------------------------------
 -- Update function on every key input
@@ -270,7 +270,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingLoopCounter=false
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
-            else
+            --else
 --                object.context.platformEventListener:removeChainListener()
 --                object.context:createNewMenu()
 --                object.context.game = nil
@@ -317,7 +317,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.inputArea = "queue"
             end
         elseif event.key == Event.KEY_OK then
-
             local queuePos = object.position
             if queuePos > 2*object.rowLength then
                 queuePos = queuePos - 2*object.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
@@ -329,6 +328,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             else
                 object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
             end
+        elseif event.key == Event.KEY_BACK then --This terminates the game no matter what is happening.
+            object.context.platformEventListener:removeChainListener()
+            object.context:createNewMenu()
+            object.context.game = nil
         end
     end
 end
