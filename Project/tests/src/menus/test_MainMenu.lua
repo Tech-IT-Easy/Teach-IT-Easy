@@ -43,6 +43,12 @@ function teardown()
   package.preload['menus.MainMenu'] = nil
 end
 
+-------------------------------------
+-- Tests if loadview() calls the function for drawing on screen
+-- @system_under_test: MainMenu:new(), MainMenu:loadview(input)
+-- @author name: Johanna
+-------------------------------------
+
 function test_loadview()
   local mc = create_mock(SUT)
 
@@ -66,8 +72,13 @@ function test_loadview()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Goes right from pos 1
+-- @system_under_test: MainMenu:new(), MainMenu:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_right()
-  -- goes right from pos 1
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
@@ -104,8 +115,13 @@ function test_handleinput_right()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Goes down from any of the two upper item on the right side when down is pressed
+-- @system_under_test: MainMenu:new(), MainMenu:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_from_right_down()
-  -- goes down from any of the two upper item on the right side when down is pressed
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
@@ -141,8 +157,13 @@ function test_handleinput_from_right_down()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Should do nothing when down is pressed from bottom position on the right
+-- @system_under_test: MainMenu:new(), MainMenu:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_from_right_down_two()
-  -- should do nothing when down is pressed from bottom position on the right
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
@@ -177,8 +198,14 @@ function test_handleinput_from_right_down_two()
 
   verify_mock(mc)
 end
+
+-------------------------------------
+-- Should move up when in any of the two lowest sections on the right side
+-- @system_under_test: MainMenu:new(), MainMenu:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_from_right_up()
-  -- should move up when in any of the two lowest sections on the right side
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
@@ -213,8 +240,14 @@ function test_handleinput_from_right_up()
 
   verify_mock(mc)
 end
+
+-------------------------------------
+-- Should do nothing when up is pressed from the top position on the right
+-- @system_under_test: MainMenu:new(), MainMenu:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_from_right_up_two()
-  -- should do nothing when up is pressed from the top position on the right
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
@@ -250,8 +283,13 @@ function test_handleinput_from_right_up_two()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Should move left from right
+-- @system_under_test: MainMenu:new(), MainMenu:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_from_right_left()
-  -- should move left from right
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
@@ -287,8 +325,13 @@ function test_handleinput_from_right_left()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Should do nothing when left is pressed from the left section
+-- @system_under_test: MainMenu:new(), MainMenu:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_left_left()
-  -- should do nothing when left is pressed from the left section
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
@@ -324,8 +367,13 @@ function test_handleinput_left_left()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Checks if game is chosen when 1 is pressed from left pos.
+-- @system_under_test: MainMenu:new(), MainMenu:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_left_one()
-  -- checks if game is chosen when 1 is pressed from left pos.
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 0
@@ -334,8 +382,13 @@ function test_handleinput_left_one()
   assert_equal("games", b[1], "should want to start game")
 end
 
+-------------------------------------
+-- Checks if create is chosen if 1 is pressed
+-- @system_under_test: MainMenu:new(), MainMenu:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_two()
-  -- checks if create is chosen if 1 is pressed
   local ps = require(SUT)
   local a = ps:new()
   event.key = event.KEY_BACK
@@ -343,8 +396,13 @@ function test_handleinput_two()
   assert_equal("profilesel", b[1], "should get create")
 end
 
+-------------------------------------
+-- Checks that it does nothing on any other case
+-- @system_under_test: MainMenu:new(), MainMenu:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_any_other()
-  -- checks that is does nothing on any other case
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 2

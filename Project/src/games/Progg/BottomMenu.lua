@@ -258,9 +258,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
-                object.context.platformEventListener:removeChainListener()
-                object.context:createNewMenu()
-                object.context.game = nil
+--                object.context.platformEventListener:removeChainListener()
+--                object.context:createNewMenu()
+--                object.context.game = nil
             end
 
         elseif event.key == Event.KEY_UP then
@@ -433,6 +433,11 @@ function BottomMenu:moveAction(positionOne, positionTwo)
     if queuePosOne > 16 then
         queuePosOne = queuePosOne - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
         queuePosTwo = queuePosTwo - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
+    end
+
+    if queuePosTwo > #self:getQueue(self.inputArea) then
+        print("Not allowed to move action to empty slot")
+        return
     end
 
     local actionOne = self:getQueue(self.inputArea)[queuePosOne]
