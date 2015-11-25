@@ -155,7 +155,7 @@ function DrawBottomMenu:highlightIcon(pos, prevPos, queue)
 end
 
 ---------------------------------------------
--- Clears the previous position.
+-- Clears the previous position for highlighting.
 -- @param pos:Integer, queue:Queue. The position to be cleared and the queue of commands.
 ---------------------------------------------
 function DrawBottomMenu:clearPos(pos, queue)

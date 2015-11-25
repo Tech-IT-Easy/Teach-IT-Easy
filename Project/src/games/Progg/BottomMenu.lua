@@ -429,6 +429,11 @@ function BottomMenu:moveAction(positionOne, positionTwo)
         queuePosTwo = queuePosTwo - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
     end
 
+    if queuePosTwo > #self:getQueue(self.inputArea) then
+        print("Not allowed to move action to empty slot")
+        return
+    end
+
     local actionOne = self:getQueue(self.inputArea)[queuePosOne]
 
     if queuePosOne > queuePosTwo then
