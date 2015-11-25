@@ -67,6 +67,12 @@ function test_loadview()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests if what happens if user tries to move right from far left position.
+-- @system_under_test: CreateProfile:new(), CreateProfile:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_right_from_left()
   -- goes right from pos 1
   local mc = create_mock(SUT)
@@ -97,7 +103,13 @@ function test_handleinput_right_from_left()
 
   verify_mock(mc)
 end
-  -- tests if what happens if user tries to move right from far right position.
+
+-------------------------------------
+-- Tests if what happens if user tries to move right from far right position.
+-- @system_under_test: CreateProfile:new(), CreateProfile:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_right_from_right()
   local mc = create_mock(SUT)
   -- Mock inactive and active
@@ -127,7 +139,13 @@ function test_handleinput_right_from_right()
 
   verify_mock(mc)
 end
--- tests if goes left from far right position ( when test is written, 27 positions)
+
+-------------------------------------
+-- Tests if goes left from far right position (when test is written, 27 positions)
+-- @system_under_test: CreateProfile:new(), CreateProfile:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_left_from_right()
   local mc = create_mock(SUT)
   -- Mock inactive and active
@@ -158,7 +176,12 @@ function test_handleinput_left_from_right()
   verify_mock(mc)
 end
 
--- should not be able to moce left from far left position.
+-------------------------------------
+-- Should not be able to moce left from far left position.
+-- @system_under_test: CreateProfile:new(), CreateProfile:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_left_from_left()
   -- goes right from pos 1
   local mc = create_mock(SUT)
@@ -190,7 +213,12 @@ function test_handleinput_left_from_left()
   verify_mock(mc)
 end
 
+-------------------------------------
 -- Tries to add A to profilename.
+-- @system_under_test: CreateProfile:new(), CreateProfile:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_one_from_any_letter()
   local mc = create_mock(SUT)
   -- Mock inactive and active
@@ -226,7 +254,12 @@ function test_handleinput_one_from_any_letter()
   verify_mock(mc)
 end
 
+-------------------------------------
 -- Tries to add A to profilename already consisting of letters.
+-- @system_under_test: CreateProfile:new(), CreateProfile:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_one_from_any_letter_to_add_new_letter_to_username()
 
   local mc = create_mock(SUT)
@@ -263,7 +296,12 @@ function test_handleinput_one_from_any_letter_to_add_new_letter_to_username()
   verify_mock(mc)
 end
 
+-------------------------------------
 -- Tries to press done by pressing one.
+-- @system_under_test: CreateProfile:new(), CreateProfile:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_one_from_pos_done()
   local mc = create_mock(SUT)
   -- Mock inactive and active
@@ -297,7 +335,12 @@ function test_handleinput_one_from_pos_done()
   verify_mock(mc)
 end
 
+-------------------------------------
 -- Tries to go back by pressing two
+-- @system_under_test: CreateProfile:new(), CreateProfile:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_two_from_any_pos()
   local mc = create_mock(SUT)
   -- Mock inactive and active
@@ -328,7 +371,12 @@ function test_handleinput_two_from_any_pos()
   verify_mock(mc)
 end
 
--- push any other button
+-------------------------------------
+-- Push any other button
+-- @system_under_test: CreateProfile:new(), CreateProfile:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_one_from_pos_done()
   local ps = require(SUT)
   local a = ps:new()

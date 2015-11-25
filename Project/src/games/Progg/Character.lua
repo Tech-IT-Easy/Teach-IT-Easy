@@ -7,6 +7,7 @@ local Object = require("toolkit.Object")
 local Character = extends(Object)
 local Commands = require('games.Progg.Commands')
 local Map = require('games.Progg.Map')
+local Position = require('games.Progg.Position')
 
 ----
 --0 == UP
@@ -25,7 +26,7 @@ function Character:new(newPosition)
   local o = Character:super()
   -- @member position:Position
   o.position = newPosition
-  o.startPosition = newPosition
+  o.startPosition = Position:new(newPosition:getX(), newPosition:getY())
   o.state = 0
   -- @member map:Map
   o.map = Map:new()
@@ -41,18 +42,18 @@ end
 ----------------------------------------
 function Character:startExecution(inqueue)
   self.queue = inqueue:getExecutionQueue()
-  self.j = 0 --Will keep track of number of commands. No use yet
+  self.j = 0 --Keeps track of number of commands.
 
  start = function(timer)
   if(0<#self.queue.actions or self.onP1 or self.onP2 or self.onLoop) then
     local act
       if(not self.onP1 and not self.onP2 and not self.onLoop)then
-      act = self.queue:pop()
+        act = self.queue:pop()
       else
-      act = "onProc"
+        act = "onProc"
       end
     if(act~=nil)then
-    
+
       --If the command LOOP is encounter or if its executing LOOP
       if (act == Commands.LOOP or self.onLoop) then
         self.onLoop = true
@@ -71,7 +72,7 @@ function Character:startExecution(inqueue)
         else
           self.onLoop = false
         end -- end of LOOP
-        
+
       --If the command P1 is encounter or if its executing P1
       elseif (act == Commands.P1 or self.onP1) then
         self.onP1=true
@@ -100,14 +101,23 @@ function Character:startExecution(inqueue)
     end -- if act ~= nil
   else
   --End of execution
-  self.executionTimer:stop()   
+  self.executionTimer:stop()
+  self.executionTimer = nil
+  collectgarbage()
      --Check if the goal has been reached
      if(self.map:isInGoal(self.position:getX(),self.position:getY()))then
         self.hasWon = true
      else
-         self.map:restartCharacter(self.position:getX(),self.position:getY())
-         self.position = self.startPosition
-         gfx.update()
+       self.map:restartCharacter(self.position:getX(),self.position:getY())
+       self.position = self.startPosition
+       self.state = 0
+       self.onP1 = false
+       self.loopProcess = 0
+       self.nrOfIterations = 0
+       self.onP2 = false
+       self.onLoop = false
+       self.j = 0
+       gfx.update()
      end
   end -- end of QUEUE
   
@@ -151,11 +161,13 @@ function Character:execute(command)
     if(command == Commands.TURN_LEFT) then
     --Moving left
     self.state = (self.state -1)%4
+        self.map:setCharacter(self.map:getPosition(self.position:getX(), self.position:getY()), self.state)
     end
 
     if(command == Commands.TURN_RIGHT) then
     --moving right
         self.state = (self.state +1)%4
+        self.map:setCharacter(self.map:getPosition(self.position:getX(), self.position:getY()), self.state)
     end
 end
 

@@ -72,11 +72,11 @@ function Map:load()
 
 self.mapdata =
     {
-        "9", "a", "c", "0", "0", "0", "0", "0",
-        "5", "0", "3", "c", "0", "0", "0", "0",
-        "5", "0", "0", "7", "0", "0", "0", "0",
-        "5", "0", "0", "0", "f", "0", "0", "0",
-        "7", "0", "0", "0", "0", "0", "0", "0",
+        "9", "a", "c", "f", "f", "f", "f", "f",
+        "5", "f", "3", "c", "f", "f", "f", "f",
+        "5", "f", "f", "7", "f", "f", "f", "f",
+        "5", "f", "f", "f", "f", "f", "f", "f",
+        "7", "f", "f", "f", "f", "f", "f", "f",
     }
 
   self.tiles = {}
@@ -96,7 +96,7 @@ self.mapdata =
   end
   self:setGoal(self.goalPos)
   self:setStart(self.startPos)
-  self:setCharacter(self.charPos)
+  self:setCharacter(self.charPos, Map.UP)
 
 
     --[[
@@ -243,15 +243,15 @@ function Map:moveCharacter(x, y, direction)
         self:square(pos, self.tiles[pos])
     end
     if direction == Map.UP then
-        self:setCharacter(pos - 8)
+        self:setCharacter(pos - 8, direction)
     elseif direction == Map.LEFT then
-        self:setCharacter(pos - 1)
+        self:setCharacter(pos - 1, direction)
     elseif direction == Map.RIGHT then
-        self:setCharacter(pos + 1)
+        self:setCharacter(pos + 1, direction)
     elseif direction == Map.DOWN then
-        self:setCharacter(pos + 8)
+        self:setCharacter(pos + 8, direction)
     end
-    gfx.update()
+
 end
 
 -------------------------------------
@@ -288,7 +288,7 @@ end
 function Map:restartCharacter(x,y)
   local pos = self:getPosition(x,y)
   self:square(pos, self.tiles[pos])
-  self:setCharacter(self.startPos)
+  self:setCharacter(self.startPos, Map.UP)
 
 end
 
@@ -297,9 +297,17 @@ end
 -- @param i Place of character
 -- @author Erik
 -------------------------------------
-function Map:setCharacter(i)
-
-  self.image1 = gfx.loadpng('data/avatar_down.png')
+function Map:setCharacter(i, direction)
+    self.image1 = gfx.loadpng('data/avatar_up.png')
+    if direction == Map.UP then
+        self.image1 = gfx.loadpng('data/avatar_up.png')
+    elseif direction == Map.DOWN then
+        self.image1 = gfx.loadpng('data/avatar_down.png')
+    elseif direction == Map.RIGHT then
+        self.image1 = gfx.loadpng('data/avatar_right.png')
+    elseif direction == Map.LEFT then
+        self.image1 = gfx.loadpng('data/avatar_left.png')
+    end
 
     screen:copyfrom(self.image1, nil, {
         x = self:getX(i) + self.boxpadding,
@@ -308,6 +316,7 @@ function Map:setCharacter(i)
         h = self.innerboxheight
     }, true)
     self.image1:destroy()
+    gfx.update()
 end
 
 -------------------------------------

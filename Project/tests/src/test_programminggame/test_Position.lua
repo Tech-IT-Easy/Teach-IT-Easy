@@ -11,6 +11,11 @@ module( "test_Position", package.seeall, lunit.testcase )
 
 local SUT = 'games.Progg.Position'
 
+-------------------------------------
+-- ??
+-- @system_under_test: Position:new(x,y), Position:getX(), Position:getY(), Position:setX(x), Position:setY(y)
+-- @author name: ??
+-------------------------------------
 
 function test_create()
    local pos = require(SUT):new(1,2)

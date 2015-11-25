@@ -30,3 +30,23 @@ All notable changes between releases will be documented in this file.
 ### Removed
 - Emulator folder, all code is now in 'src'
 - STB_Emulator_default folder, not used code
+
+## [v.0.3] - 2015-11-24
+### New
+- Started implementing programming game
+- Draw map in programming game
+- Add, delete and move actions in queue
+- Possible to execute queue
+- Animation when avatar moves in the map
+- Possible to move around in the bottom menu
+- Implemented new UI-kit
+- All the draw functions in separate classes
+- Inheritance between menus
+- Separate skin files for menu and programming game
+- Back button in profile selection menu
+- Possible to add procedures and loops in the queue
+
+### Changed
+- New avatars
+- New eventhandler (new buttons for OK, back etc.)
+- Not longer possible to add more than 4 profiles
