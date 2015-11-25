@@ -52,7 +52,6 @@ function Character:startExecution(inqueue)
       act = "onProc"
       end
     if(act~=nil)then
-      print("HEJA")
       --If the command LOOP is encounter or if its executing LOOP
       if (act == Commands.LOOP or self.onLoop) then
         self.onLoop = true
@@ -112,7 +111,6 @@ function Character:startExecution(inqueue)
   end -- end of QUEUE
   
   end
-  
   --Sets the timer
   self.executionTimer = sys.new_timer(500, "start")
 end

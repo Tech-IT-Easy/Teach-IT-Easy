@@ -5,7 +5,6 @@
 -- Time: 12:28
 -- To change this template use File | Settings | File Templates.
 --
-
 lunit = require "lunit"
 module( "inttest_id_2", package.seeall, lunit.testcase )
 
@@ -73,19 +72,15 @@ function test_start_executing_commands()
 
     create_queue(myqueue, "complex")
 
-    print(myqueue.actions[1])
-    print(myqueue.actions[2])
-    print(myqueue.actions[3])
-    print(myqueue.actions[4])
-    print(myqueue.actions[5])
-    print(myqueue.actions[6])
-    print(myqueue.actions[7])
-    print(myqueue.actions[8])
-    print(myqueue.actions[9])
-    print(myqueue.actions[10])
-    print(myqueue.actions[11])
-
     character:startExecution(myqueue)
+
+    --simulates the timer without delay
+    while(0<#character.queue.actions or character.onP1 or character.onP2 or character.onLoop) do
+        start()
+    end
+
+    --Must run one more time, to get path coverage in end of execution
+    start()
 
     local is_at_goal = character.hasWon
 
