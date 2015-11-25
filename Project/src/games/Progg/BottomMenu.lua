@@ -289,7 +289,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
         elseif event.key == Event.KEY_ZERO then
             if object.selectingActionEdit ~= nil then
-                print("Not allowed while selecting edit")
+                object.selectingActionEdit = nil
             elseif object.inputArea == "queue"  then
                 object:executeQueue()
             else
