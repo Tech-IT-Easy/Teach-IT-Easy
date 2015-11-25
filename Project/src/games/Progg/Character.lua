@@ -7,7 +7,6 @@ local Object = require("toolkit.Object")
 local Character = extends(Object)
 local Commands = require('games.Progg.Commands')
 local Map = require('games.Progg.Map')
-local Position = require('games.Progg.Position')
 
 ----
 --0 == UP
@@ -18,14 +17,14 @@ local Position = require('games.Progg.Position')
 local executionProgress = 0
 ----
 -- Constructor of the character.
--- @param the initial position:Position of the character
+-- @param x:integer the initial x-position of the character
+-- @param y:integer the initial y-position of the character
 -- @author Ludwig Wikblad; Mario Pizcueta
 ----
-function Character:new(newPosition)
+function Character:new(x,y)
   local o = Character:super()
-  -- @member position:Position
-  o.position = newPosition
-  o.startPosition = Position:new(newPosition:getX(), newPosition:getY())
+  o.position = {x = x, y = y}
+  o.startPosition = {x = x, y = y}
   o.state = 0
   -- @member map:Map
   o.map = Map:new()
@@ -113,7 +112,7 @@ function Character:startExecution(inqueue)
   self.executionTimer = nil
   collectgarbage()
      --Check if the goal has been reached
-     if(self.map:isInGoal(self.position:getX(),self.position:getY()))then
+     if(self.map:isInGoal(self.position.x,self.position.y))then
         self.hasWon = true
      else
        self:reset()
@@ -137,22 +136,22 @@ function Character:execute(command)
   --Moving up
     if(command == Commands.MOVE) then
       if(self:checkCollision(self.position, self.state)) then
-        if(self.state ==0) then
-          self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-          self.position:setY(self.position:getY()-self.step)
-        elseif(self.state ==1) then
-          self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-          self.position:setX(self.position:getX()+self.step)
-        elseif(self.state ==2) then
-          self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-          self.position:setY(self.position:getY()+self.step)
-        elseif(self.state ==3) then
-          self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-          self.position:setX(self.position:getX()-self.step)
+        if(self.state == 0) then
+          self.map:moveCharacter(self.position.x, self.position.y, self.state)
+          self.position.y = self.position.y-self.step
+        elseif(self.state == 1) then
+          self.map:moveCharacter(self.position.x, self.position.y, self.state)
+          self.position.x = self.position.x+self.step
+        elseif(self.state == 2) then
+          self.map:moveCharacter(self.position.x, self.position.y, self.state)
+          self.position.y = self.position.y+self.step
+        elseif(self.state == 3) then
+          self.map:moveCharacter(self.position.x, self.position.y, self.state)
+          self.position.x = self.position.x-self.step
         end
       else --If encounter collision-> restart
          self.executionTimer:stop()
-         self.map:restartCharacter(self.position:getX(),self.position:getY())
+         self.map:restartCharacter(self.position.x,self.position.y)
          self.position = self.startPosition
          gfx.update()
       end
@@ -161,13 +160,13 @@ function Character:execute(command)
     if(command == Commands.TURN_LEFT) then
     --Moving left
       self.state = (self.state -1)%4
-      self.map:setCharacter(self.map:getPosition(self.position:getX(), self.position:getY()), self.state)
+      self.map:setCharacter(self.map:getPosition(self.position.x, self.position.y), self.state)
     end
 
     if(command == Commands.TURN_RIGHT) then
     --moving right
         self.state = (self.state +1)%4
-        self.map:setCharacter(self.map:getPosition(self.position:getX(), self.position:getY()), self.state)
+        self.map:setCharacter(self.map:getPosition(self.position.x, self.position.y), self.state)
     end
 end
 
@@ -180,7 +179,7 @@ end
 -- @author Ludwig Wikblad
 -----------------------------------------------------------------
 function Character:checkCollision(position, state)
-  return self.map:canMove(position:getX(), position:getY(), state)
+  return self.map:canMove(position.x, position.y, state)
 end
 
 ---------------------------------------
@@ -188,8 +187,9 @@ end
 -- @author Ludwig Wikblad
 ---------------------------------------
 function Character:reset()
-  self.map:restartCharacter(self.position:getX(),self.position:getY())
-  self.position = self.startPosition
+  self.map:restartCharacter(self.position.x,self.position.y)
+  self.position.x = self.startPosition.x
+  self.position.y = self.startPosition.y
   self.state = 0
   self.onP1 = false
   self.procProcess = 0

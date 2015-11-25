@@ -19,7 +19,6 @@ local buildArea = require('games.Progg.BuildArea')
 local Character = require('games.Progg.Character')
 local Queue = require('games.Progg.Queue')
 
-local Position = require('games.Progg.Position')
 local BottomMenu = extends(Controllable)
 local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 
@@ -51,7 +50,7 @@ function BottomMenu:new(maxCommands,gameContext)
     -- @member drawBottomMenu:DrawBottomMenu
     o.drawBottomMenu = newDrawBottomMenu:new(maxCommands)
     -- @member character:Character
-    o.character = Character:new(Position:new(1,5))
+    o.character = Character:new(1,5)
     o.queue = Queue:new(o, o.buildArea, maxCommands)
     return BottomMenu:init(o)
 end
