@@ -59,14 +59,14 @@ function Character:startExecution(inqueue)
         self.onLoop = true
         if(act == Commands.LOOP) then
         self.nrOfIterations = inqueue.loopCounter
-        self.loopProcess = 0 --Counts the position inside the loop
+        self.procProcess = 0 --Counts the position inside the loop
         end
         if(self.nrOfIterations>0) then
-            act = self.queue.loopActions[#self.queue.loopActions - self.loopProcess + 1]
-            self.loopProcess = self.loopProcess+1
+            act = self.queue.loopActions[#self.queue.loopActions - self.procProcess + 1]
+            self.procProcess = self.procProcess+1
             self:execute(act)
-            if(self.loopProcess>#self.queue.loopActions)then
-            self.loopProcess = 0
+            if(self.procProcess>#self.queue.loopActions)then
+            self.procProcess = 0
             self.nrOfIterations = self.nrOfIterations-1
             end
         else
@@ -75,9 +75,13 @@ function Character:startExecution(inqueue)
 
       --If the command P1 is encounter or if its executing P1
       elseif (act == Commands.P1 or self.onP1) then
+        if(act == Commands.P1) then
+          self.procProcess = 0 
+        end
         self.onP1=true
-        if(0<#self.queue.p1Actions)then
-          act = table.remove(self.queue.p1Actions)
+        if(self.procProcess<#self.queue.p1Actions)then
+          self.procProcess =  self.procProcess + 1;
+          act = self.queue.p1Actions[#self.queue.p1Actions - self.procProcess + 1]
           self:execute(act)
         else
         self.onP1=false
@@ -85,9 +89,13 @@ function Character:startExecution(inqueue)
 
        --If the command P2 is encounter or if its executing P2
       elseif (act == Commands.P2 or self.onP2) then
+        if(act == Commands.P2) then
+          self.procProcess = 0 
+        end
         self.onP2=true
-        if(0<#self.queue.p2Actions)then
-          act = table.remove(self.queue.p2Actions)
+        if(self.procProcess<#self.queue.p2Actions)then
+          self.procProcess =  self.procProcess + 1;
+          act = self.queue.p2Actions[#self.queue.p2Actions - self.procProcess + 1]
           self:execute(act)
         else
           self.onP2=false
@@ -184,7 +192,7 @@ function Character:reset()
   self.position = self.startPosition
   self.state = 0
   self.onP1 = false
-  self.loopProcess = 0
+  self.procProcess = 0
   self.nrOfIterations = 0
   self.onP2 = false
   self.onLoop = false
