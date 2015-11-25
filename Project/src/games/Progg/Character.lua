@@ -25,7 +25,7 @@ function Character:new(newPosition)
   local o = Character:super()
   -- @member position:Position
   o.position = newPosition
-  o.startPosition = Position:new(newPosition:getX(), newPosition:getY())
+  o.startPosition = {x = newPosition:getX(), y = newPosition:getY()}
   o.state = 0
   -- @member map:Map
   o.map = Map:new()
@@ -181,7 +181,8 @@ end
 ---------------------------------------
 function Character:reset()
   self.map:restartCharacter(self.position:getX(),self.position:getY())
-  self.position = self.startPosition
+  self.position:setX(self.startPosition.x)
+  self.position:setY(self.startPosition.y)
   self.state = 0
   self.onP1 = false
   self.loopProcess = 0
