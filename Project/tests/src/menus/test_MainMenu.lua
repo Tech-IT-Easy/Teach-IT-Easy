@@ -397,7 +397,7 @@ function test_handleinput_two()
 end
 
 -------------------------------------
--- Checks that is does nothing on any other case
+-- Checks that it does nothing on any other case
 -- @system_under_test: MainMenu:new(), MainMenu:handleinput(event)
 -- @author name: Johanna
 -------------------------------------
