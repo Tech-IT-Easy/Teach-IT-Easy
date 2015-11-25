@@ -52,7 +52,7 @@ function Character:startExecution(inqueue)
       act = "onProc"
       end
     if(act~=nil)then
-    
+      print("HEJA")
       --If the command LOOP is encounter or if its executing LOOP
       if (act == Commands.LOOP or self.onLoop) then
         self.onLoop = true

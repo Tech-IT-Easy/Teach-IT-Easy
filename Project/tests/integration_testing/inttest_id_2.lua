@@ -14,35 +14,40 @@ local SUT_2 = 'games.Progg.Position'
 local SUT_3 = 'games.Progg.Queue'
 local commands=require('games.Progg.Commands')
 
-local function create_queue(inqueue)
-    inqueue:push(commands.MOVE, "queue")
-    inqueue:push(commands.MOVE, "queue")
-    inqueue:push(commands.MOVE, "queue")
-    inqueue:push(commands.MOVE, "queue")
-    inqueue:push(commands.TURN_RIGHT, "queue")
-    inqueue:push(commands.MOVE, "queue")
-    inqueue:push(commands.MOVE, "queue")
-    inqueue:push(commands.TURN_RIGHT, "queue")
-    inqueue:push(commands.MOVE, "queue")
---    inqueue:push(commands.MOVE, "queue")
---    inqueue:push(commands.P1, "queue")
---    inqueue:push(commands.MOVE, "P1")
---    inqueue:push(commands.MOVE, "P1")
---    inqueue:push(commands.TURN_LEFT, "P1")
---    inqueue:push(commands.TURN_RIGHT, "P1")
---    inqueue:push(commands.P2, "queue")
---    inqueue:push(commands.MOVE, "P2")
---    inqueue:push(commands.MOVE, "P2")
---    inqueue:push(commands.TURN_LEFT, "P2")
---    inqueue:push(commands.TURN_RIGHT, "P2")
+local function create_queue(inqueue, type)
+    if(type=="simple")then
+        inqueue:push(commands.MOVE, "queue")
+        inqueue:push(commands.MOVE, "queue")
+        inqueue:push(commands.MOVE, "queue")
+        inqueue:push(commands.MOVE, "queue")
+        inqueue:push(commands.TURN_RIGHT, "queue")
+        inqueue:push(commands.MOVE, "queue")
+        inqueue:push(commands.MOVE, "queue")
+        inqueue:push(commands.TURN_RIGHT, "queue")
+        inqueue:push(commands.MOVE, "queue")
+    else
+        inqueue:push(commands.LOOP, "queue")
+        inqueue.loopCounter=4
+        inqueue:push(commands.MOVE, "loop")
+        inqueue:push(commands.TURN_RIGHT, "queue")
+        inqueue:push(commands.MOVE, "queue")
+        inqueue:push(commands.MOVE, "queue")
+        inqueue:push(commands.TURN_RIGHT, "queue")
+        inqueue:push(commands.MOVE, "queue")
+        inqueue:push(commands.TURN_LEFT, "queue")
+        inqueue:push(commands.MOVE, "queue")
+        inqueue:push(commands.MOVE, "queue")
+        inqueue:push(commands.TURN_RIGHT, "queue")
+        inqueue:push(commands.MOVE, "queue")
+    end
 end
 
-function test_execute_commads()
+function test_execute_simple_commads()
     local Position = require(SUT_2)
     local character = require(SUT_1):new(Position:new(1,5))
     local myqueue=require(SUT_3):new(nil,nil,{["queue"] = 9, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
 
-    create_queue(myqueue)
+    create_queue(myqueue, "simple")
 
     local executionqueue = myqueue:getExecutionQueue()
 
@@ -59,6 +64,32 @@ function test_execute_commads()
 
     lunit.assert_equal(3, x_position, "Not correct x-position")
     lunit.assert_equal(2, y_position, "Not correct y-position")
+end
+
+function test_start_executing_commands()
+    local Position = require(SUT_2)
+    local character = require(SUT_1):new(Position:new(1,5))
+    local myqueue=require(SUT_3):new(nil,nil,{["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
+
+    create_queue(myqueue, "complex")
+
+    print(myqueue.actions[1])
+    print(myqueue.actions[2])
+    print(myqueue.actions[3])
+    print(myqueue.actions[4])
+    print(myqueue.actions[5])
+    print(myqueue.actions[6])
+    print(myqueue.actions[7])
+    print(myqueue.actions[8])
+    print(myqueue.actions[9])
+    print(myqueue.actions[10])
+    print(myqueue.actions[11])
+
+    character:startExecution(myqueue)
+
+    local is_at_goal = character.hasWon
+
+    lunit.assert_true(is_at_goal, "Has not moved to right position")
 end
 
 function test_command_queue_bottomMenu()
