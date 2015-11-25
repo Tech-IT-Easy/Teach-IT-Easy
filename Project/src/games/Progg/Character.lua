@@ -152,8 +152,8 @@ function Character:execute(command)
 
     if(command == Commands.TURN_LEFT) then
     --Moving left
-    self.state = (self.state -1)%4
-        self.map:setCharacter(self.map:getPosition(self.position:getX(), self.position:getY()), self.state)
+      self.state = (self.state -1)%4
+      self.map:setCharacter(self.map:getPosition(self.position:getX(), self.position:getY()), self.state)
     end
 
     if(command == Commands.TURN_RIGHT) then
