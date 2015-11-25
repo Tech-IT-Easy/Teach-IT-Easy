@@ -36,7 +36,7 @@ end
 -- @system_under_test: Character:new(newPosition), Character:execute(command)
 -- @author name: ??
 -------------------------------------
---[[ This test requires a mocked map in order to work.
+
 function test_Character_move()
 
     local Character = require(SUT)
@@ -47,7 +47,7 @@ function test_Character_move()
     
     lunit.assert_equal(char.position:getY(),1,"The character doesnt move forward up properly")
 end
---]]
+
 -------------------------------------
 -- Test for execute a command turn-left
 -- @system_under_test: Character:new(newPosition), Character:execute(command)
