@@ -243,13 +243,13 @@ function Map:moveCharacter(x, y, direction)
         self:square(pos, self.tiles[pos])
     end
     if direction == Map.UP then
-        self:setCharacter(pos - 8)
+        self:setCharacter(pos - self.columns)
     elseif direction == Map.LEFT then
         self:setCharacter(pos - 1)
     elseif direction == Map.RIGHT then
         self:setCharacter(pos + 1)
     elseif direction == Map.DOWN then
-        self:setCharacter(pos + 8)
+        self:setCharacter(pos + self.columns)
     end
     gfx.update()
 end
@@ -262,7 +262,7 @@ end
 -- @author Erik
 -------------------------------------
 function Map:getPosition(x, y)
-    local pos = x + (y - 1) * 8
+    local pos = x + (y - 1) * self.columns
     return pos
 end
 
