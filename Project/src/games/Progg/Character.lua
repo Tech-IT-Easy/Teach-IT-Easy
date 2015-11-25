@@ -15,7 +15,6 @@ local Position = require('games.Progg.Position')
 --2 == DOWN
 --3 == LEFT
 ----
-local step = 1
 local executionProgress = 0
 ----
 -- Constructor of the character.
@@ -32,6 +31,7 @@ function Character:new(newPosition)
   o.map = Map:new()
   o.map:load()
   o.hasWon=false
+  o.step = 1
   return Character:init(o)
 end
 
@@ -108,15 +108,7 @@ function Character:startExecution(inqueue)
      if(self.map:isInGoal(self.position:getX(),self.position:getY()))then
         self.hasWon = true
      else
-       self.map:restartCharacter(self.position:getX(),self.position:getY())
-       self.position = self.startPosition
-       self.state = 0
-       self.onP1 = false
-       self.loopProcess = 0
-       self.nrOfIterations = 0
-       self.onP2 = false
-       self.onLoop = false
-       self.j = 0
+       self:reset()
        gfx.update()
      end
   end -- end of QUEUE
@@ -139,16 +131,16 @@ function Character:execute(command)
       if(self:checkCollision(self.position, self.state)) then
         if(self.state ==0) then
           self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-          self.position:setY(self.position:getY()-step)
+          self.position:setY(self.position:getY()-self.step)
         elseif(self.state ==1) then
           self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-          self.position:setX(self.position:getX()+step)
+          self.position:setX(self.position:getX()+self.step)
         elseif(self.state ==2) then
           self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-          self.position:setY(self.position:getY()+step)
+          self.position:setY(self.position:getY()+self.step)
         elseif(self.state ==3) then
           self.map:moveCharacter(self.position:getX(), self.position:getY(), self.state)
-          self.position:setX(self.position:getX()-step)
+          self.position:setX(self.position:getX()-self.step)
         end
       else --If encounter collision-> restart
          self.executionTimer:stop()
@@ -181,7 +173,22 @@ end
 -----------------------------------------------------------------
 function Character:checkCollision(position, state)
   return self.map:canMove(position:getX(), position:getY(), state)
-  --return true
+end
+
+---------------------------------------
+-- Resets the character to it's start position.
+-- @author Ludwig Wikblad
+---------------------------------------
+function Character:reset()
+  self.map:restartCharacter(self.position:getX(),self.position:getY())
+  self.position = self.startPosition
+  self.state = 0
+  self.onP1 = false
+  self.loopProcess = 0
+  self.nrOfIterations = 0
+  self.onP2 = false
+  self.onLoop = false
+  self.j = 0
 end
 
 return Character

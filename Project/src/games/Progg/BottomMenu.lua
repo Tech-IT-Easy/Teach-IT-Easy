@@ -42,6 +42,7 @@ function BottomMenu:new(maxCommands,gameContext)
     o.prevInputArea = "queue"
     o.maxCommands = maxCommands
     o.position = 1     --Starting position for highlight
+    o.rowLength = 8
     o.prevPosition = nil
     -- @member context:PlatformContext
     o.context = gameContext
@@ -210,7 +211,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingLoopCounter=true
 
                 object.prevPosition = object.position
-                object.position = 17
+                object.position = 2*object.rowLength + 1
                 object.buildArea:setPosition(object.position)
                 object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.loopQueue)
@@ -228,7 +229,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.inputArea = "P1"
 
                 object.prevPosition = object.position
-                object.position = 17
+                object.position = 2*object.rowLength + 1
                 object.buildArea:setPosition(object.position)
                 object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.p1Queue)
@@ -246,7 +247,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.inputArea = "P2"
 
                 object.prevPosition = object.position
-                object.position = 17
+                object.position = 2*object.rowLength + 1
                 object.buildArea:setPosition(object.position)
                 object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.p2Queue)
@@ -267,18 +268,18 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if object.selectingActionEdit ~= nil then
                 print("Not allowed while selecting edit")
             elseif  object:isUpperRow(object.position) == false then
-                object:setPosition(-8)
+                object:setPosition(-object.rowLength)
             end
         elseif event.key == Event.KEY_DOWN then
             if object.selectingActionEdit ~= nil then
                 print("Not allowed while selecting edit")
             elseif  object:isAllowedDown() then
-                object:setPosition(8)
+                object:setPosition(object.rowLength)
             end
         elseif event.key == Event.KEY_LEFT then
             if object.selectingActionEdit ~= nil then
                 print("Not allowed while selecting edit")
-            elseif object.position > 1 and object.position ~= 17 then
+            elseif object.position > 1 and object.position ~= 2*object.rowLength + 1 then
                 object:setPosition(-1)
             end
         elseif event.key == Event.KEY_RIGHT then
@@ -306,9 +307,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
         elseif event.key == Event.KEY_OK then
 
             local queuePos = object.position
-            if queuePos > 16 then
-                queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
-
+            if queuePos > 2*object.rowLength then
+                queuePos = queuePos - 2*object.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
             end
             if object.isMovingAction == true then
                 object:moveAction(object.posActionToMove, object.position)
@@ -339,11 +339,11 @@ end
 -----------------------------------------
 function BottomMenu:isAllowedRight()
     local queuePos = self.position
-    if queuePos > 16 then
-        queuePos = queuePos - 16
+    if queuePos > 2*self.rowLength then
+        queuePos = queuePos - 2*self.rowLength
     end
 
-    if self.position < 32 and self.position ~= 16 and self.maxCommands[self.inputArea] > queuePos  then
+    if self.position < 4*self.rowLength and self.position ~= 2*self.rowLength and self.maxCommands[self.inputArea] > queuePos  then
         return true
     else
         return false
@@ -357,11 +357,11 @@ end
 -----------------------------------------
 function BottomMenu:isAllowedDown()
     local queuePos = self.position
-    if queuePos > 16 then
-        queuePos = queuePos - 16
+    if queuePos > 2*self.rowLength then
+        queuePos = queuePos - 2*self.rowLength
     end
 
-    if  self:isUpperRow(self.position) == true and self.maxCommands[self.inputArea] >= queuePos + 8 then
+    if  self:isUpperRow(self.position) == true and self.maxCommands[self.inputArea] >= queuePos + self.rowLength then
         return true
     else
         return false
@@ -374,13 +374,13 @@ end
 -----------------------------------------
 function BottomMenu:enterMethod()
     local queuePos = self.position
-    if queuePos > 16 then
-        queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
+    if queuePos > 2*self.rowLength then
+        queuePos = queuePos - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
     end
     self.buildArea:setBuildType(self:getQueue(self.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
     self.inputArea = self:getQueue(self.inputArea)[queuePos]
     self.prevPosition = self.position
-    self.position = 17
+    self.position = 2*self.rowLength + 1
     self.buildArea:setPosition(self.position)
     self.drawBottomMenu:clearPos(self.prevPosition, self.queue.actions)
     self.buildArea.drawBuildArea:clearPos(self.buildArea.prevPosition, self:getQueue(self.inputArea))
@@ -394,7 +394,7 @@ end
 -- @author Mikael Ögren
 -----------------------------------------
 function BottomMenu:isUpperRow(pos)
-    if (pos > 8 and pos <= 16) or (24 < pos and pos <= 32) then
+    if (pos > self.rowLength and pos <= 2*self.rowLength) or (3*self.rowLength < pos and pos <= 4*self.rowLength) then
         return false
     else
         return true
@@ -409,8 +409,8 @@ end
 -----------------------------------
 function BottomMenu:deleteAction(position, inputArea)
     local queuePos = position
-    if queuePos > 16 then
-        queuePos = queuePos - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
+    if queuePos > 2*self.rowLength then
+        queuePos = queuePos - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
     end
 
     if self:getQueue(inputArea)[queuePos] ~= nil then
@@ -430,9 +430,9 @@ function BottomMenu:moveAction(positionOne, positionTwo)
     local queuePosOne = positionOne
     local queuePosTwo = positionTwo
 
-    if queuePosOne > 16 then
-        queuePosOne = queuePosOne - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
-        queuePosTwo = queuePosTwo - 16 -- Must be done if clicking a command in buildArea to get correct position in queue
+    if queuePosOne > 2*self.rowLength then
+        queuePosOne = queuePosOne - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
+        queuePosTwo = queuePosTwo - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
     end
 
     if queuePosTwo > #self:getQueue(self.inputArea) then
