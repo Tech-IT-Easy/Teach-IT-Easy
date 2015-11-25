@@ -38,57 +38,103 @@ end
 function teardown()
   reset_mocks()
 end
-
-function test_left_possible() -- Test function for moving left when not in pos 1
+-------------------------------------
+-- Test function for moving left when not in pos 1
+-- @system_under_test: main:onKey(key,state)
+-- @author name: ??
+-------------------------------------
+function test_left_possible()
   mock_render_ui()
   main.setPos(2)
   local pos = main.onKey('left', 'down')
   assert_equal(1, pos, "Should move left, but couldn't")
 end
 
-function test_left_not_possible() -- Test function for moving left when in pos 1
+-------------------------------------
+-- Test function for moving left when in pos 1
+-- @system_under_test: main:onKey(key,state)
+-- @author name: ??
+-------------------------------------
+
+function test_left_not_possible()
   mock_render_ui()
   main.setPos(1)
   local pos = main.onKey('left', 'down')
   assert_equal(1, pos, "Shouldn't be able to move left, but did")
 end
 
-function test_right_possible() -- Test function for moving right when not in pos 4
+-------------------------------------
+-- Test function for moving right when not in pos 4
+-- @system_under_test: main:onKey(key,state)
+-- @author name: ??
+-------------------------------------
+
+function test_right_possible()
   mock_render_ui()
   main.setPos(2)
   local pos = main.onKey('right', 'down')
   assert_equal(3, pos, "Should move right, but couldn't")
 end
 
-function test_right_not_possible() -- Test function for moving right when in pos 4
+-------------------------------------
+-- Test function for moving right when in pos 4
+-- @system_under_test: main:onKey(key,state)
+-- @author name: ??
+-------------------------------------
+
+function test_right_not_possible()
   mock_render_ui()
   main.setPos(4)
   local pos = main.onKey('right', 'down')
   assert_equal(4, pos, "Shouldn't be able to move right, but did")
 end
 
-function test_up_possible() -- Test function for moving up when in pos 5
+-------------------------------------
+-- Test function for moving up when in pos 5
+-- @system_under_test: main:onKey(key,state)
+-- @author name: ??
+-------------------------------------
+
+function test_up_possible()
   mock_render_ui()
   main.setPos(5)
   local pos = main.onKey('up', 'down')
   assert_equal(1, pos, "Should move up, but couldn't")
 end
 
-function test_up_not_possible() -- Test function for moving up when not in pos 5
+-------------------------------------
+-- Test function for moving up when not in pos 5
+-- @system_under_test: main:onKey(key,state)
+-- @author name: ??
+-------------------------------------
+
+function test_up_not_possible()
   mock_render_ui()
   main.setPos(1)
   local pos = main.onKey('up', 'down')
   assert_equal(1, pos, "Shouldn't be able to move up, but did")
 end
 
-function test_down_possible()  -- Test function for moving down when not in pos 5
+-------------------------------------
+-- Test function for moving down when not in pos 5
+-- @system_under_test: main:onKey(key,state)
+-- @author name: ??
+-------------------------------------
+
+function test_down_possible()
   mock_render_ui()
   main.setPos(2)
   local pos = main.onKey('down', 'down')
   assert_equal(5, pos, "Should move down, but couldn't")
 end
 
-function test_down_not_possible()  -- Test function for moving down when in pos 5
+-------------------------------------
+-- Test function for moving down when in pos 5
+-- @system_under_test: main:onKey(key,state)
+-- @author name: ??
+-------------------------------------
+
+function test_down_not_possible()
   mock_render_ui()
   main.setPos(5)
   local pos = main.onKey('down', 'down')

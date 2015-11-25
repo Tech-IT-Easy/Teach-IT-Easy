@@ -46,6 +46,12 @@ function teardown()
   package.preload['menus.ProfileSelection'] = nil
 end
 
+-------------------------------------
+-- Tests if loadview() calls the function for drawing on screen
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:loadview()
+-- @author name: Johanna
+-------------------------------------
+
 function test_loadview()
   local mc = create_mock(SUT)
 
@@ -69,9 +75,13 @@ function test_loadview()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests if possible tp go right from pos 1
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
 
 function test_handleinput_right()
-  -- goes right from pos 1
   local mc = create_mock(SUT)
   -- Mock inactive and active
   -- Create mock objects for each function to mock
@@ -102,8 +112,13 @@ function test_handleinput_right()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests if no movement to the right when at far right
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_right_two()
-   -- does not move right when at far right
   local mc = create_mock(SUT)
   local inactive = mc:mock()
   local active = mc:mock()
@@ -124,8 +139,13 @@ function test_handleinput_right_two()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests if no movement to the left when at far left pos
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_left()
-    -- does not move left when at far left pos
   local mc = create_mock(SUT)
   local inactive = mc:mock()
   local active = mc:mock()
@@ -145,8 +165,13 @@ function test_handleinput_left()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests if no movement one step left
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_left_two()
-  -- should move one step left
   local mc = create_mock(SUT)
   local inactive = mc:mock()
   local active = mc:mock()
@@ -166,8 +191,13 @@ function test_handleinput_left_two()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests if no movement from bottom when right is pressed
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_bottom_right()
-  -- does not move from bottom when right is pressed
   local mc = create_mock(SUT)
   local inactive = mc:mock()
   local active = mc:mock()
@@ -187,8 +217,13 @@ function test_handleinput_bottom_right()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests if no movement from bottom when left is pressed
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_bottom_left()
-  -- does not move from bottom when left is pressed
   local mc = create_mock(SUT)
   local inactive = mc:mock()
   local active = mc:mock()
@@ -208,8 +243,13 @@ function test_handleinput_bottom_left()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests if no movement from bottom when down is pressed
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_bottom_down()
-  -- does not move from bottom when down is pressed
   local mc = create_mock(SUT)
   local inactive = mc:mock()
   local active = mc:mock()
@@ -229,8 +269,13 @@ function test_handleinput_bottom_down()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests if movement from bottom when left up pressed
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_bottom_up()
-  -- moves up from bottom when up is pressed
   local mc = create_mock(SUT)
   local inactive = mc:mock()
   local active = mc:mock()
@@ -250,8 +295,13 @@ function test_handleinput_bottom_up()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests that nothing happens when up is pressed and pos is among the upper ones.
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_up_up()
-  -- nothing should happen when up is pressed and pos is among the upper ones.
   local mc = create_mock(SUT)
   local inactive = mc:mock()
   local active = mc:mock()
@@ -278,8 +328,13 @@ function test_handleinput_up_up()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests movement down to pos 5 from all upper pos when down is pressed a.pos = 1
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_up_down()
-  -- should move down to pos 5 from all upper pos when down is pressed a.pos = 1
   local mc = create_mock(SUT)
   local inactive = mc:mock()
   local active = mc:mock()
@@ -305,8 +360,13 @@ function test_handleinput_up_down()
   verify_mock(mc)
 end
 
+-------------------------------------
+-- Tests if the right user is chosen when 1 is pressed
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_up_one()
-  -- tests if the right user is choses when 1 is pressed
   local ps = require(SUT)
   local a = ps:new()
  -- a.usernames = {"a", "b", "c"}
@@ -323,8 +383,13 @@ function test_handleinput_up_one()
 
 end
 
+-------------------------------------
+-- Checks if create is chosen if 1 is pressed
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_down_one()
-  -- checks if create is chosen if 1 is pressed
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 5
@@ -333,8 +398,13 @@ function test_handleinput_down_one()
   assert_equal("create", b[1], "should get create")
 end
 
+-------------------------------------
+-- Test what happens if any other button is pressed.
+-- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_any_other_button()
-  -- test what happens if any other button is pressed.
   local ps = require(SUT)
   local a = ps:new()
   a.pos = 5

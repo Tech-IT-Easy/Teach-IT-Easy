@@ -176,7 +176,7 @@ end
 
 -------------------------------------
 -- Set goal test. Tests all possible paths.
--- @system_under_test : Map:new(), Map:setGoal()
+-- @system_under_test : Map:new(), Map:setGoal(i)
 -- @author name: Marcus
 -------------------------------------
 function test_setGoal_one()
@@ -271,7 +271,7 @@ end
 
 -------------------------------------
 -- Set start test. Tests all possible paths.
--- @system_under_test : Map:new(), Map:setStart()
+-- @system_under_test : Map:new(), Map:setStart(i)
 -- @author name: Marcus
 -------------------------------------
 function test_setStart_one()

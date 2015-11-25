@@ -14,6 +14,13 @@ local SUT = 'games.Progg.ProggGame'
 -- Delete this function when the real test is done
 
 -- FIXME: Write tests
+
+-------------------------------------
+-- Test not implemented
+-- @system_under_test: -
+-- @author name: -
+-------------------------------------
+
 --[[
 function test_ProggGame_fail()
    fail("ProggGame class and functions not tested yet!")
