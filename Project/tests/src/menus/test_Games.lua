@@ -46,7 +46,12 @@ function teardown()
   package.preload['menus.Games'] = nil
 end
 
--- tests if move right from far left posistion.
+-------------------------------------
+-- Tests if move right from far left posistion.
+-- @system_under_test: Games:new(), Games:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_right_from_left()
    local mc = create_mock(SUT)
   -- Mock inactive and active
@@ -75,8 +80,12 @@ function test_handleinput_right_from_left()
   assert_equal(2, a.pos, "should move one position to the right, didn't ")
 end
 
+-------------------------------------
+-- Tests if move right from far right position, shouldn't
+-- @system_under_test: Games:new(), Games:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
 
--- tests if move right from far right position, shouldn't
 function test_handleinput_right_from_right()
        local mc = create_mock(SUT)
        -- Mock inactive and active
@@ -108,7 +117,12 @@ function test_handleinput_right_from_right()
  --fail("don't know how to test if key == 'right' and self.pos <#self.games then..., Don't know how to test #self.games")
 end
 
--- tests if move left from position that is not the far left one
+-------------------------------------
+-- Tests if move left from position that is not the far left one
+-- @system_under_test: Games:new(), Games:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function handleinput_left_form_right()
   local mc = create_mock(SUT)
   -- Mock inactive and active
@@ -137,7 +151,12 @@ function handleinput_left_form_right()
   assert_equal(2, a.pos, "should move one position to the left, didn't ")
 end
 
--- tests if able to move left from far left position. Should not be able to.
+-------------------------------------
+-- Tests if able to move left from far left position. Should not be able to.
+-- @system_under_test: Games:new(), Games:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_left_form_left()
   local mc = create_mock(SUT)
   -- Mock inactive and active
@@ -166,7 +185,12 @@ function test_handleinput_left_form_left()
   assert_equal(1, a.pos, "should note move one position to the left, did ")
 end
 
--- checks if main is return when trying to go back.
+-------------------------------------
+-- Checks if main is return when trying to go back.
+-- @system_under_test: Games:new(), Games:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_two_from_left()
   local ps = require(SUT)
   local a = ps:new()
@@ -175,7 +199,13 @@ function test_handleinput_two_from_left()
   local b = a:handleinput(event)
   assert_equal("main", b[1], "should return main")
 end
--- checks if main is return when trying to go back.
+
+-------------------------------------
+-- Checks if main is return when trying to go back.
+-- @system_under_test: Games:new(), Games:handleinput(event)
+-- @author name: Johanna
+-------------------------------------
+
 function test_handleinput_other_args()
   local ps = require(SUT)
   local a = ps:new()

@@ -176,7 +176,7 @@ end
 
 -------------------------------------
 -- Set goal test. Tests all possible paths.
--- @system_under_test : Map:new(), Map:setGoal()
+-- @system_under_test : Map:new(), Map:setGoal(i)
 -- @author name: Marcus
 -------------------------------------
 function test_setGoal_one()
@@ -271,7 +271,7 @@ end
 
 -------------------------------------
 -- Set start test. Tests all possible paths.
--- @system_under_test : Map:new(), Map:setStart()
+-- @system_under_test : Map:new(), Map:setStart(i)
 -- @author name: Marcus
 -------------------------------------
 function test_setStart_one()
@@ -737,6 +737,7 @@ function test_getPosition_one()
     mc:replay()
 
     local a = ps:new()
+    a.columns = 8
 
     local x = 1
     local y = 1
@@ -753,6 +754,7 @@ function test_getPosition_two()
     mc:replay()
 
     local a = ps:new()
+    a.columns = 8
 
     local x = 3
     local y = 3
@@ -788,8 +790,9 @@ function test_moveCharacter_one()
     local x = 2
     local y = 2
     local direction = 0
+    a.columns = 8
     a.startPos = 1
-    a.tiles={0,0,0,0,0,0,0}
+    a.tiles={0,0,0,0,0,0,0 }
 
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
     square(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -824,9 +827,11 @@ function test_moveCharacter_two()
     local x = 2
     local y = 2
     local direction = 0
+    a.columns = 8
     a.startPos = 1
     a.mapdata = {}
-    a.tiles={0,0,0,0,0,0,0}
+    a.tiles={0,0,0,0,0,0,0 }
+
 
 
 
@@ -864,9 +869,11 @@ function test_moveCharacter_three()
     local x = 2
     local y = 2
     local direction = 3
+    a.columns = 8
     a.startPos = 1
     a.mapdata = {}
-    a.tiles={0,0,0,0,0,0,0}
+    a.tiles={0,0,0,0,0,0,0 }
+
 
 
 
@@ -902,9 +909,10 @@ function test_moveCharacter_four()
     local x = 2
     local y = 2
     local direction = 1
+    a.columns = 8
     a.startPos = 1
     a.mapdata = {}
-    a.tiles={0,0,0,0,0,0,0}
+    a.tiles={0,0,0,0,0,0,0 }
 
 
 
@@ -940,8 +948,9 @@ function test_moveCharacter_five()
     local x = 2
     local y = 2
     local direction = 2
+    a.columns = 8
     a.mapdata = {}
-    a.tiles={0,0,0,0,0,0,0}
+    a.tiles={0,0,0,0,0,0,0 }
 
 
     setStart(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -976,6 +985,7 @@ function test_canMove_one()
     local x = 1
     local y = 1
     local direction = 0
+    a.columns = 8
     a.tiles = { tile }
 
     getPosition(mc.ANYARGS); mc:returns(1):anytimes()
@@ -1003,7 +1013,9 @@ function test_canMove_two()
     local x = 1
     local y = 1
     local direction = 0
+    a.columns = 8
     a.tiles = { tile }
+
 
     getPosition(mc.ANYARGS); mc:returns(1):anytimes()
     mc:replay()

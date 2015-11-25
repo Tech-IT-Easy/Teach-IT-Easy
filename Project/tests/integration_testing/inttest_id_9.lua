@@ -1,19 +1,18 @@
 --
 -- Created by IntelliJ IDEA.
--- User: Andreas Mansson
--- Date: 2015-11-19
--- Time: 14:13
+-- User: Lena
+-- Date: 2015-11-20
+-- Time: 10:50
 -- To change this template use File | Settings | File Templates.
 --
 
+
 lunit = require "lunit"
-module( "inttest_id_6", package.seeall, lunit.testcase )
+module( "inttest_id_9", package.seeall, lunit.testcase )
 local event = require ("toolkit.Event")
 
-local SUT1 = 'games.Progg.Commands'
-local SUT2 = 'games.Progg.BuildArea'
-local SUT3 = 'games.Progg.Character'
-local SUT4 = 'games.Progg.Queue'
+local SUT1 = 'games.Progg.BuildArea'
+local SUT2 = 'games.Progg.DrawBuildArea'
 
 --Corresponds to function bottomMenuEventHandler:update(object,eventListener,event)
 --in BottomMenu
@@ -49,80 +48,23 @@ function teardown()
 end
 
 
---function test_update_queue()
---    local queue = require(SUT4)
---    local commands = require(SUT1)
---    local buildarea =require(SUT2)
---    local q = queue:new()
---    local inputArea = "queue"
---
---    local class_to_mock = "games.Progg.BottomMenu"
---    local mc = create_mock(class_to_mock)
---    local drawIcons = mc:mock()
---    local setQueue = mc:mock()
---
---    --Only drawIcons in ButtomMenu need to be mocked. Reload class
---    local ps=require(class_to_mock)
---
---    package.loaded[class_to_mock].drawIcons = drawIcons
---    package.loaded[class_to_mock].setQueue = setQueue
---
---    drawIcons(mc.ANYARGS) ;mc :returns(nil) :anytimes()
---    setQueue(mc.ANYARGS) ;mc :returns(nil) :anytimes()
---    mc:replay()
---
---    local ps1 = require(SUT1)
---    local ps4=ps:new()
---
---    local event = require "toolkit.Event"
---    event.key = event.KEY_ONE
---
---    local a = ps1:new(event)
---    -- a.command = a.MOVE
---    -- SUT1 =  'games.Progg.Queue'
---    -- SUT2 =  'games.Progg.Commands'
---    local bb = require(SUT4)
---    local b = bb:new(ps4,buildarea:new(16))
---
---
---    --Push MOVE-command into queue
---    b:push(commands.MOVE, inputArea)
---    local c1 = b.actions[1]
---    lunit.assert_equal(commands.MOVE, c1, "Did not found the correct element in the queue")
---
---    --Push TURN_LEFT-command into queue
---    b:push(commands.TURN_LEFT, inputArea)
---    local c1 = b.actions[2]
---    lunit.assert_equal(commands.TURN_LEFT, c1, "Did not found the correct element in the queue")
---
---    --Push TURN_RIGHT-command into queue
---    b:push(commands.TURN_RIGHT, inputArea)
---    local c1 = b.actions[2]
---    lunit.assert_equal(commands.TURN_RIGHT, c1, "Did not found the correct element in the queue")
---
---    --Push TURN_LEFT-command into queue
---    b:push(commands.TURN_LEFT, inputArea)
---    local c1 = b.actions[2]
---    lunit.assert_equal(commands.TURN_LEFT, c1, "Did not found the correct element in the queue")
---
---
---
---    --local BottomMenu = require(SUT)
---    --local bm = BottomMenu:new(16,nil)
---
---    --bm.queue:push(Commands.MOVE, "queue")
---
---    --local a = Event:new(Event.KEY_ONE, Event.KEY_STATE_DOWN)
---
---    --bm.bottomM1enuEventHandler:update(bm,nil,a)
---    --bm.queue:push(Commands.MOVE, "queue")
---end
+-- Test if what is built in Build Area is drawed correctly
 
+function test_loop_drawing ()
+    local build = require("games.Progg.BuildArea")
+    local drawbuild = require("games.Progg.DrawBuildArea")
+    local buildarea = build:new(10, 17)
+    local queue = {"move", "turn-right", "turn-left"}
+    buildarea:setQueue(queue, "loop")
+    buildarea:showqueue(queue)
+    drawbuild:getFileName(queue)
+
+end
 --Test if character moved according to the added procedure
 function test_execute_queue_3()
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },nil)
+    local bottommenu = test:new(16,nil)
     local test_event
     local bm_queue
     local test_command
@@ -177,9 +119,11 @@ function test_execute_queue_3()
     --Test if character moved according to the added commands
     test_event = event:new("0", "down") --simulates a key press on key 0
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    local pos_X = bottommenu.character.position.x
-    local pos_Y=bottommenu.character.position.y
+    local pos_X = bottommenu.character.position:getX()
+    local pos_Y=bottommenu.character.position:getY()
     lunit.assert_equal(1,pos_X ,"Did not move to the right x-coordinate")
-    lunit.assert_equal(5,pos_Y ,"Did not move to the right x-coordinate")
+    lunit.assert_equal(4,pos_Y ,"Did not move to the right x-coordinate")
 end
+
+
 
