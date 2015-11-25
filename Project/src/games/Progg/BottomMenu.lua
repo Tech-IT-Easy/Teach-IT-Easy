@@ -256,9 +256,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
-                object.context.platformEventListener:removeChainListener()
-                object.context:createNewMenu()
-                object.context.game = nil
+--                object.context.platformEventListener:removeChainListener()
+--                object.context:createNewMenu()
+--                object.context.game = nil
             end
 
         elseif event.key == Event.KEY_UP then
