@@ -73,20 +73,20 @@ function List:remove(listNode)
   end
 end
 
-function List:getNodeByValue(view)
+function List:getNodeByValue(node,comp)
   if self.first == nil then
     return nil
   end
   
-  if self.last.view == view then
+  if comp(self.last,node)==0 then
     return self.last
   end
   
   local iter = self.first
-  while (iter ~= self.last) and (iter.value.view ~= view) do
+  while (iter ~= self.last) and comp(iter,node)~=0 do
     iter = iter.next
   end
-  if iter.value.view == view then
+  if comp(iter,node)==0 then
     return iter
   end
   
@@ -94,12 +94,11 @@ function List:getNodeByValue(view)
 end
 
 
-function List:setCurrentNode(view)
+function List:setCurrentNode(node,comp)
   assert(self.first,"List:setCurrentNode(view),error: list is null")
-  local v = self:getNodeByValue(view)
-  if v then
-    self.current = v
-  end
+  local v = self:getNodeByValue(node,comp)
+  assert(v,"List:setCurrentNode(view),error: view is not found")
+  self.current = v
 end
 
 
@@ -110,6 +109,31 @@ function List:nextNode()
   self.current = self.current.next
   return self.current.value
 end
+
+function List:nextDifferNode(comp)
+  local currentPre = self.current.pre
+  local iter = self.current
+  while ((iter~=currentPre) and (comp(iter,iter.next)==0)) do
+    iter = iter.next
+  end
+  
+  self.current = iter.next
+  return self.current
+end
+
+function List:preDifferNode(comp)
+  local currentNext = self.current
+  local iter = self.current.pre
+  
+   
+  while ((iter~=currentNext) and (comp(iter,iter.pre)==0)) do
+    iter = iter.pre
+  end
+  
+  self.current = iter
+  return self.current
+end
+
 
 function List:preNode()
   self.current = self.current.pre

@@ -4,6 +4,7 @@ local Event = require("toolkit.Event")
 local UIWindowViewController = extends(Controllable)
 
 function UIWindowViewController:new(window)
+  assert(window,"UIWindowViewController(window),error:window parameter can't be nil")
   local o = UIWindowViewController:super()
   o.window = window
   o.window.delegate = o
@@ -32,6 +33,10 @@ function UIWindowViewController:process(listener,event)
     self.window:moveToPreFocus()
   elseif event.key == Event.KEY_RIGHT and event.state == Event.KEY_STATE_DOWN then
     self.window:moveToNextFocus()
+  elseif event.key == Event.KEY_UP and event.state == Event.KEY_STATE_DOWN then
+    self.window:moveToUpFocus()
+  elseif event.key == Event.KEY_DOWN and event.state == Event.KEY_STATE_DOWN then
+    self.window:moveToDownFocus()
   elseif event.key == Event.KEY_OK and event.state == Event.KEY_STATE_DOWN then
     local sender = self.window.focusingView
     if sender then

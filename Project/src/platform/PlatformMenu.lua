@@ -104,7 +104,6 @@ menuEventHandler.events = {[Event.KEY_UP] = Event.KEY_STATE_DOWN,[Event.KEY_DOWN
 
 -- override specific update method to response keyboard events, 
 function menuEventHandler:update(object,eventListener,event)
-  print("platform menu event handler")
 
    -- if key == 'exit' then
    -- sys.stop()
