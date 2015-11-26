@@ -240,6 +240,7 @@ end
 function DrawRightMenu:addStop()
     self:drawFullRow(4,245,45,120)
     command_play:draw_over_surface(screen, "0  Stop!")
+    --gfx.update()
 end
 
 -------------------------------------

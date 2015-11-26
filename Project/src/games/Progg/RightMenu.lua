@@ -29,6 +29,7 @@ function RightMenu:new()
     -- @member drawRightMenu:DrawRightMenu
     o.draw = drawRightMenu:new()
     o.currentHighlight = nil
+    o.inputAreaChanged = false
     o.inputArea = "queue"
     o.highlightTimer = nil
     o.isFirstTimeLoop = true
@@ -41,7 +42,7 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:load()
-    self:show()
+    self:standardLayout()
 end
 
 -------------------------------------
@@ -59,20 +60,22 @@ function RightMenu:show(command)
     --self:loopLayout()
     --self:buildLayout()
 
-    if (self.inputArea == "queue") then
-        self:standardLayout()
-        if (self.toHighlight ~= nil) then
-            self:highlight(self.toHighlight)
-            self.toHighlight = nil
+    if (self.inputAreaChanged == true) then
+        if (self.inputArea == "queue") then
+            self:standardLayout()
+        elseif(self.inputArea == "loop") then
+            self:loopLayout()
+        elseif(self.inputArea == "build") then
+            self:buildLayout()
+        elseif(self.inputArea == "options") then
+            self:optionsLayout()
         end
-    elseif(self.inputArea == "loop") then
-        self:loopLayout()
-    elseif(self.inputArea == "build") then
-        self:buildLayout()
-    elseif(self.inputArea == "options") then
-        self:optionsLayout()
     end
-
+    if (self.toHighlight ~= nil) then
+        self:highlight(self.toHighlight)
+        self.toHighlight = nil
+    end
+    self.inputAreaChanged = false
 
 end
 
@@ -129,6 +132,7 @@ function RightMenu:play()
         self:removeHighlight(self.currentHighlight)
     end
     self.draw:addStop()
+
 end
 
 -------------------------------------
