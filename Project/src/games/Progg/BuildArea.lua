@@ -39,7 +39,7 @@ function BuildArea:load(inputArea, active)
     elseif self.buildType == "loop" then
         self.drawBuildArea:allIcons(self.loopQueue, inputArea)
     elseif string.match(self.buildType, "if") then
-        self.drawBuildArea:allIcons(self.ifQueue[inputArea], inputArea)
+        self.drawBuildArea:allIcons(self.ifQueue, inputArea)
     end
 end
 
@@ -60,8 +60,8 @@ function BuildArea:show(queue, inputArea)
         self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.loopQueue)
         self.drawBuildArea:drawLoopCounter(queue.loopCounter)
     elseif string.match(self.buildType, "if") then
-        self.drawBuildArea:icons(self.ifQueue[inputArea], inputArea)
-        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.ifQueue[inputArea])
+        self.drawBuildArea:icons(self.ifQueue, inputArea)
+        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.ifQueue)
     end
 end
 

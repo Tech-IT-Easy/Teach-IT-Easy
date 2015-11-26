@@ -305,6 +305,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.inputArea == "if-wall" then
                 object.buildArea:setBuildType("if-not-wall")
                 object.inputArea = "if-not-wall"
+                --object:updateInputArea(object.inputArea, true)
             elseif object.inputArea == "queue"  then
                 object:executeQueue()
             else

@@ -56,7 +56,7 @@ function Queue:push(action, queueType)
     elseif string.match(queueType, "if") then
       if self.maxCommands[queueType] > #self.ifActions[queueType] then
         table.insert(self.ifActions[queueType], action)
-        if self.buildArea ~= nil then self.buildArea:setQueue(self.ifActions, queueType) end
+        if self.buildArea ~= nil then self.buildArea:setQueue(self.ifActions[queueType], queueType) end
       end
   end
 end
