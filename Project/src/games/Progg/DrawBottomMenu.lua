@@ -206,7 +206,7 @@ function DrawBottomMenu:getFileName(action)
     elseif action == "action" then
         return "data/progg_game_icons/action.png"
 
-    elseif action == "if-wall" then
+    elseif action == "if" then
         return "data/progg_game_icons/if_wall.png"
 
     elseif action == "loop" then
