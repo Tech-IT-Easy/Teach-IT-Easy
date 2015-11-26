@@ -9,7 +9,7 @@ lemock = {}
 lemock._ENV = lemock
 setmetatable(lemock, { __index = _G })
 lemock._NAME = 'lemock'
-lemock._VERSION   = "LeMock 0.6"
+lemock._VERSION   = "LeMock 0.7"
 lemock._COPYRIGHT = "Copyright (C) 2009 Tommy Pettersson <ptp@lysator.liu.se>"
 local class, object, qtostring, add_to_set
 local sfmt
