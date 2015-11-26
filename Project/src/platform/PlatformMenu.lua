@@ -77,11 +77,7 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function PlatformMenu:changeview(newview)
-    -- @member currentview:MainMenu
-    -- @member currentview:CreateProfile
-    -- @member currentview:Games
-    -- @member currentview:ChooseAvatar
-    -- @member currentview:TrophyRoom
+    -- @member currentview:MenuSuperClass
     self.currentview = self.views[newview[1]]:new()
     screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
     self.currentview:loadview(newview[2])
