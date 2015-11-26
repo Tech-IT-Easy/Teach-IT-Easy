@@ -87,7 +87,7 @@ function test_start_executing_commands()
     lunit.assert_true(is_at_goal, "Has not moved to right position")
 end
 
-function test_command_queue_bottomMenu()
+--function test_command_queue_bottomMenu()
 --    local class_to_mock="games.Progg.BottmMenu"
 --    local mc = create_mock(class_to_mock)
 --
@@ -104,6 +104,6 @@ function test_command_queue_bottomMenu()
 --    local Position = require(SUT_2)
 --    local char = Character:new(Position:new(1,5))
 
-end
+--end
 
 
