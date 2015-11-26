@@ -177,7 +177,7 @@ function RightMenu:buildLayout()
     self.draw:drawRow(3)
     self.draw:addNumbers()
     self.draw:addImages()
-    self.draw:addPlayAndBack()
+    self.draw:addBack()
 end
 
 -------------------------------------

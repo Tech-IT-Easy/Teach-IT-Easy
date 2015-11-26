@@ -248,11 +248,9 @@ end
 -- layout
 -- @author Vilhelm
 -------------------------------------
-function DrawRightMenu:addPlayAndBack()
-    self:drawTwoBoxRow(4,78,113,215)
-    command_0:draw_over_surface(screen, "0")
-    command_play_small:draw_over_surface(screen, "Play!")
-    command_back:draw_over_surface(screen, "Back")
+function DrawRightMenu:addBack()
+    self:drawFullRow(4,78,113,215)
+    command_play:draw_over_surface(screen, "0  Back")
 end
 
 -------------------------------------
@@ -308,7 +306,7 @@ end
 -- @author Vilhelm
 -------------------------------------
 function DrawRightMenu:clearRow(row)
-    self:drawBox(92,128,149,92,128,149,first_column-command_width*0.15,first_row+(row-1)*(command_height+col_spacing)-command_height*0.15,3*command_width+2*row_spacing+command_width*0.15,command_height*1.4)
+    self:drawBox(92,128,149,92,128,149,first_column-command_width*0.20,first_row+(row-1)*(command_height+col_spacing)-command_height*0.20,3*command_width+2*row_spacing+command_width*0.20,command_height*1.4)
 end
 
 -------------------------------------
