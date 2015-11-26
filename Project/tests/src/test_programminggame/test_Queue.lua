@@ -10,46 +10,14 @@ lunit = require "lunit"
 module( "test_Queue", package.seeall, lunit.testcase )
 
 local SUT = 'games.Progg.Queue'
---require "source.model.command.Queue" -- import the Queue class
 
 
----------------------------------------------------------------
--- Tests for functions of class Queue in Software Architecture
--- Tests corresponds to UC06 in SRS
----------------------------------------------------------------
-
--- ------------Required classes and functions------------------
-
--- Class Queue:
--- Function 1. new()
--- >> Description: creates a new CommandQueue
--- >> Input: -
--- >> Output: -
--- Function 2. push()
--- >> Description: adds a new command object into the queue.
--- >> Input: -
--- >> Output: -
--- Function 3. pop()
--- >> Description: delete next command object in the queue.
--- >> Input: -
--- >> Output: -
--- Function 4. execute()
--- >> Description: iterates over queue and returns the Command objects in it
--- >> Input: -
--- >> Output: -
--- Function 5. setPosition()
--- >> Description: allows someone to switch positions for two objects in the queue
--- >> Input: -
--- >> Output: -
--- Function 6. empty()
--- >> Description: checks if queue is empty
--- >> Input: -
--- >> Output: -
-
--- -------------------------------------------------------------
-
-
+-------------------------------------
 -- Tests if an object can be added to the queue
+-- @system_under_test: Queue:new(), Queue:push(action)
+-- @author name: ??
+-------------------------------------
+
 function test_push_1()
   local a = require(SUT)
   local queuelist = a:new(nil)
@@ -62,10 +30,16 @@ function test_push_1()
 
 end
 
+-------------------------------------
 -- Tests if objects added to the queue are added correctly
+-- @system_under_test: Queue:new(), Queue:push(action)
+-- @author name: ??
+-------------------------------------
+
 function test_push_2()
   local a = require(SUT)
   local queuelist = a:new()
+  queuelist.maxCommands = {["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 }--FIXME
   local queuecmd_1 = "Command_1"
   local queuecmd_2 = "Command_2"
 
@@ -81,9 +55,15 @@ function test_push_2()
   lunit.assert_equal(queuecmd_1, c1, "Did not found the correct element in the queue")
 end
 
+-------------------------------------
 -- Tests if the element last added can be deleted, presumes that add() functions works in adding element, as it is tested above
+-- @system_under_test: Queue:new(), Queue:push(action), Queue:pop()
+-- @author name: ??
+-------------------------------------
+
 function test_delete()
     local queuelist = require(SUT):new()
+    queuelist.maxCommands = {["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 }--FIXME
     local queuecmd_1 = "Command_1"
     local queuecmd_2 = "Command_2"
 
@@ -98,9 +78,15 @@ function test_delete()
 
 end
 
+-------------------------------------
 -- Tests if elements in queue can be collected from first element to last
+-- @system_under_test: Queue:new(), Queue:push(action), Queue:pop(), Queue:getExecutionQueue(),
+-- @author name: ??
+-------------------------------------
+
 function test_execute()
     local queuelist = require(SUT):new()
+    queuelist.maxCommands = {["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 }--FIXME
     local queuecmd_1 = "Command_1"
     local queuecmd_2 = "Command_2"
     local queuecmd_3 = "Command_3"
@@ -124,10 +110,16 @@ function test_execute()
 
 end
 
+-------------------------------------
 -- Tests if two object can swap places in the queue
+-- @system_under_test: Queue:new(), Queue:push(action), Queue:setPosition(currentPos, goalPos)
+-- @author name: ??
+-------------------------------------
+
 function test_SetPos()
     local a = require(SUT)
     local queuelist = a:new()
+    queuelist.maxCommands = {["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 }--FIXME
     local queuecmd_1 = "Command_1"
     local queuecmd_2 = "Command_2"
 

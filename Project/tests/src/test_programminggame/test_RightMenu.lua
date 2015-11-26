@@ -125,8 +125,59 @@ function test_removeHighlight_correctCommand()
   local ps1 = require(SUT)
   local a = ps1:new()
   a.currentHighlight = "loop"
+  a.highlightTimer = sys.new_timer(500, "callback") --FIXME
   local event = "loop"
   a:removeHighlight(event)
   assert_equal(nil, a.currentHighlight, "should return nil, didn't")
+  verify_mock(mc)
+end
+
+-------------------------------------
+-- Testing that the can_enter variable
+-- is correctly assigned
+-- @system_under_test: RightMenu:new(), RightMenu:optionsLayout(command)
+-- @author name: Vilhelm
+-------------------------------------
+function test_optionsLayout_canEnterCommand()
+  local class_to_mock = "games.Progg.DrawRightMenu"
+
+  local mc = create_mock(class_to_mock)
+  local addOptions = mc:mock()
+  local ps=require(class_to_mock)
+  package.loaded[class_to_mock].addOptions = addOptions
+  addOptions(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+
+  mc:replay()
+
+  local ps1 = require(SUT)
+  local a = ps1:new()
+  a.selectedCommand = "loop"
+  a:optionsLayout()
+  assert_equal(true, a.can_enter, "should return true, didn't")
+  verify_mock(mc)
+end
+
+-------------------------------------
+-- Testing that the can_enter variable
+-- is correctly assigned
+-- @system_under_test: RightMenu:new(), RightMenu:optionsLayout(command)
+-- @author name: Vilhelm
+-------------------------------------
+function test_optionsLayout_cannotEnterCommand()
+  local class_to_mock = "games.Progg.DrawRightMenu"
+
+  local mc = create_mock(class_to_mock)
+  local addOptions = mc:mock()
+  local ps=require(class_to_mock)
+  package.loaded[class_to_mock].addOptions = addOptions
+  addOptions(mc.ANYARGS) ;mc :returns(nil) :anytimes()
+
+  mc:replay()
+
+  local ps1 = require(SUT)
+  local a = ps1:new()
+  a.selectedCommand = "move"
+  a:optionsLayout()
+  assert_equal(false, a.can_enter, "should return false, didn't")
   verify_mock(mc)
 end
