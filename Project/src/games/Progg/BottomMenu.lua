@@ -236,7 +236,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.queue:push(Commands.LOOP, object.inputArea)
 
                 object.inputArea = "loop"
-                --object.selectingLoopCounter=true
+                object.selectingLoopCounter=true
 
                 object.prevPosition = object.position
                 object.position = 2*object.rowLength + 1

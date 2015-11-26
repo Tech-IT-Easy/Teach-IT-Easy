@@ -186,10 +186,8 @@ end
 -- @author Vilhelm
 -------------------------------------
 function RightMenu:optionsLayout()
-    print(self.selectedCommand)
     self.can_enter = false
     if(self.selectedCommand == "loop" or self.selectedCommand == "P1" or self.selectedCommand == "P2" ) then
-        print("setting boolean")
         self.can_enter = true
     end
 
