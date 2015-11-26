@@ -66,6 +66,8 @@ return {
 	"lemock/",
 	"/lemock/",
     "/SDK/",
+    "./games/Progg/DrawBuildArea",
+	"./games/Progg/DrawBottomMenu",
   },
 
   -- Table mapping names of modules to be included to their filenames.
