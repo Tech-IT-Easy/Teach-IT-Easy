@@ -15,7 +15,7 @@ require "games.Progg.Tile"
 
 require "games.GameFactory"
 
-require "lib.json"
+--require "lib.json"
 
 require "menus.ChooseAvatar"
 require "menus.CreateProfile"
@@ -28,8 +28,8 @@ require "menus.TrophyRoom"
 require "platform.PlatformContext"
 require "platform.PlatformMenu"
 require "platform.Profile"
-require "platform.UIStartWindowController"
-require "platform.UIStartWindowView"
+--require "platform.UIStartWindowController"
+--require "platform.UIStartWindowView"
 
 require "toolkit.UIKit.UIButtonView"
 require "toolkit.UIKit.UIImage"
