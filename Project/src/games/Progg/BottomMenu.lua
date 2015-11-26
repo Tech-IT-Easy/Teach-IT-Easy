@@ -19,9 +19,9 @@ local buildArea = require('games.Progg.BuildArea')
 local Character = require('games.Progg.Character')
 local Queue = require('games.Progg.Queue')
 
-local Position = require('games.Progg.Position')
 local BottomMenu = extends(Controllable)
 local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
+local rightMenu = require("games.Progg.RightMenu")
 
 -------------------------------------------------
 -- Constructor method for the BottomMenu.
@@ -37,8 +37,7 @@ function BottomMenu:new(maxCommands,gameContext)
     o.selectingEditAction = nil
     o.isMovingAction = false
     o.posActionToMove = nil
-    o.selectingLoopCounter = false
-    o.selectingIfTrueStatements = nil
+    o.selectingLoopCounter = true
     o.inputArea = "queue"
     o.prevInputArea = "queue"
     o.maxCommands = maxCommands
@@ -52,8 +51,9 @@ function BottomMenu:new(maxCommands,gameContext)
     -- @member drawBottomMenu:DrawBottomMenu
     o.drawBottomMenu = newDrawBottomMenu:new(maxCommands)
     -- @member character:Character
-    o.character = Character:new(Position:new(1,5))
+    o.character = Character:new(1,5)
     o.queue = Queue:new(o, o.buildArea, maxCommands)
+    o.rightMenu = rightMenu:new()
     return BottomMenu:init(o)
 end
 
@@ -68,6 +68,7 @@ function BottomMenu:load(inArea,active)
     if (inArea ~= nil and inArea ~= "queue") then
         self.buildArea:load(inArea, active)
     end
+    self.rightMenu:load()
 end
 
 --------------------------------------------
@@ -89,6 +90,7 @@ function BottomMenu:show()
         self.drawBottomMenu:icons(self.queue.actions, self.inputArea)
         self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
     end
+    self.rightMenu:show()
 end
 
 --------------------------------------------
@@ -123,7 +125,7 @@ end
 --Subscribing the eventHandler to all events.
 bottomMenuEventHandler = EventHandler:new()
 bottomMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.KEY_THREE]=1,[Event.KEY_FOUR]=1,[Event.KEY_FIVE]=1,[Event.KEY_SIX]=1,[Event.KEY_SEVEN]=1,[Event.KEY_EIGHT]=1,[Event.KEY_NINE]=1
-    ,[Event.KEY_ZERO]=1,[Event.KEY_UP]=1,[Event.KEY_DOWN]=1 ,[Event.KEY_LEFT]=1,[Event.KEY_RIGHT]=1, [Event.KEY_OK]=1 }
+    ,[Event.KEY_ZERO]=1,[Event.KEY_UP]=1,[Event.KEY_DOWN]=1 ,[Event.KEY_LEFT]=1,[Event.KEY_RIGHT]=1, [Event.KEY_OK]=1,[Event.KEY_BACK]=1 }
 
 ----------------------------------------
 -- Update function on every key input
@@ -139,6 +141,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 1
                 object.selectingLoopCounter=false
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit~= nil then
                 object.isMovingAction = true
                 object.posActionToMove = object.position
@@ -147,51 +150,65 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 print("Not allowed while moving an action")
             else
                 object.queue:push(Commands.MOVE, object.inputArea)
+                object.rightMenu.toHighlight = (Commands.MOVE)
             end
 
         elseif event.key == Event.KEY_TWO then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 2
                 object.selectingLoopCounter=false
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil then
                 object:deleteAction(object.position, object.inputArea)
                 object:updateInputArea(object.inputArea, true)
                 object.selectingActionEdit = nil
+                if object.inputArea == "queue" then
+                    object.rightMenu.inputArea = object.inputArea
+                else
+                    object.rightMenu.inputArea = "build"
+                end
             elseif object.isMovingAction == true then
                 print("Not allowed while moving an action")
             else
                 object.queue:push(Commands.TURN_LEFT, object.inputArea)
+                object.rightMenu.toHighlight = (Commands.TURN_LEFT)
             end
 
         elseif event.key == Event.KEY_THREE then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 3
                 object.selectingLoopCounter=false
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2"  then
                 object:enterMethod()
                 object.selectingActionEdit = nil
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while moving an action")
                 print("Cannot enter command that is not a loop or procedure")
                 object.selectingActionEdit = nil
             else
                 object.queue:push(Commands.TURN_RIGHT, object.inputArea)
+                object.rightMenu.toHighlight = (Commands.TURN_RIGHT)
             end
 
         elseif event.key == Event.KEY_FOUR then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 4
                 object.selectingLoopCounter=false
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
                 --queue:push(Commands.TURN_RIGHT, inputArea)
+                --object.rightMenu.toHighlight = (Commands.ACTION)
             end
 
         elseif event.key == Event.KEY_FIVE then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 5
                 object.selectingLoopCounter=false
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
@@ -206,18 +223,29 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 --                         object.queue:push(Commands.IF, "if-not-wall")
 --                     end
 --                end
+                --queue:push(Commands.TURN_RIGHT, inputArea)
+                --object.rightMenu.toHighlight = (Commands.IF)
             end
 
         elseif event.key == Event.KEY_SIX then
-
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 6
                 object.selectingLoopCounter=false
+                object.rightMenu.inputArea = "build"
+
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
+                if object:isBuildArea() == true then
+                    print("Not allowed to add methods to build area")
+                    return;
+                end
+
+                object.rightMenu.inputArea = "loop"
+
                 object.buildArea:setBuildType("loop")
                 object.queue:push(Commands.LOOP, object.inputArea)
+
                 object.inputArea = "loop"
                 object.selectingLoopCounter=true
 
@@ -232,9 +260,15 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 7
                 object.selectingLoopCounter=false
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
+                if object:isBuildArea() == true then
+                    print("Not allowed to add methods to build area")
+                    return;
+                end
+                object.rightMenu.inputArea = "build"
                 object.buildArea:setBuildType("P1")
                 object.queue:push(Commands.P1, object.inputArea)
                 object.inputArea = "P1"
@@ -250,9 +284,15 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 8
                 object.selectingLoopCounter=false
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
+                if object:isBuildArea() == true then
+                    print("Not allowed to add methods to build area")
+                    return;
+                end
+                object.rightMenu.inputArea = "build"
                 object.buildArea:setBuildType("P2")
                 object.queue:push(Commands.P2, object.inputArea)
                 object.inputArea = "P2"
@@ -267,9 +307,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 9
                 object.selectingLoopCounter=false
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
-            else
+            --else
 --                object.context.platformEventListener:removeChainListener()
 --                object.context:createNewMenu()
 --                object.context.game = nil
@@ -318,9 +359,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
                 object.inputArea = "queue"
+                object.rightMenu.inputArea = "queue"
             end
         elseif event.key == Event.KEY_OK then
-
             local queuePos = object.position
             if queuePos > 2*object.rowLength then
                 queuePos = queuePos - 2*object.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
@@ -329,10 +370,36 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object:moveAction(object.posActionToMove, object.position)
                 object.isMovingAction = false
                 object:updateInputArea(object.inputArea, true)
+                if object.inputArea == "queue" then
+                    object.rightMenu.inputArea = object.inputArea
+                else
+                    object.rightMenu.inputArea = "build"
+                end
             else
+
+                object.rightMenu.selectedCommand = object:getQueue(object.inputArea)[queuePos]
+                print(object:getQueue(object.inputArea)[queuePos])
+
+                if object.rightMenu.selectedCommand ~= nil then
+                    object.rightMenu.inputArea = "options"
+                end
+
                 object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
             end
+        elseif event.key == Event.KEY_BACK then --This terminates the game no matter what is happening.
+            object.context.platformEventListener:removeChainListener()
+            object.context:createNewMenu()
+            object.context.game = nil
         end
+    end
+end
+
+function BottomMenu:isBuildArea()
+    print(self.inputArea)
+    if self.inputArea == "loop" or self.inputArea == "P1" or self.inputArea == "P2" then
+        return true
+    else
+        return false
     end
 end
 
