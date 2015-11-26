@@ -8,6 +8,7 @@
 -- @Author:Updated by Chuck Chu, Nov 12, 2015 fit to new structure
 -- @Author:Updated by Mikael Ögren, Nov 16, 2015 Moved draw functions to DrawBottomMenu
 -- @Author:Updated by Chuck Chu, Nov 16,2015 for removing GameInputHandler
+-- @Author:Updated by Tobias Lundell, Nov 26, 2015 for adding functionality for if-statements
 -----------------------------------------------------------
 
 local Object = require("toolkit.Object")
@@ -215,16 +216,11 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.buildArea:setBuildType("if-wall")
                 object.queue:push(Commands.IF, object.inputArea)
                 object.inputArea = "if-wall"
-              --  object.selectingTrueStatements = true
---                if (object.selectingIfTrueStatements ~= nil) then
---                     if (object.selectingIfTrueStatements == true) then
---                        object.queue:push(Commands.IF, "if-wall")
---                     else
---                         object.queue:push(Commands.IF, "if-not-wall")
---                     end
---                end
-                --queue:push(Commands.TURN_RIGHT, inputArea)
-                --object.rightMenu.toHighlight = (Commands.IF)
+                object.prevPosition = object.position
+                object.position = 2*object.rowLength + 1
+                object.buildArea:setPosition(object.position)
+                object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+                object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.ifTrueQueue)
             end
 
         elseif event.key == Event.KEY_SIX then
@@ -346,6 +342,11 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.inputArea == "if-wall" then
                 object.buildArea:setBuildType("if-not-wall")
                 object.inputArea = "if-not-wall"
+                object.prevPosition = object.position
+                object.position = 2*object.rowLength + 1
+                object.buildArea:setPosition(object.position)
+                object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+                object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.ifFalseQueue)
                 --object:updateInputArea(object.inputArea, true)
             elseif object.inputArea == "queue"  then
                 object:executeQueue()
@@ -396,7 +397,7 @@ end
 
 function BottomMenu:isBuildArea()
     print(self.inputArea)
-    if self.inputArea == "loop" or self.inputArea == "P1" or self.inputArea == "P2" then
+    if self.inputArea == "loop" or self.inputArea == "P1" or self.inputArea == "P2" or self.inputArea == "if-wall" or self.inputArea == "if-not-wall" then
         return true
     else
         return false
