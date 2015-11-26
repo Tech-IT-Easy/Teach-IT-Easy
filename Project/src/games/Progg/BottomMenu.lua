@@ -215,7 +215,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
                 object.queue.loopCounter = 5
                 object.selectingLoopCounter=false
-                object.rightMenu.prevInputArea = object.rightMenu.inputArea
+                object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
