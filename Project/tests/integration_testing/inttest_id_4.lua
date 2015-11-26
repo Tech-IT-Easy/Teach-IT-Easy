@@ -191,7 +191,7 @@ function test_execute_queue_1()
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
 
     --Select number of iteration. Selects 5 iterations in this case.
-    test_event = event:new("5", "down") --simulates a key press on key 6
+    test_event = event:new("5", "down") --simulates a key press on key 5
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
     local loopCounter = bottommenu.queue.loopCounter
     --print("Number of iterations: " .. loopCounter)
@@ -403,8 +403,8 @@ function test_execute_queue_1()
     --Test if character moved according to the added commands
     test_event = event:new("0", "down") --simulates a key press on key 0
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    local pos_X = bottommenu.character.position:getX()
-    local pos_Y=bottommenu.character.position:getY()
+    local pos_X = bottommenu.character.position.x
+    local pos_Y=bottommenu.character.position.y
     lunit.assert_equal(1,pos_X ,"Did not move to the right x-coordinate")
     lunit.assert_equal(5,pos_Y ,"Did not move to the right x-coordinate")
 end

@@ -30,6 +30,7 @@ function RightMenu:new()
     o.currentHighlight = nil
     o.inputArea = "queue"
     o.highlightTimer = nil
+    o.isFirstTimeLoop = true
 
     return RightMenu:init(o)
 end
@@ -219,7 +220,10 @@ function rightMenuEventHandler:update(object,eventListener,event)
         elseif event.key == Event.KEY_SIX then
             if(object.inputArea =="queue") then
              object:highlight(Commands.LOOP)
-            object:loopLayout()
+            if object.isFirstTimeLoop == true then
+              object:loopLayout()
+              object.isFirstTimeLoop = false
+            end
             object.inputArea = "loop"
          elseif(object.inputArea =="loop") then
             object.inputArea = "queue"
