@@ -18,6 +18,7 @@ function BuildArea:new(maxCommands, pos)
     o.loopQueue = {}
     o.p1Queue = {}
     o.p2Queue = {}
+    o.ifQueue = {}
     o.drawBuildArea = newDrawBuildArea:new(o.maxCommands)
  --   o.inputArea = nil
     return BuildArea:init(o)
@@ -37,6 +38,8 @@ function BuildArea:load(inputArea, active)
         self.drawBuildArea:allIcons(self.p2Queue, inputArea)
     elseif self.buildType == "loop" then
         self.drawBuildArea:allIcons(self.loopQueue, inputArea)
+    elseif string.match(self.buildType, "if") then
+        self.drawBuildArea:allIcons(self.ifQueue[inputArea], inputArea)
     end
 end
 
@@ -56,6 +59,9 @@ function BuildArea:show(queue, inputArea)
         self.drawBuildArea:icons(self.loopQueue, inputArea)
         self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.loopQueue)
         self.drawBuildArea:drawLoopCounter(queue.loopCounter)
+    elseif string.match(self.buildType, "if") then
+        self.drawBuildArea:icons(self.ifQueue[inputArea], inputArea)
+        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.ifQueue[inputArea])
     end
 end
 
@@ -100,6 +106,8 @@ function BuildArea:setQueue(queue, queueType)
         self.p1Queue = queue
     elseif queueType == "P2" then
         self.p2Queue = queue
+    elseif string.match(queueType, "if") then
+        self.ifQueue = queue
     end
 end
 

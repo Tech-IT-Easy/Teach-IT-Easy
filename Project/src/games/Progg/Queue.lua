@@ -6,6 +6,7 @@ local Queue = extends(Object)
 -- @param newBuildArea:BuildArea. The places where the loops and procedures are edited.
 -- @return queue:Queue a new queue instance
 -- @author Ludwig Wikblad
+-- @author Tobias Lundell
 ----------------------------------------------------------------
 function Queue:new(newBottomMenu, newBuildArea, maxCommands)
   local o = Queue:super()
@@ -13,6 +14,8 @@ function Queue:new(newBottomMenu, newBuildArea, maxCommands)
   o.loopActions = {}
   o.p1Actions = {}
   o.p2Actions = {}
+  o.ifActions = { ["if-wall"] = {},
+                  ["if-not-wall"] = {} }
   o.maxCommands = maxCommands
   o.loopCounter = 2
   -- @member bottomMenu:BottomMenu
@@ -50,6 +53,11 @@ function Queue:push(action, queueType)
         table.insert(self.p2Actions,action)
         if self.buildArea ~= nil then self.buildArea:setQueue(self.p2Actions, queueType) end
     end
+    elseif string.match(queueType, "if") then
+      if self.maxCommands[queueType] > #self.ifActions[queueType] then
+        table.insert(self.ifActions[queueType], action)
+        if self.buildArea ~= nil then self.buildArea:setQueue(self.ifActions, queueType) end
+      end
   end
 end
 

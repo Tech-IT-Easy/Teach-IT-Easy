@@ -38,6 +38,7 @@ function BottomMenu:new(maxCommands,gameContext)
     o.isMovingAction = false
     o.posActionToMove = nil
     o.selectingLoopCounter = false
+    o.selectingIfTrueStatements = nil
     o.inputArea = "queue"
     o.prevInputArea = "queue"
     o.maxCommands = maxCommands
@@ -194,7 +195,17 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
-                --queue:push(Commands.TURN_RIGHT, inputArea)
+                object.buildArea:setBuildType("if-wall")
+                object.queue:push(Commands.IF, object.inputArea)
+                object.inputArea = "if-wall"
+              --  object.selectingTrueStatements = true
+--                if (object.selectingIfTrueStatements ~= nil) then
+--                     if (object.selectingIfTrueStatements == true) then
+--                        object.queue:push(Commands.IF, "if-wall")
+--                     else
+--                         object.queue:push(Commands.IF, "if-not-wall")
+--                     end
+--                end
             end
 
         elseif event.key == Event.KEY_SIX then
@@ -291,6 +302,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
         elseif event.key == Event.KEY_ZERO then
             if object.selectingActionEdit ~= nil then
                 object.selectingActionEdit = nil
+            elseif object.inputArea == "if-wall" then
+                object.buildArea:setBuildType("if-not-wall")
+                object.inputArea = "if-not-wall"
             elseif object.inputArea == "queue"  then
                 object:executeQueue()
             else
@@ -471,6 +485,8 @@ function BottomMenu:getQueue(inputArea)
         return self.queue.p1Actions
     elseif inputArea == "P2" then
         return self.queue.p2Actions
+    elseif string.match(inputArea, "if") then
+        return self.queue.ifActions
     end
 end
 

@@ -22,8 +22,15 @@ end
 -- @author Mikael Ögren
 -------------------------------------
 function DrawBuildArea:emptySlots(inputArea, active)
-    for i=1, self.maxCommands[inputArea] do
-        self:singleEmptySlot(i, inputArea, active)
+    if (string.match(inputArea, "if")) then
+        for i=1, self.maxCommands[inputArea] do
+            self:singleEmptySlot(i, inputArea, active)
+        end
+    else
+
+        for i=1, self.maxCommands[inputArea] do
+            self:singleEmptySlot(i, inputArea, active)
+        end
     end
 end
 

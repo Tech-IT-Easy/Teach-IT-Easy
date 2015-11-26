@@ -20,7 +20,7 @@ function ProggGame:new(context)
 
   -- @member BottomMenu:BottomMenu
   -- @member map:Map
-  o.bottomMenu = BottomMenu:new({["queue"] = 9, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },context)
+  o.bottomMenu = BottomMenu:new({["queue"] = 9, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 },context)
   o.rightMenu = rightMenu:new()
   --o.map = map:new()
   --------------------------------
