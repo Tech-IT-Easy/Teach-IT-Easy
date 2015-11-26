@@ -35,7 +35,7 @@ local function create_queue(inqueue, type)
         inqueue:push(commands.MOVE, "queue")
         inqueue:push(commands.TURN_LEFT, "queue")
         inqueue:push(commands.MOVE, "queue")
-        inqueue:push(commands.MOVE, "queue")
+        --inqueue:push(commands.MOVE, "queue")
         inqueue:push(commands.TURN_RIGHT, "queue")
         inqueue:push(commands.MOVE, "queue")
     end
@@ -43,7 +43,8 @@ end
 
 function test_execute_simple_commads()
     local Position = require(SUT_2)
-    local character = require(SUT_1):new(Position:new(1,5))
+    local pos = Position:new(1,5)
+    local character = require(SUT_1):new(pos:getX(), pos:getY())
     local myqueue=require(SUT_3):new(nil,nil,{["queue"] = 9, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
 
     create_queue(myqueue, "simple")
@@ -58,8 +59,8 @@ function test_execute_simple_commads()
         character:execute(executionqueue.actions[iterationcnt+1-i])
     end
 
-    local x_position = character.position:getX()
-    local y_position = character.position:getY()
+    local x_position = character.position.x
+    local y_position = character.position.y
 
     lunit.assert_equal(3, x_position, "Not correct x-position")
     lunit.assert_equal(2, y_position, "Not correct y-position")
@@ -67,7 +68,8 @@ end
 
 function test_start_executing_commands()
     local Position = require(SUT_2)
-    local character = require(SUT_1):new(Position:new(1,5))
+    local pos = Position:new(1,5)
+    local character = require(SUT_1):new(pos:getX(), pos:getY())
     local myqueue=require(SUT_3):new(nil,nil,{["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
 
     create_queue(myqueue, "complex")
