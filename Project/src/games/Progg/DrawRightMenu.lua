@@ -255,6 +255,17 @@ function DrawRightMenu:addBack()
 end
 
 -------------------------------------
+-- Adds if false text to the
+-- two-buttons row in the 9-command
+-- layout.
+-- @author Tobias Lundell
+-------------------------------------
+function DrawRightMenu:addIfFalse()
+    self:drawFullRow(4,78,113,215)
+    command_play:draw_over_surface(screen, "0 If false")
+end
+
+-------------------------------------
 -- Adds the option buttons when
 -- selecting an action
 -- @author Vilhelm
