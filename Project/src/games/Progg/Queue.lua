@@ -1,5 +1,6 @@
 local Object = require('toolkit.Object')
 local Queue = extends(Object)
+
 ---------------------------------------------------------------
 -- Constructor for the Queue
 -- @param newBottomMenu:BottomMenu The place where the queue is drawn.
@@ -18,6 +19,7 @@ function Queue:new(newBottomMenu, newBuildArea, maxCommands)
   o.ifFalseActions = {}
   o.maxCommands = maxCommands
   o.loopCounter = 2
+  o.INFINITY = 999
   -- @member bottomMenu:BottomMenu
   if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
   -- @member buildArea:BuildArea

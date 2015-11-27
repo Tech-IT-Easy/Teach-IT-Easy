@@ -184,9 +184,14 @@ end
 -- @author Tobias Lundell
 --------------------------------------
 function DrawBuildArea:drawLoopCounter(counter)
-    if counter ~= nil then
+    if counter ~= nil and counter ~= 999 then
         screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.87), y = screen:get_height()*0.65, w = screen:get_width()*0.040, h = screen:get_height()*0.060 })
         right_buildarea_loopcounter:draw_over_surface(screen, counter)
+    elseif counter == 999 then
+        self.image = gfx.loadpng(self:getFileName("infinity-loop"))
+        screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.869), y =screen:get_height()*0.65, w=screen:get_width()*0.040, h = screen:get_height()*0.060 }, true)
+        self.image:destroy()
+        collectgarbage()
     end
 end
 
@@ -214,7 +219,8 @@ function DrawBuildArea:getFileName(action)
 
     elseif action == "P2" then
         return "data/progg_game_icons/P2.png"
-
+    elseif action =="infinity-loop" then
+        return "data/progg_game_icons/infinity_loop.png"
     end
 end
 

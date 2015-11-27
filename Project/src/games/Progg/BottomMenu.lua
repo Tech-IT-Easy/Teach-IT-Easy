@@ -350,7 +350,12 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object:setPosition(1)
             end
         elseif event.key == Event.KEY_ZERO then
-            if object.selectingActionEdit ~= nil then
+            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
+                object.queue.loopCounter = object.queue.INFINITY
+                object.selectingLoopCounter=false
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "build"
+            elseif object.selectingActionEdit ~= nil then
                 object.selectingActionEdit = nil
             elseif object.inputArea == "if-wall" then
                 object.rightMenu.inputAreaChanged = true
