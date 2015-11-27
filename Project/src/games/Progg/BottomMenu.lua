@@ -225,6 +225,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                     print("Action not allowed")
                     return;
                 end
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "if-wall"
                 object.buildArea:setBuildType("if-wall")
                 object.queue:push(Commands.IF, object.inputArea)
                 object.inputArea = "if-wall"
@@ -249,16 +251,12 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                     print("Action not allowed")
                     return;
                 end
-                
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "loop"
-                
                 object.buildArea:setBuildType("loop")
                 object.queue:push(Commands.LOOP, object.inputArea)
-
                 object.inputArea = "loop"
                 object.selectingLoopCounter=true
-
                 object.prevPosition = object.position
                 object.position = 2*object.rowLength + 1
                 object.buildArea:setPosition(object.position)
@@ -359,6 +357,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if object.selectingActionEdit ~= nil then
                 object.selectingActionEdit = nil
             elseif object.inputArea == "if-wall" then
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "build"
                 object.buildArea:setBuildType("if-not-wall")
                 object.inputArea = "if-not-wall"
                 object.prevPosition = object.position
@@ -400,7 +400,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                     object.rightMenu.inputArea = "build"
                 end
             else
-
                 object.rightMenu.selectedCommand = object:getQueue(object.inputArea)[queuePos]
                 print(object:getQueue(object.inputArea)[queuePos])
 
@@ -584,8 +583,6 @@ function BottomMenu:getQueue(inputArea)
         return self.queue.ifTrueActions
     elseif inputArea == "if-not-wall" then
         return self.queue.ifFalseActions
---    elseif string.match(inputArea, "if") then
---        return self.queue.ifActions
     end
 end
 

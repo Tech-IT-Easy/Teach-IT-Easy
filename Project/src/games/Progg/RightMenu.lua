@@ -67,6 +67,8 @@ function RightMenu:show(command)
             self:loopLayout()
         elseif(self.inputArea == "build") then
             self:buildLayout()
+        elseif(self.inputArea == "if-wall") then
+            self:ifTrueLayout()
         elseif(self.inputArea == "options") then
             self:optionsLayout()
         end
@@ -184,6 +186,14 @@ function RightMenu:buildLayout()
     self.draw:addBack()
 end
 
+function RightMenu:ifTrueLayout()
+    self.draw:drawRow(1)
+    self.draw:drawRow(2)
+    self.draw:drawRow(3)
+    self.draw:addNumbers()
+    self.draw:addImages()
+    self.draw:addIfFalse()
+end
 -------------------------------------
 -- Called to replace buttons for
 -- options when selecting an action

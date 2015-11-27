@@ -41,122 +41,129 @@ end
 -- @author Ludwig Wikblad, Mario Pizcueta
 ----------------------------------------
 function Character:startExecution(inqueue)
-  self.queue = inqueue:getExecutionQueue()
-  self.j = 0 --Keeps track of number of commands.
+  -- This if is necessary in order to handle the user trying to start the execution while it's already running.
+  if self.executionTimer == nil then
+    self.queue = inqueue:getExecutionQueue()
+    self.j = 0 --Keeps track of number of commands.
 
-  start = function(timer)
-    if(0<#self.queue.actions or self.onP1 or self.onP2 or self.onLoop or self.onIf) then
-      local act
-      if(not self.onP1 and not self.onP2 and not self.onLoop and not self.onIf)then
-        act = self.queue:pop()
-      else
-        act = "onProc"
-      end
-      if(act~=nil)then
 
-        --If the command LOOP is encounter or if its executing LOOP
-        if (act == Commands.LOOP or self.onLoop) then
-          self.onLoop = true
-          if(act == Commands.LOOP) then
-            self.nrOfIterations = inqueue.loopCounter
-            self.procProcess = 0 --Counts the position inside the loop
-          end
-          if(self.nrOfIterations>0) then
-            act = self.queue.loopActions[#self.queue.loopActions - self.procProcess + 1]
-            self.procProcess = self.procProcess+1
-            self:execute(act)
-            if(self.procProcess>#self.queue.loopActions)then
-              self.procProcess = 0
-              self.nrOfIterations = self.nrOfIterations-1
-            end
-          else
-            self.onLoop = false
-          end -- end of LOOP
-
-          --If the command P1 is encounter or if its executing P1
-        elseif (act == Commands.P1 or self.onP1) then
-          if(act == Commands.P1) then
-            self.procProcess = 0
-          end
-          self.onP1=true
-          if(self.procProcess<#self.queue.p1Actions)then
-            self.procProcess =  self.procProcess + 1;
-            act = self.queue.p1Actions[#self.queue.p1Actions - self.procProcess + 1]
-            self:execute(act)
-          else
-            self.onP1=false
-          end-- end of P1
-
-          --If the command P2 is encounter or if its executing P2
-        elseif (act == Commands.P2 or self.onP2) then
-          if(act == Commands.P2) then
-            self.procProcess = 0
-          end
-          self.onP2=true
-          if(self.procProcess<#self.queue.p2Actions)then
-            self.procProcess =  self.procProcess + 1;
-            act = self.queue.p2Actions[#self.queue.p2Actions - self.procProcess + 1]
-            self:execute(act)
-          else
-            self.onP2=false
-          end-- end of P2
-
-          --If the command IF is encountered it is executing IF
-        elseif (act == Commands.IF or self.onIf) then
-          if (act == Commands.IF) then
-            self.procProcess = 0
-            self.onIf = true
-          end
-          if (not self.onIfTrue and not self.onIfFalse) then --Check condition (if wall) true or false
-            if (self:checkCollision(self.position, self.state) == false) then
-              self.onIfTrue = true
-            else
-              self.onIfFalse = true
-            end
-          end
-          if (self.onIfTrue) then --Executes if true
-            if (self.procProcess<#self.queue.ifTrueActions) then
-              self.procProcess = self.procProcess + 1
-              act = self.queue.ifTrueActions[#self.queue.ifTrueActions - self.procProcess + 1]
-              self:execute(act)
-            else
-              self.onIfTrue = false
-              self.onIf = false
-            end -- end ifTrue
-          elseif (self.onIfFalse) then --Executes if false
-            if (self.procProcess<#self.queue.ifFalseActions) then
-              self.procProcess = self.procProcess + 1
-              act = self.queue.ifFalseActions[#self.queue.ifFalseActions - self.procProcess + 1]
-              self:execute(act)
-            else
-              self.onIfFalse = false
-              self.onIf = false
-            end -- end ifFalse
-          end -- end of IF
+    start = function(timer)
+      if(0<#self.queue.actions or self.onP1 or self.onP2 or self.onLoop or self.onIf) then
+        local act
+        if(not self.onP1 and not self.onP2 and not self.onLoop and not self.onIf)then
+          act = self.queue:pop()
         else
-          --If not executing any procedure or loop -> normal queue
-          self:execute(act)
-        end -- if act ==Commands.
-        self.j= self.j+1; --Keeps track of of number of commands
-      end -- if act ~= nil
-    else
-      --End of execution
-      self.executionTimer:stop()
-      self.executionTimer = nil
-      collectgarbage()
-      --Check if the goal has been reached
-      if(self.map:isInGoal(self.position.x,self.position.y))then
-        self.hasWon = true
+          act = "onProc"
+        end
+        if(act~=nil)then
+
+          --If the command LOOP is encounter or if its executing LOOP
+          if (act == Commands.LOOP or self.onLoop) then
+            self.onLoop = true
+            if(act == Commands.LOOP) then
+              self.nrOfIterations = inqueue.loopCounter
+              self.procProcess = 0 --Counts the position inside the loop
+            end
+            if(self.nrOfIterations>0) then
+              act = self.queue.loopActions[#self.queue.loopActions - self.procProcess + 1]
+              self.procProcess = self.procProcess+1
+              self:execute(act)
+              if(self.procProcess>#self.queue.loopActions)then
+                self.procProcess = 0
+                self.nrOfIterations = self.nrOfIterations-1
+              end
+            else
+              self.onLoop = false
+            end -- end of LOOP
+
+            --If the command P1 is encounter or if its executing P1
+          elseif (act == Commands.P1 or self.onP1) then
+            if(act == Commands.P1) then
+              self.procProcess = 0
+            end
+            self.onP1=true
+            if(self.procProcess<#self.queue.p1Actions)then
+              self.procProcess =  self.procProcess + 1;
+              act = self.queue.p1Actions[#self.queue.p1Actions - self.procProcess + 1]
+              self:execute(act)
+            else
+              self.onP1=false
+            end-- end of P1
+
+            --If the command P2 is encounter or if its executing P2
+          elseif (act == Commands.P2 or self.onP2) then
+            if(act == Commands.P2) then
+              self.procProcess = 0
+            end
+            self.onP2=true
+            if(self.procProcess<#self.queue.p2Actions)then
+              self.procProcess =  self.procProcess + 1;
+              act = self.queue.p2Actions[#self.queue.p2Actions - self.procProcess + 1]
+              self:execute(act)
+            else
+              self.onP2=false
+            end-- end of P2
+
+            --If the command IF is encountered it is executing IF
+          elseif (act == Commands.IF or self.onIf) then
+            if (act == Commands.IF) then
+              self.procProcess = 0
+              self.onIf = true
+            end
+            if (not self.onIfTrue and not self.onIfFalse) then --Check condition (if wall) true or false
+              if (self:checkCollision(self.position, self.state) == false) then
+                self.onIfTrue = true
+              else
+                self.onIfFalse = true
+              end
+            end
+            if (self.onIfTrue) then --Executes if true
+              if (self.procProcess<#self.queue.ifTrueActions) then
+                self.procProcess = self.procProcess + 1
+                act = self.queue.ifTrueActions[#self.queue.ifTrueActions - self.procProcess + 1]
+                self:execute(act)
+              else
+                self.onIfTrue = false
+                self.onIf = false
+              end -- end ifTrue
+            elseif (self.onIfFalse) then --Executes if false
+              if (self.procProcess<#self.queue.ifFalseActions) then
+                self.procProcess = self.procProcess + 1
+                act = self.queue.ifFalseActions[#self.queue.ifFalseActions - self.procProcess + 1]
+                self:execute(act)
+              else
+                self.onIfFalse = false
+                self.onIf = false
+              end -- end ifFalse
+            end -- end of IF
+          else
+            --If not executing any procedure or loop -> normal queue
+            self:execute(act)
+          end -- if act ==Commands.
+          self.j= self.j+1; --Keeps track of of number of commands
+        end -- if act ~= nil
       else
-        self:reset()
-        gfx.update()
-      end
-    end -- end of QUEUE
+        --End of execution
+        if self.executionTimer ~= nil then
+          self.executionTimer:stop()
+          self.executionTimer = nil
+        end
+        collectgarbage()
+        --Check if the goal has been reached
+        if(self.map:isInGoal(self.position.x,self.position.y))then
+          self.hasWon = true
+        else
+          self:reset()
+          gfx.update()
+        end
+      end -- end of QUEUE
+
+    end
+
+    --Sets the timer
+    self.executionTimer = sys.new_timer(500, "start")
 
   end
-
-  --Sets the timer
-  self.executionTimer = sys.new_timer(500, "start")
 end
 
 ---------------------------------------

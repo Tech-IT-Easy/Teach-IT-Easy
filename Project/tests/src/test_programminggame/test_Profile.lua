@@ -22,7 +22,7 @@ function test_input_aName_picture1()
 
     local a = ps:new("name", 1)
     local imagePath = a.avatar
-    assert_equal(imagePath,'data/avatar_down.png', "Should be data/avatar_down.png")
+    assert_equal(imagePath,'data/avatar/cute_robot/DOWN.png', "Should be data/avatar/cute_robot/DOWN.png")
 end
 
 function test_input_name_picture2()
@@ -30,7 +30,7 @@ function test_input_name_picture2()
 
     local a = ps:new("name", 2)
     local imagePath = a.avatar
-    assert_equal(imagePath,'data/avatar_right.png', "Should be data/avatar_right.png")
+    assert_equal(imagePath,'data/avatar/insect_robot/DOWN.png', "Should be data/avatar/cute_robot/RIGHT.png")
 end
 
 function test_input_name_picture3()
@@ -38,5 +38,5 @@ function test_input_name_picture3()
 
     local a = ps:new("name", 3)
     local imagePath = a.avatar
-    assert_equal(imagePath, 'data/avatar_up.png', "Should be data/avatar_right.png")
+    assert_equal(imagePath, 'data/avatar/cute_robot/UP.png', "Should be data/avatar/cute_robot/RIGHT.png")
 end

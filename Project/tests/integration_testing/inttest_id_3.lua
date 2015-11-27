@@ -402,3 +402,167 @@ function test_adding_commands()
 
 end
 
+function test_delete()
+    local test = require("games.Progg.BottomMenu")
+    local commands = require('games.Progg.Commands')
+    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },nil)
+    local test_event
+    local bm_queue
+    local test_command
+
+    -----------------------------------------------------------------------------------------------
+     -- Adding some commands
+    -----------------------------------------------------------------------------------------------
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "1"
+    test_event = event:new("1", "down") --simulates a key press on key 1
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[1]
+    --print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.MOVE
+    lunit.assert_equal(test_command, bm_queue,  "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "2"
+    test_event = event:new("2", "down") --simulates a key press on key 2
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[2]
+    --print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.TURN_LEFT
+    lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
+
+    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "3"
+    test_event = event:new("3", "down") --simulates a key press on key 3
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    bm_queue = bottommenu.queue.actions[3]
+    --print("Added " .. bm_queue .. " in the queue")
+    test_command = commands.TURN_RIGHT
+    lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
+
+    --print("Commands added")
+    -----------------------------------------------------------------------------------------------
+     -- Added commands
+    -----------------------------------------------------------------------------------------------
+
+    bottommenu:deleteAction(1,"queue")
+    local cmd_1 = bottommenu.queue.actions[1]
+    local cmd_2 = bottommenu.queue.actions[2]
+
+    lunit.assert_equal(commands.TURN_LEFT, cmd_1, "Not right command in position 1")
+    lunit.assert_equal(commands.TURN_RIGHT, cmd_2, "Not right command in position 2")
+end
+
+function test_key_press()
+    local test = require("games.Progg.BottomMenu")
+    local commands = require('games.Progg.Commands')
+    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },nil)
+
+    local test_event = event:new("1", "down")
+    bottommenu.inputArea = "loop"
+    bottommenu.selectingLoopCounter=true
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.queue.loopCounter==1, "Key press not implies right action")
+
+    local test_event = event:new("1", "down")
+    bottommenu.selectingActionEdit=true
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.isMovingAction == true, "Key press not implies right action")
+
+    local test_event = event:new("2", "down")
+    bottommenu.inputArea ="loop"
+    bottommenu.selectingLoopCounter=true
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.queue.loopCounter == 2, "Key press not implies right action")
+
+    local test_event = event:new("2", "down")
+    bottommenu.selectingActionEdit=true
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.selectingActionEdit == nil, "Key press not implies right action")
+
+    local test_event = event:new("3", "down")
+    bottommenu.inputArea = "loop"
+    bottommenu.selectingLoopCounter=true
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.queue.loopCounter==3, "Key press not implies right action")
+
+    local test_event = event:new("3", "down")
+    bottommenu.selectingActionEdit = "loop"
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.selectingActionEdit == nil, "Key press not implies right action")
+
+    local test_event = event:new("3", "down")
+    bottommenu.isMovingAction = true
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.selectingActionEdit == nil, "Key press not implies right action")
+
+    local test_event = event:new("4", "down")
+    bottommenu.inputArea ="loop"
+    bottommenu.selectingLoopCounter=true
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.queue.loopCounter == 4, "Key press not implies right action")
+
+    local test_event = event:new("5", "down")
+    bottommenu.inputArea ="loop"
+    bottommenu.selectingLoopCounter=true
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.queue.loopCounter == 5, "Key press not implies right action")
+
+    local test_event = event:new("6", "down")
+    bottommenu.inputArea ="loop"
+    bottommenu.selectingLoopCounter=true
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.queue.loopCounter == 6, "Key press not implies right action")
+
+    local test_event = event:new("6", "down")
+    bottommenu.inputArea ="queue"
+    bottommenu.selectingActionEdit = nil
+    bottommenu.isMovingAction=false
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.inputArea == "loop", "Key press not implies right action")
+
+    local test_event = event:new("9", "down")
+    bottommenu.inputArea ="loop"
+    bottommenu.selectingLoopCounter=true
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.queue.loopCounter == 9, "Key press not implies right action")
+
+    local test_event = event:new("up", "down")
+    bottommenu.position = 9 --is not upper row
+    bottommenu.selectingActionEdit =nil
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.prevPosition == 9, "Key press not implies right action")
+    lunit.assert_true(bottommenu.position==1, "Key press not implies right action")
+
+    local test_event = event:new("down", "down")
+    bottommenu.position = 1
+    bottommenu.selectingActionEdit =nil
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.prevPosition == 1, "Key press not implies right action")
+    lunit.assert_true(bottommenu.position==9, "Key press not implies right action")
+
+    local test_event = event:new("left", "down")
+    bottommenu.position = 3
+    bottommenu.selectingActionEdit =nil
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.prevPosition == 3, "Key press not implies right action")
+    lunit.assert_true(bottommenu.position==2, "Key press not implies right action")
+
+    local test_event = event:new("right", "down")
+    bottommenu.position = 3
+    bottommenu.selectingActionEdit =nil
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.prevPosition == 3, "Key press not implies right action")
+    lunit.assert_true(bottommenu.position==4, "Key press not implies right action")
+
+    local test_event = event:new("ok", "down")
+    bottommenu.isMovingAction = true
+    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_true(bottommenu.isMovingAction == false, "Key press not implies right action")
+
+--    local test_event = event:new("backspace", "down")
+--    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+--    lunit.assert_true(bottommenu.context.game==nil, "Key press not implies right action")
+
+end
+
+
+
+

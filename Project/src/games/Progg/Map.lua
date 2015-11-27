@@ -298,15 +298,15 @@ end
 -- @author Erik
 -------------------------------------
 function Map:setCharacter(i, direction)
-    self.image1 = gfx.loadpng('data/avatar_up.png')
+    self.image1 = gfx.loadpng('data/avatar/cute_robot/UP.png')
     if direction == Map.UP then
-        self.image1 = gfx.loadpng('data/avatar_up.png')
+        self.image1 = gfx.loadpng('data/avatar/cute_robot/UP.png')
     elseif direction == Map.DOWN then
-        self.image1 = gfx.loadpng('data/avatar_down.png')
+        self.image1 = gfx.loadpng('data/avatar/cute_robot/DOWN.png')
     elseif direction == Map.RIGHT then
-        self.image1 = gfx.loadpng('data/avatar_right.png')
+        self.image1 = gfx.loadpng('data/avatar/cute_robot/RIGHT.png')
     elseif direction == Map.LEFT then
-        self.image1 = gfx.loadpng('data/avatar_left.png')
+        self.image1 = gfx.loadpng('data/avatar/cute_robot/LEFT.png')
     end
 
     screen:copyfrom(self.image1, nil, {
