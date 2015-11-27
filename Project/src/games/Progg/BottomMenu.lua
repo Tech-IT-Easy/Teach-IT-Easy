@@ -54,7 +54,7 @@ function BottomMenu:new(maxCommands,gameContext)
     -- @member character:Character
     o.character = Character:new(1,5)
     o.queue = Queue:new(o, o.buildArea, maxCommands)
-    o.rightMenu = rightMenu:new()
+    o.rightMenu = rightMenu:new(maxCommands)
     return BottomMenu:init(o)
 end
 
@@ -221,8 +221,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
-                if object:isBuildArea() == true then
-                    print("Not allowed to add methods to build area")
+                if object:isBuildArea() == true or object.maxCommands["if-wall"] then
+                    print("Action not allowed")
                     return;
                 end
                 object.buildArea:setBuildType("if-wall")
@@ -245,8 +245,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
-                if object:isBuildArea() == true then
-                    print("Not allowed to add methods to build area")
+                if object:isBuildArea() == true or object.maxCommands["loop"] == 0 then
+                    print("Action not allowed")
                     return;
                 end
                 
@@ -275,8 +275,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
-                if object:isBuildArea() == true then
-                    print("Not allowed to add methods to build area")
+                if object:isBuildArea() == true or object.maxCommands["P1"] == 0 then
+                    print("Action not allowed")
                     return;
                 end
                 object.rightMenu.inputAreaChanged = true
@@ -301,8 +301,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
-                if object:isBuildArea() == true then
-                    print("Not allowed to add methods to build area")
+                if object:isBuildArea() == true or object.maxCommands["P2"] == 0 then
+                    print("Action not allowed")
                     return;
                 end
                 object.rightMenu.inputAreaChanged = true
@@ -484,13 +484,15 @@ function BottomMenu:enterMethod()
     if queuePos > 2*self.rowLength then
         queuePos = queuePos - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
     end
-    self.buildArea:setBuildType(self:getQueue(self.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
-    self.inputArea = self:getQueue(self.inputArea)[queuePos]
-    self.prevPosition = self.position
-    self.position = 2*self.rowLength + 1
-    self.buildArea:setPosition(self.position)
-    self.drawBottomMenu:clearPos(self.prevPosition, self.queue.actions)
-    self.buildArea.drawBuildArea:clearPos(self.buildArea.prevPosition, self:getQueue(self.inputArea))
+    if self.maxCommands[self:getQueue(self.inputArea)[queuePos]] > 0 then
+        self.buildArea:setBuildType(self:getQueue(self.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
+        self.inputArea = self:getQueue(self.inputArea)[queuePos]
+        self.prevPosition = self.position
+        self.position = 2*self.rowLength + 1
+        self.buildArea:setPosition(self.position)
+        self.drawBottomMenu:clearPos(self.prevPosition, self.queue.actions)
+        self.buildArea.drawBuildArea:clearPos(self.buildArea.prevPosition, self:getQueue(self.inputArea))
+    end
 end
 
 ---------------------------------------------

@@ -9,7 +9,7 @@ local Object = require("toolkit.Object")
 
 local DrawRightMenu = extends(Object)
 skin = require('games/Progg/progg_skin')
-commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
+
 
 -------------------------------------
 -- Creates the draw functions for
@@ -17,8 +17,10 @@ commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
 -- @return self. The created object.
 -- @author Vilhelm
 -------------------------------------
-function DrawRightMenu:new()
+function DrawRightMenu:new(maxCommands)
    local o = DrawRightMenu:super()
+   o.maxCommands = maxCommands
+   o.commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
    return DrawRightMenu:init(o)
 end
 
@@ -156,8 +158,11 @@ end
 -------------------------------------
 function DrawRightMenu:addImages()
     local i = 1
-    while commands[i] do
-        self:addImage(commands[i])
+    while self.commands[i] do
+        if self.maxCommands[self.commands[i]]== nil or self.maxCommands[self.commands[i]] > 0 then
+            self:addImage(self.commands[i])
+
+        end
         i = i + 1
     end
 end

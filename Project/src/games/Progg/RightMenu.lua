@@ -22,12 +22,12 @@ local drawRightMenu = require('games.Progg.DrawRightMenu')
 -- @return rightMenu:RightMenu The created object.
 -- @author Vilhelm
 -------------------------------------
-function RightMenu:new()
+function RightMenu:new(maxCommands)
     local o = RightMenu:super()
     --Draw right-hand side
     screen:clear({ r = 92, g = 128, b = 149 }, { x = screen:get_width() * 0.75, y = 0, w = screen:get_width() * 0.25, h = screen:get_height()*0.65 })
     -- @member drawRightMenu:DrawRightMenu
-    o.draw = drawRightMenu:new()
+    o.draw = drawRightMenu:new(maxCommands)
     o.currentHighlight = nil
     o.inputAreaChanged = false
     o.inputArea = "queue"
