@@ -574,8 +574,12 @@ function BottomMenu:getQueue(inputArea)
         return self.queue.p1Actions
     elseif inputArea == "P2" then
         return self.queue.p2Actions
-    elseif string.match(inputArea, "if") then
-        return self.queue.ifActions
+    elseif inputArea == "if-wall" then
+        return self.queue.ifTrueActions
+    elseif inputArea == "if-not-wall" then
+        return self.queue.ifFalseActions
+--    elseif string.match(inputArea, "if") then
+--        return self.queue.ifActions
     end
 end
 

@@ -119,10 +119,12 @@ function Queue:getExecutionQueue()
       table.insert(executionQueue.p2Actions, i, self.p2Actions[#self.p2Actions - i + 1])
     end
   end
-  if self.ifActions ~= nil then
+  if self.ifTrueActions ~= nil then
     for i = 1, #self.ifTrueActions do
       table.insert(executionQueue.ifTrueActions, i, self.ifTrueActions[#self.ifTrueActions - i + 1])
     end
+  end
+  if self.ifFalseActions ~= nil then
     for i = 1, #self.ifFalseActions do
       table.insert(executionQueue.ifFalseActions, i, self.ifFalseActions[#self.ifFalseActions - i + 1])
     end
