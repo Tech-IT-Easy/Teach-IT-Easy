@@ -1358,3 +1358,38 @@ function test_isInGoal_one()
 
     verify_mock(mc)
 end
+
+-------------------------------------
+-- Mocks restart character
+-- @system_under_test : Map:new(), Map:restartCharacter(x,y)
+-- @author name: Erik
+-------------------------------------
+function test_restartCharacter_one()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local getPosition = mc:mock()
+    local square = mc:mock()
+    local setCharacter = mc:mock()
+
+    package.loaded[SUT].getPosition = getPosition
+    package.loaded[SUT].square = square
+    package.loaded[SUT].setCharacter = setCharacter
+
+    local a = ps:new()
+
+    local x = 1
+    local y = 1
+    a.startPos = 1
+    a.tiles={}
+
+    getPosition(mc.ANYARGS); mc:returns(1):anytimes()
+    square(mc.ANYARGS); mc:returns(nil):anytimes()
+    setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
+
+    mc:replay()
+
+    a:restartCharacter(x,y)
+
+    verify_mock(mc)
+end
