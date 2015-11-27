@@ -9,7 +9,7 @@
 lunit = require "lunit"
 module( "inttest_id_3", package.seeall, lunit.testcase )
 local event = require ("toolkit.Event")
-
+local Commands = require('games.Progg.Commands')
 local SUT1 = 'games.Progg.Commands'
 local SUT2 = 'games.Progg.BuildArea'
 local SUT3 = 'games.Progg.Character'
@@ -124,7 +124,7 @@ end
 function test_adding_commands()
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },nil)
+    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 },nil)
     local test_event
     local bm_queue
     local test_command
@@ -405,7 +405,7 @@ end
 function test_delete()
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },nil)
+    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 },nil)
     local test_event
     local bm_queue
     local test_command
@@ -453,7 +453,7 @@ end
 function test_key_press()
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },nil)
+    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 , ["if-wall"] = 16, ["if-not-wall"] = 16} ,nil)
 
     local test_event = event:new("1", "down")
     bottommenu.inputArea = "loop"
@@ -484,7 +484,9 @@ function test_key_press()
     lunit.assert_true(bottommenu.queue.loopCounter==3, "Key press not implies right action")
 
     local test_event = event:new("3", "down")
+    bottommenu.inputArea = "queue"
     bottommenu.selectingActionEdit = "loop"
+    bottommenu.queue:push(Commands.LOOP, "queue")
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
     lunit.assert_true(bottommenu.selectingActionEdit == nil, "Key press not implies right action")
 
