@@ -16,5 +16,6 @@ require "tests.src.test_programminggame.test_Map"
 
 require "tests.src.test_programminggame.test_ProggGame"
 require "tests.src.test_programminggame.test_RightMenu"
+require "tests.src.test_programminggame.test_DrawRightMenu"
 require "tests.src.test_programminggame.test_Tile"
 

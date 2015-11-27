@@ -13,10 +13,10 @@ local skin = require('games/Progg/progg_skin')
 local Commands = require('games.Progg.Commands')
 local Event = require('toolkit.Event')
 local EventHandler = require('toolkit.EventHandler')
-local drawRightMenu = require('games/Progg/DrawRightMenu')
+local drawRightMenu = require('games.Progg.DrawRightMenu')
 
 
--------------------------------------
+------------------------------------
 -- Creates the Right-hand screen in the programming game
 -- @return rightMenu:RightMenu The created object.
 -- @author Vilhelm
