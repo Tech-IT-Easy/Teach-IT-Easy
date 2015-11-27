@@ -221,7 +221,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
-                if object:isBuildArea() == true or object.maxCommands["if-wall"] then
+                if object:isBuildArea() == true or object.maxCommands["if-wall"] or #object.queue.actions<object.maxCommands[object.inputArea] == false then
                     print("Action not allowed")
                     return;
                 end
@@ -244,7 +244,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
 
-            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
+            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true or #object.queue.actions<object.maxCommands[object.inputArea] == false then
                 print("Not allowed while selecting edit or moving action")
             else
                 if object:isBuildArea() == true or object.maxCommands["loop"] == 0 then
@@ -273,7 +273,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
-                if object:isBuildArea() == true or object.maxCommands["P1"] == 0 then
+                if object:isBuildArea() == true or object.maxCommands["P1"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
                     print("Action not allowed")
                     return;
                 end
@@ -299,7 +299,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
-                if object:isBuildArea() == true or object.maxCommands["P2"] == 0 then
+                if object:isBuildArea() == true or object.maxCommands["P2"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
                     print("Action not allowed")
                     return;
                 end
@@ -354,7 +354,12 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object:setPosition(1)
             end
         elseif event.key == Event.KEY_ZERO then
-            if object.selectingActionEdit ~= nil then
+            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
+                object.queue.loopCounter = object.queue.INFINITY
+                object.selectingLoopCounter=false
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "build"
+            elseif object.selectingActionEdit ~= nil then
                 object.selectingActionEdit = nil
             elseif object.inputArea == "if-wall" then
                 object.rightMenu.inputAreaChanged = true
