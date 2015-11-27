@@ -82,7 +82,7 @@ local MapData = require('games.Progg.levels.level'..'1')
     self.boxpadding = 10
     self.borderthickness = self.boxpadding / 2
 
-
+--[[
 self.mapdata =
     {
         "9", "a", "c", "f", "f", "f", "f", "f",
@@ -98,7 +98,7 @@ self.mapdata =
     --@member tiles:Tile
     table.insert(self.tiles, Tile:new(self.mapdata[i]))
   end
-
+]]
   self.goalPos = 20
   self.startPos = 33
   self.charPos = self.startPos
