@@ -487,10 +487,6 @@ function BottomMenu:enterMethod()
     if queuePos > 2*self.rowLength then
         queuePos = queuePos - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
     end
-
-    print("position: ", self.position)
-    print("inputArea: ", self.inputArea)
-    print(self:getQueue(self.inputArea)[queuePos])
     if self.maxCommands[self:getQueue(self.inputArea)[queuePos]] > 0 then
         self.buildArea:setBuildType(self:getQueue(self.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
         self.inputArea = self:getQueue(self.inputArea)[queuePos]
