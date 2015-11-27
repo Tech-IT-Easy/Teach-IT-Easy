@@ -220,7 +220,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
-            else
+            elseif #object.queue.actions<object.maxCommands[object.inputArea] then
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "if-wall"
                 object.buildArea:setBuildType("if-wall")
@@ -242,7 +242,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
-            else
+            elseif #object.queue.actions<object.maxCommands[object.inputArea] then
                 if object:isBuildArea() == true then
                     print("Not allowed to add methods to build area")
                     return;
@@ -268,7 +268,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
-            else
+            elseif #object.queue.actions<object.maxCommands[object.inputArea] then
                 if object:isBuildArea() == true then
                     print("Not allowed to add methods to build area")
                     return;
@@ -294,7 +294,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
-            else
+            elseif #object.queue.actions<object.maxCommands[object.inputArea] then
                 if object:isBuildArea() == true then
                     print("Not allowed to add methods to build area")
                     return;
