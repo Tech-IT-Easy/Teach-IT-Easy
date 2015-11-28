@@ -9,7 +9,7 @@ local Object = require("toolkit.Object")
 
 local DrawRightMenu = extends(Object)
 skin = require('games/Progg/progg_skin')
-commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
+
 
 -------------------------------------
 -- Creates the draw functions for
@@ -17,8 +17,10 @@ commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
 -- @return self. The created object.
 -- @author Vilhelm
 -------------------------------------
-function DrawRightMenu:new()
+function DrawRightMenu:new(maxCommands)
    local o = DrawRightMenu:super()
+   o.maxCommands = maxCommands
+   o.commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
    return DrawRightMenu:init(o)
 end
 
@@ -118,6 +120,7 @@ end
 -- @author Vilhelm
 -------------------------------------
 function DrawRightMenu:drawRow(row)
+    self:clearRow(row)
     self:drawBox(34,59,94,203,212,214,first_column,first_row+(row-1)*(command_height+col_spacing),command_width,command_height)
     self:drawBox(34,59,94,203,212,214,first_column+(command_width+row_spacing),first_row+(row-1)*(command_height+col_spacing),command_width,command_height)
     self:drawBox(34,59,94,203,212,214,first_column+2*(command_width+row_spacing),first_row+(row-1)*(command_height+col_spacing),command_width,command_height)
@@ -133,8 +136,7 @@ end
 -- @author Vilhelm
 -------------------------------------
 function DrawRightMenu:drawTwoBoxRow(row,r,g,b)
-    self:drawBox(92,128,149,92,128,149,first_column,first_row+(row-1)*(command_height+col_spacing),3*command_width+2*row_spacing,command_height)
-
+    self:clearRow(row)
     self:drawBox(34,59,94,r,g,b,first_column,first_row+(row-1)*(command_height+col_spacing),(1.33)*command_width+row_spacing,command_height)
     self:drawBox(34,59,94,r,g,b,first_column+(1.66)*command_width+row_spacing,first_row+(row-1)*(command_height+col_spacing),(1.33)*command_width+row_spacing,command_height)
 end
@@ -145,8 +147,7 @@ end
 -- @author Vilhelm
 -------------------------------------
 function DrawRightMenu:drawFullRow(row,r,g,b)
-    self:drawBox(92,128,149,92,128,149,first_column-command_width*0.10,first_row+(row-1)*(command_height+col_spacing)-command_height*0.15,command_width,command_height*0.4)
-
+    self:clearRow(row)
     self:drawBox(34,59,94,r,g,b,first_column,first_row+(row-1)*(command_height+col_spacing),3*command_width+2*row_spacing,command_height)
 end
 
@@ -157,8 +158,11 @@ end
 -------------------------------------
 function DrawRightMenu:addImages()
     local i = 1
-    while commands[i] do
-        self:addImage(commands[i])
+    while self.commands[i] do
+        if self.maxCommands[self.commands[i]]== nil or self.maxCommands[self.commands[i]] > 0 then
+            self:addImage(self.commands[i])
+
+        end
         i = i + 1
     end
 end
@@ -241,6 +245,7 @@ end
 function DrawRightMenu:addStop()
     self:drawFullRow(4,245,45,120)
     command_play:draw_over_surface(screen, "0  Stop!")
+    --gfx.update()
 end
 
 -------------------------------------
@@ -249,11 +254,45 @@ end
 -- layout
 -- @author Vilhelm
 -------------------------------------
-function DrawRightMenu:addPlayAndBack()
-    self:drawTwoBoxRow(4,78,113,215)
-    command_0:draw_over_surface(screen, "0")
-    command_play_small:draw_over_surface(screen, "Play!")
-    command_back:draw_over_surface(screen, "Back")
+function DrawRightMenu:addBack()
+    self:drawFullRow(4,78,113,215)
+    command_play:draw_over_surface(screen, "0  Back")
+end
+
+-------------------------------------
+-- Adds if false text to the
+-- two-buttons row in the 9-command
+-- layout.
+-- @author Tobias Lundell
+-------------------------------------
+function DrawRightMenu:addIfFalse()
+    self:drawFullRow(4,78,113,215)
+    command_play:draw_over_surface(screen, "0 If false")
+end
+
+-------------------------------------
+-- Adds the option buttons when
+-- selecting an action
+-- @author Vilhelm
+-------------------------------------
+function DrawRightMenu:addOptions(can_enter)
+    self:clearRow(1)
+    self:clearRow(2)
+    self:clearRow(3)
+    self:clearRow(4)
+    self:drawFullRow(1,78,113,215)
+    self:drawFullRow(2,78,113,215)
+    command_1:draw_over_surface(screen, "1")
+    command_4:draw_over_surface(screen, "2")
+    nr_1:draw_over_surface(screen, "Move")
+    nr_4:draw_over_surface(screen, "Delete")
+
+    if (can_enter == true) then
+        self:drawFullRow(3,78,113,215)
+        command_7:draw_over_surface(screen, "3")
+        nr_7:draw_over_surface(screen, "Enter")
+    end
+
 end
 
 -------------------------------------
@@ -279,19 +318,21 @@ function DrawRightMenu:addLoopOptions()
 end
 
 -------------------------------------
+-- Clears a row
+-- @param: row to be cleared
+-- @author Vilhelm
+-------------------------------------
+function DrawRightMenu:clearRow(row)
+    self:drawBox(92,128,149,92,128,149,first_column-command_width*0.20,first_row+(row-1)*(command_height+col_spacing)-command_height*0.20,3*command_width+2*row_spacing+command_width*0.20,command_height*1.4)
+end
+
+-------------------------------------
 -- Draws a box with a border
 -- r1,g1,b1 specifies border color
 -- r2,g2,b2 specifies filling color
 -- @author Vilhelm
 -------------------------------------
 function DrawRightMenu:drawBox(r1,g1,b1,r2,g2,b2,x,y,w,h)
-
-    --[[if w>h
-    then
-      local f=h
-    else
-      local f=w
-    end]]
 
     local b=3
     local x2=x+b

@@ -1,11 +1,13 @@
 local Object = require('toolkit.Object')
 local Queue = extends(Object)
+
 ---------------------------------------------------------------
 -- Constructor for the Queue
 -- @param newBottomMenu:BottomMenu The place where the queue is drawn.
 -- @param newBuildArea:BuildArea. The places where the loops and procedures are edited.
 -- @return queue:Queue a new queue instance
 -- @author Ludwig Wikblad
+-- @author Tobias Lundell
 ----------------------------------------------------------------
 function Queue:new(newBottomMenu, newBuildArea, maxCommands)
   local o = Queue:super()
@@ -13,8 +15,11 @@ function Queue:new(newBottomMenu, newBuildArea, maxCommands)
   o.loopActions = {}
   o.p1Actions = {}
   o.p2Actions = {}
+  o.ifTrueActions = {}
+  o.ifFalseActions = {}
   o.maxCommands = maxCommands
   o.loopCounter = 2
+  o.INFINITY = 999
   -- @member bottomMenu:BottomMenu
   if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
   -- @member buildArea:BuildArea
@@ -36,22 +41,33 @@ function Queue:push(action, queueType)
         if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self) end
     end
   elseif queueType == "loop" then
-    if self.maxCommands[queueType] > #self.loopActions then
+    if self.maxCommands[queueType] > #self.loopActions and self:containsRecursion(action, self.loopActions, queueType) == false then
         table.insert(self.loopActions,action)
         if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions, queueType) end
     end
   elseif queueType == "P1" then
-    if self.maxCommands[queueType] > #self.p1Actions then
+    if self.maxCommands[queueType] > #self.p1Actions and self:containsRecursion(action, self.p1Actions, queueType) == false then
         table.insert(self.p1Actions,action)
         if self.buildArea ~= nil then self.buildArea:setQueue(self.p1Actions, queueType) end
     end
   elseif queueType == "P2" then
-    if self.maxCommands[queueType] > #self.p2Actions then
+    if self.maxCommands[queueType] > #self.p2Actions and self:containsRecursion(action, self.p2Actions, queueType) == false then
         table.insert(self.p2Actions,action)
         if self.buildArea ~= nil then self.buildArea:setQueue(self.p2Actions, queueType) end
     end
+  elseif queueType == "if-wall" then
+    if self.maxCommands[queueType] > #self.ifTrueActions and self:containsRecursion(action, self.ifTrueActions, queueType) == false then
+      table.insert(self.ifTrueActions, action)
+      if self.buildArea ~= nil then self.buildArea:setQueue(self.ifTrueActions, queueType) end
+    end
+  elseif queueType == "if-not-wall" then
+    if self.maxCommands[queueType] > #self.ifFalseActions and self:containsRecursion(action, self.ifFalseActions, queueType) == false then
+      table.insert(self.ifFalseActions, action)
+      if self.buildArea ~= nil then self.buildArea:setQueue(self.ifFalseActions, queueType) end
+    end
   end
 end
+
 
 function Queue:getQueue()
   return
@@ -105,7 +121,46 @@ function Queue:getExecutionQueue()
       table.insert(executionQueue.p2Actions, i, self.p2Actions[#self.p2Actions - i + 1])
     end
   end
+  if self.ifTrueActions ~= nil then
+    for i = 1, #self.ifTrueActions do
+      table.insert(executionQueue.ifTrueActions, i, self.ifTrueActions[#self.ifTrueActions - i + 1])
+    end
+  end
+  if self.ifFalseActions ~= nil then
+    for i = 1, #self.ifFalseActions do
+      table.insert(executionQueue.ifFalseActions, i, self.ifFalseActions[#self.ifFalseActions - i + 1])
+    end
+  end
   return executionQueue
 end
 
+-------------
+--- !!Note!! This function will be uncommented and work as intended when calling methods from methods is supported. !!Note!!
+---
+--- Used to make sure that not more than one recursion call is made in a method.
+--- @return false if adding action that is not itself (aka not recursive) or if there isn't a recursive call already added.
+--- @return true if method already contains a call to itself.
+--- @author Mikael Ögren
+----
+function Queue:containsRecursion(action, Queue, queueType)
+--  if action ~= queueType then
+--    return false
+--  else
+
+    if action == "loop" or action == "P1" or action == "P2" or action == "if" then --Remove when method calls are allowed
+    print("Calling a method from a method is not allowed yet") --Remove when method calls are allowed
+    return true --Remove when method calls are allowed
+
+--    for i = 1, #Queue do
+--      if Queue[i] == action then
+--        print("Only allowed to use recursion once!")
+--        return true
+--      end
+--    end
+  else return false --Remove when method calls are allowed
+  end
+--  return false
+end
+
 return Queue
+

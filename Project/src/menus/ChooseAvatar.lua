@@ -71,9 +71,9 @@ function ChooseAvatar:loadview(input)
   self.pos = 1
   self.lastpos = 1
   self.username = input
-  self.image1 = gfx.loadpng('data/avatar_down.png')
-  self.image2 = gfx.loadpng('data/avatar_right.png')
-  self.image3 = gfx.loadpng('data/avatar_up.png')
+  self.image1 = gfx.loadpng('data/DOWN.png')
+  self.image2 = gfx.loadpng('data/RIGHT.png')
+  self.image3 = gfx.loadpng('data/UP.png')
   self.myimages = { self.image1, self.image2, self.image3 }
   self:renderui()
 end
