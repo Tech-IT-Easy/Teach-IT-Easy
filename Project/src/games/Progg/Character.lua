@@ -46,7 +46,7 @@ function Character:startExecution(inqueue)
   if self.executionTimer == nil then
     self.queue = inqueue:getExecutionQueue()
     self.j = 0 --Keeps track of number of commands.
-
+    self.loopNumber = 1
 
     start = function(timer)
       if(0<#self.queue.actions or self.onP1 or self.onP2 or self.onLoop or self.onIf) then
@@ -62,19 +62,20 @@ function Character:startExecution(inqueue)
           if (act == Commands.LOOP or self.onLoop) then
             self.onLoop = true
             if(act == Commands.LOOP) then
-              self.nrOfIterations = inqueue.loopCounter
+              self.nrOfIterations = inqueue.loopCounter[self.loopNumber]
               self.procProcess = 0 --Counts the position inside the loop
             end
             if(self.nrOfIterations>0) then
-              act = self.queue.loopActions[#self.queue.loopActions - self.procProcess + 1]
+              act = self.queue.loopActions[self.loopNumber][self.procProcess]
               self.procProcess = self.procProcess+1
               self:execute(act)
-              if(self.procProcess>#self.queue.loopActions)then
+              if(self.procProcess>#self.queue.loopActions[self.loopNumber])then
                 self.procProcess = 0
                 self.nrOfIterations = self.nrOfIterations-1
               end
             else
               self.onLoop = false
+              self.loopNumber = self.loopNumber+1
             end -- end of LOOP
 
             --If the command P1 is encounter or if its executing P1

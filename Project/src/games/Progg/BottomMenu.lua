@@ -157,7 +157,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
         --Switch for all the input handling to implement
         if event.key == Event.KEY_ONE then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
-                object.queue.loopCounter = 1
+                object.queue.loopCounter[object.queue.loopPointer] = 1
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -179,7 +179,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_TWO then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
-                object.queue.loopCounter = 2
+                object.queue.loopCounter[object.queue.loopPointer]  = 2
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -207,7 +207,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_THREE then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
-                object.queue.loopCounter = 3
+                object.queue.loopCounter[object.queue.loopPointer]  = 3
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -227,7 +227,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_FOUR then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
-                object.queue.loopCounter = 4
+                object.queue.loopCounter[object.queue.loopPointer]  = 4
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -247,7 +247,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_FIVE then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
-                object.queue.loopCounter = 5
+                object.queue.loopCounter[object.queue.loopPointer]  = 5
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -272,7 +272,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_SIX then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
-                object.queue.loopCounter = 6
+                object.queue.loopCounter[object.queue.loopPointer]  = 6
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -299,7 +299,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_SEVEN then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
-                object.queue.loopCounter = 7
+                object.queue.loopCounter[object.queue.loopPointer]  = 7
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -325,7 +325,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_EIGHT then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
-                object.queue.loopCounter = 8
+                object.queue.loopCounter[object.queue.loopPointer]  = 8
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -350,7 +350,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
         elseif event.key == Event.KEY_NINE then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
-                object.queue.loopCounter = 9
+                object.queue.loopCounter[object.queue.loopPointer]  = 9
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -388,7 +388,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
         elseif event.key == Event.KEY_ZERO then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then
-                object.queue.loopCounter = object.queue.INFINITY
+                object.queue.loopCounter[object.queue.loopPointer] = object.queue.INFINITY
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -416,7 +416,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.position = 1
                 object.buildArea:setPosition(object.position)
                 object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
-                object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+               -- object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))!!
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "queue"
                 object.inputArea = "queue"

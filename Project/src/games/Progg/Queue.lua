@@ -18,8 +18,9 @@ function Queue:new(newBottomMenu, newBuildArea, maxCommands)
   o.ifTrueActions = {}
   o.ifFalseActions = {}
   o.maxCommands = maxCommands
-  o.loopCounter = 2
+  o.loopCounter = {}
   o.INFINITY = 999
+  o.loopPointer = 0
   -- @member bottomMenu:BottomMenu
   if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
   -- @member buildArea:BuildArea
@@ -38,12 +39,18 @@ function Queue:push(action, queueType)
   if queueType == "queue" or queueType == nil then
     if  queueType == nil or self.maxCommands[queueType] > #self.actions then
         table.insert(self.actions,action)
-        if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self) end
+        if(action=="loop")then
+          table.insert(self.loopActions,{})
+          self.loopPointer = self.loopPointer+1
+        end
+        if self.bottomMenu ~= nil then 
+          self.bottomMenu:setQueue(self) 
+        end
     end
   elseif queueType == "loop" then
     if self.maxCommands[queueType] > #self.loopActions and self:containsRecursion(action, self.loopActions, queueType) == false then
-        table.insert(self.loopActions,action)
-        if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions, queueType) end
+        table.insert(self.loopActions[self.loopPointer],action)
+        if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions[self.loopPointer], queueType) end
     end
   elseif queueType == "P1" then
     if self.maxCommands[queueType] > #self.p1Actions and self:containsRecursion(action, self.p1Actions, queueType) == false then
@@ -108,7 +115,7 @@ function Queue:getExecutionQueue()
   end
   if self.loopActions ~= nil then
     for i = 1, #self.loopActions do
-      table.insert(executionQueue.loopActions, i, self.loopActions[#self.loopActions - i + 1])
+      table.insert(executionQueue.loopActions, i, self.loopActions[i])
     end
   end
   if self.p1Actions ~= nil then
