@@ -102,6 +102,10 @@ function TrophyRoom:renderui()
     self:printTopPanel()
     self:printProgressionBar()
 
+
+
+
+
     --[[
 
     main_menu_username:draw_over_surface(screen, self.usernamestring)
@@ -118,13 +122,15 @@ function TrophyRoom:renderui()
 end
 
 function TrophyRoom:printTopPanel()
+    avatarImage = platformContext.profile.avatar
+    local image1 = gfx.loadpng(platformContext.profile.avatar)
+
 
     main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
     trophy_room_pagename:draw_over_surface(screen, "Programming game trophies")
 
     games_username:draw_over_surface(screen, self.usernamestring)
-    screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
-
+    screen:copyfrom(image1, nil, { x = screen:get_width() * 0.08, y = screen:get_height() *0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
     screen:clear({ g = 0, r = 0, b = 0 }, { x = screen:get_width() * 0.8, y = screen:get_height() * 0.08, w = screen:get_width() * 0.05, h = screen:get_height() * 0.04 })
     screen:clear({ g = 230, r = 230, b = 230 }, { x = screen:get_width() * 0.803, y = screen:get_height() * 0.0845, w = screen:get_width() * 0.0455, h = screen:get_height() * 0.0308 })
     games_backbutton:draw_over_surface(screen, "BACK")

@@ -71,12 +71,16 @@ end
 -- @author Erik
 -------------------------------------
 function Games:renderui()
+   local image1 = gfx.loadpng(platformContext.profile.avatar)
+
 
   games_appname:draw_over_surface(screen, "TEACH IT EASY")
   games_pagename:draw_over_surface(screen, "CHOOSE A GAME")
   games_username:draw_over_surface(screen, self.usernamestring)
-  screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
-  self:buttonactive(1)
+
+   screen:copyfrom(image1, nil, { x = screen:get_width() * 0.08, y = screen:get_height() *0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+
+   self:buttonactive(1)
   for i = 2, #self.games, 1 do
     self:buttoninactive(i)
   end

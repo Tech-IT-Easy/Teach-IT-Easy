@@ -100,7 +100,26 @@ function MainMenu:renderui()
     main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
     main_menu_pagename:draw_over_surface(screen, "MAIN MENU")
     main_menu_username:draw_over_surface(screen, self.usernamestring)
-    screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+
+    avatarImageUrl = platformContext.profile.avatar
+
+    trophyRoomImageActive="data/trophy_active.png"
+    trophyRoomImageInactive="data/trophyinactive.png"
+    SettingsMenuImageActive="data/settings_active.png"
+    SettingsMenuImageinctive="data/settings_inactive.png"
+    --data/background_h720.png
+
+    local avatarImage = gfx.loadpng(avatarImageUrl)
+    self.trophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
+    self.trophyRoomImageInactiveImage = gfx.loadpng(trophyRoomImageInactive)
+    self.SettingsMenuImageActiveImage = gfx.loadpng(SettingsMenuImageActive)
+    self.SettingsMenuImageinctiveImage = gfx.loadpng(SettingsMenuImageinctive)
+
+
+
+
+   screen:copyfrom(avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() *0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+
     self:gamebuttonactive()
     for i = 1, 3, 1 do
         self:sidebuttoninactive(i)
@@ -136,6 +155,7 @@ end
 -- @author Erik
 -------------------------------------
 function MainMenu:sidebuttonactive(x1)
+    --screen:copyfrom(self.trophyRoomImageActiveImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() *0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
     screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.5375, y = (screen:get_height() * 0.3) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = screen:get_width() * 0.425, h = screen:get_height() * 0.185 })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.5425, y = (screen:get_height() * 0.309) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = (screen:get_width() * 0.415), h = (screen:get_height() * 0.1685) })
 
@@ -148,8 +168,8 @@ end
 -- @author Erik
 -------------------------------------
 function MainMenu:sidebuttoninactive(x1)
+   -- screen:copyfrom(self.trophyRoomImageInactiveImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() *0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.5375, y = (screen:get_height() * 0.3) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = screen:get_width() * 0.425, h = screen:get_height() * 0.185 })
-
     self.sidebuttonfonts[x1]:draw_over_surface(screen, self.sidebuttons[x1])
 end
 
