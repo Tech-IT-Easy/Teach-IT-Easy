@@ -71,6 +71,8 @@ function RightMenu:show(command)
             self:ifTrueLayout()
         elseif(self.inputArea == "options") then
             self:optionsLayout()
+        elseif(self.inputArea == "confirm") then
+            self:confirmLayout()
         end
     end
     if (self.toHighlight ~= nil) then
@@ -206,6 +208,15 @@ function RightMenu:optionsLayout()
     end
 
     self.draw:addOptions(self.can_enter)
+end
+
+-------------------------------------
+-- Called to changed button layout
+-- to show confirmation window for clear all.
+-- @author Mikael Ögrem
+-------------------------------------
+function RightMenu:confirmLayout()
+    self.draw:addConfirm()
 end
 
 

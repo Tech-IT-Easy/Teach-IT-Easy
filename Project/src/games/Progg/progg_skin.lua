@@ -41,6 +41,7 @@ command_0 = sys.new_freetype({g=255, r=255, b=255, a=255}, command_height*0.4, {
 command_play_small = sys.new_freetype({g=255, r=255, b=255, a=255}, command_height*0.45, {x= first_column+command_width*0.20, y=first_row+command_height*0.30+3*(command_height+col_spacing)}, script_path..'data/GROBOLD.ttf')
 command_back = sys.new_freetype({g=255, r=255, b=255, a=255}, command_height*0.45, {x= first_column+(1.66)*command_width+row_spacing+command_width*0.20, y=first_row+command_height*0.30+3*(command_height+col_spacing)}, script_path..'data/GROBOLD.ttf')
 
+clearAll = sys.new_freetype({r=255, g=255, b=255, a=255}, command_height*0.7, {x= first_column, y=first_row+0.15*command_width}, script_path..'data/GROBOLD.ttf')
 
 nr_1 = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.8, {x= first_column+0.20*command_height, y=first_row+0.15*command_width}, script_path..'data/GROBOLD.ttf')
 nr_2 = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.8, {x= first_column+(command_width+row_spacing)+0.20*command_height, y=first_row+0.15*command_width}, script_path..'data/GROBOLD.ttf')

@@ -34,6 +34,7 @@ local rightMenu = require("games.Progg.RightMenu")
 -------------------------------------------------
 function BottomMenu:new(maxCommands,gameContext)
     local o = BottomMenu:super()
+    o.clearAllCheck = false
     o.selectingEditAction = nil
     o.isMovingAction = false
     o.posActionToMove = nil
@@ -152,6 +153,11 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
+            elseif object.clearAllCheck == true then
+                object.queue:clearAll(object.inputArea)
+                object.clearAllCheck = false
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "queue"
             elseif object.selectingActionEdit~= nil then
                 object.isMovingAction = true
                 object.posActionToMove = object.position
@@ -169,6 +175,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
+            elseif object.clearAllCheck == true then
+                object.clearAllCheck = false
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "queue"
             elseif object.selectingActionEdit ~= nil then
                 object:deleteAction(object.position, object.inputArea)
                 object:updateInputArea(object.inputArea, true)
@@ -335,10 +345,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
-            --else
---                object.context.platformEventListener:removeChainListener()
---                object.context:createNewMenu()
---                object.context.game = nil
+            else
+                object.clearAllCheck = true
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "confirm"
             end
 
         elseif event.key == Event.KEY_UP then
