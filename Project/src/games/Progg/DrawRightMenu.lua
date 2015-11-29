@@ -165,6 +165,8 @@ function DrawRightMenu:addImages()
         end
         i = i + 1
     end
+    clear_on_nr9_top:draw_over_surface(screen, "Clear")  -- Keep as long as key 9 clears the queue
+    clear_on_nr9_bot:draw_over_surface(screen, "Queue")  -- Keep as long as key 9 clears the queue
 end
 
 -------------------------------------

@@ -54,4 +54,6 @@ nr_8 = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.8, {x= first
 nr_9 = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.8, {x= first_column+2*(command_width+row_spacing)+0.20*command_height, y=first_row+2*(command_height+col_spacing)+0.15*command_width}, script_path..'data/GROBOLD.ttf')
 nr_10 = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.8, {x= first_column+0.20*command_height, y=first_row+3*(command_height+col_spacing)+0.15*command_width}, script_path..'data/GROBOLD.ttf')
 
+clear_on_nr9_top = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.25, {x= first_column+2*(command_width+row_spacing)+0.14*command_height, y=first_row+2*(command_height+col_spacing)+0.25*command_width}, script_path..'data/GROBOLD.ttf')
+clear_on_nr9_bot = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.25, {x= first_column+2*(command_width+row_spacing)+0.1*command_height, y=first_row+2*(command_height+col_spacing)+0.55*command_width}, script_path..'data/GROBOLD.ttf')
 nr_on_loop = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.5, { x = screen:get_width()*(0.90), y = screen:get_height()*0.67}, script_path..'data/GROBOLD.ttf')
