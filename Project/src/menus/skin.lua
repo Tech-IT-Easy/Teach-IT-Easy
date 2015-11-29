@@ -77,7 +77,7 @@ main_menu_sidebuttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 
 -------------------------------------
 
 trophy_room_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.28, y = main_menu_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
-trophy_room_progress = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.08, y = screen:get_height()*0.3 }, script_path .. 'data/BlackoutMidnight.ttf')
+trophy_room_progress = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.08, y = screen:get_height()*0.3 }, script_path .. 'data/GROBOLD.ttf')
 
 
 
