@@ -28,7 +28,7 @@ function Character:new(x,y)
   o.state = 0
   -- @member map:Map
   o.map = Map:new()
-  o.map:load()
+  o.map:load("2")
   o.hasWon=false
   o.step = 1
   return Character:init(o)
