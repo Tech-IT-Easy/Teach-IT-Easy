@@ -8,7 +8,7 @@
 local Object = require("toolkit.Object")
 
 local DrawRightMenu = extends(Object)
-skin = require('games/Progg/progg_skin')
+skin = require('games.Progg.progg_skin')
 
 
 -------------------------------------
