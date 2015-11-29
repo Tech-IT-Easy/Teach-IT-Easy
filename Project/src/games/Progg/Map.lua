@@ -287,7 +287,11 @@ end
 
 function Map:restartCharacter(x,y)
   local pos = self:getPosition(x,y)
-  self:square(pos, self.tiles[pos])
+  if pos == self.startPos then
+    self:setStart(self.startPos)
+  else
+    self:square(pos, self.tiles[pos])
+  end
   self:setCharacter(self.startPos, Map.UP)
 
 end

@@ -51,9 +51,9 @@ function BottomMenu:new(maxCommands,gameContext)
     -- @member drawBottomMenu:DrawBottomMenu
     o.drawBottomMenu = newDrawBottomMenu:new(maxCommands)
     -- @member character:Character
-    o.character = Character:new(1,5)
     o.queue = Queue:new(o, o.buildArea, maxCommands)
     o.rightMenu = rightMenu:new(maxCommands)
+    o.character = Character:new(1,5,o.rightMenu)
     return BottomMenu:init(o)
 end
 
@@ -120,6 +120,15 @@ end
 function BottomMenu:executeQueue()
     self.character:startExecution(self.queue)
 end
+
+function BottomMenu:returnToMenus()
+    self.character.executionTimer:stop()
+    self.character.executionTimer:stop()
+    self.context.platformEventListener:removeChainListener()
+    self.context:createNewMenu()
+    self.context.game = nil
+end
+
 
 
 --Subscribing the eventHandler to all events.
@@ -415,9 +424,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
             end
         elseif event.key == Event.KEY_BACK then --This terminates the game no matter what is happening.
-            object.context.platformEventListener:removeChainListener()
-            object.context:createNewMenu()
-            object.context.game = nil
+            object:returnToMenus()
         end
     end
 end
