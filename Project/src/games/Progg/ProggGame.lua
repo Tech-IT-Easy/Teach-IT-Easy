@@ -20,7 +20,7 @@ function ProggGame:new(context, level)
 
   -- @member BottomMenu:BottomMenu
   -- @member map:Map
-  local levelData = context.proggGameLevels[2]
+  local levelData = context.proggGameLevels[level]
   print(levelData.maxCommands.queue)
 --  o.bottomMenu = BottomMenu:new(levelData, context)
   o.bottomMenu = BottomMenu:new(levelData, context)
