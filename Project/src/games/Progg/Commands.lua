@@ -16,6 +16,7 @@ Commands.LOOP = "loop"
 Commands.IF = "if"
 Commands.P1 = "P1"
 Commands.P2 = "P2"
+Commands.FIX = "fix"
 -------------------------------------
 --Constructor to create a new command-object.
 -- Not currently used 19/11

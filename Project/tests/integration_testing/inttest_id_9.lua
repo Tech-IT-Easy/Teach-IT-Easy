@@ -13,6 +13,7 @@ local event = require ("toolkit.Event")
 
 local SUT1 = 'games.Progg.BuildArea'
 local SUT2 = 'games.Progg.DrawBuildArea'
+local SUT3 = 'games.Progg.BottomMenu'
 
 --Corresponds to function bottomMenuEventHandler:update(object,eventListener,event)
 --in BottomMenu
@@ -47,83 +48,65 @@ function teardown()
   package.preload['games.Progg.Queue'] = nil
 end
 
-
--- Test if what is built in Build Area is drawed correctly
+-------------------------------------
+-- Test if what is built in BuildArea is drawed correctly from DrawBuildArea, if it is a loop
+-- @system_under_test: BuildArea:new(maxCommands, pos), DrawBuildArea:getFileName(action)
+-- @author name: Lena
+-------------------------------------
 
 function test_loop_drawing ()
-    local build = require("games.Progg.BuildArea")
-    local drawbuild = require("games.Progg.DrawBuildArea")
-    local buildarea = build:new(10, 17)
-    local queue = {"move", "turn-right", "turn-left"}
-    buildarea:setQueue(queue, "loop")
-    buildarea:showqueue(queue)
-    drawbuild:getFileName(queue)
+    local a = require(SUT1)
+    local b = require(SUT1)
+
+    local bottomMenu = b:new(10, "context")
+
+    local buildArea = a:new(10, 1)
+    local queue = {"move", "turn-right", "turn-left" }
+
+    buildArea:setQueue(queue, "loop")
+
+    lunit.assert_equal(buildArea.drawBuildArea:getFileName(buildArea.loopQueue[1]), "data/progg_game_icons/arrow_up.png", "Did not draw the correct action from the queue")
+    lunit.assert_equal(buildArea.drawBuildArea:getFileName(buildArea.loopQueue[2]), "data/progg_game_icons/turn_right.png", "Did not draw the correct action from the queue")
+    lunit.assert_equal(buildArea.drawBuildArea:getFileName(buildArea.loopQueue[3]), "data/progg_game_icons/turn_left.png", "Did not draw the correct action from the queue")
 
 end
---Test if character moved according to the added procedure
-function test_execute_queue_3()
-    local test = require("games.Progg.BottomMenu")
-    local commands = require('games.Progg.Commands')
-    local bottommenu = test:new(16,nil)
-    local test_event
-    local bm_queue
-    local test_command
 
------------------------------------------------------------------------------------------------
-     -- Creating PROCEDURE-action
-    -----------------------------------------------------------------------------------------------
-    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "7"
-    test_event = event:new("7", "down") --simulates a key press on key 7
-    bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.actions[1]
-    --print("Added " .. bm_queue .. " in the queue")
-    test_command = commands.P1
-    lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
+-------------------------------------
+-- Test if what is built in BuildArea is drawed correctly from DrawBuildArea, if it is a procedure 1
+-- @system_under_test: BuildArea:new(maxCommands, pos), DrawBuildArea:getFileName(action)
+-- @author name: Lena
+-------------------------------------
 
-    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "1"
-    --Adding MOVE-action to procedure P1
-    test_event = event:new("1", "down") --simulates a key press on key 1
-    bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.p1Actions[1]
-    --print("Added " .. bm_queue .. " in the P1-queue")
-    test_command = commands.MOVE
-    lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
+function test_p1_drawing ()
+    local a = require(SUT1)
 
-    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "2"
-    --Adding TURN_LEFT-action to procedure P1
-    test_event = event:new("2", "down") --simulates a key press on key 2
-    bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.p1Actions[2]
-    --print("Added " .. bm_queue .. " in the P1-queue")
-    test_command = commands.TURN_LEFT
-    lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
+    local buildArea = a:new(10, 1)
+    local queue = {"move", "turn-right", "turn-left" }
 
-    --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "3"
-    --Adding TURN_RIGHT-action to procedure P1
-    test_event = event:new("3", "down") --simulates a key press on key 3
-    bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.p1Actions[3]
-    --print("Added " .. bm_queue .. " in the P1-queue")
-    test_command = commands.TURN_RIGHT
-    lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
+    buildArea:setQueue(queue, "P1")
 
-    --Exits the procedure-mode
-    test_event = event:new("0", "down") --simulates a key press on key
-    bottomMenuEventHandler:update(bottommenu,nil,test_event)
+    lunit.assert_equal(buildArea.drawBuildArea:getFileName(buildArea.p1Queue[1]), "data/progg_game_icons/arrow_up.png", "Did not draw the correct action from the queue")
+    lunit.assert_equal(buildArea.drawBuildArea:getFileName(buildArea.p1Queue[2]), "data/progg_game_icons/turn_right.png", "Did not draw the correct action from the queue")
+    lunit.assert_equal(buildArea.drawBuildArea:getFileName(buildArea.p1Queue[3]), "data/progg_game_icons/turn_left.png", "Did not draw the correct action from the queue")
 
-    --print("PROCEDURE-action created")
-    -----------------------------------------------------------------------------------------------
-     -- PROCEDURE-action created
-    -----------------------------------------------------------------------------------------------
-
-    --Test if character moved according to the added commands
-    test_event = event:new("0", "down") --simulates a key press on key 0
-    bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    local pos_X = bottommenu.character.position:getX()
-    local pos_Y=bottommenu.character.position:getY()
-    lunit.assert_equal(1,pos_X ,"Did not move to the right x-coordinate")
-    lunit.assert_equal(4,pos_Y ,"Did not move to the right x-coordinate")
 end
 
+-------------------------------------
+-- Test if what is built in BuildArea is drawed correctly from DrawBuildArea, if it is a procedure 2
+-- @system_under_test: BuildArea:new(maxCommands, pos), DrawBuildArea:getFileName(action)
+-- @author name: Lena
+-------------------------------------
 
+function test_p2_drawing ()
+    local a = require(SUT1)
 
+    local buildArea = a:new(10, 1)
+    local queue = {"move", "turn-right", "turn-left" }
+
+    buildArea:setQueue(queue, "P2")
+
+    lunit.assert_equal(buildArea.drawBuildArea:getFileName(buildArea.p2Queue[1]), "data/progg_game_icons/arrow_up.png", "Did not draw the correct action from the queue")
+    lunit.assert_equal(buildArea.drawBuildArea:getFileName(buildArea.p2Queue[2]), "data/progg_game_icons/turn_right.png", "Did not draw the correct action from the queue")
+    lunit.assert_equal(buildArea.drawBuildArea:getFileName(buildArea.p2Queue[3]), "data/progg_game_icons/turn_left.png", "Did not draw the correct action from the queue")
+
+end
