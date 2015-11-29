@@ -20,7 +20,27 @@ main = require "main" -- import the main file
 -------------------------------------
 function test_file()
     onStart()
-            local cnt = 250
+--    onKey("ok","down")
+--    onKey("ok","down")
+--    onKey("ok","down")
+--    -- for key,value in pairs(platformContext.game.bottomMenu.character) do print(key,value) end
+--
+--    onKey("1","down")
+--    onKey("1","down")
+--    onKey("1","down")
+--    onKey("1","down")
+--    onKey("3","down")
+--    onKey("1","down")
+--    onKey("1","down")
+--    onKey("3","down")
+--    onKey("1","down")
+--    onKey("2","down")
+--    onKey("1","down")
+--    onKey("3","down")
+--    onKey("1","down")
+--    onKey("0","down")
+
+    local cnt = 250
     onKey('ok','down')
     print('System testing progress ( ' .. (tonumber(string.format('%.1f',1/cnt*100)) .. '%' .. ' )'))
     onKey('back','down')
@@ -530,4 +550,5 @@ function test_file()
     --Must run one more time, to get path coverage in end of execution
     start()
     lunit.assert_true(platformContext.game.bottomMenu.character.hasWon)
+
 end
