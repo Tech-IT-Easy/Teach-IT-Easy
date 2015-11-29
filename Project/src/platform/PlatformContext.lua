@@ -57,6 +57,9 @@ function PlatformContext:new()
   -- @member gameProgress:GameProgress
   o.gameprogress = GameProgress:new()
 
+
+  math.randomseed(os.time())
+
   --------------
   -- code
   --------------

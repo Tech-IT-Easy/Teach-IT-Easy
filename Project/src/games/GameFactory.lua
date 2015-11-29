@@ -20,7 +20,7 @@ function GameFactory:new()
   o.game = nil
   o.gameMatrix = {}
   o.gameMatrix[1] = {"Programming", "games.Progg.ProggGame" }
-  o.gameMatrix[2] = {"Other game", nil }
+  o.gameMatrix[2] = {"Other game", "games.Catch.Catch" }
   o.gameMatrix[3] = {"Test game", nil }
   o.gameMatrix[4] = {"Pony game", nil }
   --o.gameMatrix[4] = {"Mario", "games.mario.Mario" }
