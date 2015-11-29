@@ -123,8 +123,10 @@ function BottomMenu:executeQueue()
 end
 
 function BottomMenu:returnToMenus()
-    self.character.executionTimer:stop()
-    self.character.executionTimer:stop()
+    if self.character.executionTimer ~= nil then
+        self.character.executionTimer:stop()
+        self.character.executionTimer = nil
+    end
     self.context.platformEventListener:removeChainListener()
     self.context:createNewMenu()
     self.context.game = nil
