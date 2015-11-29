@@ -54,6 +54,8 @@ function PlatformContext:new()
   -- Attach menu object to listener
   o.platformEventListener:attach(o.platformMenu)
 
+  -- @member profile:Profile
+  o.profile = nil
   -- @member gameProgress:GameProgress
   o.gameprogress = GameProgress:new()
 

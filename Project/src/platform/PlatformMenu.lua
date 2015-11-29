@@ -21,6 +21,7 @@ skin = require('menus.skin')
 local background = gfx.loadpng("data/background_h720.png")
 local ChooseAvatar = require('menus.ChooseAvatar')
 local TrophyRoom = require('menus.TrophyRoom')
+local Instructions = require('menus.Instructions')
 
 -----------------------------------------------------------
 -- Constructor method
@@ -66,7 +67,8 @@ function PlatformMenu:loadviews()
         create = CreateProfile,
         games = Games,
         chooseavatar = ChooseAvatar,
-        trophy = TrophyRoom
+        trophy = TrophyRoom,
+        instructions = Instructions
     }
     collectgarbage()
 end
