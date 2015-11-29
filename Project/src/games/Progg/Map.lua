@@ -53,7 +53,7 @@ require('games.Progg.levels.level'..'1')
     self.background:destroy()
 
     self.mapdata = {}
-
+--[[
     for i = 1, #levelMapData do
     local c = levelMapData:sub(i,i)
         table.insert(self.mapdata, c)
@@ -66,7 +66,7 @@ require('games.Progg.levels.level'..'1')
     --@member tiles:Tile
     table.insert(self.tiles, Tile:new(self.mapdata[i]))
   end
-
+]]
     -- Variables of level, should be read from file?
     self.rows = levelRows
     self.columns = levelColumns
@@ -83,7 +83,7 @@ require('games.Progg.levels.level'..'1')
     self.boxpadding = 10
     self.borderthickness = self.boxpadding / 2
 
---[[
+
 self.mapdata =
     {
         "9", "a", "c", "f", "f", "f", "f", "f",
@@ -99,7 +99,7 @@ self.mapdata =
     --@member tiles:Tile
     table.insert(self.tiles, Tile:new(self.mapdata[i]))
   end
-]]
+
   --self.goalPos = 20
   --self.startPos = 33
   self.charPos = self.startPos
