@@ -22,7 +22,7 @@ local executionProgress = 0
 -- @param y:integer the initial y-position of the character
 -- @author Ludwig Wikblad; Mario Pizcueta
 ----
-function Character:new(x,y)
+function Character:new(x,y, rightMenu)
   local o = Character:super()
   o.position = {x = x, y = y}
   o.startPosition = {x = x, y = y}
@@ -32,6 +32,7 @@ function Character:new(x,y)
   o.map:load()
   o.hasWon=false
   o.step = 1
+  o.rightMenu = rightMenu
   return Character:init(o)
 end
 
@@ -150,7 +151,7 @@ function Character:startExecution(inqueue)
         end
         collectgarbage()
         --Check if the goal has been reached
-        if(self.map:isInGoal(self.position.x,self.position.y))then
+        if(self.map:isInGoal(self.position.x,self.position.y) and #self.map.inGameObjectives==0)then
           self.hasWon = true
         else
           self:reset()
@@ -195,7 +196,7 @@ function Character:execute(command)
       end
     else --If encounter collision-> restart
     self.executionTimer:stop()
-    self.map:restartCharacter(self.position.x,self.position.y)
+    self:reset()
     self.position = self.startPosition
     gfx.update()
     end
@@ -211,6 +212,11 @@ function Character:execute(command)
     --moving right
     self.state = (self.state +1)%4
     self.map:setCharacter(self.map:getPosition(self.position.x, self.position.y), self.state)
+  end
+  
+  if(command == Commands.FIX) then
+    --fixing the box
+    self.map:activateBox(self.position.x, self.position.y)
   end
 end
 
@@ -244,6 +250,7 @@ function Character:reset()
   self.onIfTrue = false
   self.onIfFalse = false
   self.j = 0
+  self.rightMenu:stop()
 end
 
 return Character
