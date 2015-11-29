@@ -22,7 +22,7 @@ local executionProgress = 0
 -- @param y:integer the initial y-position of the character
 -- @author Ludwig Wikblad; Mario Pizcueta
 ----
-function Character:new(x,y)
+function Character:new(x,y, rightMenu)
   local o = Character:super()
   o.position = {x = x, y = y}
   o.startPosition = {x = x, y = y}
@@ -32,6 +32,7 @@ function Character:new(x,y)
   o.map:load()
   o.hasWon=false
   o.step = 1
+  o.rightMenu = rightMenu
   return Character:init(o)
 end
 
@@ -195,7 +196,7 @@ function Character:execute(command)
       end
     else --If encounter collision-> restart
     self.executionTimer:stop()
-    self.map:restartCharacter(self.position.x,self.position.y)
+    self:reset()
     self.position = self.startPosition
     gfx.update()
     end
@@ -244,6 +245,7 @@ function Character:reset()
   self.onIfTrue = false
   self.onIfFalse = false
   self.j = 0
+  self.rightMenu:stop()
 end
 
 return Character

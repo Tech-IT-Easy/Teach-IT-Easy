@@ -52,9 +52,9 @@ function BottomMenu:new(maxCommands,gameContext)
     -- @member drawBottomMenu:DrawBottomMenu
     o.drawBottomMenu = newDrawBottomMenu:new(maxCommands)
     -- @member character:Character
-    o.character = Character:new(1,5)
     o.queue = Queue:new(o, o.buildArea, maxCommands)
     o.rightMenu = rightMenu:new(maxCommands)
+    o.character = Character:new(1,5,o.rightMenu)
     return BottomMenu:init(o)
 end
 
