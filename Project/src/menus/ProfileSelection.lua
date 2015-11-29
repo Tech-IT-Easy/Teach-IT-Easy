@@ -119,7 +119,7 @@ function ProfileSelection:active(x1)
     screen:clear({ g = 131, r = 0, b = 143 }, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1), y = prof_sel_itemy, w = prof_sel_itemwidth, h = prof_sel_itemheight })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1) + prof_sel_itemwidth * 0.02, y = prof_sel_activey, w = prof_sel_activewidth, h = prof_sel_activeheight })
     if x1 < (#images + 1) then
-      screen:copyfrom(images[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = prof_sel_itemy + screen:get_height() * 0.045, w = image1:get_width() * 0.6, h = image1:get_height() * 0.6 }, true)
+      screen:copyfrom(images[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1) + screen:get_width() * 0.01, y = prof_sel_itemy + screen:get_height() * 0.02, w = image1:get_width() * 0.6, h = image1:get_height() * 0.6 }, true)
     end
   else
     screen:clear({ g = 131, r = 0, b = 143 }, { x = 0, y = prof_sel_addprofiley, w = screen:get_width(), h = prof_sel_addprofileheight })
@@ -138,7 +138,7 @@ function ProfileSelection:inactive(x1)
   if x1 < 5 then
     screen:clear({ g = 228, r = 187, b = 235 }, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1), y = prof_sel_itemy, w = prof_sel_itemwidth, h = prof_sel_itemheight })
     if x1 < (#images + 1) then
-      screen:copyfrom(images[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = prof_sel_itemy + screen:get_height() * 0.045, w = image1:get_width() * 0.6, h = image1:get_height() * 0.6 }, true)
+      screen:copyfrom(images[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1) + screen:get_width() * 0.01, y = prof_sel_itemy + screen:get_height() * 0.02, w = image1:get_width() * 0.6, h = image1:get_height() * 0.6 }, true)
     end
   else
     screen:clear({ g = 228, r = 187, b = 235 }, { x = 0, y = prof_sel_addprofiley, w = screen:get_width(), h = prof_sel_addprofileheight })

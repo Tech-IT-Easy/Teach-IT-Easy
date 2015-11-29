@@ -46,8 +46,8 @@ function TrophyRoom:handleinput(event)
         end
         ]]
     if event.key == Event.KEY_BACK then
-            return { "main", self.usernamestring}
-        end
+        return { "main", self.usernamestring }
+    end
     return { " " }
 end
 
@@ -95,7 +95,16 @@ end
 function TrophyRoom:renderui()
 
     main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
-    trophy_room_pagename:draw_over_surface(screen, "TROPHY ROOM")
+    trophy_room_pagename:draw_over_surface(screen, "Programming game trophies")
+
+    games_username:draw_over_surface(screen, self.usernamestring)
+    screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+
+    screen:clear({ g = 0, r = 0, b = 0 }, { x = screen:get_width() * 0.8, y = screen:get_height() * 0.08, w = screen:get_width() * 0.05, h = screen:get_height() * 0.04 })
+    screen:clear({ g = 230, r = 230, b = 230 }, { x = screen:get_width() * 0.803, y = screen:get_height() * 0.0845, w = screen:get_width() * 0.0455, h = screen:get_height() * 0.0308 })
+    games_backbutton:draw_over_surface(screen, "BACK")
+    games_backtext:draw_over_surface(screen, "Go back")
+
     --[[
 
     main_menu_username:draw_over_surface(screen, self.usernamestring)
