@@ -15,12 +15,15 @@ local ProggGame = extends(Game)
 -- @param context:PlatformContext - A pointer to the context that the game exists in
 -- @return a new game:ProggGame instance
 -----------------------------------------------------------
-function ProggGame:new(context)
+function ProggGame:new(context, level)
   local o = ProggGame:super()
 
   -- @member BottomMenu:BottomMenu
   -- @member map:Map
-  o.bottomMenu = BottomMenu:new({["queue"] = 13, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 },context)
+  local levelData = context.proggGameLevels[2]
+  print(levelData.maxCommands.queue)
+--  o.bottomMenu = BottomMenu:new(levelData, context)
+  o.bottomMenu = BottomMenu:new(levelData, context)
   o.rightMenu = rightMenu:new()
   --o.map = map:new()
   --------------------------------

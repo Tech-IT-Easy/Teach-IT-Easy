@@ -22,14 +22,14 @@ local executionProgress = 0
 -- @param y:integer the initial y-position of the character
 -- @author Ludwig Wikblad; Mario Pizcueta
 ----
-function Character:new(x,y, rightMenu)
+function Character:new(x,y, rightMenu, levelData)
   local o = Character:super()
   o.position = {x = x, y = y}
   o.startPosition = {x = x, y = y}
   o.state = 0
   -- @member map:Map
   o.map = Map:new()
-  o.map:load()
+  o.map:load(levelData)
   o.hasWon=false
   o.step = 1
   o.rightMenu = rightMenu
