@@ -416,7 +416,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.position = 1
                 object.buildArea:setPosition(object.position)
                 object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
-               -- object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))!!
+                object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "queue"
                 object.inputArea = "queue"
@@ -438,6 +438,13 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                     object.rightMenu.inputArea = "build"
                 end
             else
+                local count = 0
+                for i = queuePos, 0, -1 do
+                    if object.queue.actions[i] == Commands.LOOP then
+                        count = count + 1
+                    end
+                end
+                object.queue.loopPointer = count
                 object.rightMenu.selectedCommand = object:getQueue(object.inputArea)[queuePos]
                 print(object:getQueue(object.inputArea)[queuePos])
 
@@ -609,7 +616,7 @@ function BottomMenu:getQueue(inputArea)
     if inputArea == "queue" then
         return self.queue.actions
     elseif inputArea == "loop" then
-        return self.queue.loopActions
+        return self.queue.loopActions[self.queue.loopPointer]
     elseif inputArea == "P1" then
         return self.queue.p1Actions
     elseif inputArea == "P2" then
