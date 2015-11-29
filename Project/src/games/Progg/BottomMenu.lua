@@ -121,6 +121,12 @@ function BottomMenu:executeQueue()
     self.character:startExecution(self.queue)
 end
 
+--------------------------------------
+-- Quit the game and return to the menu. Right now
+-- it goes all the way back to profile selection.
+-- It should just go back to the games-menu.
+-- @author Ludwig Wikblad
+---------------------------------------
 function BottomMenu:returnToMenus()
     self.character.executionTimer:stop()
     self.character.executionTimer:stop()
