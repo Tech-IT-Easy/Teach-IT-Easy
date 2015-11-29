@@ -787,6 +787,7 @@ function test_moveCharacter_one()
     package.loaded[SUT].setStart = setStart
 
     local a = ps:new()
+    a.inGameObjectives = {}
     local x = 2
     local y = 2
     local direction = 0
@@ -824,6 +825,7 @@ function test_moveCharacter_two()
 
 
     local a = ps:new()
+    a.inGameObjectives = {}
     local x = 2
     local y = 2
     local direction = 0
@@ -866,6 +868,7 @@ function test_moveCharacter_three()
     package.loaded[SUT].setStart = setStart
 
     local a = ps:new()
+    a.inGameObjectives = {}
     local x = 2
     local y = 2
     local direction = 3
@@ -906,6 +909,7 @@ function test_moveCharacter_four()
     package.loaded[SUT].setStart = setStart
 
     local a = ps:new()
+    a.inGameObjectives = {}
     local x = 2
     local y = 2
     local direction = 1
@@ -951,6 +955,7 @@ function test_moveCharacter_five()
     a.columns = 8
     a.mapdata = {}
     a.tiles={0,0,0,0,0,0,0 }
+    a.inGameObjectives = {}
 
 
     setStart(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -979,6 +984,7 @@ function test_canMove_one()
     package.loaded[SUT].getPosition = getPosition
 
     local a = ps:new()
+    a:load()
     local tile = ps2:new("1")
 
 
@@ -1007,6 +1013,7 @@ function test_canMove_two()
     package.loaded[SUT].getPosition = getPosition
 
     local a = ps:new()
+    a:load()
     local tile = ps2:new("8")
 
 
@@ -1036,6 +1043,7 @@ function test_canMove_three()
     package.loaded[SUT].getPosition = getPosition
 
     local a = ps:new()
+    a:load()
     local tile = ps2:new("3")
 
 
@@ -1063,6 +1071,7 @@ function test_canMove_four()
     package.loaded[SUT].getPosition = getPosition
 
     local a = ps:new()
+    a:load()
     local tile = ps2:new("4")
 
 
@@ -1091,6 +1100,7 @@ function test_canMove_five()
     package.loaded[SUT].getPosition = getPosition
 
     local a = ps:new()
+    a:load()
     local tile = ps2:new("2")
 
 
