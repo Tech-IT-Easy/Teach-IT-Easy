@@ -219,11 +219,18 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
+            elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" or object.selectingActionEdit == "if"  then
+                object:enterMethod()
+                object.selectingActionEdit = nil
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
-                print("Not allowed while selecting edit or moving action")
+                print("Not allowed while moving an action")
+                print("Cannot enter command that is not a loop or procedure")
+                object.selectingActionEdit = nil
             else
-                --queue:push(Commands.TURN_RIGHT, inputArea)
-                --object.rightMenu.toHighlight = (Commands.ACTION)
+                object.queue:push(Commands.FIX, object.inputArea)
+                --object.rightMenu.toHighlight = (Commands.FIX)
             end
 
         elseif event.key == Event.KEY_FIVE then

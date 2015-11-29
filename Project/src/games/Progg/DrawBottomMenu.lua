@@ -217,6 +217,10 @@ function DrawBottomMenu:getFileName(action)
 
     elseif action == "P2" then
         return "data/progg_game_icons/P2.png"
+        
+    elseif action == "fix" then
+        return "data/progg_game_icons/action.png"
+        
     end
 end
 
