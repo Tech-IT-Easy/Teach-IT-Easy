@@ -38,9 +38,9 @@ end
 -- @param input The mapdata. Not used 23/11
 -- @author Erik
 -------------------------------------
-function Map:load()
+function Map:load(levelData)
 -- implement parameter with mapdata
-require('games.Progg.levels.level'..'1')
+
   self.background = gfx.loadpng('data/game_background_small.png')
 
     screen:copyfrom(self.background, nil, {
@@ -51,29 +51,14 @@ require('games.Progg.levels.level'..'1')
     }, true)
     self.background:destroy()
 
-    self.mapdata = {}
---[[
-    for i = 1, #levelMapData do
-    local c = levelMapData:sub(i,i)
-        table.insert(self.mapdata, c)
-    end
-
-
-  self.tiles = {}
-
-  for i=1, #self.mapdata do
-    --@member tiles:Tile
-    table.insert(self.tiles, Tile:new(self.mapdata[i]))
-  end
-]]
     -- Variables of level, should be read from file?
-    self.rows = levelRows
-    self.columns = levelColumns
-    self.goalPos = levelGoalPosition
-    self.startPos = levelStartPosition
+    self.rows = 5
+    self.columns = 8
+    self.goalPos = levelData.levelGoalPosition
+    self.startPos = levelData.levelStartPosition
     self.charPos = self.startPos
     --Fro creating the inGame objectives
-    self.objectives = { 17, 1 }
+    self.objectives = levelData.objectives
     self.inGameObjectives = {}
     for i=1, #self.objectives do
     self.inGameObjectives[i] = self.objectives[i]
@@ -88,14 +73,21 @@ require('games.Progg.levels.level'..'1')
     self.borderthickness = self.boxpadding / 2
 
 
-self.mapdata =
-    {
-        "9", "a", "c", "f", "f", "f", "f", "f",
-        "5", "f", "3", "c", "f", "f", "f", "f",
-        "5", "f", "f", "7", "f", "f", "f", "f",
-        "5", "f", "f", "f", "f", "f", "f", "f",
-        "7", "f", "f", "f", "f", "f", "f", "f",
-    }
+    self.mapdata = {}
+--    {
+--        "9", "a", "c", "f", "f", "f", "f", "f",
+--        "5", "f", "3", "c", "f", "f", "f", "f",
+--        "5", "f", "f", "7", "f", "f", "f", "f",
+--        "5", "f", "f", "f", "f", "f", "f", "f",
+--        "7", "f", "f", "f", "f", "f", "f", "f",
+--    }
+    local levelMapData = levelData.mapData
+
+    for i = 1, #levelMapData do
+        local c = levelMapData:sub(i,i)
+        table.insert(self.mapdata, c)
+    end
+
 
   self.tiles = {}
 
@@ -104,8 +96,9 @@ self.mapdata =
     table.insert(self.tiles, Tile:new(self.mapdata[i]))
   end
 
-  --self.goalPos = 20
-  --self.startPos = 33
+
+  self.goalPos = 20
+  self.startPos = 33
   self.charPos = self.startPos
 
   --Loop builds map

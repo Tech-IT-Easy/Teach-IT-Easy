@@ -20,7 +20,6 @@ local Event = require('toolkit.Event')
 function Instructions:new()
     self.page = 1
     self.maxPage = 6
-    print("hejdå")
     return self
 end
 
@@ -75,10 +74,7 @@ function Instructions:renderui()
     main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
     trophy_room_pagename:draw_over_surface(screen, "INSTRUCTIONS")
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.19, w = screen:get_width() * 0.18, h = screen:get_height() * 0.08})
-    page_txt:draw_over_surface(screen, "Page")
-    page_nr:draw_over_surface(screen, self.page)
-    page_of:draw_over_surface(screen, "of")
-    page_max:draw_over_surface(screen, self.maxPage)
+    page_txt:draw_over_surface(screen, "Page "..self.page.." of "..self.maxPage)
     if self.page == 1 then
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
         row_1:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")

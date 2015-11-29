@@ -32,7 +32,7 @@ local rightMenu = require("games.Progg.RightMenu")
 -- @return bottomMenu:BottomMenu a new instance of BottomMenu
 -- @author Mikael Ögren; Tobias Lundell;
 -------------------------------------------------
-function BottomMenu:new(maxCommands,gameContext)
+function BottomMenu:new(levelData,gameContext)
     local o = BottomMenu:super()
     o.clearAllCheck = false
     o.selectingEditAction = nil
@@ -41,20 +41,20 @@ function BottomMenu:new(maxCommands,gameContext)
     o.selectingLoopCounter = true
     o.inputArea = "queue"
     o.prevInputArea = "queue"
-    o.maxCommands = maxCommands
+    o.maxCommands = levelData.maxCommands
     o.position = 1     --Starting position for highlight
     o.rowLength = 8
     o.prevPosition = nil
     -- @member context:PlatformContext
     o.context = gameContext
     -- @member buildArea:BuildArea
-    o.buildArea = buildArea:new(maxCommands, o.position)
+    o.buildArea = buildArea:new(o.maxCommands, o.position)
     -- @member drawBottomMenu:DrawBottomMenu
-    o.drawBottomMenu = newDrawBottomMenu:new(maxCommands)
+    o.drawBottomMenu = newDrawBottomMenu:new(o.maxCommands)
     -- @member character:Character
-    o.queue = Queue:new(o, o.buildArea, maxCommands)
-    o.rightMenu = rightMenu:new(maxCommands)
-    o.character = Character:new(1,5,o.rightMenu)
+    o.queue = Queue:new(o, o.buildArea, o.maxCommands)
+    o.rightMenu = rightMenu:new(o.maxCommands)
+    o.character = Character:new(1,5,o.rightMenu, levelData)
     return BottomMenu:init(o)
 end
 
