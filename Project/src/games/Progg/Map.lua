@@ -41,7 +41,7 @@ end
 -------------------------------------
 function Map:load()
 -- implement parameter with mapdata
-local MapData = require('games.Progg.levels.level'..'1')
+require('games.Progg.levels.level'..'1')
   self.background = gfx.loadpng('data/game_background_small.png')
 
     screen:copyfrom(self.background, nil, {
@@ -66,6 +66,7 @@ local MapData = require('games.Progg.levels.level'..'1')
     --@member tiles:Tile
     table.insert(self.tiles, Tile:new(self.mapdata[i]))
   end
+
     -- Variables of level, should be read from file?
     self.rows = levelRows
     self.columns = levelColumns
@@ -99,8 +100,8 @@ self.mapdata =
     table.insert(self.tiles, Tile:new(self.mapdata[i]))
   end
 ]]
-  self.goalPos = 20
-  self.startPos = 33
+  --self.goalPos = 20
+  --self.startPos = 33
   self.charPos = self.startPos
 
   --Loop builds map
