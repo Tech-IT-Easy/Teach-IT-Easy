@@ -9,7 +9,7 @@
 
 lunit = require "lunit"
 module( "test_DrawRightMenu", package.seeall, lunit.testcase )
-my_file = require "games.Progg.DrawRightMenu"
+--my_file = require "games.Progg.DrawRightMenu"
 
 local SUT = 'games.Progg.DrawRightMenu'
 

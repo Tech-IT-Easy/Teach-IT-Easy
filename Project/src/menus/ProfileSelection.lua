@@ -10,9 +10,9 @@ local Event = require('toolkit.Event')
 
 -- profiles
 profiles = {}
-table.insert(profiles, Profile:new("Knatte",1))
-table.insert(profiles, Profile:new("Fnatte",2))
-table.insert(profiles, Profile:new("Tjatte",3))
+table.insert(profiles, Profile:new("Knatte", 'data/avatar/cute_robot/DOWN.png'))
+table.insert(profiles, Profile:new("Fnatte", 'data/avatar/insect_robot/DOWN.png'))
+table.insert(profiles, Profile:new("Tjatte", 'data/avatar/cute_robot/UP.png'))
 
 -- images
 local image1 = gfx.loadpng(profiles[1].avatar)
@@ -64,6 +64,7 @@ function ProfileSelection:handleinput(event)
     self.pos = 1
 
   elseif event.key == Event.KEY_OK and self.pos < 5 then
+      PlatformContext.profile = profiles[self.pos]
     return { "main", profiles[self.pos].name}
 
 

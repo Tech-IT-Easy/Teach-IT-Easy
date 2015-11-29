@@ -11,7 +11,6 @@ local Tile = require('games.Progg.Tile')
 local Map = extends(Object)
 
 
-
 Map.UP = 0
 Map.RIGHT = 1
 Map.DOWN = 2
@@ -73,7 +72,12 @@ require('games.Progg.levels.level'..'1')
     self.goalPos = levelGoalPosition
     self.startPos = levelStartPosition
     self.charPos = self.startPos
-
+    --Fro creating the inGame objectives
+    self.objectives = { 17, 1 }
+    self.inGameObjectives = {}
+    for i=1, #self.objectives do
+    self.inGameObjectives[i] = self.objectives[i]
+    end
     -- Calculates variables of map
     self.boxheight = (screen:get_height() * 0.65) / (self.rows + 1)
     local padding = (screen:get_width() * 0.75) - (self.boxheight * self.columns)
@@ -111,13 +115,16 @@ self.mapdata =
   self:setGoal(self.goalPos)
   self:setStart(self.startPos)
   self:setCharacter(self.charPos, Map.UP)
-
-
-    --[[
-     for i = 1, #self.objectives, 1 do
+  
+ --Restart the list of objectives
+  for i=1, #self.objectives do
+    self.inGameObjectives[i] = self.objectives[i]
+  end
+  --And redraw all the objectives
+  for i = 1, #self.objectives, 1 do
         self:printObjective(self.objectives[i])
-    end
-    ]]
+  end
+
 end
 
 
@@ -130,10 +137,10 @@ end
 -------------------------------------
 function Map:activateBox(x, y)
     local pos = self:getPosition(x, y)
-    for _, v in pairs(self.inGameObjectives) do
+    for k, v in pairs(self.inGameObjectives) do
         if v == pos then
             self:printObjectiveAsDone(pos)
-            self.inGameObjectives.remove(v)
+            table.remove(self.inGameObjectives,k)
             break
         end
     end
@@ -242,13 +249,15 @@ end
 function Map:moveCharacter(x, y, direction)
     local pos = self:getPosition(x, y)
     local isObjective = false
-    --[[for _, v in pairs(self.inGameObjectives) do
+    
+    --Check if its in a objective
+    for _, v in pairs(self.inGameObjectives) do
         if v == pos then
             isObjective = true
             break
         end
     end
-]]
+    
     if pos == self.startPos then
         self:setStart(pos)
     elseif isObjective then
@@ -301,8 +310,22 @@ end
 
 function Map:restartCharacter(x,y)
   local pos = self:getPosition(x,y)
-  self:square(pos, self.tiles[pos])
+  if pos == self.startPos then
+    self:setStart(self.startPos)
+  else
+    self:square(pos, self.tiles[pos])
+  end
   self:setCharacter(self.startPos, Map.UP)
+  
+  --Restart the list of objectives
+  for i=1, #self.objectives do
+    self.inGameObjectives[i] = self.objectives[i]
+  end
+  --And redraw all the objectives
+  for i = 1, #self.objectives, 1 do
+        self:printObjective(self.objectives[i])
+  end
+  
 end
 
 -------------------------------------
@@ -311,15 +334,15 @@ end
 -- @author Erik
 -------------------------------------
 function Map:setCharacter(i, direction)
-    self.image1 = gfx.loadpng('data/avatar_up.png')
+    self.image1 = gfx.loadpng('data/avatar/cute_robot/UP.png')
     if direction == Map.UP then
-        self.image1 = gfx.loadpng('data/avatar_up.png')
+        self.image1 = gfx.loadpng('data/avatar/cute_robot/UP.png')
     elseif direction == Map.DOWN then
-        self.image1 = gfx.loadpng('data/avatar_down.png')
+        self.image1 = gfx.loadpng('data/avatar/cute_robot/DOWN.png')
     elseif direction == Map.RIGHT then
-        self.image1 = gfx.loadpng('data/avatar_right.png')
+        self.image1 = gfx.loadpng('data/avatar/cute_robot/RIGHT.png')
     elseif direction == Map.LEFT then
-        self.image1 = gfx.loadpng('data/avatar_left.png')
+        self.image1 = gfx.loadpng('data/avatar/cute_robot/LEFT.png')
     end
 
     screen:copyfrom(self.image1, nil, {

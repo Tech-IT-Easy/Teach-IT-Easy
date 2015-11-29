@@ -38,6 +38,9 @@ function MainMenu:handleinput(event)
         return { "games", self.usernamestring }
     elseif event.key == Event.KEY_OK and self.pos == 1 then
         return { "trophy", self.usernamestring }
+    elseif event.key == Event.KEY_OK and self.pos == 2 then
+        return { "instructions", self.usernamestring }
+
     elseif event.key == Event.KEY_BACK then
         return { "profilesel" }
     end
@@ -71,7 +74,7 @@ end
 function MainMenu:loadview(input)
     self.pos = 0
     self.lastpos = self.pos
-    self.sidebuttons = { "Trophy room", "Wardrobe", "Settings" }
+    self.sidebuttons = { "Trophy room", "Instructions", "Settings" }
     self.usernamestring = input
     --self:printbackground()
     self:renderui()
