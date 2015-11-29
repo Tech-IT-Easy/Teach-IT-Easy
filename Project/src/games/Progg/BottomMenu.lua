@@ -213,7 +213,11 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
-            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
+            elseif object.selectingActionEdit ~= nil then
+                object.selectingActionEdit = nil
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "queue"
+            elseif object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
                 --queue:push(Commands.TURN_RIGHT, inputArea)
