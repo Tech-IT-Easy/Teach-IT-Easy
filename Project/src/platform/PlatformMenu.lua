@@ -22,6 +22,7 @@ local background = gfx.loadpng("data/background_h720.png")
 local ChooseAvatar = require('menus.ChooseAvatar')
 local TrophyRoom = require('menus.TrophyRoom')
 local Instructions = require('menus.Instructions')
+local SelectLevel = require('menus.SelectLevel')
 
 -----------------------------------------------------------
 -- Constructor method
@@ -68,7 +69,8 @@ function PlatformMenu:loadviews()
         games = Games,
         chooseavatar = ChooseAvatar,
         trophy = TrophyRoom,
-        instructions = Instructions
+        instructions = Instructions,
+        selectlevel = SelectLevel
     }
     collectgarbage()
 end

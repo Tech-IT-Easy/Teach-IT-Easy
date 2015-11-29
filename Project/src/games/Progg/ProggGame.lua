@@ -22,6 +22,7 @@ function ProggGame:new(context)
   -- @member map:Map
   o.bottomMenu = BottomMenu:new({["queue"] = 13, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 },context)
   o.rightMenu = rightMenu:new()
+
   --o.map = map:new()
   --------------------------------
   -- super characters
@@ -31,6 +32,7 @@ function ProggGame:new(context)
   --self.gameEventListener:attach(o.inputHandler)
   self.gameEventListener:attach(o.rightMenu)
   self.gameEventListener:attach(o.bottomMenu)
+  self.gameEventListener:attach(o.selectLevel)
   
   return ProggGame:init(o)
 end
@@ -46,6 +48,7 @@ function ProggGame:load()
   -- UI:load()
   -----------------------
   --self.map:load()
+
   self.bottomMenu:load()
 end
 
