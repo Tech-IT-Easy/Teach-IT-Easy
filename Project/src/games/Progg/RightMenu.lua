@@ -22,12 +22,12 @@ local drawRightMenu = require('games.Progg.DrawRightMenu')
 -- @return rightMenu:RightMenu The created object.
 -- @author Vilhelm
 -------------------------------------
-function RightMenu:new()
+function RightMenu:new(maxCommands)
     local o = RightMenu:super()
     --Draw right-hand side
     screen:clear({ r = 92, g = 128, b = 149 }, { x = screen:get_width() * 0.75, y = 0, w = screen:get_width() * 0.25, h = screen:get_height()*0.65 })
     -- @member drawRightMenu:DrawRightMenu
-    o.draw = drawRightMenu:new()
+    o.draw = drawRightMenu:new(maxCommands)
     o.currentHighlight = nil
     o.inputAreaChanged = false
     o.inputArea = "queue"
@@ -67,8 +67,12 @@ function RightMenu:show(command)
             self:loopLayout()
         elseif(self.inputArea == "build") then
             self:buildLayout()
+        elseif(self.inputArea == "if-wall") then
+            self:ifTrueLayout()
         elseif(self.inputArea == "options") then
             self:optionsLayout()
+        elseif(self.inputArea == "confirm") then
+            self:confirmLayout()
         end
     end
     if (self.toHighlight ~= nil) then
@@ -184,6 +188,14 @@ function RightMenu:buildLayout()
     self.draw:addBack()
 end
 
+function RightMenu:ifTrueLayout()
+    self.draw:drawRow(1)
+    self.draw:drawRow(2)
+    self.draw:drawRow(3)
+    self.draw:addNumbers()
+    self.draw:addImages()
+    self.draw:addIfFalse()
+end
 -------------------------------------
 -- Called to replace buttons for
 -- options when selecting an action
@@ -196,6 +208,15 @@ function RightMenu:optionsLayout()
     end
 
     self.draw:addOptions(self.can_enter)
+end
+
+-------------------------------------
+-- Called to changed button layout
+-- to show confirmation window for clear all.
+-- @author Mikael Ögrem
+-------------------------------------
+function RightMenu:confirmLayout()
+    self.draw:addConfirm()
 end
 
 

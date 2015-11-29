@@ -9,7 +9,7 @@ local Object = require("toolkit.Object")
 
 local DrawRightMenu = extends(Object)
 skin = require('games/Progg/progg_skin')
-commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
+
 
 -------------------------------------
 -- Creates the draw functions for
@@ -17,8 +17,10 @@ commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
 -- @return self. The created object.
 -- @author Vilhelm
 -------------------------------------
-function DrawRightMenu:new()
+function DrawRightMenu:new(maxCommands)
    local o = DrawRightMenu:super()
+   o.maxCommands = maxCommands
+   o.commands = {"move","turn-left","turn-right","action","if-wall","loop","P1","P2"}
    return DrawRightMenu:init(o)
 end
 
@@ -156,10 +158,15 @@ end
 -------------------------------------
 function DrawRightMenu:addImages()
     local i = 1
-    while commands[i] do
-        self:addImage(commands[i])
+    while self.commands[i] do
+        if self.maxCommands[self.commands[i]]== nil or self.maxCommands[self.commands[i]] > 0 then
+            self:addImage(self.commands[i])
+
+        end
         i = i + 1
     end
+    clear_on_nr9_top:draw_over_surface(screen, "Clear")  -- Keep as long as key 9 clears the queue
+    clear_on_nr9_bot:draw_over_surface(screen, "Queue")  -- Keep as long as key 9 clears the queue
 end
 
 -------------------------------------
@@ -255,6 +262,31 @@ function DrawRightMenu:addBack()
 end
 
 -------------------------------------
+-- Adds if false text to the
+-- two-buttons row in the 9-command
+-- layout.
+-- @author Tobias Lundell
+-------------------------------------
+function DrawRightMenu:addIfFalse()
+    self:drawFullRow(4,78,113,215)
+    command_play:draw_over_surface(screen, "0 If false")
+end
+
+function DrawRightMenu:addConfirm()
+    self:clearRow(1)
+    self:clearRow(2)
+    self:clearRow(3)
+    self:clearRow(4)
+    self:drawFullRow(2,78,113,215)
+    self:drawFullRow(3,78,113,215)
+    command_4:draw_over_surface(screen, "1")
+    command_7:draw_over_surface(screen, "2")
+    clearAll:draw_over_surface(screen, "Clear All?")
+    nr_4:draw_over_surface(screen, "Confirm")
+    nr_7:draw_over_surface(screen, "Cancel")
+end
+
+-------------------------------------
 -- Adds the option buttons when
 -- selecting an action
 -- @author Vilhelm
@@ -277,6 +309,9 @@ function DrawRightMenu:addOptions(can_enter)
         nr_7:draw_over_surface(screen, "Enter")
     end
 
+    self:drawFullRow(4,78,113,215)
+    command_10:draw_over_surface(screen, "4")
+    nr_10:draw_over_surface(screen, "Exit")
 end
 
 -------------------------------------
