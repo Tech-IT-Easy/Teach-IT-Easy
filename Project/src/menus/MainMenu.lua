@@ -72,7 +72,7 @@ function MainMenu:loadview(input)
     self.pos = 0
     self.lastpos = self.pos
     self.sidebuttons = { "Trophy room", "Wardrobe", "Settings" }
-    self.usernamestring = input
+    self.usernamestring = PlatformContext.profile.name
     --self:printbackground()
     self:renderui()
 end
