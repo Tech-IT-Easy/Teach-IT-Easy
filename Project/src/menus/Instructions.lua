@@ -18,6 +18,9 @@ local Event = require('toolkit.Event')
 -- @author Erik
 -------------------------------------
 function Instructions:new()
+    self.page = 1
+    self.maxPage = 6
+    print("hejdå")
     return self
 end
 
@@ -28,13 +31,21 @@ end
 -- @author Erik
 -------------------------------------
 function Instructions:handleinput(event)
-
     collectgarbage()
     self.lastpos = self.pos
     if event.key == Event.KEY_BACK then
-            return { "main", self.usernamestring}
+            return { "main", self.usernamestring }
+    elseif event.key == Event.KEY_RIGHT then
+        if self.page < self.maxPage then
+            self.page = self.page + 1
         end
+    elseif event.key == Event.KEY_LEFT then
+        if self.page > 1 then
+            self.page = self.page - 1
+        end
+    end
     return { " " }
+
 end
 
 -------------------------------------
@@ -42,6 +53,7 @@ end
 -- @author Erik
 -------------------------------------
 function Instructions:update()
+    self:renderui()
 end
 
 
@@ -62,17 +74,66 @@ function Instructions:renderui()
 
     main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
     trophy_room_pagename:draw_over_surface(screen, "INSTRUCTIONS")
-    row_1:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
-    row_2:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
-    row_3:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
-    row_4:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
-    row_5:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
-    row_6:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
-    row_7:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
-    row_8:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
-    row_9:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
-    row_10:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
-    row_11:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+    screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.19, w = screen:get_width() * 0.18, h = screen:get_height() * 0.08})
+    page_txt:draw_over_surface(screen, "Page")
+    page_nr:draw_over_surface(screen, self.page)
+    page_of:draw_over_surface(screen, "of")
+    page_max:draw_over_surface(screen, self.maxPage)
+    if self.page == 1 then
+        screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
+        row_1:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_2:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_3:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_4:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_5:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_6:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_7:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_8:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_9:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_10:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_11:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_12:draw_over_surface(screen, "Det har")
+    elseif self.page == 2  then
+        screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
+        row_1:draw_over_surface(screen,"haha")
+        row_2:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_3:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_4:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_5:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_6:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_7:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_8:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_9:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_10:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+    elseif self.page == 3  then
+        screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
+        row_1:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_2:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_3:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_4:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_5:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_6:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_7:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_8:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+    elseif self.page == 4  then
+        screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
+        row_1:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_2:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_3:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_4:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_5:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_6:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+    elseif self.page == 5  then
+        screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
+        row_1:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_2:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_3:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_4:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+    elseif self.page == 6  then
+        screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
+        row_1:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+        row_2:draw_over_surface(screen,"This is instructions for the game which is nice to have. Learn from someone who knows.")
+    end
 end
 
 return Instructions
