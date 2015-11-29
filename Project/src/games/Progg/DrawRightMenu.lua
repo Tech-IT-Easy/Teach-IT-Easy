@@ -294,7 +294,8 @@ function DrawRightMenu:addOptions(can_enter)
     end
 
     self:drawFullRow(4,78,113,215)
-    command_play:draw_over_surface(screen, "4 Exit")
+    command_10:draw_over_surface(screen, "4")
+    nr_10:draw_over_surface(screen, "Exit")
 end
 
 -------------------------------------
