@@ -28,7 +28,7 @@ function Character:new(x,y, rightMenu, levelData, context)
   o.startPosition = {x = x, y = y}
   o.state = 0
   -- @member map:Map
-  o.map = Map:new()
+  o.map = Map:new(context)
   o.map:load(levelData)
   o.hasWon=false
   o.step = 1
