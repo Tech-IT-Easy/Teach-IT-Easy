@@ -28,6 +28,7 @@ local EventListener = require('toolkit.EventListener')
 local PlatformMenu = require('platform.PlatformMenu')
 local Event = require('toolkit.Event')
 
+local ProggLevels = require("games.Progg.levels.ProggLevels")
 local GameProgress =require('toolkit.GameProgress')
 
 
@@ -42,10 +43,9 @@ function PlatformContext:new()
   local o = PlatformContext:super()
   -- Platform contains a game which will be allocated when profile selected
   o.game = nil
-
-  o.proggGameLevels = self.getProggLevels()
-  print("PROGGGAMELEVELS:")
-  print(o.proggGameLevels[1].maxCommands.queue)
+  -- @member proggLevels:ProggLevels
+  local proggLevels = ProggLevels:new()
+  o.proggGameLevels = proggLevels:getProggLevels()
 
   -- Platform menu
   -- @member platformMenu:PlatformMenu
@@ -142,22 +142,5 @@ function PlatformContext:process(key,state)
   end
 end
 
-
-function PlatformContext:getProggLevels()
-    local levels = {}
---    level = 1
---    maxCommands = {["queue"] = 13, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }
---    levelMapData = "9acfffff503cffff5ff7ffff5fffffff7fffffff"
---    levelGoalPosition = 20
---    levelStartPosition = 33
-    local level1 = {level = 1, maxCommands = {["queue"] = 13, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff", levelGoalPosition = 20, levelStartPosition = 33, objectives = { 17, 1 } }
---      levelMapData = "3acad6ff503cffff5ff7ffff5fbc6fff7fffffff"
---      levelGoalPosition = 20
---      levelStartPosition = 33
-    local level2 = {level = 1, maxCommands = {["queue"] = 8, ["loop"] = 6, ["P1"] = 12, ["P2"] = 5, ["if-wall"] = 5, ["if-not-wall"] = 5 }, mapData = "3acad6ff503cffff5ff7ffff5fbc6fff7fffffff", levelGoalPosition = 20, levelStartPosition = 33, objectives = {} }
-    table.insert(levels, level1)
-    table.insert(levels, level2)
-    return levels
-end
 
 return PlatformContext

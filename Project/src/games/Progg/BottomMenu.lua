@@ -32,7 +32,7 @@ local rightMenu = require("games.Progg.RightMenu")
 -- @return bottomMenu:BottomMenu a new instance of BottomMenu
 -- @author Mikael Ögren; Tobias Lundell;
 -------------------------------------------------
-function BottomMenu:new(levelData,gameContext)
+function BottomMenu:new(levelData,context)
     local o = BottomMenu:super()
     o.clearAllCheck = false
     o.selectingEditAction = nil
@@ -46,7 +46,7 @@ function BottomMenu:new(levelData,gameContext)
     o.rowLength = 8
     o.prevPosition = nil
     -- @member context:PlatformContext
-    o.context = gameContext
+    o.context = context
     -- @member buildArea:BuildArea
     o.buildArea = buildArea:new(o.maxCommands, o.position)
     -- @member drawBottomMenu:DrawBottomMenu
@@ -54,7 +54,7 @@ function BottomMenu:new(levelData,gameContext)
     -- @member character:Character
     o.queue = Queue:new(o, o.buildArea, o.maxCommands)
     o.rightMenu = rightMenu:new(o.maxCommands)
-    o.character = Character:new(1,5,o.rightMenu, levelData)
+    o.character = Character:new(1,5,o.rightMenu, levelData, context)
     return BottomMenu:init(o)
 end
 
@@ -254,7 +254,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then
                 print("Not allowed while selecting edit or moving action")
             else
-                if object:isBuildArea() == true or #object.queue.actions<object.maxCommands[object.inputArea] == false then
+                if #object.queue.actions<object.maxCommands[object.inputArea] == false then
                     print("Action not allowed")
                     return;
                 end
