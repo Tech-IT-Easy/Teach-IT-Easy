@@ -20,7 +20,7 @@ function TrophyRoom:new()
     local o = TrophyRoom:super()
     o.totalTrophies = 5
     o.sidebuttonfonts = { trophyroom_sidebuttontext1, trophyroom_sidebuttontext2, trophyroom_sidebuttontext3 }
-
+    o.inactivesidebuttonfonts = {trophyroom_inactive_sidebuttontext1, trophyroom_inactive_sidebuttontext2, trophyroom_inactive_sidebuttontext3}
     return TrophyRoom:init(o)
 end
 
@@ -94,6 +94,10 @@ function TrophyRoom:printAchievementBox()
     screen:clear({ g = 255, r = 255, b = 255 }, { x = (screen:get_width() * 0.57) + self.boxpadding, y = self.starty + self.boxpadding, w = (screen:get_width() * 0.35) - self.boxpadding * 2, h = (screen:get_height() * 0.40) - self.boxpadding * 2 })
     trophyroom_contentheader:draw_over_surface(screen, self.achievementButtons[self.pos][1])
     trophyroom_boxcontent:draw_over_surface(screen, self.achievementButtons[self.pos][2])
+
+    if(self.done[tostring(tostring(self.pos))]~=true)then
+    trophyroom_boxcontentrequirement:draw_over_surface(screen, self.achievementButtons[self.pos][3])
+    end
 end
 
 -------------------------------------
@@ -104,22 +108,24 @@ end
 function TrophyRoom:loadProgress(game)
     self.achievementButtons = {}
     self.done = {}
-    self.locked = {}
     if (game == "progg") then
         if (platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].proggGameLoopLevel) then
             table.insert(self.achievementButtons, { "Loop", "Loop is completed" })
+            self.done["1"]=true
         else
-            table.insert(self.achievementButtons, { "Loop", "Unlock loop levels" })
+            table.insert(self.achievementButtons, { "Loop", "Unlock loop levels","Finish level 2" })
         end
         if (platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].proggGameProcLevel) then
             table.insert(self.achievementButtons, { "Procedure", "Procedure is completed" })
+            self.done["2"]=true
         else
-            table.insert(self.achievementButtons, { "Procedure", "Unlock proceure levels" })
+            table.insert(self.achievementButtons, { "Procedure", "Unlock proceure levels", "Finish level 2 and 3" })
         end
         if (platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].proggGameIfLevel) then
             table.insert(self.achievementButtons, { "If statement", "If statement is completed" })
+            self.done["3"]=true
         else
-            table.insert(self.achievementButtons, { "If statement", "Unlock if statement" })
+            table.insert(self.achievementButtons, { "If statement", "Unlock if statement", "Finish level 4 and 5" })
         end
     elseif (game == "reading") then
     end
@@ -153,8 +159,12 @@ function TrophyRoom:sidebuttonactive(x1)
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding, w = self.innerboxwidth, h = self.innerboxheight })
 
     --get info from tables
+    if(self.done[tostring(x1)])then
     self.sidebuttonfonts[x1]:draw_over_surface(screen, self.achievementButtons[x1][1])
-
+    else
+    self.inactivesidebuttonfonts[x1]:draw_over_surface(screen, self.achievementButtons[x1][1])
+        --trophyroom_boxcontentrequirement
+    end
     --self.sidebuttonfonts[x1]:draw_over_surface(screen, self.sidebuttons[x1])
 end
 
@@ -167,8 +177,12 @@ function TrophyRoom:sidebuttoninactive(x1)
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08, y = self.starty + ((x1 - 1) * self.boxheight * 1.5), w = self.boxwidth, h = self.boxheight })
 
     --get info from tables
+    if(self.done[tostring(x1)])then
     self.sidebuttonfonts[x1]:draw_over_surface(screen, self.achievementButtons[x1][1])
-
+    else
+    self.inactivesidebuttonfonts[x1]:draw_over_surface(screen, self.achievementButtons[x1][1])
+        --trophyroom_boxcontentrequirement
+    end
     --self.sidebuttonfonts[x1]:draw_over_surface(screen, self.sidebuttons[x1])
 end
 
