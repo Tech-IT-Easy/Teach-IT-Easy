@@ -79,9 +79,13 @@ function ChooseAvatar:loadview(input)
   self.lastpos = 1
   self.username = input
   self.image1 = gfx.loadpng('data/avatar/cute_robot/DOWN.png')
+  self.image1:premultiply()
   self.image2 = gfx.loadpng('data/avatar/insect_robot/DOWN.png')
+  self.image2:premultiply()
   self.image3 = gfx.loadpng('data/avatar/cute_robot/UP.png')
+  self.image3:premultiply()
   self.image4 = gfx.loadpng('data/avatar/insect_robot/UP.png')
+  self.image4:premultiply()
   self.myimages = { self.image1, self.image2, self.image3, self.image4 }
   self:renderui()
 end

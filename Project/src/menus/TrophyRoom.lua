@@ -195,6 +195,7 @@ end
 function TrophyRoom:printTopPanel()
     avatarImage = platformContext.profile.avatar
     local image1 = gfx.loadpng(platformContext.profile.avatar)
+    image1:premultiply()
 
 
     main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
