@@ -35,8 +35,8 @@ function Network:getFirstname()
       -- url = "http://2015-3.pumi.ida.liu.se:9000/users/",
       sink = ltn12.sink.table(t)
   }
-  table = table.concat(t)
-  jsonResult = json.parse(table)
+  local table = table.concat(t)
+  local jsonResult = json.parse(table)
   -- For 2015-3.pumi
   -- return jsonResult[1].username
   -- For randomuser.me
