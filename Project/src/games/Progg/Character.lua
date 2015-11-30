@@ -94,9 +94,15 @@ function Character:startExecution(inqueue)
             end
             self.onP1=true
             if(self.procProcess<#self.queue.p1Actions)then
-              self.procProcess =  self.procProcess + 1;
+              if (not self.onIf) then
+                self.procProcess =  self.procProcess + 1;
+              end
               act = self.queue.p1Actions[#self.queue.p1Actions - self.procProcess + 1]
-              self:execute(act)
+              if (act == Commands.IF) then
+                self.isCompleted = self:executeIfStatement()
+              else
+                self:execute(act)
+              end
             else
               self.onP1=false
             end-- end of P1
@@ -108,9 +114,15 @@ function Character:startExecution(inqueue)
             end
             self.onP2=true
             if(self.procProcess<#self.queue.p2Actions)then
-              self.procProcess =  self.procProcess + 1;
+              if (not self.onIf) then
+                self.procProcess =  self.procProcess + 1;
+              end
               act = self.queue.p2Actions[#self.queue.p2Actions - self.procProcess + 1]
-              self:execute(act)
+              if (act == Commands.IF) then
+                self.isCompleted = self:executeIfStatement()
+              else
+                self:execute(act)
+              end
             else
               self.onP2=false
             end-- end of P2
