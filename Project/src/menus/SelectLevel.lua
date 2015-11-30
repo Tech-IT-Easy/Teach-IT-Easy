@@ -24,6 +24,7 @@ function SelectLevel:new()
   local o = SelectLevel:super()
     --@member gameFactory:GameFactory
   o.gameFactory = GameFactory:new()
+  o.context = PlatformContext
   -- available games
   o.games = o.gameFactory.gameMatrix
   return SelectLevel:init(o)
@@ -34,10 +35,10 @@ end
 -- @author Erik; Marcus
 -------------------------------------
 function SelectLevel:update()
-  if self.image1 then
+  --if self.image1 then
     self:inactive(self.lastpos)
     self:active(self.pos)
-  end
+  --end
 end
 
 -------------------------------------
@@ -49,10 +50,14 @@ end
 function SelectLevel:handleinput(event)
   collectgarbage()
   self.lastpos = self.pos
-  if event.key == Event.KEY_RIGHT and self.pos < 4 then
+  if event.key == Event.KEY_RIGHT and self.pos < self.unlockedLevels then
     self.pos = self.pos + 1
   elseif event.key == Event.KEY_LEFT and self.pos > 1 then
     self.pos = self.pos - 1
+    elseif event.key == Event.KEY_DOWN and (self.pos < 5 and self.unlockedLevels >= self.pos +4) then
+    self.pos = self.pos + 4
+    elseif event.key == Event.KEY_UP and self.pos > 4 then
+    self.pos = self.pos - 4
   elseif (event.key == Event.KEY_OK) then
 
     platformContext.game = self.gameFactory:getGame('Programming',platformContext, self.pos)
@@ -77,12 +82,15 @@ function SelectLevel:loadview(input)
   self.pos = 1
   self.lastpos = 1
   self.username = input
-  self.image1 = gfx.loadpng('data/avatar/cute_robot/DOWN.png')
+  --self.unlockedLevels = 2
+  self.unlockedLevels = self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level
+  --[[self.image1 = gfx.loadpng('data/avatar/cute_robot/DOWN.png')
   self.image2 = gfx.loadpng('data/avatar/insect_robot/DOWN.png')
   self.image3 = gfx.loadpng('data/avatar/cute_robot/UP.png')
   self.image4 = gfx.loadpng('data/avatar/insect_robot/UP.png')
   self.myimages = { self.image1, self.image2, self.image3, self.image4 }
-  self:renderui()
+  ]]
+  self:renderui(self.unlockedLevels)
 end
 
 -------------------------------------
@@ -91,7 +99,13 @@ end
 -- @author Erik
 -------------------------------------
 function SelectLevel:active(x1)
+   if x1 < 5 then
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+
+  else
+  screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+   end
+   level_fonts[x1]:draw_over_surface(screen, ""..x1)
   --screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
 
 end
@@ -102,22 +116,43 @@ end
 -- @author Erik
 -------------------------------------
 function SelectLevel:inactive(x1)
+  if x1 < 5 then
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+
+  else
+  screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+  end
+  level_fonts[x1]:draw_over_surface(screen, ""..x1)
   --screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
 
+end
+
+function SelectLevel:lockedlevels(x1)
+  if x1 < 5 then
+  screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+  level_fonts[x1]:draw_over_surface(screen, ""..x1)
+  else
+  screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+  end
+
+  locked_levels[x1]:draw_over_surface(screen, ""..x1)
 end
 
 -------------------------------------
 -- Loads initial screen of menu
 -- @author Erik; Marcus
 -------------------------------------
-function SelectLevel:renderui()
+function SelectLevel:renderui(unlocked)
   create_prof_appname:draw_over_surface(screen, "TEACH IT EASY")
   create_prof_pagename:draw_over_surface(screen, "SELECT LEVEL")
 
   self:active(1)
-  for i = 2, #self.myimages, 1 do
+  for i = 2, unlocked, 1 do
     self:inactive(i)
+  end
+
+  for i = unlocked + 1, 8, 1 do
+    self:lockedlevels(i)
   end
 end
 
