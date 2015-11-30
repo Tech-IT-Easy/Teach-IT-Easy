@@ -176,6 +176,9 @@ function TrophyRoom:sidebuttonactive(x1)
     screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08, y = self.starty + ((x1 - 1) * self.boxheight * 1.5), w = self.boxwidth, h = self.boxheight })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding, w = self.innerboxwidth, h = self.innerboxheight })
 
+    --get info from tables
+        --self.sidebuttonfonts[x1]:draw_over_surface(screen, self.sidebuttons[x1])
+
     --self.sidebuttonfonts[x1]:draw_over_surface(screen, self.sidebuttons[x1])
 end
 
@@ -186,6 +189,9 @@ end
 -------------------------------------
 function TrophyRoom:sidebuttoninactive(x1)
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08, y = self.starty + ((x1 - 1) * self.boxheight * 1.5), w = self.boxwidth, h = self.boxheight })
+
+    --get info from tables
+       -- self.sidebuttonfonts[x1]:draw_over_surface(screen, self.sidebuttons[x1])
 
     --self.sidebuttonfonts[x1]:draw_over_surface(screen, self.sidebuttons[x1])
 end
