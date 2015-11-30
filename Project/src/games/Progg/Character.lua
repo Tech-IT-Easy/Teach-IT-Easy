@@ -22,16 +22,20 @@ local executionProgress = 0
 -- @param y:integer the initial y-position of the character
 -- @author Ludwig Wikblad; Mario Pizcueta
 ----
-function Character:new(x,y)
+function Character:new(x,y, rightMenu, levelData, context)
   local o = Character:super()
   o.position = {x = x, y = y}
   o.startPosition = {x = x, y = y}
   o.state = 0
   -- @member map:Map
   o.map = Map:new()
-  o.map:load()
+  o.map:load(levelData)
   o.hasWon=false
   o.step = 1
+  o.rightMenu = rightMenu
+  o.ifIterations = 0
+  o.context = context
+  o.levelData = levelData
   return Character:init(o)
 end
 
@@ -66,11 +70,18 @@ function Character:startExecution(inqueue)
             end
             if(self.nrOfIterations>0) then
               act = self.queue.loopActions[#self.queue.loopActions - self.procProcess + 1]
-              self.procProcess = self.procProcess+1
-              self:execute(act)
+              if (act == Commands.IF) or self.onIf then
+                  self.isCompleted = self:executeIfStatement()
+                  if (self.isCompleted) then
+                    self.procProcess = self.procProcess+1;
+                  end
+              else
+                self.procProcess = self.procProcess+1;
+                self:execute(act)
+              end
               if(self.procProcess>#self.queue.loopActions)then
                 self.procProcess = 0
-                self.nrOfIterations = self.nrOfIterations-1
+                self.nrOfIterations = self.nrOfIterations-1;
               end
             else
               self.onLoop = false
@@ -83,9 +94,15 @@ function Character:startExecution(inqueue)
             end
             self.onP1=true
             if(self.procProcess<#self.queue.p1Actions)then
-              self.procProcess =  self.procProcess + 1;
+              if (not self.onIf) then
+                self.procProcess =  self.procProcess + 1;
+              end
               act = self.queue.p1Actions[#self.queue.p1Actions - self.procProcess + 1]
-              self:execute(act)
+              if (act == Commands.IF) then
+                self.isCompleted = self:executeIfStatement()
+              else
+                self:execute(act)
+              end
             else
               self.onP1=false
             end-- end of P1
@@ -97,45 +114,25 @@ function Character:startExecution(inqueue)
             end
             self.onP2=true
             if(self.procProcess<#self.queue.p2Actions)then
-              self.procProcess =  self.procProcess + 1;
+              if (not self.onIf) then
+                self.procProcess =  self.procProcess + 1;
+              end
               act = self.queue.p2Actions[#self.queue.p2Actions - self.procProcess + 1]
-              self:execute(act)
+              if (act == Commands.IF) then
+                self.isCompleted = self:executeIfStatement()
+              else
+                self:execute(act)
+              end
             else
               self.onP2=false
             end-- end of P2
 
-            --If the command IF is encountered it is executing IF
+            --If the command IF is encountered or it is executing IF
           elseif (act == Commands.IF or self.onIf) then
-            if (act == Commands.IF) then
-              self.procProcess = 0
-              self.onIf = true
+            self.isCompleted = self:executeIfStatement()
+            if (self.isCompleted) then
+              self.procProcess = self.procProcess + 1;
             end
-            if (not self.onIfTrue and not self.onIfFalse) then --Check condition (if wall) true or false
-              if (self:checkCollision(self.position, self.state) == false) then
-                self.onIfTrue = true
-              else
-                self.onIfFalse = true
-              end
-            end
-            if (self.onIfTrue) then --Executes if true
-              if (self.procProcess<#self.queue.ifTrueActions) then
-                self.procProcess = self.procProcess + 1
-                act = self.queue.ifTrueActions[#self.queue.ifTrueActions - self.procProcess + 1]
-                self:execute(act)
-              else
-                self.onIfTrue = false
-                self.onIf = false
-              end -- end ifTrue
-            elseif (self.onIfFalse) then --Executes if false
-              if (self.procProcess<#self.queue.ifFalseActions) then
-                self.procProcess = self.procProcess + 1
-                act = self.queue.ifFalseActions[#self.queue.ifFalseActions - self.procProcess + 1]
-                self:execute(act)
-              else
-                self.onIfFalse = false
-                self.onIf = false
-              end -- end ifFalse
-            end -- end of IF
           else
             --If not executing any procedure or loop -> normal queue
             self:execute(act)
@@ -150,8 +147,9 @@ function Character:startExecution(inqueue)
         end
         collectgarbage()
         --Check if the goal has been reached
-        if(self.map:isInGoal(self.position.x,self.position.y))then
+        if(self.map:isInGoal(self.position.x,self.position.y) and #self.map.inGameObjectives==0)then
           self.hasWon = true
+          self:updateProgress()
         else
           self:reset()
           gfx.update()
@@ -195,7 +193,7 @@ function Character:execute(command)
       end
     else --If encounter collision-> restart
     self.executionTimer:stop()
-    self.map:restartCharacter(self.position.x,self.position.y)
+    self:reset()
     self.position = self.startPosition
     gfx.update()
     end
@@ -212,6 +210,55 @@ function Character:execute(command)
     self.state = (self.state +1)%4
     self.map:setCharacter(self.map:getPosition(self.position.x, self.position.y), self.state)
   end
+
+  if(command == Commands.FIX) then
+    --fixing the box
+    self.map:activateBox(self.position.x, self.position.y)
+  end
+end
+
+
+----------------------------------------
+-- Executes an if statement in queue or loop
+-- @ return boolean. True if if-statement is completed, false if not
+-- @ author Tobias Lundell, Nov 29, 2015
+----------------------------------------
+function Character:executeIfStatement()
+  if (not self.onIf) then
+    self.ifIterations = 0
+    self.onIf = true
+  end
+  if (not self.onIfTrue and not self.onIfFalse) then --Check condition (if wall) true or false
+    if (self:checkCollision(self.position, self.state) == false) then
+      self.onIfTrue = true
+      self.onIfFalse = false
+    else
+      self.onIfFalse = true
+      self.onIfTrue = false
+    end
+  end
+  if (self.onIfTrue) then --Executes if true
+    if (self.ifIterations < #self.queue.ifTrueActions) then
+      self.ifIterations = self.ifIterations + 1;
+      self.act = self.queue.ifTrueActions[#self.queue.ifTrueActions - self.ifIterations + 1]
+      self:execute(self.act)
+      return false
+    else
+      self.onIfTrue = false
+      self.onIf = false
+    end -- end ifTrue
+  elseif (self.onIfFalse) then --Executes if false
+    if (self.ifIterations < #self.queue.ifFalseActions) then
+      self.ifIterations = self.ifIterations + 1;
+      self.act = self.queue.ifFalseActions[#self.queue.ifFalseActions - self.ifIterations + 1]
+      self:execute(self.act)
+      return false
+    else
+      self.onIfFalse = false
+      self.onIf = false
+    end -- end ifFalse
+  end
+  return true
 end
 
 
@@ -244,6 +291,24 @@ function Character:reset()
   self.onIfTrue = false
   self.onIfFalse = false
   self.j = 0
+  self.rightMenu:stop()
+end
+
+---------------------------------------
+-- Resets the character to it's start position.
+-- @author Ludwig Wikblad
+---------------------------------------
+function Character:updateProgress()
+    local progress = self.context.profile.gameprogress:getProgress("games.Progg.ProggGame")
+    progress.level = self.levelData.level
+    if (self.levelData.level == 2) then
+        progress.proggGameLoopLevel = true
+    elseif (self.levelData.level == 3) then
+        progress.proggGameProcLevel = true
+    elseif (self.levelData.level == 4) then
+        progress.proggGameIfLevel = true
+    end
+    self.context.profile.gameprogress:setProgress("games.Progg.ProggGame", progress)
 end
 
 return Character

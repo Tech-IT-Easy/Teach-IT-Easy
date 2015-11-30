@@ -8,7 +8,7 @@
 local Object = require("toolkit.Object")
 
 local DrawRightMenu = extends(Object)
-skin = require('games/Progg/progg_skin')
+skin = require('games.Progg.progg_skin')
 
 
 -------------------------------------
@@ -165,6 +165,8 @@ function DrawRightMenu:addImages()
         end
         i = i + 1
     end
+    clear_on_nr9_top:draw_over_surface(screen, "Clear")  -- Keep as long as key 9 clears the queue
+    clear_on_nr9_bot:draw_over_surface(screen, "Queue")  -- Keep as long as key 9 clears the queue
 end
 
 -------------------------------------
@@ -270,6 +272,20 @@ function DrawRightMenu:addIfFalse()
     command_play:draw_over_surface(screen, "0 If false")
 end
 
+function DrawRightMenu:addConfirm()
+    self:clearRow(1)
+    self:clearRow(2)
+    self:clearRow(3)
+    self:clearRow(4)
+    self:drawFullRow(2,78,113,215)
+    self:drawFullRow(3,78,113,215)
+    command_4:draw_over_surface(screen, "1")
+    command_7:draw_over_surface(screen, "2")
+    clearAll:draw_over_surface(screen, "Clear All?")
+    nr_4:draw_over_surface(screen, "Confirm")
+    nr_7:draw_over_surface(screen, "Cancel")
+end
+
 -------------------------------------
 -- Adds the option buttons when
 -- selecting an action
@@ -293,6 +309,9 @@ function DrawRightMenu:addOptions(can_enter)
         nr_7:draw_over_surface(screen, "Enter")
     end
 
+    self:drawFullRow(4,78,113,215)
+    command_10:draw_over_surface(screen, "4")
+    nr_10:draw_over_surface(screen, "Exit")
 end
 
 -------------------------------------
