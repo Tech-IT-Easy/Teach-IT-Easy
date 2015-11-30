@@ -36,12 +36,12 @@ end
 -- @return a Game or nil
 -- @author Daniel
 -----------------------------------------------------------
-function GameFactory:getGame(gameName,context)
+function GameFactory:getGame(gameName,context, level)
   for i = 1, #self.gameMatrix, 1 do
     if gameName == self.gameMatrix[i][1] and self.gameMatrix[i][2] ~= nil then
       print("Selected game: " .. self.gameMatrix[i][1] .. " importing: " .. self.gameMatrix[i][2])
       local load = require(self.gameMatrix[i][2])
-      self.game = load:new(context)
+      self.game = load:new(context, level)
       return self.game
     end
   end

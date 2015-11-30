@@ -37,6 +37,8 @@ function Games:handleinput(event)
     self.pos = self.pos - 1
   elseif event.key == Event.KEY_BACK then
     return { "main", self.usernamestring }
+  elseif event.key == Event.KEY_OK and self.pos == 1 then
+    return{"selectlevel"}
   elseif event.key == Event.KEY_OK then
     platformContext.game = self.gameFactory:getGame(self.games[self.pos][1],platformContext)
     if platformContext.game ~= nil then

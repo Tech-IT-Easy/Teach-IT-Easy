@@ -20,11 +20,12 @@ function ProggGame:new(context, level)
 
   -- @member BottomMenu:BottomMenu
   -- @member map:Map
-  local levelData = context.proggGameLevels[2]
+  local levelData = context.proggGameLevels[level]
   print(levelData.maxCommands.queue)
 --  o.bottomMenu = BottomMenu:new(levelData, context)
   o.bottomMenu = BottomMenu:new(levelData, context)
   o.rightMenu = rightMenu:new()
+
   --o.map = map:new()
   --------------------------------
   -- super characters
@@ -34,6 +35,7 @@ function ProggGame:new(context, level)
   --self.gameEventListener:attach(o.inputHandler)
   self.gameEventListener:attach(o.rightMenu)
   self.gameEventListener:attach(o.bottomMenu)
+  self.gameEventListener:attach(o.selectLevel)
   
   return ProggGame:init(o)
 end
@@ -49,6 +51,7 @@ function ProggGame:load()
   -- UI:load()
   -----------------------
   --self.map:load()
+
   self.bottomMenu:load()
 end
 
