@@ -212,6 +212,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" or object.selectingActionEdit == "if"  then
+                if(object.selectingActionEdit == "loop")then
+                    object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")
+                end
                 object:enterMethod()
                 object.selectingActionEdit = nil
                 object.rightMenu.inputAreaChanged = true
@@ -447,8 +450,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                     end
                 end
                 object.queue.loopPointer = count
-                 if(object:getQueue(object.inputArea)[queuePos] == Commands.LOOP)then
-                object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")end
+--                if(object:getQueue(object.inputArea)[queuePos] == Commands.LOOP)then
+--                    object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")
+--                end
                 object.rightMenu.selectedCommand = object:getQueue(object.inputArea)[queuePos]
                 print(object:getQueue(object.inputArea)[queuePos])
 
@@ -563,6 +567,17 @@ end
 -----------------------------------
 function BottomMenu:deleteAction(position, inputArea)
     local queuePos = position
+    if self:getQueue(inputArea)[queuePos] == Commands.LOOP then
+        local counter = 0
+      for i = position, 0, -1 do
+          if self.queue.actions[i] == "loop" then
+              counter = counter + 1
+          end
+      end
+      table.remove(self.queue.loopActions, counter)
+      table.remove(self.queue.loopCounter, counter)
+    end
+
     if queuePos > 2*self.rowLength then
         queuePos = queuePos - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
     end
@@ -584,30 +599,33 @@ function BottomMenu:moveAction(positionOne, positionTwo)
     local queuePosOne = positionOne
     local queuePosTwo = positionTwo
 
-    if queuePosOne > 2*self.rowLength then
-        queuePosOne = queuePosOne - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
-        queuePosTwo = queuePosTwo - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
-    end
-
-    if queuePosTwo > #self:getQueue(self.inputArea) then
-        print("Not allowed to move action to empty slot")
-        return
-    end
-
-    local actionOne = self:getQueue(self.inputArea)[queuePosOne]
-
-    if queuePosOne > queuePosTwo then
-        for i = queuePosOne, queuePosTwo + 1, -1 do
-            self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i-1]
-        end
-        self:getQueue(self.inputArea)[queuePosTwo] = actionOne
+    if queuePosOne < 2*self.rowLength and queuePosTwo < 2*self.rowLength then
+            self.queue:setPosition(self.posActionToMove, self.position)
     else
-        for i = queuePosOne, queuePosTwo - 1 do
-            self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i+1]
+        if queuePosOne > 2*self.rowLength then
+            queuePosOne = queuePosOne - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
+            queuePosTwo = queuePosTwo - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
         end
-        self:getQueue(self.inputArea)[queuePosTwo] = actionOne
-    end
 
+        if queuePosTwo > #self:getQueue(self.inputArea) then
+            print("Not allowed to move action to empty slot")
+            return
+        end
+
+        local actionOne = self:getQueue(self.inputArea)[queuePosOne]
+
+        if queuePosOne > queuePosTwo then
+            for i = queuePosOne, queuePosTwo + 1, -1 do
+                self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i-1]
+            end
+            self:getQueue(self.inputArea)[queuePosTwo] = actionOne
+        else
+            for i = queuePosOne, queuePosTwo - 1 do
+                self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i+1]
+            end
+            self:getQueue(self.inputArea)[queuePosTwo] = actionOne
+        end
+    end
     self.actionToMove = nil
 end
 
