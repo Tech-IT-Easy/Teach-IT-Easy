@@ -5,7 +5,7 @@ local GameProgress = extends(Object)
 -------------------------------------
 -- Creates the Game Progress object.
 -- @return GameProgress-object.
--- @author Daniel
+-- @author Daniel; Alex
 -------------------------------------
 function GameProgress:new(name)
     local o = GameProgress:super()

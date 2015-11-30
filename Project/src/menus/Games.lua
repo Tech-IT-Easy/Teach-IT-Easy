@@ -61,7 +61,7 @@ end
 function Games:loadview(input)
   self.pos = 1
   self.lastpos = 1
-  self.usernamestring = input
+  self.usernamestring = platformContext.profile.name
 
   self:renderui()
 end

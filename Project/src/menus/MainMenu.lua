@@ -99,7 +99,7 @@ function MainMenu:renderui()
 
     main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
     main_menu_pagename:draw_over_surface(screen, "MAIN MENU")
-    main_menu_username:draw_over_surface(screen, self.usernamestring)
+    main_menu_username:draw_over_surface(screen, platformContext.profile.name)
 
     avatarImageUrl = platformContext.profile.avatar
 
