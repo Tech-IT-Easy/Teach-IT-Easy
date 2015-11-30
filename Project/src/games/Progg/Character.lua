@@ -33,6 +33,7 @@ function Character:new(x,y, rightMenu)
   o.hasWon=false
   o.step = 1
   o.rightMenu = rightMenu
+  o.ifIterations = 0
   return Character:init(o)
 end
 
@@ -67,11 +68,18 @@ function Character:startExecution(inqueue)
             end
             if(self.nrOfIterations>0) then
               act = self.queue.loopActions[#self.queue.loopActions - self.procProcess + 1]
-              self.procProcess = self.procProcess+1
-              self:execute(act)
+              if (act == Commands.IF) or self.onIf then
+                  self.isCompleted = self:executeIfStatement()
+                  if (self.isCompleted) then
+                    self.procProcess = self.procProcess+1;
+                  end
+              else
+                self.procProcess = self.procProcess+1;
+                self:execute(act)
+              end
               if(self.procProcess>#self.queue.loopActions)then
                 self.procProcess = 0
-                self.nrOfIterations = self.nrOfIterations-1
+                self.nrOfIterations = self.nrOfIterations-1;
               end
             else
               self.onLoop = false
@@ -105,38 +113,12 @@ function Character:startExecution(inqueue)
               self.onP2=false
             end-- end of P2
 
-            --If the command IF is encountered it is executing IF
+            --If the command IF is encountered or it is executing IF
           elseif (act == Commands.IF or self.onIf) then
-            if (act == Commands.IF) then
-              self.procProcess = 0
-              self.onIf = true
+            self.isCompleted = self:executeIfStatement()
+            if (self.isCompleted) then
+              self.procProcess = self.procProcess + 1;
             end
-            if (not self.onIfTrue and not self.onIfFalse) then --Check condition (if wall) true or false
-              if (self:checkCollision(self.position, self.state) == false) then
-                self.onIfTrue = true
-              else
-                self.onIfFalse = true
-              end
-            end
-            if (self.onIfTrue) then --Executes if true
-              if (self.procProcess<#self.queue.ifTrueActions) then
-                self.procProcess = self.procProcess + 1
-                act = self.queue.ifTrueActions[#self.queue.ifTrueActions - self.procProcess + 1]
-                self:execute(act)
-              else
-                self.onIfTrue = false
-                self.onIf = false
-              end -- end ifTrue
-            elseif (self.onIfFalse) then --Executes if false
-              if (self.procProcess<#self.queue.ifFalseActions) then
-                self.procProcess = self.procProcess + 1
-                act = self.queue.ifFalseActions[#self.queue.ifFalseActions - self.procProcess + 1]
-                self:execute(act)
-              else
-                self.onIfFalse = false
-                self.onIf = false
-              end -- end ifFalse
-            end -- end of IF
           else
             --If not executing any procedure or loop -> normal queue
             self:execute(act)
@@ -213,11 +195,55 @@ function Character:execute(command)
     self.state = (self.state +1)%4
     self.map:setCharacter(self.map:getPosition(self.position.x, self.position.y), self.state)
   end
-  
+
   if(command == Commands.FIX) then
     --fixing the box
     self.map:activateBox(self.position.x, self.position.y)
   end
+end
+
+
+----------------------------------------
+-- Executes an if statement in queue or loop
+-- @ return boolean. True if if-statement is completed, false if not
+-- @ author Tobias Lundell, Nov 29, 2015
+----------------------------------------
+function Character:executeIfStatement()
+  if (not self.onIf) then
+    self.ifIterations = 0
+    self.onIf = true
+  end
+  if (not self.onIfTrue and not self.onIfFalse) then --Check condition (if wall) true or false
+    if (self:checkCollision(self.position, self.state) == false) then
+      self.onIfTrue = true
+      self.onIfFalse = false
+    else
+      self.onIfFalse = true
+      self.onIfTrue = false
+    end
+  end
+  if (self.onIfTrue) then --Executes if true
+    if (self.ifIterations < #self.queue.ifTrueActions) then
+      self.ifIterations = self.ifIterations + 1;
+      self.act = self.queue.ifTrueActions[#self.queue.ifTrueActions - self.ifIterations + 1]
+      self:execute(self.act)
+      return false
+    else
+      self.onIfTrue = false
+      self.onIf = false
+    end -- end ifTrue
+  elseif (self.onIfFalse) then --Executes if false
+    if (self.ifIterations < #self.queue.ifFalseActions) then
+      self.ifIterations = self.ifIterations + 1;
+      self.act = self.queue.ifFalseActions[#self.queue.ifFalseActions - self.ifIterations + 1]
+      self:execute(self.act)
+      return false
+    else
+      self.onIfFalse = false
+      self.onIf = false
+    end -- end ifFalse
+  end
+  return true
 end
 
 
