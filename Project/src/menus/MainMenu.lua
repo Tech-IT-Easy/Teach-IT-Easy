@@ -101,26 +101,26 @@ function MainMenu:renderui()
     main_menu_pagename:draw_over_surface(screen, "MAIN MENU")
     main_menu_username:draw_over_surface(screen, self.usernamestring)
 
-    avatarImageUrl = platformContext.profile.avatar
+    local avatarImageUrl = platformContext.profile.avatar
 
-    trophyRoomImageActive="data/trophy_active.png"
-    trophyRoomImageInactive="data/trophyinactive.png"
-    SettingsMenuImageActive="data/settings_active.png"
-    SettingsMenuImageInactive="data/settings_inactive.png"
+    local trophyRoomImageActive="data/trophy_active.png"
+    local trophyRoomImageInactive="data/trophyinactive.png"
+    local SettingsMenuImageActive="data/settings_active.png"
+    local SettingsMenuImageInactive="data/settings_inactive.png"
 
-    InstructionsMenuImageActive="data/MysteryPicture.png"
-    InstructionsMenuImageInactive="data/MysteryPicture.png"
-    --data/background_h720.png
+    local InstructionsMenuImageActive="data/MysteryPicture.png"
+    local InstructionsMenuImageInactive="data/MysteryPicture.png"
+
 
     local avatarImage = gfx.loadpng(avatarImageUrl)
 
-    TrophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
-    TrophyRoomImageInactiveImage = gfx.loadpng(trophyRoomImageInactive)
-    SettingsMenuImageActiveImage = gfx.loadpng(SettingsMenuImageActive)
-    SettingsMenuImageInactiveImage = gfx.loadpng(SettingsMenuImageInactive)
+    local TrophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
+    local TrophyRoomImageInactiveImage = gfx.loadpng(trophyRoomImageInactive)
+    local SettingsMenuImageActiveImage = gfx.loadpng(SettingsMenuImageActive)
+    local SettingsMenuImageInactiveImage = gfx.loadpng(SettingsMenuImageInactive)
 
-    InstructionsActiveImage = gfx.loadpng(InstructionsMenuImageActive)
-    InstructionsInactiveImage = gfx.loadpng(InstructionsMenuImageInactive)
+    local InstructionsActiveImage = gfx.loadpng(InstructionsMenuImageActive)
+    local InstructionsInactiveImage = gfx.loadpng(InstructionsMenuImageInactive)
 
 
 
