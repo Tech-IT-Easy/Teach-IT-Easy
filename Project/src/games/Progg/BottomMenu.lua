@@ -165,8 +165,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.queue:clearAll(object.inputArea)
                 object.clearAllCheck = false
                 object.rightMenu.inputAreaChanged = true
-                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if"  then
+                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
                     object.rightMenu.inputArea = "build"
+                elseif object.inputArea == "if-wall"  then
+                    object.rightMenu.inputArea = "if-wall"
                 else
                     object.rightMenu.inputArea = "queue"
                 end
@@ -190,8 +192,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.clearAllCheck == true then --Handles input when confirming if user wants to clear a queue
                 object.clearAllCheck = false
                 object.rightMenu.inputAreaChanged = true
-                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if"  then
+                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
                     object.rightMenu.inputArea = "build"
+                elseif object.inputArea == "if-wall"  then
+                    object.rightMenu.inputArea = "if-wall"
                 else
                     object.rightMenu.inputArea = "queue"
                 end
