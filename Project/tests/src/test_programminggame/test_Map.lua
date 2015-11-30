@@ -1118,3 +1118,288 @@ function test_canMove_five()
 
     verify_mock(mc)
 end
+
+-------------------------------------
+-- Tests the calculation in getX.
+-- @system_under_test : Map:new(), Map:getX(i)
+-- @author name: Erik
+-------------------------------------
+function test_getX_one()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local a = ps:new()
+
+    local i = 1
+    a.columns = 8
+    a.rows = 5
+    a.startx = 2
+    a.boxheight = 2
+
+    mc:replay()
+
+    local answer = a:getX(i)
+
+    assert_equal(2, answer, "Wrong x value")
+
+    verify_mock(mc)
+end
+
+function test_getX_two()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local a = ps:new()
+
+    local i = 5
+    a.columns = 8
+    a.rows = 5
+    a.startx = 2
+    a.boxheight = 2
+
+    mc:replay()
+
+    local answer = a:getX(i)
+
+    assert_equal(10, answer, "Wrong x value")
+
+    verify_mock(mc)
+end
+
+function test_getX_three()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local a = ps:new()
+
+    local i = 2
+    a.columns = 8
+    a.rows = 5
+    a.startx = 2
+    a.boxheight = 2
+
+    mc:replay()
+
+    local answer = a:getX(i)
+
+    assert_not_equal(6, answer, "Should not be this x value")
+
+    verify_mock(mc)
+end
+
+-------------------------------------
+-- Tests the calculation in getY.
+-- @system_under_test : Map:new(), Map:getY(i)
+-- @author name: Erik
+-------------------------------------
+function test_getY_one()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local a = ps:new()
+
+    local i = 2
+    a.columns = 8
+    a.rows = 5
+    a.starty = 2
+    a.boxheight = 2
+
+    mc:replay()
+
+    local answer = a:getY(i)
+
+    assert_equal(2, answer, "Wrong y value")
+
+    verify_mock(mc)
+end
+
+function test_getY_two()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local a = ps:new()
+
+    local i = 10
+    a.columns = 8
+    a.rows = 5
+    a.starty = 2
+    a.boxheight = 2
+
+    mc:replay()
+
+    local answer = a:getY(i)
+
+    assert_equal(4, answer, "Wrong y value")
+
+    verify_mock(mc)
+end
+
+function test_getY_three()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local a = ps:new()
+
+    local i = 35
+    a.columns = 8
+    a.rows = 5
+    a.starty = 2
+    a.boxheight = 2
+
+    mc:replay()
+
+    local answer = a:getY(i)
+
+    assert_equal(10, answer, "Wrong y value")
+
+    verify_mock(mc)
+end
+
+-------------------------------------
+-- Tests to call to printInnerBox
+-- @system_under_test : Map:new(), Map:printInnerBox(i, color)
+-- @author name: Erik
+-------------------------------------
+function test_printInnerBox_one()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local getY = mc:mock()
+    local getX = mc:mock()
+    package.loaded[SUT].getY = getY
+    package.loaded[SUT].getX = getX
+
+    local a = ps:new()
+
+    local i = 1
+    local color = { g = 83, r = 101, b = 219 }
+    a.boxpadding = 1
+    a.innerboxheight = 1
+
+    getY(mc.ANYARGS); mc:returns(1):anytimes()
+    getX(mc.ANYARGS); mc:returns(1):anytimes()
+
+    mc:replay()
+
+    a:printInnerBox(i, color)
+
+    verify_mock(mc)
+end
+
+-------------------------------------
+-- Tests the call to printObjective
+-- @system_under_test : Map:new(), Map:printObjective(i)
+-- @author name: Erik
+-------------------------------------
+function test_printObjective_one()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local printInnerBox = mc:mock()
+
+    package.loaded[SUT].printInnerBox = printInnerBox
+
+    local a = ps:new()
+
+    local i = 1
+    Map.OBJECTIVECOLOR= { g = 83, r = 101, b = 219 }
+
+    printInnerBox(mc.ANYARGS); mc:returns(1):anytimes()
+
+    mc:replay()
+
+    a:printObjective(i)
+
+    verify_mock(mc)
+end
+
+-------------------------------------
+-- Tests the call to printObjective
+-- @system_under_test : Map:new(), Map:printObjectiveAsDone(i)
+-- @author name: Erik
+-------------------------------------
+function test_printObjectiveAsDone_one()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local printInnerBox = mc:mock()
+
+    package.loaded[SUT].printInnerBox = printInnerBox
+
+    local a = ps:new()
+
+    local i = 1
+    Map.INNERBOXCOLOR= { g = 83, r = 101, b = 219 }
+
+    printInnerBox(mc.ANYARGS); mc:returns(1):anytimes()
+
+    mc:replay()
+
+    a:printObjectiveAsDone(i)
+
+    verify_mock(mc)
+end
+
+-------------------------------------
+-- Tests return value of isInGoal
+-- @system_under_test : Map:new(), Map:isInGoal(x,y)
+-- @author name: Erik
+-------------------------------------
+function test_isInGoal_one()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local getPosition = mc:mock()
+
+    package.loaded[SUT].getPosition = getPosition
+
+    local a = ps:new()
+
+    local x = 1
+    local y = 1
+    a.goalPos = 1
+
+    getPosition(mc.ANYARGS); mc:returns(1):anytimes()
+
+    mc:replay()
+
+    local answer = a:isInGoal(x,y)
+    assert_true(answer, "wrong return value")
+
+    verify_mock(mc)
+end
+
+-------------------------------------
+-- Mocks restart character
+-- @system_under_test : Map:new(), Map:restartCharacter(x,y)
+-- @author name: Erik
+-------------------------------------
+function test_restartCharacter_one()
+    local mc = create_mock(SUT)
+    local ps = require(SUT)
+
+    local getPosition = mc:mock()
+    local square = mc:mock()
+    local setCharacter = mc:mock()
+
+    package.loaded[SUT].getPosition = getPosition
+    package.loaded[SUT].square = square
+    package.loaded[SUT].setCharacter = setCharacter
+
+    local a = ps:new()
+
+    local x = 1
+    local y = 1
+    a.startPos = 1
+    a.tiles={}
+
+    getPosition(mc.ANYARGS); mc:returns(1):anytimes()
+    square(mc.ANYARGS); mc:returns(nil):anytimes()
+    setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
+
+    mc:replay()
+
+    a:restartCharacter(x,y)
+
+    verify_mock(mc)
+end

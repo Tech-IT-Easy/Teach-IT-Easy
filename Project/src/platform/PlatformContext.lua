@@ -28,6 +28,7 @@ local EventListener = require('toolkit.EventListener')
 local PlatformMenu = require('platform.PlatformMenu')
 local Event = require('toolkit.Event')
 
+local ProggLevels = require("games.Progg.levels.ProggLevels")
 local GameProgress =require('toolkit.GameProgress')
 
 
@@ -42,6 +43,9 @@ function PlatformContext:new()
   local o = PlatformContext:super()
   -- Platform contains a game which will be allocated when profile selected
   o.game = nil
+  -- @member proggLevels:ProggLevels
+  local proggLevels = ProggLevels:new()
+  o.proggGameLevels = proggLevels:getProggLevels()
 
   -- Platform menu
   -- @member platformMenu:PlatformMenu

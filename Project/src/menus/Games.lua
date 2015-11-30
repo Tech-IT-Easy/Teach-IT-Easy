@@ -13,12 +13,12 @@ local GameFactory = require('games.GameFactory')
 -- @author Erik
 -------------------------------------
 function Games:new()
-    local o = Games:super()
-    --@member gameFactory:GameFactory
-    o.gameFactory = GameFactory:new()
-    -- available games
-    o.games = o.gameFactory.gameMatrix
-    return Games:init(o)
+  local o = Games:super()
+  --@member gameFactory:GameFactory
+  o.gameFactory = GameFactory:new()
+  -- available games
+  o.games = o.gameFactory.gameMatrix
+  return Games:init(o)
 end
 
 
@@ -29,32 +29,33 @@ end
 -- @author Erik
 -------------------------------------
 function Games:handleinput(event)
-    collectgarbage()
-    self.lastpos = self.pos
-    if event.key == Event.KEY_RIGHT and self.pos < #self.games then
-        self.pos = self.pos + 1
-    elseif event.key == Event.KEY_LEFT and self.pos > 1 then
-        self.pos = self.pos - 1
-    elseif event.key == Event.KEY_BACK then
-        return { "main", self.usernamestring }
-    elseif event.key == Event.KEY_OK then
-        platformContext.game = self.gameFactory:getGame(self.games[self.pos][1], platformContext)
-        if platformContext.game ~= nil then
-            platformContext.game:start()
-            platformContext.platformEventListener:remove(platformContext.platformMenu)
-            platformContext.platformMenu = nil
-        end
-        collectgarbage()
+  collectgarbage()
+  self.lastpos = self.pos
+  if event.key == Event.KEY_RIGHT and self.pos < #self.games then
+     self.pos = self.pos + 1
+  elseif event.key == Event.KEY_LEFT and self.pos > 1 then
+    self.pos = self.pos - 1
+  elseif event.key == Event.KEY_BACK then
+    return { "main", self.usernamestring }
+  elseif event.key == Event.KEY_OK and self.pos == 1 then
+    return{"selectlevel"}
+  elseif event.key == Event.KEY_OK then
+    platformContext.game = self.gameFactory:getGame(self.games[self.pos][1],platformContext)
+    if platformContext.game ~= nil then
+      platformContext.game:start()
+      platformContext.platformEventListener:remove(platformContext.platformMenu)
+      platformContext.platformMenu = nil
     end
-    return { " " }
+    collectgarbage()
+  end
+  return { " " }
 end
 
 
 function Games:update()
-    self:buttoninactive(self.lastpos)
-    self:buttonactive(self.pos)
+  self:buttoninactive(self.lastpos)
+  self:buttonactive(self.pos)
 end
-
 -------------------------------------
 -- Loads the view to the screen.
 -- @author Erik
@@ -64,7 +65,7 @@ function Games:loadview(input)
     self.lastpos = 1
     self.usernamestring = platformContext.profile.name
 
-    self:renderui()
+  self:renderui()
 end
 
 -------------------------------------
@@ -99,8 +100,8 @@ end
 function Games:buttonactive(x1)
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
 
-    games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
-    games_trophiesfonts[x1]:draw_over_surface(screen, "Progress: " .. platformContext.profile.gameprogress:getprogress(self.games[x1][2]))
+  games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
+  games_trophiesfonts[x1]:draw_over_surface(screen,"Progress: " .. platformContext.profile.gameprogress:getprogressStart(self.games[x1][2]))
 end
 
 -------------------------------------
@@ -111,8 +112,8 @@ end
 function Games:buttoninactive(x1)
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
 
-    games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
-    games_trophiesfonts[x1]:draw_over_surface(screen, "Progress: " .. platformContext.profile.gameprogress:getprogress(self.games[x1][2]))
+  games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
+  games_trophiesfonts[x1]:draw_over_surface(screen,"Progress: " .. platformContext.profile.gameprogress:getprogressStart(self.games[x1][2]))
 end
 
 return Games
