@@ -19,6 +19,8 @@ local Event = require('toolkit.Event')
 function TrophyRoom:new()
     local o = TrophyRoom:super()
     o.totalTrophies = 5
+    o.sidebuttonfonts = { trophyroom_sidebuttontext1, trophyroom_sidebuttontext2, trophyroom_sidebuttontext3 }
+
     return TrophyRoom:init(o)
 end
 

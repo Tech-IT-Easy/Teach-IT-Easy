@@ -76,12 +76,14 @@ function Games:renderui()
 
     local avatarImageUrl = platformContext.profile.avatar
   self.avatarImage = gfx.loadpng(avatarImageUrl)
-
+    self.avatarImage:premultiply()
   local proggGameURL = "data/tie_prg.png"
   self.proggGameImage = gfx.loadpng(proggGameURL)
+    self.proggGameImage:premultiply()
 
   local anotherGameURL = "data/MysteryPicture.png"
   self.anotherGameImage = gfx.loadpng(anotherGameURL)
+    self.proggGameImage:premultiply()
 
 self.test21 = {self.proggGameImage,
         self.anotherGameImage,
