@@ -8,7 +8,7 @@
 
 local Object = require("toolkit.Object")
 local DrawBuildArea = extends(Object)
-skin = require('games/Progg/progg_skin')
+skin = require('games.Progg.progg_skin')
 
 function DrawBuildArea:new(maxCommands)
     local o = DrawBuildArea:super()
@@ -208,7 +208,7 @@ function DrawBuildArea:getFileName(action)
     elseif action == "action" then
         return "data/progg_game_icons/action.png"
 
-    elseif action == "if-wall" then
+    elseif action == "if" then
         return "data/progg_game_icons/if_wall.png"
 
     elseif action == "loop" then

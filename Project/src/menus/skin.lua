@@ -177,3 +177,9 @@ row_8 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_heig
 row_9 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.7 }, script_path .. 'data/GROBOLD.ttf')
 row_10 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.75 }, script_path .. 'data/GROBOLD.ttf')
 row_11 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.8 }, script_path .. 'data/GROBOLD.ttf')
+row_12 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.03, y = screen:get_height() * 0.85 }, script_path .. 'data/GROBOLD.ttf')
+
+page_txt = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.06, y = screen:get_height() * 0.21 }, script_path .. 'data/GROBOLD.ttf')
+page_nr = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.14, y = screen:get_height() * 0.21 }, script_path .. 'data/GROBOLD.ttf')
+page_of = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.165, y = screen:get_height() * 0.21 }, script_path .. 'data/GROBOLD.ttf')
+page_max = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.205, y = screen:get_height() * 0.21 }, script_path .. 'data/GROBOLD.ttf')
