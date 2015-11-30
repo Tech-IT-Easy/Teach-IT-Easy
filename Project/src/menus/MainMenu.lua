@@ -10,7 +10,7 @@ local Event = require('toolkit.Event')
 -- @author Erik
 -------------------------------------
 function MainMenu:new()
-  local o = MainMenu:super()
+    local o = MainMenu:super()
     o.sidebuttonfonts = { main_menu_sidebuttontext1, main_menu_sidebuttontext2, main_menu_sidebuttontext3 }
     return MainMenu:init(o)
 end
@@ -23,8 +23,8 @@ end
 -------------------------------------
 function MainMenu:handleinput(event)
 
-  collectgarbage()
-  self.lastpos = self.pos
+    collectgarbage()
+    self.lastpos = self.pos
 
     if event.key == Event.KEY_RIGHT and self.pos == 0 then
         self.pos = 1
@@ -45,7 +45,7 @@ function MainMenu:handleinput(event)
         return { "profilesel" }
     end
 
-  return { " " }
+    return { " " }
 end
 
 -------------------------------------
@@ -85,9 +85,9 @@ end
 -- @author Erik
 -------------------------------------
 function MainMenu:printbackground()
-  self.background = gfx.loadpng("data/background_h720.png")
-  screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-  self.background:destroy()
+    self.background = gfx.loadpng("data/background_h720.png")
+    screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+    self.background:destroy()
 end
 
 
@@ -99,7 +99,7 @@ function MainMenu:renderui()
 
     main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
     main_menu_pagename:draw_over_surface(screen, "MAIN MENU")
-    main_menu_username:draw_over_surface(screen, self.usernamestring)
+    main_menu_username:draw_over_surface(screen, platformContext.profile.name)
 
     local avatarImageUrl = platformContext.profile.avatar
 
@@ -121,15 +121,30 @@ function MainMenu:renderui()
 
     local InstructionsActiveImage = gfx.loadpng(InstructionsMenuImageActive)
     local InstructionsInactiveImage = gfx.loadpng(InstructionsMenuImageInactive)
+    avatarImage:premultiply()
+    TrophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
+    TrophyRoomImageActiveImage:premultiply()
+    TrophyRoomImageInactiveImage = gfx.loadpng(trophyRoomImageInactive)
+    TrophyRoomImageInactiveImage:premultiply()
+    SettingsMenuImageActiveImage = gfx.loadpng(SettingsMenuImageActive)
+    SettingsMenuImageActiveImage:premultiply()
+    SettingsMenuImageInactiveImage = gfx.loadpng(SettingsMenuImageInactive)
+    SettingsMenuImageInactiveImage:premultiply()
+    InstructionsActiveImage = gfx.loadpng(InstructionsMenuImageActive)
+    InstructionsActiveImage:premultiply()
+    InstructionsInactiveImage = gfx.loadpng(InstructionsMenuImageInactive)
+    InstructionsInactiveImage:premultiply()
 
 
 
-    self.inactiveImages = {TrophyRoomImageInactiveImage,
+    self.inactiveImages = {
+        TrophyRoomImageInactiveImage,
         InstructionsInactiveImage,
-    SettingsMenuImageInactiveImage
+        SettingsMenuImageInactiveImage
     }
 
-    self.activeImages = {TrophyRoomImageActiveImage,
+    self.activeImages = {
+        TrophyRoomImageActiveImage,
         InstructionsActiveImage,
         SettingsMenuImageActiveImage
     }
@@ -139,7 +154,7 @@ function MainMenu:renderui()
 
 
 
-   screen:copyfrom(avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() *0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+    screen:copyfrom(avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
 
     self:gamebuttonactive()
     for i = 1, 3, 1 do
