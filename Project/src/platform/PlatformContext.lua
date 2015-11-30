@@ -43,6 +43,7 @@ function PlatformContext:new()
   local o = PlatformContext:super()
   -- Platform contains a game which will be allocated when profile selected
   o.game = nil
+  -- @member proggLevels:ProggLevels
   local proggLevels = ProggLevels:new()
   o.proggGameLevels = proggLevels:getProggLevels()
 
