@@ -22,7 +22,7 @@ local executionProgress = 0
 -- @param y:integer the initial y-position of the character
 -- @author Ludwig Wikblad; Mario Pizcueta
 ----
-function Character:new(x,y, rightMenu, levelData)
+function Character:new(x,y, rightMenu, levelData, context)
   local o = Character:super()
   o.position = {x = x, y = y}
   o.startPosition = {x = x, y = y}
@@ -34,6 +34,8 @@ function Character:new(x,y, rightMenu, levelData)
   o.step = 1
   o.rightMenu = rightMenu
   o.ifIterations = 0
+  o.context = context
+  o.levelData = levelData
   return Character:init(o)
 end
 
@@ -135,6 +137,7 @@ function Character:startExecution(inqueue)
         --Check if the goal has been reached
         if(self.map:isInGoal(self.position.x,self.position.y) and #self.map.inGameObjectives==0)then
           self.hasWon = true
+          self:updateProgress()
         else
           self:reset()
           gfx.update()
@@ -277,6 +280,23 @@ function Character:reset()
   self.onIfFalse = false
   self.j = 0
   self.rightMenu:stop()
+end
+
+---------------------------------------
+-- Resets the character to it's start position.
+-- @author Ludwig Wikblad
+---------------------------------------
+function Character:updateProgress()
+    local progress = self.context.profile.gameprogress:getProgress("games.Progg.ProggGame")
+    progress.level = self.levelData.level
+    if (self.levelData.level == 2) then
+        progress.proggGameLoopLevel = true
+    elseif (self.levelData.level == 3) then
+        progress.proggGameProcLevel = true
+    elseif (self.levelData.level == 4) then
+        progress.proggGameIfLevel = true
+    end
+    self.context.profile.gameprogress:setProgress("games.Progg.ProggGame", progress)
 end
 
 return Character
