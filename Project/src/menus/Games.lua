@@ -73,6 +73,27 @@ end
 -- @author Erik
 -------------------------------------
 function Games:renderui()
+
+    local avatarImageUrl = platformContext.profile.avatar
+  self.avatarImage = gfx.loadpng(avatarImageUrl)
+
+  local proggGameURL = "data/tie_prg.png"
+  self.proggGameImage = gfx.loadpng(proggGameURL)
+
+  local anotherGameURL = "data/MysteryPicture.png"
+  self.anotherGameImage = gfx.loadpng(anotherGameURL)
+
+self.test21 = {self.proggGameImage,
+        self.anotherGameImage,
+    self.anotherGameImage,
+        self.anotherGameImage }
+
+screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() *0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+
+
+
+
+
     local image1 = gfx.loadpng(platformContext.profile.avatar)
     image1:premultiply()
 
@@ -100,6 +121,8 @@ end
 function Games:buttonactive(x1)
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
 
+  screen:copyfrom(self.test21[x1], nil, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1),  y = (screen:get_height() * 0.32), w = screen:get_width() * 0.15,  h = screen:get_height() * 0.25 })
+
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
   games_trophiesfonts[x1]:draw_over_surface(screen,"Progress: " .. platformContext.profile.gameprogress:getprogressStart(self.games[x1][2]))
 end
@@ -111,6 +134,10 @@ end
 -------------------------------------
 function Games:buttoninactive(x1)
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
+
+
+  screen:copyfrom(self.test21[x1], nil, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1),  y = (screen:get_height() * 0.32), w = screen:get_width() * 0.15,  h = screen:get_height() * 0.25 })
+
 
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
   games_trophiesfonts[x1]:draw_over_surface(screen,"Progress: " .. platformContext.profile.gameprogress:getprogressStart(self.games[x1][2]))
