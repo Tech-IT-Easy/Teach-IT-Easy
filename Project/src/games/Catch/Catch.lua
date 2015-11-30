@@ -16,7 +16,10 @@ local UIMainWindowController = require('games.Catch.UIMainWindowController')
 
 
 
-local words = {"Anka", "Kaka", "Banan", "Apa"}
+local words = {
+  "Anka",
+  "Kaka"
+}
 
 
 -----------------------------------------------------------
@@ -53,8 +56,9 @@ end
 -- as of right now.
 -----------------------------------------------------------
 function Catch:load()
-  self.selectedWord = words[math.random(#words)]
-  print("Correct answer: " .. self.selectedWord)
+  self.correctWord = words[math.random(#words)]
+  self.numberCorrect = 0
+  print("Correct answer: " .. self.correctWord)
 end
 
 -----------------------
@@ -71,7 +75,18 @@ end
 -- and are displayed on the screen
 ------------------------
 function Catch:update()
-    self.windowController:presentView()
+  if self:completed() then
+    print("Game completed!")
+  else
+    print("Game not completed!")
+  end
+
+  self.windowController:presentView()
+end
+
+
+function Catch:completed()
+  return #self.correctWord == self.guessedWord;
 end
 
 return Catch
