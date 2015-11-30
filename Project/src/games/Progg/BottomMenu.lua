@@ -219,7 +219,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then  --Handles input when a command is selected and it's not a method or input when moving a command
                 print("Not allowed while moving an action")
                 print("Cannot enter command that is not a loop or procedure")
-                object.selectingActionEdit = nil
+                --object.selectingActionEdit = nil
             else -- Handles input during normal state. Lets user add "turn right" to current queue.
                 object.queue:push(Commands.TURN_RIGHT, object.inputArea)
                 object.rightMenu.toHighlight = (Commands.TURN_RIGHT)
@@ -232,14 +232,24 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" or object.selectingActionEdit == "if"  then
-                object:enterMethod()
+                --object:enterMethod()
                 object.selectingActionEdit = nil
                 object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
+                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if"  then
+                    object.rightMenu.inputArea = "build"
+                else
+                    object.rightMenu.inputArea = "queue"
+                end
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then --Handles input when a command is selected and it's not a method or input when moving a command
                 print("Not allowed while moving an action")
                 print("Cannot enter command that is not a loop or procedure")
                 object.selectingActionEdit = nil
+                object.rightMenu.inputAreaChanged = true
+                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if"  then
+                    object.rightMenu.inputArea = "build"
+                else
+                    object.rightMenu.inputArea = "queue"
+                end
             else
                 object.queue:push(Commands.FIX, object.inputArea)
                 --object.rightMenu.toHighlight = (Commands.FIX)
