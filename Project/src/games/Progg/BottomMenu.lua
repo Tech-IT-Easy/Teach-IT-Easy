@@ -276,7 +276,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
-
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true or #object.queue.actions<object.maxCommands[object.inputArea] == false then
                 print("Not allowed while selecting edit or moving action")
             else
@@ -295,6 +294,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.buildArea:setPosition(object.position)
                 object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.loopQueue)
+                object.queue.loopPointer = #object.queue.loopActions
+                object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")
             end
 
         elseif event.key == Event.KEY_SEVEN then
@@ -421,6 +422,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputArea = "queue"
                 object.inputArea = "queue"
             end
+            
         elseif event.key == Event.KEY_OK then
             local queuePos = object.position
             if queuePos > 2*object.rowLength then
@@ -445,6 +447,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                     end
                 end
                 object.queue.loopPointer = count
+                 if(object:getQueue(object.inputArea)[queuePos] == Commands.LOOP)then
+                object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")end
                 object.rightMenu.selectedCommand = object:getQueue(object.inputArea)[queuePos]
                 print(object:getQueue(object.inputArea)[queuePos])
 
