@@ -1,5 +1,6 @@
 local Object = require('toolkit.Object')
 local GameProgress = extends(Object)
+local Network = require('toolkit.Network')
 
 
 -------------------------------------
@@ -12,16 +13,9 @@ function GameProgress:new(name)
     o.name = name
     o.progress = {}
     o.progress["games.Progg.ProggGame"] = {}
---    o.progress["games.Reading.ReadingGame"] = {}
-    if name == "Knatte" then
-        o.progress["games.Progg.ProggGame"] = {level = 1, proggGameLoopLevel = false, proggGameProcLevel= false, proggGameIfLevel = false }
-    elseif name == "Fnatte" then
-        o.progress["games.Progg.ProggGame"] = {level = 3, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = false }
-    elseif name == "Tjatte" then
-        o.progress["games.Progg.ProggGame"] = {level = 5, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = true }
-    else
-       o.progress["games.Progg.ProggGame"] = {level = 0, proggGameLoopLevel = false, proggGameProcLevel= false, proggGameIfLevel = false }
-    end
+--  o.progress["games.Reading.ReadingGame"] = {}
+
+    o.progress["games.Progg.ProggGame"] = Network:getProgress("games.Progg.ProggGame", name)
 
     return GameProgress:init(o)
 end
