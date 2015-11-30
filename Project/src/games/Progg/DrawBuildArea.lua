@@ -221,6 +221,9 @@ function DrawBuildArea:getFileName(action)
         return "data/progg_game_icons/P2.png"
     elseif action =="infinity-loop" then
         return "data/progg_game_icons/infinity_loop.png"
+        
+    elseif action == "fix" then
+        return "data/progg_game_icons/action.png"
     end
 end
 

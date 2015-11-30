@@ -134,6 +134,45 @@ function Queue:getExecutionQueue()
   return executionQueue
 end
 
+----------------------------------------
+-- Clears the whole queue
+-- @param queueType:Queue to be cleared
+-- @author Ludwig Wikblad
+----------------------------------------
+function Queue:clearAll(queueType)
+  if queueType == "queue" or queueType == nil then
+    for i=1, #self.actions do
+        table.remove(self.actions)
+    end
+  elseif queueType == "loop" then
+    for i=1, #self.loopActions do
+        table.remove(self.loopActions)
+    end
+  elseif queueType == "P1" then
+    for i=1, #self.p1Actions do
+        table.remove(self.p1Actions)
+    end
+  elseif queueType == "P2" then
+    for i=1, #self.p2Actions do
+        table.remove(self.p2Actions)
+    end
+  elseif queueType == "if-wall" then
+    for i=1, #self.ifTrueActions do
+        table.remove(self.ifTrueActions)
+    end
+  elseif queueType == "if-not-wall" then
+    for i=1, #self.ifFalseActions do
+        table.remove(self.ifFalseActions)
+    end
+  end
+  if queueType == "queue" then
+    self.bottomMenu.drawBottomMenu:emptySlots(queueType)
+  else
+    self.buildArea.drawBuildArea:emptySlots(queueType)
+  end
+end
+
+
 -------------
 --- !!Note!! This function will be uncommented and work as intended when calling methods from methods is supported. !!Note!!
 ---
@@ -141,6 +180,8 @@ end
 --- @return false if adding action that is not itself (aka not recursive) or if there isn't a recursive call already added.
 --- @return true if method already contains a call to itself.
 --- @author Mikael Ögren
+
+
 ----
 function Queue:containsRecursion(action, Queue, queueType)
 --  if action ~= queueType then
