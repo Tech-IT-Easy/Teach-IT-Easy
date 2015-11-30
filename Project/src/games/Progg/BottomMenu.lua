@@ -91,7 +91,7 @@ function BottomMenu:show()
         self.drawBottomMenu:icons(self.queue.actions, self.inputArea)
         self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
     end
-    self.rightMenu:show()
+    self.rightMenu:show(self.inputArea)
 end
 
 --------------------------------------------
@@ -278,6 +278,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 print("Not allowed while selecting edit or moving action")
             else
                 if #object.queue.actions<object.maxCommands[object.inputArea] == false then
+                    print("Action not allowed")
+                    return;
+                end
+                if object.inputArea == "if-wall" or object.inputArea == "if-not-wall" then
                     print("Action not allowed")
                     return;
                 end

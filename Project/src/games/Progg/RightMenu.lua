@@ -50,7 +50,7 @@ end
 -- Currently also used to test certain commands
 -- @author Vilhelm
 -------------------------------------
-function RightMenu:show(command)
+function RightMenu:show(bottomInput)
     --self:standardLayout()
     --self:optionsLayout(true)
     --self:highlight("action")
@@ -59,14 +59,13 @@ function RightMenu:show(command)
     --self:stop()
     --self:loopLayout()
     --self:buildLayout()
-
     if (self.inputAreaChanged == true) then
         if (self.inputArea == "queue") then
             self:standardLayout()
         elseif(self.inputArea == "loop") then
             self:loopLayout()
         elseif(self.inputArea == "build") then
-            self:buildLayout()
+            self:buildLayout(bottomInput)
         elseif(self.inputArea == "if-wall") then
             self:ifTrueLayout()
         elseif(self.inputArea == "options") then
@@ -163,7 +162,7 @@ end
 
 -------------------------------------
 -- Called to replace buttons for loops
--- @author Vilhelm
+-- @author Jonathan
 -------------------------------------
 function RightMenu:loopLayout()
     self.draw:drawRow(1)
@@ -179,15 +178,21 @@ end
 -- use in the build area
 -- @author Vilhelm
 -------------------------------------
-function RightMenu:buildLayout()
+function RightMenu:buildLayout(bottomInput)
     self.draw:drawRow(1)
     self.draw:drawRow(2)
     self.draw:drawRow(3)
     self.draw:addNumbers()
     self.draw:addImages()
     self.draw:addBack()
+    self.draw:preventRecursion(bottomInput ~= "if-not-wall")
 end
 
+-------------------------------------
+-- Called to replace buttons for
+-- use with if-statements
+-- @author Vilhelm
+-------------------------------------
 function RightMenu:ifTrueLayout()
     self.draw:drawRow(1)
     self.draw:drawRow(2)
@@ -195,6 +200,7 @@ function RightMenu:ifTrueLayout()
     self.draw:addNumbers()
     self.draw:addImages()
     self.draw:addIfFalse()
+    self.draw:preventRecursion(false)
 end
 -------------------------------------
 -- Called to replace buttons for
@@ -218,7 +224,6 @@ end
 function RightMenu:confirmLayout()
     self.draw:addConfirm()
 end
-
 
 -------------------------------------
 -- Functionality related to the event listener
