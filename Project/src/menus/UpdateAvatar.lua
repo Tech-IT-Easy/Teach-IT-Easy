@@ -11,7 +11,6 @@ local UpdateAvatar = extends(Super)
 local Profile = require('platform.Profile')
 
 local Event = require('toolkit.Event')
-local CreateProfile = require('menus.CreateProfile')
 
 -------------------------------------
 -- Creates a new menu
@@ -58,8 +57,6 @@ function UpdateAvatar:handleinput(event)
     self.pos = self.pos - 1
   elseif (event.key == Event.KEY_OK) then
 
-    self.image4 = self.myimages[self.pos]
-    table.insert(images, self.image4)
     platformContext.profile.avatar = self.imagestrings[self.pos]
     platformContext.profile.images = platformContext.profile:getImages(self.folderimagestrings[self.pos])
 

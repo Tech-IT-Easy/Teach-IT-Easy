@@ -24,6 +24,7 @@ local TrophyRoom = require('menus.TrophyRoom')
 local Instructions = require('menus.Instructions')
 local SelectLevel = require('menus.SelectLevel')
 local UpdateAvatar = require('menus.UpdateAvatar')
+local UpdateName = require('menus.UpdateName')
 
 -----------------------------------------------------------
 -- Constructor method
@@ -72,7 +73,7 @@ function PlatformMenu:loadviews()
         trophy = TrophyRoom,
         instructions = Instructions,
         selectlevel = SelectLevel,
-        settings = UpdateAvatar
+        settings = UpdateName
     }
     collectgarbage()
 end
