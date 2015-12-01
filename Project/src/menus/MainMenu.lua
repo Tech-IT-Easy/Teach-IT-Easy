@@ -107,9 +107,8 @@ function MainMenu:renderui()
     local trophyRoomImageInactive="data/trophyinactive.png"
     local SettingsMenuImageActive="data/settings_active.png"
     local SettingsMenuImageInactive="data/settings_inactive.png"
-
-    local InstructionsMenuImageActive="data/MysteryPicture.png"
-    local InstructionsMenuImageInactive="data/MysteryPicture.png"
+    local InstructionsMenuImageActive="data/instructions_active.png"
+    local InstructionsMenuImageInactive="data/instructions_inactive.png"
 
 
     local avatarImage = gfx.loadpng(avatarImageUrl)
