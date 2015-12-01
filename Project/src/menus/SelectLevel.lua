@@ -15,10 +15,12 @@ local Event = require('toolkit.Event')
 local CreateProfile = require('menus.CreateProfile')
 local GameFactory = require('games.GameFactory')
 
+
+
 -------------------------------------
 -- Creates a new menu
 -- @return self:SelectLevel The created menu
--- @author Erik; Marcus
+-- @author Marcus
 -------------------------------------
 function SelectLevel:new()
   local o = SelectLevel:super()
@@ -32,20 +34,18 @@ end
 
 -------------------------------------
 -- Update menu when navigated in
--- @author Erik; Marcus
+-- @author Marcus
 -------------------------------------
 function SelectLevel:update()
-  --if self.image1 then
     self:inactive(self.lastpos)
     self:active(self.pos)
-  --end
 end
 
 -------------------------------------
 -- Handles the input from the user
 -- @param event The key pressed by the user
 -- @return menu:String to navigate to or empty string
--- @author Erik; Marcus; Adam
+-- @author Marcus
 -------------------------------------
 function SelectLevel:handleinput(event)
   collectgarbage()
@@ -76,32 +76,29 @@ end
 -------------------------------------
 -- Loads the menu
 -- @param input:String The username
--- @author Erik; Marcus
+-- @author Marcus
 -------------------------------------
 function SelectLevel:loadview(input)
   self.pos = 1
   self.lastpos = 1
   self.username = input
-  --self.unlockedLevels = 2
-  self.unlockedLevels = self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level
-  --[[self.image1 = gfx.loadpng('data/avatar/cute_robot/DOWN.png')
-  self.image2 = gfx.loadpng('data/avatar/insect_robot/DOWN.png')
-  self.image3 = gfx.loadpng('data/avatar/cute_robot/UP.png')
-  self.image4 = gfx.loadpng('data/avatar/insect_robot/UP.png')
-  self.myimages = { self.image1, self.image2, self.image3, self.image4 }
-  ]]
+
+  self.unlockedLevels = self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level + 1
+  self.image1 = gfx.loadpng('data/progg_game_icons/check.png')
+  self.image1:premultiply()
+
   self:renderui(self.unlockedLevels)
 end
 
 -------------------------------------
 -- Prints a button as active
 -- @param x1 Position of button
--- @author Erik
+-- @author Marcus
 -------------------------------------
 function SelectLevel:active(x1)
    if x1 < 5 then
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
-
+  screen:copyfrom(self.image1, nil, {x = screen:get_width() * 0.13 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.40), w = self.image1:get_width() * 0.1, h = self.image1:get_height() * 0.1})
   else
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
    end
@@ -113,12 +110,12 @@ end
 -------------------------------------
 -- Prints an inactive button.
 -- @param x1. Which position to print button at.
--- @author Erik
+-- @author Marcus
 -------------------------------------
 function SelectLevel:inactive(x1)
-  if x1 < 5 then
+  if x1 < 5 and x1  then
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
-
+  screen:copyfrom(self.image1, nil, {x = screen:get_width() * 0.13 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.40), w = self.image1:get_width() * 0.1, h = self.image1:get_height() * 0.1})
   else
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
   end
@@ -127,6 +124,11 @@ function SelectLevel:inactive(x1)
 
 end
 
+-------------------------------------
+-- Prints locked buttons. i.e the levels that are not unlocked yet.
+-- @param x1. Which position to print button at.
+-- @author Marcus
+-------------------------------------
 function SelectLevel:lockedlevels(x1)
   if x1 < 5 then
   screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
@@ -140,7 +142,7 @@ end
 
 -------------------------------------
 -- Loads initial screen of menu
--- @author Erik; Marcus
+-- @author Marcus
 -------------------------------------
 function SelectLevel:renderui(unlocked)
   create_prof_appname:draw_over_surface(screen, "TEACH IT EASY")
