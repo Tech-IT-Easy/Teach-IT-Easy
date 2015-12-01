@@ -11,8 +11,8 @@ local UIImage = require('toolkit.UIKit.UIImage')
 local Thief = require('games.Catch.Thief')
 local Cop = require('games.Catch.Cop')
 
-local UIMainWindowView = require('games.Catch.UIMainWindowView')
-local UIMainWindowController = require('games.Catch.UIMainWindowController')
+local UICatchMainWindow = require('games.Catch.UICatchMainWindow')
+local UICatchMainWindowController = require('games.Catch.UICatchMainWindowController')
 
 
 

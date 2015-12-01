@@ -57,13 +57,6 @@ function onStart()
   end
   
   platformContext:load()
-  platformContext:show() 
-  
-  -- uncomment to see readinggame layouts
-  local GameWindowController = require("games.Catch.UICatchMainWindowController")
-  gwc = GameWindowController:new()
-  gwc:presentView()
-  gfx.update()
-  
+  platformContext:show()
   
 end

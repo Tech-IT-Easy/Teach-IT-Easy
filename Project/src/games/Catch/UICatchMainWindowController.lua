@@ -14,6 +14,7 @@ function UICatchMainWindowController:new(args)
   o.levels = args.levels
   o.numberOfGuesses = 0
   
+  o.window.cop:print()
   return UICatchMainWindowController:init(o)
 end
 
