@@ -45,7 +45,20 @@ local function create_queue(inqueue, type)
 end
 
 function test_execute_simple_commads()
-    local character = require(SUT_1):new(1,5)
+    local levelData = require('games.Progg.levels.ProggLevels'):new()
+    local leveldata = levelData:getProggLevels()
+    local GameProgress = require('toolkit.GameProgress')
+
+    local context_sim = {}
+    context_sim.profile={}
+    context_sim.profile.images={}
+    context_sim.profile.images.UP='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.DOWN='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.RIGHT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.gameprogress = GameProgress:new("test_avatar")
+
+    local character = require(SUT_1):new(1,5,nil,leveldata[1],context_sim)
     local myqueue=require(SUT_3):new(nil,nil,{["queue"] = 9, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
 
     create_queue(myqueue, "simple")
@@ -71,10 +84,19 @@ function test_start_executing_commands()
     local RightMenu = require("games.Progg.RightMenu")
     local rightMenu = RightMenu:new()
     local levelData = require('games.Progg.levels.ProggLevels'):new()
-
     local leveldata = levelData:getProggLevels()
+    local GameProgress = require('toolkit.GameProgress')
 
-    local character = require(SUT_1):new(1,5, rightMenu, leveldata[1],nil)
+    local context_sim = {}
+    context_sim.profile={}
+    context_sim.profile.images={}
+    context_sim.profile.images.UP='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.DOWN='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.RIGHT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.gameprogress = GameProgress:new("test_avatar")
+
+    local character = require(SUT_1):new(1,5, rightMenu, leveldata[1],context_sim)
     local myqueue=require(SUT_3):new(nil,nil,{["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
 
     create_queue(myqueue, "complex")

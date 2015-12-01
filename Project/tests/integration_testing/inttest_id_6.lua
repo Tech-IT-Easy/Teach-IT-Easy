@@ -120,9 +120,22 @@ end
 
 --Test if character moved according to the added procedure
 function test_execute_queue_3()
+    local levelData = require('games.Progg.levels.ProggLevels'):new()
+    local leveldata = levelData:getProggLevels()
+    local GameProgress = require('toolkit.GameProgress')
+
+    local context_sim = {}
+    context_sim.profile={}
+    context_sim.profile.images={}
+    context_sim.profile.images.UP='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.DOWN='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.RIGHT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.gameprogress = GameProgress:new("test_avatar")
+
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },nil)
+    local bottommenu = test:new(leveldata[1],context_sim)
     local test_event
     local bm_queue
     local test_command
