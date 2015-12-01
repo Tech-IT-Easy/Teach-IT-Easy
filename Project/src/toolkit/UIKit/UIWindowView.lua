@@ -27,7 +27,7 @@ end
 function UIWindowView:addView(view,weight)
   self.body:addChildView(view)
   self:addToFocusHeap(view,weight)
-  if(self.focusList.currentNode ~= nil) then
+  if(self.focusList:currentNode() ~= nil) then
     self.focusingView = self.focusList:currentNode().view
   end
 end
@@ -58,9 +58,9 @@ function UIWindowView:addToFocusHeap(view,weight)
 end
 
 function UIWindowView:show()
-  
-  self.focusingView:focused()
-  
+  if self.focusingView then
+    self.focusingView:focused()
+  end
   -- now we only have body
   self.body:show()
   -- draw title somewhere...

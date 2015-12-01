@@ -47,7 +47,11 @@ function List:push(listNode,comp)
   self.current = self.first
 end
 function List:currentNode()
-  return self.current.value;
+  if self.current then
+    return self.current.value
+  else 
+    return nil
+  end
 end
 function List:nextNode()
   self.current = self.current.next

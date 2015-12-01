@@ -1,17 +1,21 @@
-local Object = require("toolkit.Object")
-local People = extends(Object)
-
-local LifeBar = require("games.Catch.LifeBar")
+local UIView = require("toolkit.UIKit.UIView")
+local People = extends(UIView)
 
 
 function People:new(args)
-  local o = People:super()
-
-  o.lifeBar = LifeBar:new()
+  local o = People:super{frame=args.frame,container=args.container}
   o.image = args.image
-  o.frameSize = args.frameSize
-
+  o.moveUnit = args.baseMoveUnit
   return People:init(o)
+end
+
+function People:show()
+  screen:copyfrom(self.image.imageData, nil, self.globalFrame, true)
+end
+
+function People:run()
+  self.frame.x = self.frame.x + self.moveUnit   
+  self:updateGlobalFrame()
 end
 
 return People
