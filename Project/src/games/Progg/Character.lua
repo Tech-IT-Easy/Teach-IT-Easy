@@ -149,9 +149,12 @@ function Character:startExecution(inqueue)
         --Check if the goal has been reached
         if(self.map:isInGoal(self.position.x,self.position.y) and #self.map.inGameObjectives==0)then
           self.hasWon = true
+          print("hallå")
+          self.map:winMessage()
           if(self.levelData.level > self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level) then
             self:updateProgress()
           end
+          gfx.update()
         else
           self:reset()
           gfx.update()
