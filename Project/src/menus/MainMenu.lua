@@ -111,7 +111,7 @@ function MainMenu:renderui()
     local InstructionsMenuImageInactive="data/instructions_inactive.png"
 
 
-    local avatarImage = gfx.loadpng(avatarImageUrl)
+    self.avatarImage = gfx.loadpng(avatarImageUrl)
 
     local TrophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
     local TrophyRoomImageInactiveImage = gfx.loadpng(trophyRoomImageInactive)
@@ -120,7 +120,7 @@ function MainMenu:renderui()
 
     local InstructionsActiveImage = gfx.loadpng(InstructionsMenuImageActive)
     local InstructionsInactiveImage = gfx.loadpng(InstructionsMenuImageInactive)
-    avatarImage:premultiply()
+    self.avatarImage:premultiply()
     TrophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
     TrophyRoomImageActiveImage:premultiply()
     TrophyRoomImageInactiveImage = gfx.loadpng(trophyRoomImageInactive)
@@ -153,7 +153,7 @@ function MainMenu:renderui()
 
 
 
-    screen:copyfrom(avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+    screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
 
     self:gamebuttonactive()
     for i = 1, 3, 1 do
@@ -172,6 +172,7 @@ end
 function MainMenu:gamebuttonactive()
     screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.3, w = screen:get_width() * 0.42, h = screen:get_height() * 0.61 })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.055, y = (screen:get_height() * 0.309), w = (screen:get_width() * 0.41), h = (screen:get_height() * 0.593) })
+    screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.10, y = screen:get_height() * 0.32 , w = screen:get_width() * 0.30, h = screen:get_height() * 0.45 })
     main_menu_games:draw_over_surface(screen, "Games")
 end
 
@@ -181,6 +182,7 @@ end
 -------------------------------------
 function MainMenu:gamebuttoninactive()
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.3, w = screen:get_width() * 0.42, h = screen:get_height() * 0.61 })
+    screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.10, y = screen:get_height() * 0.32 , w = screen:get_width() * 0.30, h = screen:get_height() * 0.45 })
     main_menu_games:draw_over_surface(screen, "Games")
 end
 
