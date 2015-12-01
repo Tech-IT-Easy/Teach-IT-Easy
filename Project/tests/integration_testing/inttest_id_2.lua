@@ -70,7 +70,11 @@ end
 function test_start_executing_commands()
     local RightMenu = require("games.Progg.RightMenu")
     local rightMenu = RightMenu:new()
-    local character = require(SUT_1):new(1,5, rightMenu)
+    local levelData = require('games.Progg.levels.ProggLevels'):new()
+
+    local leveldata = levelData:getProggLevels()
+
+    local character = require(SUT_1):new(1,5, rightMenu, leveldata[1],nil)
     local myqueue=require(SUT_3):new(nil,nil,{["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
 
     create_queue(myqueue, "complex")

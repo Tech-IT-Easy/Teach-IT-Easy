@@ -11,7 +11,6 @@ module( "inttest_id_1", package.seeall, lunit.testcase )
 
 local SUT_1 = 'games.Progg.Queue'
 local SUT_2 = 'games.Progg.Commands'
-local SUT_3 = 'games.Progg.BottomMenu'
 
 local function create_mock(class_to_mock)
   -- unload the package if loaded to dissmiss previous mocks
@@ -46,10 +45,7 @@ end
 function test_command_queue()
     local a = require(SUT_1)
     local b = require(SUT_2)
-    local c = require(SUT_3)
 
-
-    local bottommenu = c:new()
     local queue = a:new(nil, nil, {["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
     local commands = b:new()
 
