@@ -23,8 +23,8 @@ cop = Cop:new{frame={x=20,y=20,w=100,y=100},image=copImage,moveUnit=20}
 
 mainPanel:addChildView(thief)
 mainPanel:addChildView(cop)
-UIMainWindowView:addView(mainPanel,2)
-UIMainWindowView:addView(rightPanel,2)
+UIMainWindowView:addChildView(mainPanel,2)
+UIMainWindowView:addChildView(rightPanel,2)
 local textlabel = UILabel:new{text="A",color=THEME.COLOR.BLUE,size=50,font=UILabel.FONT_GROBOLD}
 UIMainWindowView.words = {
   ['a'] = UIRectangleView:new{frame={x=300,y=20,w=80,h=80},borderColor={r=255,g=29,b=25},borderWidth = 4,label=textlabel},
@@ -36,7 +36,7 @@ for _,v in pairs(UIMainWindowView.words) do
 end
 
 bottomPanel:addChildView(textPanel)
-UIMainWindowView:addView(bottomPanel)
+UIMainWindowView:addChildView(bottomPanel)
 --textlabel = UILabel:new{text="+ profile",color=COLOR.RED,size=40,font=UILabel.FONT_GROBOLD}
 --button5 = UIButtonView:new{identity="button4",enableFocus = true,frame={x=500,y=400,w=300,h=100},borderWidth = 2,label = textlabel}
 --UIMainWindowView:addView(button5,21)
