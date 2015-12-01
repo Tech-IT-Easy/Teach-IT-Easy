@@ -26,8 +26,9 @@ Map.OBJECTIVECOLOR = { g = 9, r = 115, b = 13 }
 -- @return map:Map a new instance of Map
 -- @author Adam
 -------------------------------------
-function Map:new()
+function Map:new(context)
     local o = Map:super()
+    o.context = context
 
     return Map:init(o)
 end
@@ -97,8 +98,8 @@ function Map:load(levelData)
     end
 
 
-    self.goalPos = 20
-    self.startPos = 33
+    self.goalPos = levelData.levelGoalPosition
+    self.startPos = levelData.levelStartPosition
     self.charPos = self.startPos
 
     --Loop builds map
@@ -322,16 +323,17 @@ end
 -- @author Erik
 -------------------------------------
 function Map:setCharacter(i, direction)
-    self.image1 = gfx.loadpng('data/avatar/cute_robot/UP.png')
+    local images = self.context.profile.images
+    self.image1 = gfx.loadpng(images.UP)
     self.image1:premultiply()
     if direction == Map.UP then
-        self.image1 = gfx.loadpng('data/avatar/cute_robot/UP.png')
+        self.image1 = gfx.loadpng(images.UP)
     elseif direction == Map.DOWN then
-        self.image1 = gfx.loadpng('data/avatar/cute_robot/DOWN.png')
+        self.image1 = gfx.loadpng(images.DOWN)
     elseif direction == Map.RIGHT then
-        self.image1 = gfx.loadpng('data/avatar/cute_robot/RIGHT.png')
+        self.image1 = gfx.loadpng(images.RIGHT)
     elseif direction == Map.LEFT then
-        self.image1 = gfx.loadpng('data/avatar/cute_robot/LEFT.png')
+        self.image1 = gfx.loadpng(images.LEFT)
     end
 
     screen:copyfrom(self.image1, nil, {

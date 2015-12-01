@@ -14,33 +14,32 @@ local GameProgress =require('toolkit.GameProgress')
 -- @return :Progile a new instance of Profile
 -- @author Adam
 -------------------------------------
-function Profile:new(name, image)
+function Profile:new(name, image, imagefolder)
         local o = Profile:super()
         o.name = name
         o.avatar = image
           -- @member gameProgress:GameProgress
         o.gameprogress = GameProgress:new(o.name)
+        o.images = {}
+        o.images = Profile:getImages(imagefolder)
 
-       -- print(o.gameprogress.progress["games.Progg.ProggGame"].level)
---        print(proggGameLevel)
---        print("AsdADSSADSADDSA")
---        print(PlatformContext.hej)
         return Profile:init(o)
---        if(avatarNum == 1) then
---                o.avatar = 'data/avatar/cute_robot/DOWN.png'
---                return Profile:init(o)
---        end
---
---        if(avatarNum == 2) then
---                o.avatar = 'data/avatar/insect_robot/DOWN.png'
---                return Profile:init(o)
---            end
---
---        if(avatarNum == 3) then
---                o.avatar = 'data/avatar/cute_robot/UP.png'
---                return Profile:init(o)
---        end
+end
 
+-------------------------------------
+-- Returns avatar images
+-- @param imagefolder:String the name of the folder with the images
+-- @return :Table with the images mapped to keys UP, DOWN, LEFT, RIGHT
+-- @author Trygg
+-------------------------------------
+function Profile:getImages(imagefolder)
+    local folderstring = "data/avatar"..imagefolder
+    local UP = folderstring.."UP.png"
+    local DOWN = folderstring.."DOWN.png"
+    local RIGHT = folderstring.."RIGHT.png"
+    local LEFT = folderstring.."LEFT.png"
+    local images = {UP = UP, DOWN = DOWN, RIGHT = RIGHT, LEFT = LEFT }
+    return images
 end
 
 

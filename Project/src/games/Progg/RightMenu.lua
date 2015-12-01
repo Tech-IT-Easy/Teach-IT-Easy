@@ -50,7 +50,7 @@ end
 -- Currently also used to test certain commands
 -- @author Vilhelm
 -------------------------------------
-function RightMenu:show(command)
+function RightMenu:show(bottomInput)
     --self:standardLayout()
     --self:optionsLayout(true)
     --self:highlight("action")
@@ -59,14 +59,13 @@ function RightMenu:show(command)
     --self:stop()
     --self:loopLayout()
     --self:buildLayout()
-
     if (self.inputAreaChanged == true) then
         if (self.inputArea == "queue") then
             self:standardLayout()
         elseif(self.inputArea == "loop") then
             self:loopLayout()
         elseif(self.inputArea == "build") then
-            self:buildLayout()
+            self:buildLayout(bottomInput)
         elseif(self.inputArea == "if-wall") then
             self:ifTrueLayout()
         elseif(self.inputArea == "options") then
@@ -163,7 +162,7 @@ end
 
 -------------------------------------
 -- Called to replace buttons for loops
--- @author Vilhelm
+-- @author Jonathan
 -------------------------------------
 function RightMenu:loopLayout()
     self.draw:drawRow(1)
@@ -179,15 +178,21 @@ end
 -- use in the build area
 -- @author Vilhelm
 -------------------------------------
-function RightMenu:buildLayout()
+function RightMenu:buildLayout(bottomInput)
     self.draw:drawRow(1)
     self.draw:drawRow(2)
     self.draw:drawRow(3)
     self.draw:addNumbers()
     self.draw:addImages()
     self.draw:addBack()
+    self.draw:preventRecursion(bottomInput ~= "if-not-wall")
 end
 
+-------------------------------------
+-- Called to replace buttons for
+-- use with if-statements
+-- @author Vilhelm
+-------------------------------------
 function RightMenu:ifTrueLayout()
     self.draw:drawRow(1)
     self.draw:drawRow(2)
@@ -195,6 +200,7 @@ function RightMenu:ifTrueLayout()
     self.draw:addNumbers()
     self.draw:addImages()
     self.draw:addIfFalse()
+    self.draw:preventRecursion(false)
 end
 -------------------------------------
 -- Called to replace buttons for
@@ -203,7 +209,7 @@ end
 -------------------------------------
 function RightMenu:optionsLayout()
     self.can_enter = false
-    if(self.selectedCommand == "loop" or self.selectedCommand == "P1" or self.selectedCommand == "P2" ) then
+    if(self.selectedCommand == "loop" or self.selectedCommand == "P1" or self.selectedCommand == "P2" or self.selectedCommand == "if-wall") then
         self.can_enter = true
     end
 
@@ -218,7 +224,6 @@ end
 function RightMenu:confirmLayout()
     self.draw:addConfirm()
 end
-
 
 -------------------------------------
 -- Functionality related to the event listener
@@ -238,203 +243,6 @@ rightMenuEventHandler.events = {[Event.KEY_ONE] = 1,[Event.KEY_TWO] = 1,[Event.K
 -- @param event:Event the event that trigered the function call
 function rightMenuEventHandler:update(object,eventListener,event)
     if(event.state==Event.KEY_STATE_DOWN) then
-        --Switch for all the input handling to implement
-        --[[if event.key == Event.KEY_ONE then
-            if(object.inputArea =="queue") then
-                object:highlight(Commands.MOVE)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "queue"
-                object:standardLayout()
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_TWO then
-            if(object.inputArea =="queue") then
-                object:highlight(Commands.TURN_LEFT)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "queue"
-                object:standardLayout()
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_THREE then
-            if(object.inputArea =="queue") then
-                object:highlight(Commands.TURN_RIGHT)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "queue"
-                object:standardLayout()
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_FOUR then
-            if(object.inputArea =="queue") then
-                --object:highlight()
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "queue"
-                object:standardLayout()
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_FIVE then
-            if(object.inputArea =="queue") then
-                --object:highlight()
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "queue"
-                object:standardLayout()
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_SIX then
-            if(object.inputArea =="queue") then
-             object:highlight(Commands.LOOP)
-            if object.isFirstTimeLoop == true then
-              object:loopLayout()
-              object.isFirstTimeLoop = false
-            end
-            object.inputArea = "loop"
-         elseif(object.inputArea =="loop") then
-            object.inputArea = "queue"
-            object:standardLayout()
-        elseif(object.inputArea =="options") then
-            end
-         end
-
-        elseif event.key == Event.KEY_SEVEN then
-            if(object.inputArea =="queue") then
-                object:highlight(Commands.P1)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "queue"
-                object:standardLayout()
-            elseif(object.inputArea =="options") then
-            end
-
-
-        elseif event.key == Event.KEY_EIGHT then
-            if(object.inputArea =="queue") then
-                object:highlight(Commands.P2)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "queue"
-                object:standardLayout()
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_NINE then
-            if(object.inputArea =="queue") then
-                --object:highlight()
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "queue"
-                object:standardLayout()
-            elseif(object.inputArea =="options") then
-            end
-        elseif event.key == Event.KEY_ZERO then
-
-        elseif event.key == Event.KEY_OK then
-            if(object.inputArea =="queue") then
-                object.inputArea = "options"
-                object:optionsLayout()
-            elseif(object.inputArea =="options") then
-                object.inputArea = "queue"
-                object:standardLayout()
-            end
-        end]]
-
-
-
-
-
-        if event.key == Event.KEY_ONE then
-            if(object.inputArea =="queue") then
-                object.toHighlight = (Commands.MOVE)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "build"
-            elseif(object.inputArea =="options") then
-
-            end
-
-        elseif event.key == Event.KEY_TWO then
-            if(object.inputArea =="queue") then
-                object.toHighlight = (Commands.TURN_LEFT)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "build"
-            elseif(object.inputArea =="options") then
-                object.inputArea = "queue"
-            end
-
-        elseif event.key == Event.KEY_THREE then
-            if(object.inputArea =="queue") then
-                object.toHighlight = (Commands.TURN_RIGHT)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "build"
-            elseif(object.inputArea =="options") then
-                object.inputArea = "build"
-            end
-
-        elseif event.key == Event.KEY_FOUR then
-            if(object.inputArea =="queue") then
-                --object.toHighlight = (Commands.ACTION)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "build"
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_FIVE then
-            if(object.inputArea =="queue") then
-                --object.toHighlight = (Commands.IF_START)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "build"
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_SIX then
-            if(object.inputArea =="queue") then
-                object.inputArea = "loop"
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "build"
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_SEVEN then
-            if(object.inputArea =="queue") then
-                object.toHighlight = (Commands.P1)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "build"
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_EIGHT then
-            if(object.inputArea =="queue") then
-                object.toHighlight = (Commands.P2)
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "build"
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_NINE then
-            print("seen 9 button press")
-            if(object.inputArea =="queue") then
-            elseif(object.inputArea =="loop") then
-                object.inputArea = "build"
-            elseif(object.inputArea =="options") then
-            end
-
-        elseif event.key == Event.KEY_ZERO then
-            if object.inputArea =="build" then
-                object.inputArea = "queue"
-            elseif object.inputArea =="queue" then
-                if (object.playing == true) then
-                    object.playing = false
-                else
-                    object.playing = true
-                end
-            end
-
-        elseif event.key == Event.KEY_OK then
-            if(object.inputArea =="queue") then
-                object.inputArea = "options"
-            elseif event.key == Event.KEY_OK then
-                object.inputArea = "queue"
-            end
-        end
     end
 end
 

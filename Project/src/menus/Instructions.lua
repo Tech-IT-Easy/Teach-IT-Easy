@@ -72,7 +72,7 @@ end
 function Instructions:renderui()
 
     main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
-    trophy_room_pagename:draw_over_surface(screen, "INSTRUCTIONS")
+    instructions_pagename:draw_over_surface(screen, "INSTRUCTIONS")
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.19, w = screen:get_width() * 0.18, h = screen:get_height() * 0.08})
     page_txt:draw_over_surface(screen, "Page "..self.page.." of "..self.maxPage)
     if self.page == 1 then

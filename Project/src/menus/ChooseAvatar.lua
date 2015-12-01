@@ -46,7 +46,9 @@ function ChooseAvatar:handleinput(event)
   self.imagestrings = {'data/avatar/cute_robot/DOWN.png',
   'data/avatar/insect_robot/DOWN.png',
   'data/avatar/cute_robot/UP.png',
- 'data/avatar/insect_robot/UP.png'}
+ 'data/avatar/insect_robot/UP.png' }
+
+  self.folderimagestrings = {"/cute_robot/", "/insect_robot/", "/strong_robot/", "/fourth_robot/" }
 
 
   self.lastpos = self.pos
@@ -58,7 +60,7 @@ function ChooseAvatar:handleinput(event)
 
     self.image4 = self.myimages[self.pos]
     table.insert(images, self.image4)
-    table.insert(profiles, Profile:new(CreateProfile.profilename, self.imagestrings[self.pos]))
+    table.insert(profiles, Profile:new(CreateProfile.profilename, self.imagestrings[self.pos], self.folderimagestrings[self.pos]))
 
     collectgarbage()
     return { "profilesel", " " }
