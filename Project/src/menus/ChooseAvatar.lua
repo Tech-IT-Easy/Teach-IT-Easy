@@ -63,7 +63,7 @@ function ChooseAvatar:handleinput(event)
     table.insert(profiles, Profile:new(CreateProfile.profilename, self.imagestrings[self.pos], self.folderimagestrings[self.pos]))
 
     collectgarbage()
-    return { "profilesel", " " }
+    return { "profilesel" }
   elseif (event.key == Event.KEY_BACK) then
     CreateProfile.profilename = ""
     return { "create" }
@@ -76,10 +76,10 @@ end
 -- @param input:String The username
 -- @author Erik; Marcus
 -------------------------------------
-function ChooseAvatar:loadview(input)
+function ChooseAvatar:loadview()
   self.pos = 1
   self.lastpos = 1
-  self.username = input
+  self.username = platformContext.profile.name
   self.image1 = gfx.loadpng('data/avatar/cute_robot/DOWN.png')
   self.image1:premultiply()
   self.image2 = gfx.loadpng('data/avatar/insect_robot/DOWN.png')

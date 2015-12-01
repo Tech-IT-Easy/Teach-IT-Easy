@@ -65,7 +65,7 @@ function ProfileSelection:handleinput(event)
 
   elseif event.key == Event.KEY_OK and self.pos < 5 then
       PlatformContext.profile = profiles[self.pos]
-    return { "main", profiles[self.pos].name}
+    return { "main"}
 
 
   elseif event.key == Event.KEY_OK and self.pos == 5 and #profiles <4 then

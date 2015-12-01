@@ -39,7 +39,7 @@ function MainMenu:handleinput(event)
     elseif event.key == Event.KEY_OK and self.pos == 1 then
         return { "trophy", self.usernamestring }
     elseif event.key == Event.KEY_OK and self.pos == 2 then
-        return { "instructions", self.usernamestring }
+        return { "instructions" }
 
     elseif event.key == Event.KEY_BACK then
         return { "profilesel" }
@@ -71,11 +71,11 @@ end
 -- @param input:String the username
 -- @author Erik
 -------------------------------------
-function MainMenu:loadview(input)
+function MainMenu:loadview()
     self.pos = 0
     self.lastpos = self.pos
     self.sidebuttons = { "Trophy room", "Instructions", "Settings" }
-    self.usernamestring = input
+    self.usernamestring = platformContext.profile.name
     --self:printbackground()
     self:renderui()
 end

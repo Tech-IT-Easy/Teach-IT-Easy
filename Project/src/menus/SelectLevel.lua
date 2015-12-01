@@ -62,8 +62,7 @@ function SelectLevel:handleinput(event)
 
     collectgarbage()
   elseif (event.key == Event.KEY_BACK) then
-    CreateProfile.profilename = ""
-    return { "create" }
+    return { "games" }
   end
   return {" "}
 end
@@ -73,10 +72,10 @@ end
 -- @param input:String The username
 -- @author Erik; Marcus
 -------------------------------------
-function SelectLevel:loadview(input)
+function SelectLevel:loadview()
   self.pos = 1
   self.lastpos = 1
-  self.username = input
+  self.username = platformContext.profile.name
   self.image1 = gfx.loadpng('data/avatar/cute_robot/DOWN.png')
   self.image2 = gfx.loadpng('data/avatar/insect_robot/DOWN.png')
   self.image3 = gfx.loadpng('data/avatar/cute_robot/UP.png')

@@ -33,7 +33,7 @@ function Instructions:handleinput(event)
     collectgarbage()
     self.lastpos = self.pos
     if event.key == Event.KEY_BACK then
-            return { "main", self.usernamestring }
+            return { "main"}
     elseif event.key == Event.KEY_RIGHT then
         if self.page < self.maxPage then
             self.page = self.page + 1
@@ -60,8 +60,8 @@ end
 -- Loads the view to the screen.
 -- @author Erik
 -------------------------------------
-function Instructions:loadview(input)
-    self.usernamestring = input
+function Instructions:loadview()
+    self.usernamestring = platformContext.profile.name
     self:renderui()
 end
 
