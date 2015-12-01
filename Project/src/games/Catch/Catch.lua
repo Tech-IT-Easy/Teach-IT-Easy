@@ -29,21 +29,16 @@ local words = {
 -----------------------------------------------------------
 function Catch:new(context)
   local o = Catch:super()
-
+  o.levels = {
+    {word="anka",maxNumberOfGuesses = 10},
+    {word="anka",maxNumberOfGuesses = 10},
+    {word="anka",maxNumberOfGuesses = 10}
+  }
+  
   self.platformContext = context
   self:initListener()
 
-  self.thief = Thief:new{
-    image=UIImage:new{imagePath="data/bowser.png",imageType="png"},
-    frame={x=0,y=1,w=100,h=100}
-  }
-  self.cop = Cop:new{
-    image=UIImage:new{imagePath="data/mario.png",imageType="png"},
-    frame={x=0,y=1,w=100,h=100}
-  }
-
-  o.window = UIMainWindowView
-  o.windowController = UIMainWindowController:new(o.window)
+  o.windowController = UIMainWindowController:new({levels = o.levels})
 
   self.gameEventListener:attach(o.windowController)
 

@@ -7,11 +7,26 @@ local UICatchMainWindow = require('games.Catch.UICatchMainWindow')
 
 local UICatchMainWindowController = extends(UIWindowViewController)
 
-function UICatchMainWindowController:new()
+function UICatchMainWindowController:new(args)
   local o = UICatchMainWindowController:super(UICatchMainWindow:new())
   --o.window.button1.delegate = o
   --o.window.button2.delegate = o
+  o.levels = args.levels
+  o.numberOfGuesses = 0
+  
   return UICatchMainWindowController:init(o)
+end
+
+function UICatchMainWindowController:checkLetter(letter)
+  return self.level.word:byte(self.guessedLettersCount+1) == letter
+end
+
+function UICatchMainWindowController:updateWindowWords(number)
+  for i = 1,number do
+    --a[self.level.word:byte[i]] = UIRectangleView:new{frame={x=300,y=20,w=80,h=80},borderColor={r=255,g=29,b=25},borderWidth = 4,label=textlabel},
+    --['b'] = UIRectangleView:new{frame={x=400,y=20,w=80,h=80},borderColor={r=255,g=29,b=25},borderWidth = 4}
+     --add rectangle and text to window
+  end
 end
 
 function UICatchMainWindowController:onClickEvent(sender)
