@@ -91,7 +91,7 @@ function BottomMenu:show()
         self.drawBottomMenu:icons(self.queue.actions, self.inputArea)
         self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
     end
-    self.rightMenu:show()
+    self.rightMenu:show(self.inputArea)
 end
 
 --------------------------------------------
@@ -165,7 +165,13 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.queue:clearAll(object.inputArea)
                 object.clearAllCheck = false
                 object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "queue"
+                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
+                    object.rightMenu.inputArea = "build"
+                elseif object.inputArea == "if-wall"  then
+                    object.rightMenu.inputArea = "if-wall"
+                else
+                    object.rightMenu.inputArea = "queue"
+                end
             elseif object.selectingActionEdit ~= nil then   --Handles input when a command is selected
                 object.isMovingAction = true
                 object.posActionToMove = object.position
@@ -186,7 +192,13 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.clearAllCheck == true then --Handles input when confirming if user wants to clear a queue
                 object.clearAllCheck = false
                 object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "queue"
+                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
+                    object.rightMenu.inputArea = "build"
+                elseif object.inputArea == "if-wall"  then
+                    object.rightMenu.inputArea = "if-wall"
+                else
+                    object.rightMenu.inputArea = "queue"
+                end
             elseif object.selectingActionEdit ~= nil then --Handles input when a command is selected
                 object:deleteAction(object.position, object.inputArea)
                 object:updateInputArea(object.inputArea, true)
@@ -211,15 +223,20 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
-            elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" or object.selectingActionEdit == "if"  then -- Handles input while a method is selected. Lets user enter the selected method.
+            elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" then -- Handles input while a method is selected. Lets user enter the selected method.
                 object:enterMethod()
                 object.selectingActionEdit = nil
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
+            elseif object.selectingActionEdit == "if-wall"  then -- Handles input while a method is selected. Lets user enter the selected method.
+                object:enterMethod()
+                object.selectingActionEdit = nil
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "if-wall"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then  --Handles input when a command is selected and it's not a method or input when moving a command
                 print("Not allowed while moving an action")
                 print("Cannot enter command that is not a loop or procedure")
-                object.selectingActionEdit = nil
+                --object.selectingActionEdit = nil
             else -- Handles input during normal state. Lets user add "turn right" to current queue.
                 object.queue:push(Commands.TURN_RIGHT, object.inputArea)
                 object.rightMenu.toHighlight = (Commands.TURN_RIGHT)
@@ -232,14 +249,24 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" or object.selectingActionEdit == "if"  then
-                object:enterMethod()
+                --object:enterMethod()
                 object.selectingActionEdit = nil
                 object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
+                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if"  then
+                    object.rightMenu.inputArea = "build"
+                else
+                    object.rightMenu.inputArea = "queue"
+                end
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then --Handles input when a command is selected and it's not a method or input when moving a command
                 print("Not allowed while moving an action")
                 print("Cannot enter command that is not a loop or procedure")
                 object.selectingActionEdit = nil
+                object.rightMenu.inputAreaChanged = true
+                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-wall"  then
+                    object.rightMenu.inputArea = "build"
+                else
+                    object.rightMenu.inputArea = "queue"
+                end
             else
                 object.queue:push(Commands.FIX, object.inputArea)
                 --object.rightMenu.toHighlight = (Commands.FIX)
@@ -255,6 +282,10 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 print("Not allowed while selecting edit or moving action")
             else
                 if #object.queue.actions<object.maxCommands[object.inputArea] == false then
+                    print("Action not allowed")
+                    return;
+                end
+                if object.inputArea == "if-wall" or object.inputArea == "if-not-wall" then
                     print("Action not allowed")
                     return;
                 end
@@ -445,7 +476,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                     object.rightMenu.inputAreaChanged = true
                     object.rightMenu.inputArea = "options"
                 end
-
                 object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
             end
         elseif event.key == Event.KEY_BACK then --This terminates the game no matter what is happening.
