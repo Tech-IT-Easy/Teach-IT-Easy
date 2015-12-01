@@ -38,7 +38,7 @@ function Catch:new(context)
   self.platformContext = context
   self:initListener()
 
-  o.windowController = UIMainWindowController:new({levels = o.levels})
+  o.windowController = UICatchMainWindowController:new({levels = o.levels})
 
   self.gameEventListener:attach(o.windowController)
 

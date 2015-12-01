@@ -1,6 +1,9 @@
 local UIWindowView = require("toolkit.UIKit.UIWindowView")
 local UIPanelView = require("toolkit.UIKit.UIPanelView")
 local UIRectangleView = require("toolkit.UIKit.UIRectangleView")
+local UICollectionView = require("toolkit.UIKit.UICollectionView")
+local UICollectionCellView = require("toolkit.UIKit.UICollectionCellView")
+local UIButtonView = require("toolkit.UIKit.UIButtonView")
 local UIImage = require("toolkit.UIKit.UIImage")
 local UILabel = require("toolkit.UIKit.UILabel")
 local THEME = require("games/Catch/data/theme")
@@ -38,8 +41,33 @@ function UICatchMainWindow:new()
   }
 
   -- layouts
-  local mainPanel = UIPanelView:new{frame={x=0, y = 0,w=screen:get_width()*0.8,h=screen:get_height()*0.8}}
-  local rightPanel = UIPanelView:new{frame={x=screen:get_width()*0.8, y = 0,w=screen:get_width()*0.2,h=screen:get_height()*0.8},backgroundColor=THEME.COLOR.BLUE}
+  local mainPanel = UIPanelView:new{frame={x=0, y = 0,w=screen:get_width()*0.8,h=screen:get_height()*0.8} }
+
+
+  local rows = 3
+  local columns = 2
+  local rightPanel = UICollectionView:new{frame={x=800,y=20,w=400,h=400},space=20,cols=columns,rows=rows,backgroundColor=THEME.COLOR.BLUE}
+
+  local labels = {}
+  local buttons = {}
+  local cells = {}
+
+  for i = 1, rows do
+    for j = 1, columns do
+      labels[i*rows+j] = UILabel:new{text=window.characters[i*rows+j],color=THEME.COLOR.RED,size=50,font=UILabel.FONT_GROBOLD }
+      buttons[i*rows+j] = UIButtonView:new{frame={x=1,y=1,w=100,h=100},borderColor={r=255,g=29,b=25},borderWidth = 6,backgroundImage=nil,label=labels[i*rows+j] }
+      cells[i*rows+j] = UICollectionCellView:new{view=buttons[i*rows+j],viewType="UIButtonView" }
+      rightPanel:fillWithCell(cells[i*rows+j],i-1,j-1)
+    end
+  end
+
+
+
+
+
+
+
+
   local bottomPanel = UIPanelView:new{frame={x=0, y = screen:get_height() * 0.8,w=screen:get_width(),h=screen:get_height() * 0.2},backgroundColor=THEME.COLOR.RED}
   local textPanel = UIPanelView:new{frame={x= bottomPanel.frame.w*0.1, y = bottomPanel.frame.h*0.1,w=bottomPanel.frame.w*0.8,h=bottomPanel.frame.h*0.8},backgroundColor=THEME.COLOR.GREEN}
 

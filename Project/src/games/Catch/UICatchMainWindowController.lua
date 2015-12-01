@@ -9,12 +9,28 @@ local UICatchMainWindowController = extends(UIWindowViewController)
 
 function UICatchMainWindowController:new(args)
   local o = UICatchMainWindowController:super(UICatchMainWindow:new())
+  o.window.cop:print()
+
+  o.levels = args.levels
+  o.currentLevel = 1
+
+  o.correctWord = args.levels[o.currentLevel].word
+  o.maxNumberOfGuesses = args.levels[o.currentLevel].maxNumberOfGuesses
+
+  o.numberofGuesses = 0
+  o.numberCorrect = 0
+  o.characters = {
+    "a", "b", "c",
+    "d", "e", "f",
+    "g", "h", "i"
+  }
+  print("Correct answer: " .. self.correctWord)
+
   --o.window.button1.delegate = o
   --o.window.button2.delegate = o
-  o.levels = args.levels
-  o.numberOfGuesses = 0
-  
+
   o.window.cop:print()
+
   return UICatchMainWindowController:init(o)
 end
 
