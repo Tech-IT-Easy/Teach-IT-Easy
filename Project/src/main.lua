@@ -26,9 +26,6 @@ if ADConfig.isSimulator then
 end
 
 local PlatformContext= require("platform.PlatformContext")
-local GameWindow = require("games.Catch.UIMainWindowview")
-local UILabel = require("toolkit.UIKit.UILabel")
-local THEME = require("games/Catch/data/theme")
 -- create global a game context
 platformContext = PlatformContext:new()
 
@@ -43,14 +40,7 @@ function onKey(key,state)
   if key == 'exit' then
     sys.stop()
   end
-  local textlabel = UILabel:new{text="B",color=THEME.COLOR.BLUE,size=50,font=UILabel.FONT_GROBOLD}
-  GameWindow.words['b']:setLabel(textlabel,{x=0,y=0})
-  --platformContext:process(key,state) 
-  if state == "up" then
-    GameWindow:show()
-  
-    gfx.update()
-  end
+  platformContext:process(key,state) 
   collectgarbage()
 end
 
@@ -66,8 +56,14 @@ function onStart()
     if arg[#arg] == "-debug" then require("mobdebug").start() end
   end
   
-  --platformContext:load()
-  --platformContext:show()  
-  GameWindow:show()
+  platformContext:load()
+  platformContext:show() 
+  
+  --[[ uncomment to see readinggame layouts
+  local GameWindowController = require("games.Catch.UICatchMainWindowController")
+  gwc = GameWindowController:new()
+  gwc:presentView()
   gfx.update()
+  ]]--
+  
 end

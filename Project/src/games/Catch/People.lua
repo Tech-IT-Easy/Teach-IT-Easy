@@ -5,7 +5,7 @@ local People = extends(UIView)
 function People:new(args)
   local o = People:super{frame=args.frame,container=args.container}
   o.image = args.image
-  o.moveUnit = args.baseMoveUnit
+  o.moveUnit = args.moveUnit
   return People:init(o)
 end
 
