@@ -138,7 +138,9 @@ function test_execute_queue_1()
 
     local leveldata = levelData:getProggLevels()
 
-    local bottommenu = test:new(leveldata[1],context_sim)
+    leveldata[4].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
+
+    local bottommenu = test:new(leveldata[4],context_sim)
     local test_event
     local bm_queue
     local test_command
