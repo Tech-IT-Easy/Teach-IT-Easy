@@ -83,6 +83,7 @@ function TrophyRoom:renderui()
     self:printProgressionBar()
     self:loadButtons()
     self:printAchievementBox()
+    self:loadButtonContent()
 end
 
 -------------------------------------
@@ -90,8 +91,8 @@ end
 -- @author Erik
 -------------------------------------
 function TrophyRoom:printAchievementBox()
-    screen:clear({ g = 131, r = 0, b = 143 }, { x = self.boxwidth+ self.boxmargin*2 , y = self.starty, w = self.boxwidth, h = screen:get_height() * 0.40 })
-    screen:clear({ g = 255, r = 255, b = 255 }, { x = self.boxwidth+ self.boxmargin*2 + self.boxpadding, y = self.starty + self.boxpadding, w = self.boxwidth - self.boxpadding * 2, h = (screen:get_height() * 0.40) - self.boxpadding * 2 })
+    screen:clear({ g = 131, r = 0, b = 143 }, { x = self.boxwidth + self.boxmargin * 2, y = self.starty, w = self.boxwidth, h = screen:get_height() * 0.40 })
+    screen:clear({ g = 255, r = 255, b = 255 }, { x = self.boxwidth + self.boxmargin * 2 + self.boxpadding, y = self.starty + self.boxpadding, w = self.boxwidth - self.boxpadding * 2, h = (screen:get_height() * 0.40) - self.boxpadding * 2 })
     trophyroom_contentheader:draw_over_surface(screen, self.achievementButtons[self.pos][1])
     trophyroom_boxcontent:draw_over_surface(screen, self.achievementButtons[self.pos][2])
 
@@ -138,13 +139,19 @@ end
 function TrophyRoom:loadButtons()
     self.boxheight = screen:get_height() * 0.1
     self.boxwidth = screen:get_width() * 0.38
-    local freespace = screen:get_width()-(self.boxwidth*2)
-    self.boxmargin = freespace/3
+    local freespace = screen:get_width() - (self.boxwidth * 2)
+    self.boxmargin = freespace / 3
     self.starty = screen:get_height() * 0.45
-    self.innerboxheight = self.boxheight - 10
-    self.innerboxwidth = self.boxwidth - 10
     self.boxpadding = 5
+    self.innerboxheight = self.boxheight - self.boxpadding*2
+    self.innerboxwidth = self.boxwidth - self.boxpadding*2
+end
 
+-------------------------------------
+-- Loads the current information to the buttons.
+-- @author Erik
+-------------------------------------
+function TrophyRoom:loadButtonContent()
     self:sidebuttonactive(1)
     for i = 2, 3, 1 do
         self:sidebuttoninactive(i)
@@ -188,14 +195,14 @@ function TrophyRoom:sidebuttoninactive(x1)
     local text = gfx.new_surface(self.boxwidth, self.boxheight)
     --get info from tables
     if (self.done[tostring(x1)]) then
-         trophyroom_sidebuttontext:draw_over_surface(text, self.achievementButtons[x1][1])
+        trophyroom_sidebuttontext:draw_over_surface(text, self.achievementButtons[x1][1])
         screen:copyfrom(text, nil, { x = screen:get_width() * 0.15 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding * 3, w = self.boxwidth, h = self.boxheight })
 
 
         -- self.sidebuttonfonts[x1]:draw_over_surface(screen, self.achievementButtons[x1][1])
     else
 
-         trophyroom_inactive_sidebuttontext:draw_over_surface(text, self.achievementButtons[x1][1])
+        trophyroom_inactive_sidebuttontext:draw_over_surface(text, self.achievementButtons[x1][1])
         screen:copyfrom(text, nil, { x = screen:get_width() * 0.15 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding * 3, w = self.boxwidth, h = self.boxheight })
 
         --self.inactivesidebuttonfonts[x1]:draw_over_surface(screen, self.achievementButtons[x1][1])
