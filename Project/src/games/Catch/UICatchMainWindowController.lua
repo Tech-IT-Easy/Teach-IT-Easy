@@ -24,7 +24,7 @@ function UICatchMainWindowController:new(args)
     "d", "e", "f",
     "g", "h", "i"
   }
-  print("Correct answer: " .. self.correctWord)
+  print("Correct answer: " .. o.correctWord)
 
   --o.window.button1.delegate = o
   --o.window.button2.delegate = o
