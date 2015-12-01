@@ -12,6 +12,10 @@ function Cop:catch(thief)
     return true
   end
   return false
-end 
+end
+
+function Cop:print()
+  print("HELLO APA")
+end
 
 return Cop

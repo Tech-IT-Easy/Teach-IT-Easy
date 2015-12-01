@@ -11,6 +11,7 @@ function UICatchMainWindowController:new()
   local o = UICatchMainWindowController:super(UICatchMainWindow:new())
   --o.window.button1.delegate = o
   --o.window.button2.delegate = o
+  o.window.cop:print()
   return UICatchMainWindowController:init(o)
 end
 

@@ -11,8 +11,8 @@ local UIImage = require('toolkit.UIKit.UIImage')
 local Thief = require('games.Catch.Thief')
 local Cop = require('games.Catch.Cop')
 
-local UIMainWindowView = require('games.Catch.UIMainWindowView')
-local UIMainWindowController = require('games.Catch.UIMainWindowController')
+local UICatchMainWindow = require('games.Catch.UICatchMainWindow')
+local UICatchMainWindowController = require('games.Catch.UICatchMainWindowController')
 
 
 
@@ -42,8 +42,8 @@ function Catch:new(context)
     frame={x=0,y=1,w=100,h=100}
   }
 
-  o.window = UIMainWindowView
-  o.windowController = UIMainWindowController:new(o.window)
+  o.window = UICatchMainWindow
+  o.windowController = UICatchMainWindowController:new(o.window)
 
   self.gameEventListener:attach(o.windowController)
 
