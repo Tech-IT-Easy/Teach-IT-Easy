@@ -12,7 +12,7 @@ local Event = require('toolkit.Event')
 profiles = {}
 table.insert(profiles, Profile:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
 table.insert(profiles, Profile:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
-table.insert(profiles, Profile:new("Tjatte", 'data/avatar/cute_robot/UP.png', "/strong_robot/"))
+table.insert(profiles, Profile:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
 -- images
 local image1 = gfx.loadpng(profiles[1].avatar)

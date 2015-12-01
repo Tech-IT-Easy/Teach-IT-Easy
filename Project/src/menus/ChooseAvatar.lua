@@ -45,7 +45,7 @@ function ChooseAvatar:handleinput(event)
 
   self.imagestrings = {'data/avatar/cute_robot/DOWN.png',
   'data/avatar/insect_robot/DOWN.png',
-  'data/avatar/cute_robot/UP.png',
+  'data/avatar/strong_robot/DOWN.png',
  'data/avatar/insect_robot/UP.png' }
 
   self.folderimagestrings = {"/cute_robot/", "/insect_robot/", "/strong_robot/", "/fourth_robot/" }
@@ -84,7 +84,7 @@ function ChooseAvatar:loadview()
   self.image1:premultiply()
   self.image2 = gfx.loadpng('data/avatar/insect_robot/DOWN.png')
   self.image2:premultiply()
-  self.image3 = gfx.loadpng('data/avatar/cute_robot/UP.png')
+  self.image3 = gfx.loadpng('data/avatar/strong_robot/DOWN.png')
   self.image3:premultiply()
   self.image4 = gfx.loadpng('data/avatar/insect_robot/UP.png')
   self.image4:premultiply()

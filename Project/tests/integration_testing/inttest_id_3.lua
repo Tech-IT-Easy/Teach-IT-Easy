@@ -122,9 +122,24 @@ end
 
 
 function test_adding_commands()
+    local levelData = require('games.Progg.levels.ProggLevels'):new()
+    local leveldata = levelData:getProggLevels()
+    local GameProgress = require('toolkit.GameProgress')
+
+    local context_sim = {}
+    context_sim.profile={}
+    context_sim.profile.images={}
+    context_sim.profile.images.UP='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.DOWN='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.RIGHT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.gameprogress = GameProgress:new("test_avatar")
+
+    leveldata[4].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
+
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 },nil)
+    local bottommenu = test:new(leveldata[4],context_sim)
     local test_event
     local bm_queue
     local test_command
@@ -403,9 +418,22 @@ function test_adding_commands()
 end
 
 function test_delete()
+    local levelData = require('games.Progg.levels.ProggLevels'):new()
+    local leveldata = levelData:getProggLevels()
+    local GameProgress = require('toolkit.GameProgress')
+
+    local context_sim = {}
+    context_sim.profile={}
+    context_sim.profile.images={}
+    context_sim.profile.images.UP='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.DOWN='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.RIGHT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.gameprogress = GameProgress:new("test_avatar")
+
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 },nil)
+    local bottommenu = test:new(leveldata[1],context_sim)
     local test_event
     local bm_queue
     local test_command
@@ -451,9 +479,24 @@ function test_delete()
 end
 
 function test_key_press()
+    local levelData = require('games.Progg.levels.ProggLevels'):new()
+    local leveldata = levelData:getProggLevels()
+    local GameProgress = require('toolkit.GameProgress')
+
+    local context_sim = {}
+    context_sim.profile={}
+    context_sim.profile.images={}
+    context_sim.profile.images.UP='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.DOWN='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.RIGHT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.gameprogress = GameProgress:new("test_avatar")
+
+    leveldata[4].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
+
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 , ["if-wall"] = 16, ["if-not-wall"] = 16} ,nil)
+    local bottommenu = test:new(leveldata[4], context_sim)
 
     local test_event = event:new("1", "down")
     bottommenu.inputArea = "loop"

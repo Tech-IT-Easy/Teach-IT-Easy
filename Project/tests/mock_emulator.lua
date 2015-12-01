@@ -78,10 +78,8 @@ data:getWidth(mec.ANYARGS) ; mec:returns(50) :anytimes()
 data:getDimensions(mec.ANYARGS) ; mec:returns(50, 50) :anytimes()
 data:setPixel(mec.ANYARGS) ; mec:returns(nil) :anytimes()
 data:getPixel(mec.ANYARGS) ; mec:returns(0,0,0,0) :anytimes()
-
 local canvas_data = mec:mock()
 canvas_data:getImageData(mec.ANYARGS) ; mec:returns(data) :anytimes()
-
 newCanvas(mec.ANYARGS) ; mec:returns(canvas_data) :anytimes()
 newImageData(mec.ANYARGS) ; mec:returns(data) :anytimes()
 newFileData(mec.ANYARGS) ; mec:returns(data) :anytimes()
@@ -89,6 +87,25 @@ getColor(mec.ANYARGS) ; mec:returns(0,0,0,0) :anytimes()
 newImage(mec.ANYARGS) ; mec:returns(data) :anytimes()
 getTime(mec.ANYARGS) ; mec:returns(0.1) :anytimes()
 nil_returner(mec.ANYARGS) ; mec:returns(nil) :anytimes()
+
+package.loaded['socket'] = nil -- need to delete the package where the function is taken from.
+package.preload['socket'] = function () -- Create preload. When the program wants to include love. This function will run instead
+  local Socket = {}
+  return Socket
+end
+
+package.loaded['socket.http'] = nil -- need to delete the package where the function is taken from.
+package.preload['socket.http'] = function () -- Create preload. When the program wants to include love. This function will run instead
+  local Socket = {}
+  return Socket
+end
+
+package.loaded['ltn12'] = nil -- need to delete the package where the function is taken from.
+package.preload['ltn12'] = function () -- Create preload. When the program wants to include love. This function will run instead
+  local Socket = {}
+  return Socket
+end
+
 mec:replay() -- Tells "now we start testing the code"
 _G.love = require "love"
 _G.ADConfig = require("Config.ADConfig")
