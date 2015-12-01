@@ -14,5 +14,4 @@ function Cop:catch(thief)
   return false
 end 
 
-
 return Cop
