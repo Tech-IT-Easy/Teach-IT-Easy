@@ -98,8 +98,8 @@ function Map:load(levelData)
     end
 
 
-    self.goalPos = 20
-    self.startPos = 33
+    self.goalPos = levelData.levelGoalPosition
+    self.startPos = levelData.levelStartPosition
     self.charPos = self.startPos
 
     --Loop builds map
