@@ -15,19 +15,19 @@ local UICatchMainWindow = extends(UIWindowView)
 
 function UICatchMainWindow:new()
   --assert(args.word,"UICatchMainWindow:new(args={word=''}) is nil ")
-  local window = UICatchMainWindow:super{title="Window Title",backgroundColor=THEME.COLOR.GREEN}
+  local gameBackground = UIImage:new(THEME.IMAGE.GAME_BACKGROUND)
+  local window = UICatchMainWindow:super{title="Window Title",backgroundImage=gameBackground}
   -- private data model with <local>
   local thiefImage = UIImage:new(THEME.IMAGE.THIEF_BACKGROUND)
   local copImage = UIImage:new(THEME.IMAGE.COP_BACKGROUND)
   local textlabel = UILabel:new{text="A",color=THEME.COLOR.BLUE,size=50,font=UILabel.FONT_GROBOLD}
   
   -- components
-  window.thief = Thief:new{frame={x=100,y=20,w=100,y=100},image=thiefImage,moveUnit=20}
-  window.cop = Cop:new{frame={x=20,y=20,w=100,y=100},image=copImage,moveUnit=20,bonusMoveUnit=80}
+  window.thief = Thief:new{frame={x=100,y=20,w=100,h=100},image=thiefImage,moveUnit=20}
+  window.cop = Cop:new{frame={x=20,y=20,w=100,h=100},image=copImage,moveUnit=20,bonusMoveUnit=20}
   --window.word = args.word
   window.cop:run(true)
   window.thief:run(false)
-  
   print(window.cop:catch(window.thief))
   
   --[[for i=0,string.len(window.word) do
@@ -36,8 +36,8 @@ function UICatchMainWindow:new()
   ]]--
   
   window.words = {
-    ['a'] = UIRectangleView:new{frame={x=300,y=20,w=80,h=80},borderColor={r=255,g=29,b=25},borderWidth = 4,label=textlabel},
-    ['b'] = UIRectangleView:new{frame={x=400,y=20,w=80,h=80},borderColor={r=255,g=29,b=25},borderWidth = 4}
+    [1] = UIRectangleView:new{frame={x=300,y=20,w=80,h=80},borderColor=THEME.COLOR.LIGHT_BLUE,borderWidth = 4},
+    [2] = UIRectangleView:new{frame={x=400,y=20,w=80,h=80},borderColor=THEME.COLOR.LIGHT_BLUE,borderWidth = 4}
   }
 
   -- layouts
@@ -46,30 +46,23 @@ function UICatchMainWindow:new()
 
   local rows = 3
   local columns = 2
-  local rightPanel = UICollectionView:new{frame={x=800,y=20,w=400,h=400},space=20,cols=columns,rows=rows,backgroundColor=THEME.COLOR.BLUE}
+  local rightPanel = UICollectionView:new{frame={x=800,y=20,w=400,h=400},space=20,cols=columns,rows=rows,backgroundColor=THEME.COLOR.LIGHT_GRAY}
 
   local labels = {}
   local buttons = {}
   local cells = {}
 
   for i = 1, rows do
-    for j = 1, columns do
-      labels[i*rows+j] = UILabel:new{text=window.characters[i*rows+j],color=THEME.COLOR.RED,size=50,font=UILabel.FONT_GROBOLD }
+    for j = 1, columns do--window.characters[i*rows+j]
+      labels[i*rows+j] = UILabel:new{text="1",color=THEME.COLOR.RED,size=50,font=UILabel.FONT_GROBOLD }
       buttons[i*rows+j] = UIButtonView:new{frame={x=1,y=1,w=100,h=100},borderColor={r=255,g=29,b=25},borderWidth = 6,backgroundImage=nil,label=labels[i*rows+j] }
       cells[i*rows+j] = UICollectionCellView:new{view=buttons[i*rows+j],viewType="UIButtonView" }
       rightPanel:fillWithCell(cells[i*rows+j],i-1,j-1)
     end
   end
 
-
-
-
-
-
-
-
-  local bottomPanel = UIPanelView:new{frame={x=0, y = screen:get_height() * 0.8,w=screen:get_width(),h=screen:get_height() * 0.2},backgroundColor=THEME.COLOR.RED}
-  local textPanel = UIPanelView:new{frame={x= bottomPanel.frame.w*0.1, y = bottomPanel.frame.h*0.1,w=bottomPanel.frame.w*0.8,h=bottomPanel.frame.h*0.8},backgroundColor=THEME.COLOR.GREEN}
+  local bottomPanel = UIPanelView:new{frame={x=0, y = screen:get_height() * 0.8,w=screen:get_width(),h=screen:get_height() * 0.2},backgroundColor=THEME.COLOR.DARK_GRAY}
+  --local textPanel = UIPanelView:new{frame={x= bottomPanel.frame.w*0.1, y = bottomPanel.frame.h*0.1,w=bottomPanel.frame.w*0.8,h=bottomPanel.frame.h*0.8},backgroundColor=THEME.COLOR.GREEN}
 
   mainPanel:addChildView(window.thief)
   mainPanel:addChildView(window.cop)
@@ -78,9 +71,9 @@ function UICatchMainWindow:new()
   window:addChildView(rightPanel)
 
   for _,v in pairs(window.words) do
-    textPanel:addChildView(v)
+    bottomPanel:addChildView(v)
   end
-  bottomPanel:addChildView(textPanel)
+  --bottomPanel:addChildView(textPanel)
   window:addChildView(bottomPanel)
   
   -- properties of compnents

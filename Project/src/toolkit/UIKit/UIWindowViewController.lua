@@ -49,7 +49,7 @@ function UIWindowViewController:process(listener,event)
   end
   
   self.window:moveTofocusByKey(event.key)
-  self:onKeyEvent(event)
+  self:onKeyEvent(listener,event)
 end
 
 function UIWindowViewController:onKeyEvent(event)

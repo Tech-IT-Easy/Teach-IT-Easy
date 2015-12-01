@@ -8,13 +8,13 @@ local UIPanelView = require("toolkit.UIKit.UIPanelView")
 local UIWindowView = extends(UIView)
 
 function UIWindowView:new(args)
-  local o = UIWindowView:super{frame=nil--[[args.frame]],container=nil--[[args.container]]}
+  local o = UIWindowView:super{frame=args.frame or nil,container=args.container or nil}
   --@member window title
   o.title = args.title
   --@member window toolbar, for future development
   --o.toolbar = UIToolBar:new(nil)
   --@member window body which is a blank panel filling with whole window
-  o.body = UIPanelView:new{container=o,backgroundImage = args.backgroundImage,backgroundColor=args.backgroundColor}--[[frame=frame-o.toolbar.frame]]--
+  o.body = UIPanelView:new{container=o,frame={x=0,y=0,w=o.frame.w,h=o.frame.h},backgroundImage = args.backgroundImage,backgroundColor=args.backgroundColor}--[[frame=frame-o.toolbar.frame]]--
   --@member delegate for events process
   --o.footbarHeight = args.footbarHeight or 20
   --o.footbar = UIPanelView:new{frame={x = 0,y = self.frame.h-o.footbarHeight,w = self.frame.w,h = o.footbarHeight},container = o}

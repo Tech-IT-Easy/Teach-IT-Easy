@@ -13,7 +13,7 @@ local Cop = require('games.Catch.Cop')
 
 local UICatchMainWindow = require('games.Catch.UICatchMainWindow')
 local UICatchMainWindowController = require('games.Catch.UICatchMainWindowController')
-
+local UIAlertWindowController = require("toolkit.UIKit.UIAlertWindowController")
 
 
 local words = {
@@ -37,12 +37,10 @@ function Catch:new(context)
   
   self.platformContext = context
   self:initListener()
-
-  o.windowController = UICatchMainWindowController:new({levels = o.levels})
-
+  
+  o.windowController = UICatchMainWindowController:new({levels = o.levels,game=o})
   self.gameEventListener:attach(o.windowController)
-
-
+  
   return Catch:init(o)
 end
 
@@ -77,8 +75,34 @@ function Catch:update()
   end
 
   self.windowController:presentView()
+  if self.alertController then
+    self.alertController:presentView()
+  end
 end
 
+
+function Catch:alertWindowOpen(args)
+  self.alertController = UIAlertWindowController:new{title=args.title,
+  callback=function(sender)
+    args.callback(sender)
+    self:alertWindowClose()
+  end
+  }
+  self.gameEventListener:remove(self.windowController)
+  self.gameEventListener:attach(self.alertController)
+end
+
+function Catch:alertWindowClose()
+  self.gameEventListener:attach(self.windowController)
+  self.gameEventListener:remove(self.alertController)
+  self.alertController = nil
+end
+
+function Catch:exit()
+  self.platformContext.platformEventListener:removeChainListener()
+  self.platformContext:createNewMenu()
+  self.platformContext.game = nil
+end
 
 function Catch:completed()
   return #self.correctWord == self.guessedWord;
