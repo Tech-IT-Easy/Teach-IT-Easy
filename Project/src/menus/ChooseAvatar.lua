@@ -59,7 +59,6 @@ function ChooseAvatar:handleinput(event)
   elseif (event.key == Event.KEY_OK) then
 
     self.image4 = self.myimages[self.pos]
-    table.insert(images, self.image4)
     table.insert(profiles, Profile:new(CreateProfile.profilename, self.imagestrings[self.pos], self.folderimagestrings[self.pos]))
 
     collectgarbage()
