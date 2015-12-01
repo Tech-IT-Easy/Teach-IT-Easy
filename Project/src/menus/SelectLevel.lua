@@ -96,13 +96,21 @@ end
 -- @author Marcus
 -------------------------------------
 function SelectLevel:active(x1)
-   if x1 < 5 then
+  if x1 < 5 and x1 < self.unlockedLevels then
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
   screen:copyfrom(self.image1, nil, {x = screen:get_width() * 0.13 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.40), w = self.image1:get_width() * 0.1, h = self.image1:get_height() * 0.1})
-  else
+  elseif x1 < 5 and x1 == self.unlockedLevels then
+    screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+  end
+
+  if x1 > 4 and x1 < self.unlockedLevels then
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
-   end
-   level_fonts[x1]:draw_over_surface(screen, ""..x1)
+  screen:copyfrom(self.image1, nil, {x = screen:get_width() * 0.13 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.80), w = self.image1:get_width() * 0.1, h = self.image1:get_height() * 0.1})
+  elseif x1 > 4 and x1 == self.unlockedLevels then
+    screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+  end
+
+  level_fonts[x1]:draw_over_surface(screen, ""..x1)
   --screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
 
 end
@@ -113,12 +121,20 @@ end
 -- @author Marcus
 -------------------------------------
 function SelectLevel:inactive(x1)
-  if x1 < 5 and x1  then
+  if x1 < 5 and x1 < self.unlockedLevels then
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
   screen:copyfrom(self.image1, nil, {x = screen:get_width() * 0.13 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.40), w = self.image1:get_width() * 0.1, h = self.image1:get_height() * 0.1})
-  else
-  screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+  elseif x1 < 5 and x1 == self.unlockedLevels then
+    screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
   end
+
+  if x1 > 4 and x1 < self.unlockedLevels then
+  screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+  screen:copyfrom(self.image1, nil, {x = screen:get_width() * 0.13 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.80), w = self.image1:get_width() * 0.1, h = self.image1:get_height() * 0.1})
+  elseif x1 > 4 and x1 == self.unlockedLevels then
+    screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+  end
+
   level_fonts[x1]:draw_over_surface(screen, ""..x1)
   --screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = self.image1:get_width() * 0.6, h = self.image1:get_height() * 0.6 }, true)
 
