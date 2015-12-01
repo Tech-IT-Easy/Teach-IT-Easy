@@ -6,7 +6,7 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-local Object = require("toolkit.object")
+local Object = require("toolkit.Object")
 local ProggLevels = extends(Object)
 
 

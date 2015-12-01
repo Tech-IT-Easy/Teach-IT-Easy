@@ -35,8 +35,8 @@ function Network:getFirstname()
       -- url = "http://2015-3.pumi.ida.liu.se:9000/users/",
       sink = ltn12.sink.table(t)
   }
-  table = table.concat(t)
-  jsonResult = json.parse(table)
+  local table = table.concat(t)
+  local jsonResult = json.parse(table)
   -- For 2015-3.pumi
   -- return jsonResult[1].username
   -- For randomuser.me
@@ -54,7 +54,7 @@ function Network:getProgress(game, name)
 
   local table
   if name == "Knatte" then
-      table = {level = 4, proggGameLoopLevel = false, proggGameProcLevel= false, proggGameIfLevel = false }
+      table = {level = 1, proggGameLoopLevel = false, proggGameProcLevel= false, proggGameIfLevel = false }
   elseif name == "Fnatte" then
       table = {level = 3, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = false }
   elseif name == "Tjatte" then
