@@ -13,8 +13,7 @@ local UICatchMainWindowController = extends(UIWindowViewController)
 
 function UICatchMainWindowController:new(args)
   local o = UICatchMainWindowController:super(UICatchMainWindow:new())
-  o.window.cop:print()
-
+  
   o.levels = args.levels
   o.currentLevel = 1
 
@@ -31,14 +30,21 @@ function UICatchMainWindowController:new(args)
     "d", "e", "f",
     "g", "h", "i"
   }
-  --print("Correct answer: " .. self.correctWord)
+  
+  print("Correct answer: " .. o.correctWord)
 
   --o.window.button1.delegate = o
   --o.window.button2.delegate = o
-
+  o.window.characters = o.characters
+  o.window.word = o.correctWord 
+  
   o.window.cop:print()
   o.game = args.game
   return UICatchMainWindowController:init(o)
+end
+
+function UICatchMainWindowController:initialize()
+  -- wait to implemented!
 end
 
 function UICatchMainWindowController:checkLetter(letter)
