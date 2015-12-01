@@ -11,6 +11,7 @@ local Cop = require("games.Catch.Cop")
 local UICatchMainWindow = extends(UIWindowView)
 
 function UICatchMainWindow:new()
+  --assert(args.word,"UICatchMainWindow:new(args={word=''}) is nil ")
   local window = UICatchMainWindow:super{title="Window Title",backgroundColor=THEME.COLOR.GREEN}
   -- private data model with <local>
   local thiefImage = UIImage:new(THEME.IMAGE.THIEF_BACKGROUND)
@@ -20,11 +21,16 @@ function UICatchMainWindow:new()
   -- components
   window.thief = Thief:new{frame={x=100,y=20,w=100,y=100},image=thiefImage,moveUnit=20}
   window.cop = Cop:new{frame={x=20,y=20,w=100,y=100},image=copImage,moveUnit=20,bonusMoveUnit=80}
-
+  --window.word = args.word
   window.cop:run(true)
   window.thief:run(false)
   
   print(window.cop:catch(window.thief))
+  
+  --[[for i=0,string.len(window.word) do
+    window.wordsRectangle[i] = UIRectangleView:new{frame={x=300,y=20,w=80,h=80},borderColor={r=255,g=29,b=25},borderWidth = 4},
+  end
+  ]]--
   
   window.words = {
     ['a'] = UIRectangleView:new{frame={x=300,y=20,w=80,h=80},borderColor={r=255,g=29,b=25},borderWidth = 4,label=textlabel},
