@@ -23,6 +23,7 @@ local ChooseAvatar = require('menus.ChooseAvatar')
 local TrophyRoom = require('menus.TrophyRoom')
 local Instructions = require('menus.Instructions')
 local SelectLevel = require('menus.SelectLevel')
+local UpdateAvatar = require('menus.UpdateAvatar')
 
 -----------------------------------------------------------
 -- Constructor method
@@ -70,7 +71,8 @@ function PlatformMenu:loadviews()
         chooseavatar = ChooseAvatar,
         trophy = TrophyRoom,
         instructions = Instructions,
-        selectlevel = SelectLevel
+        selectlevel = SelectLevel,
+        settings = UpdateAvatar
     }
     collectgarbage()
 end

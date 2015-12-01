@@ -40,6 +40,8 @@ function MainMenu:handleinput(event)
         return { "trophy", self.usernamestring }
     elseif event.key == Event.KEY_OK and self.pos == 2 then
         return { "instructions", self.usernamestring }
+    elseif event.key == Event.KEY_OK and self.pos == 3 then
+        return { "settings", self.usernamestring }
 
     elseif event.key == Event.KEY_BACK then
         return { "profilesel" }
