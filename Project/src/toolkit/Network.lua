@@ -65,4 +65,15 @@ function Network:getProgress(game, name)
   return table
 end
 
+
+function Network:getLevels(game)
+  -- local t = {}
+  -- http.request{
+  --     url = "http://2015-3.pumi.ida.liu.se:9000/".. game .."/levels/",
+  --     sink = ltn12.sink.table(t)
+  -- }
+  -- table = table.concat(t)
+  --return table
+end
+
 return Network
