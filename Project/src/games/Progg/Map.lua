@@ -219,6 +219,7 @@ end
 -- @author Erik
 -------------------------------------
 function Map:canMove(x, y, direction)
+    print("AEJ")
     if direction == Map.UP and self.tiles[self:getPosition(x, y)].topBorder == true then
         return false
     elseif direction == Map.LEFT and self.tiles[self:getPosition(x, y)].leftBorder == true then
