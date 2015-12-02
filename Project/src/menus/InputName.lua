@@ -5,6 +5,7 @@ local InputName = extends(Super)
 
 local Event = require('toolkit.Event')
 local ProfileSelection = require('menus.ProfileSelection')
+local LOCALE = require('i18n.main')
 
 -------------------------------------
 -- Creates the InputName-menu.
@@ -50,8 +51,8 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function InputName:renderui()
-  create_prof_appname:draw_over_surface(screen, "TEACH IT EASY")
-  create_prof_pagename:draw_over_surface(screen, "TYPE IN YOUR NAME")
+  create_prof_appname:draw_over_surface(screen, LOCALE.APP_NAME)
+  create_prof_pagename:draw_over_surface(screen, LOCALE.NAME_INPUT)
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.1, y = screen:get_height() * 0.25 * 1.2, w = screen:get_width() * 0.8, h = screen:get_height() * 0.3 * 0.6 })
   screen:clear({ g = 131, r = 0, b = 143 }, { x = 0, y = screen:get_height() * 0.55, w = screen:get_width(), h = screen:get_height() * 0.45 })
 

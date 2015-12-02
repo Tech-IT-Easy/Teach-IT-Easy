@@ -12,6 +12,8 @@ local Profile = require('platform.Profile')
 
 local Event = require('toolkit.Event')
 local CreateProfile = require('menus.CreateProfile')
+local LOCALE = require('i18n.main')
+
 
 -------------------------------------
 -- Creates a new menu
@@ -82,8 +84,8 @@ end
 -- @author Erik; Marcus
 -------------------------------------
 function AvatarSelection:renderui()
-  create_prof_appname:draw_over_surface(screen, "TEACH IT EASY")
-  create_prof_pagename:draw_over_surface(screen, "CHOOSE YOUR AVATAR")
+  create_prof_appname:draw_over_surface(screen, LOCALE.APP_NAME)
+  create_prof_pagename:draw_over_surface(screen, LOCALE.AVATAR_CHOOSE)
 
   self:active(1)
   for i = 2, #self.myimages, 1 do

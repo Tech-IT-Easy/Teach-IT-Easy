@@ -15,6 +15,8 @@ local Event = require('toolkit.Event')
 local CreateProfile = require('menus.CreateProfile')
 local GameFactory = require('games.GameFactory')
 
+local LOCALE = require('i18n.main')
+
 
 
 -------------------------------------
@@ -175,8 +177,8 @@ end
 -- @author Marcus
 -------------------------------------
 function SelectLevel:renderui(unlocked)
-  create_prof_appname:draw_over_surface(screen, "TEACH IT EASY")
-  create_prof_pagename:draw_over_surface(screen, "SELECT LEVEL")
+  create_prof_appname:draw_over_surface(screen, LOCALE.APP_NAME)
+  create_prof_pagename:draw_over_surface(screen, LOCALE.LEVEL_SELECT)
 
   self:active(1)
   for i = 2, unlocked, 1 do

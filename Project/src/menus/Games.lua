@@ -2,6 +2,7 @@ local Super = require('toolkit.MenuSuperClass')
 local Games = extends(Super)
 local Event = require('toolkit.Event')
 local GameFactory = require('games.GameFactory')
+local LOCALE = require('i18n.main')
 
 -------------------------------------
 -- Creates the Games menu.
@@ -87,8 +88,8 @@ self.gameLogos = {self.proggGameImage,
     local image1 = gfx.loadpng(platformContext.profile.avatar)
     image1:premultiply()
 
-    games_appname:draw_over_surface(screen, "TEACH IT EASY")
-    games_pagename:draw_over_surface(screen, "CHOOSE A GAME")
+    games_appname:draw_over_surface(screen, LOCALE.APP_NAME)
+    games_pagename:draw_over_surface(screen, LOCALE.GAME_CHOOSE)
     games_username:draw_over_surface(screen, self.usernamestring)
 
     screen:copyfrom(image1, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
@@ -99,8 +100,8 @@ self.gameLogos = {self.proggGameImage,
     end
     screen:clear({ g = 0, r = 0, b = 0 }, { x = screen:get_width() * 0.8, y = screen:get_height() * 0.08, w = screen:get_width() * 0.05, h = screen:get_height() * 0.04 })
     screen:clear({ g = 230, r = 230, b = 230 }, { x = screen:get_width() * 0.803, y = screen:get_height() * 0.0845, w = screen:get_width() * 0.0455, h = screen:get_height() * 0.0308 })
-    games_backbutton:draw_over_surface(screen, "BACK")
-    games_backtext:draw_over_surface(screen, "Go back")
+    games_backbutton:draw_over_surface(screen, LOCALE.BACK)
+    games_backtext:draw_over_surface(screen, LOCALE.BACK_HELP)
 end
 
 -------------------------------------
@@ -112,7 +113,7 @@ function Games:buttonactive(x1)
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
   screen:copyfrom(self.gameLogos[x1], nil, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1),  y = (screen:get_height() * 0.32), w = screen:get_width() * 0.15,  h = screen:get_height() * 0.25 })
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
-  games_trophiesfonts[x1]:draw_over_surface(screen,"Progress: " .. platformContext.profile.gameprogress:getprogressStart(self.games[x1][2]))
+  games_trophiesfonts[x1]:draw_over_surface(screen, LOCALE.PROGRESS .. ": " .. platformContext.profile.gameprogress:getprogressStart(self.games[x1][2]))
 end
 
 -------------------------------------
@@ -124,7 +125,7 @@ function Games:buttoninactive(x1)
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
   screen:copyfrom(self.gameLogos[x1], nil, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1),  y = (screen:get_height() * 0.32), w = screen:get_width() * 0.15,  h = screen:get_height() * 0.25 })
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
-  games_trophiesfonts[x1]:draw_over_surface(screen,"Progress: " .. platformContext.profile.gameprogress:getprogressStart(self.games[x1][2]))
+  games_trophiesfonts[x1]:draw_over_surface(screen, LOCALE.PROGRESS .. ": " .. platformContext.profile.gameprogress:getprogressStart(self.games[x1][2]))
 end
 
 return Games
