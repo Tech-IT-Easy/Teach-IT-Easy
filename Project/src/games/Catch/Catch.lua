@@ -18,15 +18,15 @@ function Catch:new(context)
   local o = Catch:super()
   o.levels = {
     {
-      word="anka",
+      word="bcba",
       maxNumberOfGuesses = 10
     },
     {
-      word="kaka",
+      word="abka",
       maxNumberOfGuesses = 10
     },
     {
-      word="kanna",
+      word="abna",
       maxNumberOfGuesses = 10
     }
   }

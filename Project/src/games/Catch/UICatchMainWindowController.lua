@@ -30,9 +30,8 @@ function UICatchMainWindowController:new(args)
     }
     o.window:initialize{characters=o.characters,correctWord=o.correctWord,currentLevel=o.currentLvel}
   end
-  
+
   o:initialize()
-  
   o.game = args.game
   return UICatchMainWindowController:init(o)
 end
@@ -49,47 +48,48 @@ function UICatchMainWindowController:updateWindowWords(number)
     local textlabel = UILabel:new{text=self.correctWord:sub(self.numberOfCorrect,self.numberOfCorrect),color=THEME.COLOR.DARK_GRAY,size=50,font=UILabel.FONT_GROBOLD}
     self.window.words[number]:setLabel(textlabel)
   end
+  
 end
---[[
-function UICatchMainWindowController:onClickEvent(sender)
-  if sender.identity == "button1" then
-    print("I know who you are:"..sender.identity)
-  elseif sender.identity == "button2" then
-    print("I know who you are:"..sender.identity)
-  end
-end
-]]--
-function UICatchMainWindowController:onKeyEvent(listener,event)
-  print("key down in UICatchMainWindowController")
-  if event.state == Event.KEY_DOWN then
-    -- add number of guesses
-    self.numberOfGuesses = self.numberOfGuesses+1
 
+
+function UICatchMainWindowController:onClickEvent(sender)
+  keyLetter = sender.label.text
+  print(sender.label.text)
+  if keyLetter then
+    self.numberOfGuesses = self.numberOfGuesses+1
     -- identify whether it's correct
     local flag = false
-    if self:checkLetter("a") == true then
+    if self:checkLetter(keyLetter) == true then
       flag = true
       self.numberOfCorrect = self.numberOfCorrect + 1
       self:updateWindowWords(self.numberOfCorrect)
       if self.numberOfCorrect == string.len(self.correctWord) then
         -- show another window to say success
-      end
-    elseif self.numberOfGuesses >= self.maxNumberOfGuesses then
-      self.game:alertWindowOpen{title="You are failed,Do you want to try again?",
+        self.game:alertWindowOpen{title="You win,Do you want to try again?",
         callback=function(sender)
           if sender.identity=="OK" then
-            --initialize window and controller
-          else 
+          --initialize window and controller
+          else
+            self.game:exit()
+          end
+        end
+      }
+      end
+    elseif self.numberOfGuesses >= self.maxNumberOfGuesses then
+      self.game:alertWindowOpen{title="You failed,Do you want to try again?",
+        callback=function(sender)
+          if sender.identity=="OK" then
+          --initialize window and controller
+          else
             self.game:exit()
           end
         end
       }
     end
-
     self.window.cop:run(flag)
     self.window.thief:run()
   end
-
+  
 end
 
 return UICatchMainWindowController
