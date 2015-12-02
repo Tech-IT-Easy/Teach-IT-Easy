@@ -106,8 +106,6 @@ function test_setCharacter_one()
     context.profile = profiles[1]
     a.context = context
 
-    --a.context.profile = {images="/strong_robot/"}
-    --a.context.profile.images = {}
     a.columns = 8
     a.boxheight = 50
     a.startx = 200
@@ -875,7 +873,6 @@ function test_moveCharacter_two()
     package.loaded[SUT].setGoal = setGoal
     package.loaded[SUT].setStart = setStart
 
-
     local a = ps:new()
     a.inGameObjectives = {}
     local x = 2
@@ -885,11 +882,6 @@ function test_moveCharacter_two()
     a.startPos = 1
     a.mapdata = {}
     a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
-
-
-
-
-
 
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
     square(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -929,9 +921,6 @@ function test_moveCharacter_three()
     a.mapdata = {}
     a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
 
-
-
-
     setStart(mc.ANYARGS); mc:returns(nil):anytimes()
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
     square(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -970,8 +959,6 @@ function test_moveCharacter_four()
     a.mapdata = {}
     a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
 
-
-
     setStart(mc.ANYARGS); mc:returns(nil):anytimes()
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
     square(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -1009,7 +996,6 @@ function test_moveCharacter_five()
     a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
     a.inGameObjectives = {}
 
-
     setStart(mc.ANYARGS); mc:returns(nil):anytimes()
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
     square(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -1031,33 +1017,12 @@ function test_canMove_one()
     local mc = create_mock(SUT)
     local ps = require(SUT)
     local ps2 = require('games.Progg.Tile')
-    --[[
-        local square = mc:mock()
-        local setGoal = mc:mock()
-        local setStart = mc:mock()
-        local setCharacter = mc:mock()
-        local printObjective = mc:mock()
-        package.loaded[SUT].square = square
-        package.loaded[SUT].setGoal = setGoal
-        package.loaded[SUT].setStart = setStart
-        package.loaded[SUT].setCharacter = setCharacter
-        package.loaded[SUT].printObjective = printObjective
-        square(mc.ANYARGS); mc:returns(nil):anytimes()
-        setGoal(mc.ANYARGS); mc:returns(nil):anytimes()
-        setStart(mc.ANYARGS); mc:returns(nil):anytimes()
-        setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
-        printObjective(mc.ANYARGS); mc:returns(nil):anytimes()
-    ]]
+
     local getPosition = mc:mock()
     package.loaded[SUT].getPosition = getPosition
 
     local a = ps:new()
     a.objectives = { 1, 2 }
-
-    --local printObjective = mc:mock()
-    --package.loaded[SUT].printObjective = printObjective
-    --printObjective(mc.ANYARGS); mc:returns(nil):anytimes()
-    --a:load({ objectives = "s", mapData = "a" })
 
     local tile = ps2:new("1")
 
@@ -1479,7 +1444,6 @@ function test_restartCharacter_one()
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
     setStart(mc.ANYARGS); mc:returns(nil):anytimes()
     printObjective(mc.ANYARGS); mc:returns(nil):anytimes()
-
 
     mc:replay()
 
