@@ -85,16 +85,16 @@ function test_command_queue()
     lunit.assert_equal(commands.LOOP, queue.actions[5], "Did not get the right value from the queue")
 
     queue:push(commands.MOVE, "loop")
-    lunit.assert_equal(commands.MOVE, queue.loopActions[1], "Did not get the right value from the queue")
+    lunit.assert_equal(commands.MOVE, queue.loopActions[1][1], "Did not get the right value from the queue")
 
     queue:push(commands.MOVE, "loop")
-    lunit.assert_equal(commands.MOVE, queue.loopActions[2], "Did not get the right value from the queue")
+    lunit.assert_equal(commands.MOVE, queue.loopActions[1][2], "Did not get the right value from the queue")
 
     queue:push(commands.TURN_LEFT, "loop")
-    lunit.assert_equal(commands.TURN_LEFT, queue.loopActions[3], "Did not get the right value from the queue")
+    lunit.assert_equal(commands.TURN_LEFT, queue.loopActions[1][3], "Did not get the right value from the queue")
 
     queue:push(commands.TURN_RIGHT, "loop")
-    lunit.assert_equal(commands.TURN_RIGHT, queue.loopActions[4], "Did not get the right value from the queue")
+    lunit.assert_equal(commands.TURN_RIGHT, queue.loopActions[1][4], "Did not get the right value from the queue")
 
     queue:push(commands.MOVE, "queue")
     lunit.assert_equal(commands.MOVE, queue.actions[6], "Did not get the right value from the queue")

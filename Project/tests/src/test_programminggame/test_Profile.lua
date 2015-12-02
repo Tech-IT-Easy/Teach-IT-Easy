@@ -20,7 +20,7 @@ end
 function test_input_aName_picture1()
     local ps = require(SUT)
 
-    local a = ps:new("name", 'data/avatar/cute_robot/DOWN.png', 'data/avatar/cute_robot')
+    local a = ps:new("name", 'data/avatar/cute_robot/DOWN.png', 'data/avatar/cute_robot/')
     local imagePath = a.avatar
     assert_equal(imagePath,'data/avatar/cute_robot/DOWN.png', "Should be data/avatar/cute_robot/DOWN.png")
 end
@@ -28,15 +28,15 @@ end
 function test_input_name_picture2()
     local ps = require(SUT)
 
-    local a = ps:new("name", 'data/avatar/insect_robot/DOWN.png', 'data/avatar/insect_robot')
+    local a = ps:new("name", 'data/avatar/insect_robot/DOWN.png', 'data/avatar/insect_robot/')
     local imagePath = a.avatar
-    assert_equal(imagePath,'data/avatar/insect_robot/DOWN.png', "Should be data/avatar/cute_robot/RIGHT.png")
+    assert_equal(imagePath,'data/avatar/insect_robot/DOWN.png', "Should be data/avatar/insect_robot/RIGHT.png")
 end
 
 function test_input_name_picture3()
     local ps = require(SUT)
 
-    local a = ps:new("name", 'data/avatar/cute_robot/UP.png', 'data/avatar/cute_robot')
+    local a = ps:new("name", 'data/avatar/cute_robot/UP.png', 'data/avatar/cute_robot/')
     local imagePath = a.avatar
     assert_equal(imagePath, 'data/avatar/cute_robot/UP.png', "Should be data/avatar/cute_robot/RIGHT.png")
 end
