@@ -161,13 +161,13 @@ function test_execute_queue_2()
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
     local loopCounter = bottommenu.queue.loopCounter
     --print("Number of iterations: " .. loopCounter)
-    lunit.assert_equal(5, loopCounter, "Not correct number of iterations")
+    lunit.assert_equal(5, loopCounter[1], "Not correct number of iterations")
 
     --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "1"
     --Adding MOVE-action to loop
     test_event = event:new("1", "down") --simulates a key press on key 1
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.loopActions[1]
+    bm_queue = bottommenu.queue.loopActions[1][1]
     --print("Added " .. bm_queue .. " in the loop-queue")
     test_command = commands.MOVE
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
@@ -176,7 +176,7 @@ function test_execute_queue_2()
     --Adding TURN_LEFT-action to loop
     test_event = event:new("2", "down") --simulates a key press on key 2
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.loopActions[2]
+    bm_queue = bottommenu.queue.loopActions[1][2]
     --print("Added " .. bm_queue .. " in the loop-queue")
     test_command = commands.TURN_LEFT
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
@@ -185,7 +185,7 @@ function test_execute_queue_2()
     --Adding TURN_RIGHT-action to loop
     test_event = event:new("3", "down") --simulates a key press on key 3
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.loopActions[3]
+    bm_queue = bottommenu.queue.loopActions[1][3]
     --print("Added " .. bm_queue .. " in the loop-queue")
     test_command = commands.TURN_RIGHT
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")

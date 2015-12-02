@@ -156,8 +156,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
     if(event.state==Event.KEY_STATE_DOWN) then
         --Switch for all the input handling to implement
         if event.key == Event.KEY_ONE then
-            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then   --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 1
+            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
+                object.queue.loopCounter[object.queue.loopPointer] = 1
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -184,8 +184,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
 
         elseif event.key == Event.KEY_TWO then
-            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 2
+            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then--Handles input when selecting how many times a loop should repeat
+                object.queue.loopCounter[object.queue.loopPointer]  = 2
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -218,12 +218,15 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
 
         elseif event.key == Event.KEY_THREE then
-            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 3
+            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then--Handles input when selecting how many times a loop should repeat
+                object.queue.loopCounter[object.queue.loopPointer]  = 3
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
-            elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" then -- Handles input while a method is selected. Lets user enter the selected method.
+            elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" or object.selectingActionEdit == "if"  then -- Handles input while a method is selected. Lets user enter the selected method.
+                if(object.selectingActionEdit == "loop")then
+                    object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")
+                end
                 object:enterMethod()
                 object.selectingActionEdit = nil
                 object.rightMenu.inputAreaChanged = true
@@ -244,7 +247,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_FOUR then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 4
+                object.queue.loopCounter[object.queue.loopPointer]  = 4
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -274,7 +277,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_FIVE then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 5
+                object.queue.loopCounter[object.queue.loopPointer]  = 5
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -303,7 +306,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_SIX then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 6
+                object.queue.loopCounter[object.queue.loopPointer]  = 6
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -326,11 +329,13 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.buildArea:setPosition(object.position)
                 object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.loopQueue)
+                object.queue.loopPointer = #object.queue.loopActions
+                object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")
             end
 
         elseif event.key == Event.KEY_SEVEN then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 7
+                object.queue.loopCounter[object.queue.loopPointer]  = 7
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -356,7 +361,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_EIGHT then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 8
+                object.queue.loopCounter[object.queue.loopPointer]  = 8
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -381,7 +386,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
         elseif event.key == Event.KEY_NINE then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 9
+                object.queue.loopCounter[object.queue.loopPointer]  = 9
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -419,7 +424,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             end
         elseif event.key == Event.KEY_ZERO then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = object.queue.INFINITY
+                object.queue.loopCounter[object.queue.loopPointer] = object.queue.INFINITY
                 object.selectingLoopCounter=false
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
@@ -452,6 +457,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputArea = "queue"
                 object.inputArea = "queue"
             end
+
         elseif event.key == Event.KEY_OK then
             local queuePos = object.position
             if queuePos > 2*object.rowLength then
@@ -468,7 +474,17 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                     object.rightMenu.inputAreaChanged = true
                     object.rightMenu.inputArea = "build"
                 end
-            else   --Handles input during regular state. Let's user select a command.
+            else --Handles input during regular state. Let's user select a command.
+                local count = 0
+                for i = queuePos, 0, -1 do
+                    if object.queue.actions[i] == Commands.LOOP then
+                        count = count + 1
+                    end
+                end
+                object.queue.loopPointer = count
+--                if(object:getQueue(object.inputArea)[queuePos] == Commands.LOOP)then
+--                    object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")
+--                end
                 object.rightMenu.selectedCommand = object:getQueue(object.inputArea)[queuePos]
                 print(object:getQueue(object.inputArea)[queuePos])
 
@@ -582,6 +598,17 @@ end
 -----------------------------------
 function BottomMenu:deleteAction(position, inputArea)
     local queuePos = position
+    if self:getQueue(inputArea)[queuePos] == Commands.LOOP then
+        local counter = 0
+      for i = position, 0, -1 do
+          if self.queue.actions[i] == "loop" then
+              counter = counter + 1
+          end
+      end
+      table.remove(self.queue.loopActions, counter)
+      table.remove(self.queue.loopCounter, counter)
+    end
+
     if queuePos > 2*self.rowLength then
         queuePos = queuePos - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
     end
@@ -603,28 +630,32 @@ function BottomMenu:moveAction(positionOne, positionTwo)
     local queuePosOne = positionOne
     local queuePosTwo = positionTwo
 
-    if queuePosOne > 2*self.rowLength then
-        queuePosOne = queuePosOne - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
-        queuePosTwo = queuePosTwo - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
-    end
-
-    if queuePosTwo > #self:getQueue(self.inputArea) then
-        print("Not allowed to move action to empty slot")
-        return
-    end
-
-    local actionOne = self:getQueue(self.inputArea)[queuePosOne]
-
-    if queuePosOne > queuePosTwo then
-        for i = queuePosOne, queuePosTwo + 1, -1 do
-            self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i-1]
-        end
-        self:getQueue(self.inputArea)[queuePosTwo] = actionOne
+    if queuePosOne < 2*self.rowLength and queuePosTwo < 2*self.rowLength and queuePosTwo < #self:getQueue(self.inputArea) then
+            self.queue:setPosition(self.posActionToMove, self.position)
     else
-        for i = queuePosOne, queuePosTwo - 1 do
-            self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i+1]
+        if queuePosOne > 2*self.rowLength then
+            queuePosOne = queuePosOne - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
+            queuePosTwo = queuePosTwo - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
         end
-        self:getQueue(self.inputArea)[queuePosTwo] = actionOne
+
+        if queuePosTwo > #self:getQueue(self.inputArea) then
+            print("Not allowed to move action to empty slot")
+            return
+        end
+
+        local actionOne = self:getQueue(self.inputArea)[queuePosOne]
+
+        if queuePosOne > queuePosTwo then
+            for i = queuePosOne, queuePosTwo + 1, -1 do
+                self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i-1]
+            end
+            self:getQueue(self.inputArea)[queuePosTwo] = actionOne
+        else
+            for i = queuePosOne, queuePosTwo - 1 do
+                self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i+1]
+            end
+            self:getQueue(self.inputArea)[queuePosTwo] = actionOne
+        end
     end
 
     self.actionToMove = nil
@@ -639,7 +670,7 @@ function BottomMenu:getQueue(inputArea)
     if inputArea == "queue" then
         return self.queue.actions
     elseif inputArea == "loop" then
-        return self.queue.loopActions
+        return self.queue.loopActions[self.queue.loopPointer]
     elseif inputArea == "P1" then
         return self.queue.p1Actions
     elseif inputArea == "P2" then
