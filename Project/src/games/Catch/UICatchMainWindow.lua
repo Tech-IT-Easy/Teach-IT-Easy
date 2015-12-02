@@ -43,7 +43,7 @@ function UICatchMainWindow:new()
   local labels = {}
   local buttons = {}
   local cells = {}
-
+  
   for i = 1, rows do
     for j = 1, columns do--window.characters[i*rows+j]
       labels[i*rows+j] = UILabel:new{text="1",color=THEME.COLOR.RED,size=50,font=UILabel.FONT_GROBOLD }
@@ -72,5 +72,15 @@ function UICatchMainWindow:new()
   -- 
   return UICatchMainWindow:init(window)
 end
+function UICatchMainWindow:initialize(args)
+ local characters = args.characters
+ 
+  
+ 
+ 
+ local word = args.word
 
+
+  
+end
 return UICatchMainWindow
