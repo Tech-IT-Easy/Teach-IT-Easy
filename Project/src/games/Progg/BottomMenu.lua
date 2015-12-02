@@ -633,9 +633,6 @@ function BottomMenu:moveAction(positionOne, positionTwo)
     local queuePosOne = positionOne
     local queuePosTwo = positionTwo
 
-    if queuePosOne < 2*self.rowLength and queuePosTwo < 2*self.rowLength and queuePosTwo <= #self:getQueue(self.inputArea) then
-            self.queue:setPosition(self.posActionToMove, self.position)
-    else
         if queuePosOne > 2*self.rowLength then
             queuePosOne = queuePosOne - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
             queuePosTwo = queuePosTwo - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
@@ -645,6 +642,10 @@ function BottomMenu:moveAction(positionOne, positionTwo)
             print("Not allowed to move action to empty slot")
             return
         end
+
+        if (self.inputArea == "queue") and (self:getQueue(self.inputArea)[queuePosOne] == Commands.LOOP or self:getQueue(self.inputArea)[queuePosTwo] == Commands.LOOP) then
+            self.queue:setPosition(queuePosOne, queuePosTwo)
+        else
 
         local actionOne = self:getQueue(self.inputArea)[queuePosOne]
 
@@ -659,9 +660,9 @@ function BottomMenu:moveAction(positionOne, positionTwo)
             end
             self:getQueue(self.inputArea)[queuePosTwo] = actionOne
         end
-    end
 
-    self.actionToMove = nil
+        self.actionToMove = nil
+        end
 end
 
 -----------------------------------
