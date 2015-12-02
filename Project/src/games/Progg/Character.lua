@@ -58,6 +58,8 @@ function Character:startExecution(inqueue)
         self.map:winMessage()
         if(self.levelData.level > self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level) then
           self:updateProgress()
+          self.map:drawTrophy()
+
         end
         self.executionTimer:stop()
         self.executionTimer = nil

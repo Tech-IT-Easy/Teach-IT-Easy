@@ -9,6 +9,7 @@
 local Object = require('toolkit.Object')
 local Tile = require('games.Progg.Tile')
 local Map = extends(Object)
+skin = require('games.Progg.progg_skin')
 
 
 Map.UP = 0
@@ -40,7 +41,7 @@ end
 -------------------------------------
 function Map:load(levelData)
     -- implement parameter with mapdata
-
+    self.levelNmb = levelData.level
     self.background = gfx.loadpng('data/game_background_small.png')
 
     screen:copyfrom(self.background, nil, {
@@ -466,8 +467,24 @@ function Map:drawRightBorder(xPos, yPos)
 end
 
 function Map:winMessage()
-    screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width()*0.05 , y = screen:get_height()*0.1, w = screen:get_width()*0.65, h = screen:get_height()*0.46 })
-    screen:clear({ g = 200, r = 95, b = 129 }, { x = screen:get_width()*0.07 , y = screen:get_height()*0.13, w = screen:get_width()*0.61, h = screen:get_height()*0.4 })
+    screen:clear({  r = 255,g = 235, b = 59}, { x = screen:get_width()*0.05 , y = screen:get_height()*0.1, w = screen:get_width()*0.65, h = screen:get_height()*0.46 })
+    screen:clear({ r = 78, g = 113, b = 215  }, { x = screen:get_width()*0.07 , y = screen:get_height()*0.13, w = screen:get_width()*0.61, h = screen:get_height()*0.4 })
+    self.image = gfx.loadpng("data/trophy_active.png")
+    screen:copyfrom(self.image, nil, { x = screen:get_width()*0.52, y = screen:get_height()*0.18, w=screen:get_width()*0.18, h = screen:get_height()*0.3 }, true)
+    self.image:destroy()
+    win_1:draw_over_surface(screen, "Congratulations!")
+    win_2:draw_over_surface(screen, "You Have Completed")
+    win_3:draw_over_surface(screen, "Level "..self.levelNmb)
+    win_4:draw_over_surface(screen, "Press Enter To Continue")
+    collectgarbage()
+end
+
+function Map:drawTrophy()
+    --self.image = gfx.loadpng("trophy_active")
+    --screen:copyfrom(self.image, nil, { x = screen:get_width()*0.5, y = screen:get_height()*0.15, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+    self.image:destroy()
+
+    collectgarbage()
 end
 return Map
 
