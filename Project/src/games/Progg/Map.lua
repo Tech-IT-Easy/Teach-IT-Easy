@@ -29,7 +29,6 @@ Map.OBJECTIVECOLOR = { g = 9, r = 115, b = 13 }
 function Map:new(context)
     local o = Map:super()
     o.context = context
-
     return Map:init(o)
 end
 
@@ -253,6 +252,8 @@ function Map:moveCharacter(x, y, direction)
 
     if pos == self.startPos then
         self:setStart(pos)
+    elseif pos == self.goalPos then
+        self:setGoal(pos)
     elseif isObjective then
         self:printObjective(pos)
     else
@@ -464,6 +465,10 @@ function Map:drawRightBorder(xPos, yPos)
     screen:clear({ g = 255, r = 255, b = 255 }, { x = xPos, y = yPos, w = self.borderthickness, h = self.boxheight })
 end
 
+function Map:winMessage()
+    screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width()*0.1 , y = screen:get_height()*0.1, w = screen:get_width()*0.4, h = screen:get_height()*0.1 })
+
+end
 return Map
 
 
