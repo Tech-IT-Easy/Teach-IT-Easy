@@ -66,6 +66,13 @@ function test_loadview()
 
   mc:replay()
 
+  local ps2 = require("platform.PlatformContext")
+  platformContext = ps2:new()
+  local ps3 = require("platform.Profile")
+  local profiles = {}
+  table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+  platformContext.profile = profiles[1]
+
   local b = ps:new()
   b:loadview()
 
