@@ -466,8 +466,8 @@ function Map:drawRightBorder(xPos, yPos)
 end
 
 function Map:winMessage()
-    screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width()*0.1 , y = screen:get_height()*0.1, w = screen:get_width()*0.4, h = screen:get_height()*0.1 })
-
+    screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width()*0.05 , y = screen:get_height()*0.1, w = screen:get_width()*0.65, h = screen:get_height()*0.46 })
+    screen:clear({ g = 200, r = 95, b = 129 }, { x = screen:get_width()*0.07 , y = screen:get_height()*0.13, w = screen:get_width()*0.61, h = screen:get_height()*0.4 })
 end
 return Map
 

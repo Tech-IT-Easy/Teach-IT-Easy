@@ -52,6 +52,19 @@ function Character:startExecution(inqueue)
 
 
     start = function(timer)
+      --Check if the goal has been reached
+      if(self.map:isInGoal(self.position.x,self.position.y) and #self.map.inGameObjectives==0)then
+        self.hasWon = true
+        self.map:winMessage()
+        if(self.levelData.level > self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level) then
+          self:updateProgress()
+        end
+        self.executionTimer:stop()
+        self.executionTimer = nil
+        gfx.update()
+          return;
+      end
+
       if(0<#self.queue.actions or self.onP1 or self.onP2 or self.onLoop or self.onIf) then
         local act
         if(not self.onP1 and not self.onP2 and not self.onLoop and not self.onIf)then
@@ -146,19 +159,8 @@ function Character:startExecution(inqueue)
           self.executionTimer = nil
         end
         collectgarbage()
-        --Check if the goal has been reached
-        if(self.map:isInGoal(self.position.x,self.position.y) and #self.map.inGameObjectives==0)then
-          self.hasWon = true
-          print("hallå")
-          self.map:winMessage()
-          if(self.levelData.level > self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level) then
-            self:updateProgress()
-          end
-          gfx.update()
-        else
           self:reset()
           gfx.update()
-        end
       end -- end of QUEUE
     end
 
