@@ -599,7 +599,7 @@ function BottomMenu:moveAction(positionOne, positionTwo)
     local queuePosOne = positionOne
     local queuePosTwo = positionTwo
 
-    if queuePosOne < 2*self.rowLength and queuePosTwo < 2*self.rowLength then
+    if queuePosOne < 2*self.rowLength and queuePosTwo < 2*self.rowLength and queuePosTwo < #self:getQueue(self.inputArea) then
             self.queue:setPosition(self.posActionToMove, self.position)
     else
         if queuePosOne > 2*self.rowLength then

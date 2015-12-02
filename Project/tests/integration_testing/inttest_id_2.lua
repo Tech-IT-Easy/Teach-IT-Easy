@@ -26,7 +26,7 @@ local function create_queue(inqueue, type)
         inqueue:push(commands.MOVE, "queue")
     else
         inqueue:push(commands.LOOP, "queue")
-        inqueue.loopCounter=4
+        inqueue.loopCounter[1]=4
         inqueue:push(commands.MOVE, "loop")
         inqueue:push(commands.FIX, "loop")
         inqueue:push(commands.TURN_RIGHT, "queue")
