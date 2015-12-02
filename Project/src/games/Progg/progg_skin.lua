@@ -57,3 +57,9 @@ nr_10 = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.8, {x= firs
 clear_on_nr9_top = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.25, {x= first_column+2*(command_width+row_spacing)+0.14*command_height, y=first_row+2*(command_height+col_spacing)+0.25*command_width}, script_path..'data/GROBOLD.ttf')
 clear_on_nr9_bot = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.25, {x= first_column+2*(command_width+row_spacing)+0.1*command_height, y=first_row+2*(command_height+col_spacing)+0.55*command_width}, script_path..'data/GROBOLD.ttf')
 nr_on_loop = sys.new_freetype({r=34, g=59, b=94, a=255}, command_height*0.5, { x = screen:get_width()*(0.90), y = screen:get_height()*0.67}, script_path..'data/GROBOLD.ttf')
+
+-- preset freetype objects for text in the map
+win_1 = sys.new_freetype({r=34, g=59, b=94, a=255}, screen:get_width()* 0.04, {x= screen:get_width()*0.08, y=screen:get_height()*0.15}, script_path..'data/GROBOLD.ttf')
+win_2 = sys.new_freetype({r=34, g=59, b=94, a=255}, screen:get_width()* 0.04, {x= screen:get_width()*0.08, y=screen:get_height()*0.24}, script_path..'data/GROBOLD.ttf')
+win_3 = sys.new_freetype({r=34, g=59, b=94, a=255}, screen:get_width()* 0.04, {x= screen:get_width()*0.08, y=screen:get_height()*0.33}, script_path..'data/GROBOLD.ttf')
+win_4 = sys.new_freetype({r=255, g=255, b=255, a=255}, screen:get_width()* 0.04, {x= screen:get_width()*0.08, y=screen:get_height()*0.42}, script_path..'data/GROBOLD.ttf')

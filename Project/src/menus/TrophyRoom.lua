@@ -10,6 +10,7 @@ local Super = require('toolkit.MenuSuperClass')
 TrophyRoom = extends(Super)
 
 local Event = require('toolkit.Event')
+local LOCALE = require('i18n.main')
 
 -------------------------------------
 -- Creates the TrophyRoom menu.
@@ -160,7 +161,9 @@ function TrophyRoom:loadProgress(game)
         -- progGameMasterProc = false
     elseif (game == "reading") then
         self.totalLevels = 10
-        self.achievementButtons = { { "ABC", "Learn the alphabet", "Finish level 1" }, { "Kindergarten", "Can you read?", "Finish level 2" }, { "Sentances", "This needs skill", "Finish level 4" }, { "Phd", "Some serious stuff", "Buy levels for 20$" }, {"Shakespeare", "Real pro", "Level soon in stores"} }
+        self.achievementButtons = { { "ABC", "Learn the alphabet", "Finish level 1" },
+            { "Kindergarten", "Can you read?", "Finish level 2" }, { "Sentances", "This needs skill",
+                "Finish level 4" }, { "Phd", "Some serious stuff", "Buy levels for 20$" }, {"Shakespeare", "Real pro", "Level soon in stores"} }
     end
 end
 
@@ -284,8 +287,10 @@ function TrophyRoom:printTopPanel()
     local image1 = gfx.loadpng(platformContext.profile.avatar)
     image1:premultiply()
 
-    main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
+    main_menu_appname:draw_over_surface(screen, LOCALE.APP_NAME)
     local pageTitle
+    --LOCALE.TROPHY_MENU
+    -- name of page
     if self.currentGame == "progg" then
         pageTitle = "Programming game trophies"
     elseif self.currentGame == "reading" then
@@ -297,8 +302,8 @@ function TrophyRoom:printTopPanel()
     screen:copyfrom(image1, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
     screen:clear({ g = 0, r = 0, b = 0 }, { x = screen:get_width() * 0.8, y = screen:get_height() * 0.08, w = screen:get_width() * 0.05, h = screen:get_height() * 0.04 })
     screen:clear({ g = 230, r = 230, b = 230 }, { x = screen:get_width() * 0.803, y = screen:get_height() * 0.0845, w = screen:get_width() * 0.0455, h = screen:get_height() * 0.0308 })
-    games_backbutton:draw_over_surface(screen, "BACK")
-    games_backtext:draw_over_surface(screen, "Go back")
+    games_backbutton:draw_over_surface(screen, LOCALE.BACK)
+    games_backtext:draw_over_surface(screen, LOCALE.BACK_HELP)
 end
 
 -------------------------------------
@@ -312,7 +317,7 @@ function TrophyRoom:printProgressionBar()
     else
     finishedLevels=0
     end
-    trophy_room_progress:draw_over_surface(screen, "You have completed " .. finishedLevels .. " levels out of " .. self.totalLevels)
+    trophy_room_progress:draw_over_surface(screen, string.format(LOCALE.TROPHY_COMPLETED, finishedLevels, self.totalLevels)
     local padding = (screen:get_width() * 0.16) / 2
     local bar = screen:get_width() - (padding * 2)
     local bluebar = bar * (finishedLevels / self.totalLevels)
