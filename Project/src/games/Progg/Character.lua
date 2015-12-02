@@ -297,7 +297,7 @@ function Character:reset()
   self.onIfTrue = false
   self.onIfFalse = false
   self.j = 0
-  self.rightMenu:stop()
+  if self.rightMenu ~= nil then  self.rightMenu:stop() end
 end
 
 ---------------------------------------
