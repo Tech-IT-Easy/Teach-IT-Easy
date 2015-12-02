@@ -130,6 +130,9 @@ function Character:startExecution(inqueue)
 
             --If the command IF is encountered or it is executing IF
           elseif (act == Commands.IF or self.onIf) then
+            if (act == Commands.IF) then
+              self.procProcess = 0
+            end
             self.isCompleted = self:executeIfStatement()
             if (self.isCompleted) then
               self.procProcess = self.procProcess + 1;
