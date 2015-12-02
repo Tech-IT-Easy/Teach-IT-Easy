@@ -4,12 +4,9 @@
 -- Date: 2015-11-04
 -------------------------------------
 
--- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
 local ChooseAvatar = extends(Super)
-
 local Profile = require('platform.Profile')
-
 local Event = require('toolkit.Event')
 local CreateProfile = require('menus.CreateProfile')
 
@@ -18,6 +15,7 @@ local CreateProfile = require('menus.CreateProfile')
 -- @return self:ChooseAvatar The created menu
 -- @author Erik; Marcus
 -------------------------------------
+
 function ChooseAvatar:new()
   local o = ChooseAvatar:super()
   return ChooseAvatar:init(o)
@@ -44,9 +42,9 @@ function ChooseAvatar:handleinput(event)
   collectgarbage()
 
   self.imagestrings = {'data/avatar/cute_robot/DOWN.png',
-  'data/avatar/insect_robot/DOWN.png',
-  'data/avatar/strong_robot/DOWN.png',
- 'data/avatar/insect_robot/UP.png' }
+    'data/avatar/insect_robot/DOWN.png',
+    'data/avatar/strong_robot/DOWN.png',
+    'data/avatar/insect_robot/UP.png' }
 
   self.folderimagestrings = {"/cute_robot/", "/insect_robot/", "/strong_robot/", "/fourth_robot/" }
 
@@ -127,6 +125,5 @@ function ChooseAvatar:renderui()
     self:inactive(i)
   end
 end
-
 
 return ChooseAvatar

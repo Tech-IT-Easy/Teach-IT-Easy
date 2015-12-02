@@ -1,20 +1,13 @@
---ProfileSelection = {} --MenuView:new()
--- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
-
 local Profile = require('platform.Profile')
-
 local ProfileSelection = extends(Super)
-
 local Event = require('toolkit.Event')
 
--- profiles
 profiles = {}
 table.insert(profiles, Profile:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
 table.insert(profiles, Profile:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
 table.insert(profiles, Profile:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
--- images
 local image1 = gfx.loadpng(profiles[1].avatar)
 image1:premultiply()
 local image2 = gfx.loadpng(profiles[2].avatar)
@@ -24,7 +17,6 @@ image3:premultiply()
 
 images = { image1, image2, image3}
 
-
 -------------------------------------
 -- Creates the Profile selection-menu.
 -- @return self. The created menu-object.
@@ -32,7 +24,6 @@ images = { image1, image2, image3}
 -------------------------------------
 function ProfileSelection:new()
   local o = ProfileSelection:super()
-  -- text placing
   o.appnamebaseline = screen:get_height() * 0.08
   o.pagenamebaseline = screen:get_height() * 0.15
   return ProfileSelection:init(o)
@@ -46,12 +37,11 @@ end
 -------------------------------------
 function ProfileSelection:handleinput(event)
   collectgarbage()
-  -- each menu will have its own function to handle remote input
-
   self.lastpos = self.pos
   if event.key == Event.KEY_RIGHT and self.pos < #profiles then
     self.lastpos = self.pos
     self.pos = self.pos + 1
+
   elseif event.key == Event.KEY_LEFT and self.pos > 1 and self.pos < #profiles + 1 then
 
     self.pos = self.pos - 1
@@ -67,17 +57,10 @@ function ProfileSelection:handleinput(event)
       PlatformContext.profile = profiles[self.pos]
     return { "main", profiles[self.pos].name}
 
-
   elseif event.key == Event.KEY_OK and self.pos == 5 and #profiles <4 then
     return { "create" }
 
---  elseif event.key == Event.KEY_ONE and self.pos < 5 then
---    return { "main", usernames[self.pos] }
-
---  elseif event.key == Event.KEY_ONE and self.pos == 5 then
---    return { "create" }
   end
-
   return { " " }
 end
 
