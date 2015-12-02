@@ -91,13 +91,5 @@ function UICatchMainWindowController:onKeyEvent(listener,event)
   end
 
 end
---[[
-
-local GameWindowController = require("games.Catch.UICatchMainWindowController")
-local UILabel = require("toolkit.UIKit.UILabel")
-local THEME = require("games/Catch/data/theme")
-GameWindowController:new():presentView()
-
-]]--
 
 return UICatchMainWindowController

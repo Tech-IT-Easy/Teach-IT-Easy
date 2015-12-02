@@ -36,30 +36,11 @@ function UICatchMainWindow:new()
   local mainPanel = UIPanelView:new{frame={x=0, y = 0,w=screen:get_width()*0.8,h=screen:get_height()*0.8} }
 
 
-  local rows = 3
-  local columns = 2
-  local rightPanel = UICollectionView:new{frame={x=800,y=20,w=400,h=400},space=20,cols=columns,rows=rows,backgroundColor=THEME.COLOR.LIGHT_GRAY}
-
-  local labels = {}
-  local buttons = {}
-  local cells = {}
-  
-  for i = 1, rows do
-    for j = 1, columns do--window.characters[i*rows+j]
-      labels[i*rows+j] = UILabel:new{text="1",color=THEME.COLOR.RED,size=50,font=UILabel.FONT_GROBOLD }
-      buttons[i*rows+j] = UIButtonView:new{frame={x=1,y=1,w=100,h=100},borderColor={r=255,g=29,b=25},borderWidth = 6,backgroundImage=nil,label=labels[i*rows+j] }
-      cells[i*rows+j] = UICollectionCellView:new{view=buttons[i*rows+j],viewType="UIButtonView" }
-      rightPanel:fillWithCell(cells[i*rows+j],i-1,j-1)
-    end
-  end
-
   local bottomPanel = UIPanelView:new{frame={x=0, y = screen:get_height() * 0.8,w=screen:get_width(),h=screen:get_height() * 0.2},backgroundColor=THEME.COLOR.DARK_GRAY}
 
   mainPanel:addChildView(window.thief)
   mainPanel:addChildView(window.cop)
   window:addChildView(mainPanel)
-  
-  window:addChildView(rightPanel)
 
   for _,v in pairs(window.words) do
     bottomPanel:addChildView(v)
@@ -72,15 +53,31 @@ function UICatchMainWindow:new()
   -- 
   return UICatchMainWindow:init(window)
 end
+
 function UICatchMainWindow:initialize(args)
  local characters = args.characters
- 
-  
- 
+
+ local rows = 3
+ local columns = 2
+ local rightPanel = UICollectionView:new{frame={x=800,y=20,w=400,h=400},space=20,cols=columns,rows=rows,backgroundColor=THEME.COLOR.LIGHT_GRAY}
+
+ local labels = {}
+ local buttons = {}
+ local cells = {}
+
+ for i = 1, rows do
+   for j = 1, columns do
+     labels[i*rows+j] = UILabel:new{text=characters[i*rows+j],color=THEME.COLOR.RED,size=50,font=UILabel.FONT_GROBOLD }
+     buttons[i*rows+j] = UIButtonView:new{frame={x=1,y=1,w=100,h=100},borderColor={r=255,g=29,b=25},borderWidth = 6,backgroundImage=nil,label=labels[i*rows+j] }
+     cells[i*rows+j] = UICollectionCellView:new{view=buttons[i*rows+j],viewType="UIButtonView" }
+     rightPanel:fillWithCell(cells[i*rows+j],i-1,j-1)
+   end
+ end
+
+ self:addChildView(rightPanel)
  
  local word = args.word
 
-
-  
 end
+
 return UICatchMainWindow
