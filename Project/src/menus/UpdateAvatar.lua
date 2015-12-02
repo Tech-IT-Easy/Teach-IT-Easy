@@ -6,21 +6,18 @@
 
 -- Changed to extending empty super-menu
 local Super = require('menus.AvatarSelection')
-local ChooseAvatar = extends(Super)
-
-local Profile = require('platform.Profile')
+local UpdateAvatar = extends(Super)
 
 local Event = require('toolkit.Event')
-local CreateProfile = require('menus.CreateProfile')
 
 -------------------------------------
 -- Creates a new menu
 -- @return self:ChooseAvatar The created menu
 -- @author Erik; Marcus
 -------------------------------------
-function ChooseAvatar:new()
-  local o = ChooseAvatar:super()
-  return ChooseAvatar:init(o)
+function UpdateAvatar:new()
+  local o = UpdateAvatar:super()
+  return UpdateAvatar:init(o)
 end
 
 -------------------------------------
@@ -29,13 +26,13 @@ end
 -- @return menu:String to navigate to or empty string
 -- @author Erik; Marcus; Adam
 -------------------------------------
-function ChooseAvatar:handleinput(event)
+function UpdateAvatar:handleinput(event)
   collectgarbage()
 
   self.imagestrings = {'data/avatar/cute_robot/DOWN.png',
-    'data/avatar/insect_robot/DOWN.png',
-    'data/avatar/strong_robot/DOWN.png',
-    'data/avatar/insect_robot/UP.png' }
+  'data/avatar/insect_robot/DOWN.png',
+  'data/avatar/strong_robot/DOWN.png',
+ 'data/avatar/insect_robot/UP.png' }
 
   self.folderimagestrings = {"/cute_robot/", "/insect_robot/", "/strong_robot/", "/fourth_robot/" }
 
@@ -47,16 +44,17 @@ function ChooseAvatar:handleinput(event)
     self.pos = self.pos - 1
   elseif (event.key == Event.KEY_OK) then
 
-    self.image4 = self.myimages[self.pos]
-    table.insert(profiles, Profile:new(CreateProfile.profilename, self.imagestrings[self.pos], self.folderimagestrings[self.pos]))
+    platformContext.profile.avatar = self.imagestrings[self.pos]
+    platformContext.profile.images = platformContext.profile:getImages(self.folderimagestrings[self.pos])
+
+    --table.insert(profiles, Profile:new(CreateProfile.profilename, self.imagestrings[self.pos], self.folderimagestrings[self.pos]))
 
     collectgarbage()
-    return { "profilesel", " " }
+    return { "main" }
   elseif (event.key == Event.KEY_BACK) then
-    CreateProfile.profilename = ""
-    return { "create" }
+    return { "main" }
   end
   return {" "}
 end
 
-return ChooseAvatar
+return UpdateAvatar
