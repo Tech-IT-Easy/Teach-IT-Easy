@@ -210,13 +210,13 @@ function test_adding_commands()
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
     local loopCounter = bottommenu.queue.loopCounter
     --print("Number of iterations: " .. loopCounter)
-    lunit.assert_equal(5, loopCounter, "Not correct number of iterations")
+    lunit.assert_equal(5, loopCounter[1], "Not correct number of iterations")
 
     --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "1"
     --Adding MOVE-action to loop
     test_event = event:new("1", "down") --simulates a key press on key 1
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.loopActions[1]
+    bm_queue = bottommenu.queue.loopActions[1][1]
     --print("Added " .. bm_queue .. " in the loop-queue")
     test_command = commands.MOVE
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
@@ -225,7 +225,7 @@ function test_adding_commands()
     --Adding TURN_LEFT-action to loop
     test_event = event:new("2", "down") --simulates a key press on key 2
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.loopActions[2]
+    bm_queue = bottommenu.queue.loopActions[1][2]
     --print("Added " .. bm_queue .. " in the loop-queue")
     test_command = commands.TURN_LEFT
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
@@ -234,7 +234,7 @@ function test_adding_commands()
     --Adding TURN_RIGHT-action to loop
     test_event = event:new("3", "down") --simulates a key press on key 3
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.loopActions[3]
+    bm_queue = bottommenu.queue.loopActions[1][3]
     --print("Added " .. bm_queue .. " in the loop-queue")
     test_command = commands.TURN_RIGHT
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
@@ -499,10 +499,12 @@ function test_key_press()
     local bottommenu = test:new(leveldata[4], context_sim)
 
     local test_event = event:new("1", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea = "loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter==1, "Key press not implies right action")
+    lunit.assert_equal(1, bottommenu.queue.loopCounter[1], "Key press not implies right action")
 
     local test_event = event:new("1", "down")
     bottommenu.selectingActionEdit=true
@@ -510,10 +512,12 @@ function test_key_press()
     lunit.assert_true(bottommenu.isMovingAction == true, "Key press not implies right action")
 
     local test_event = event:new("2", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea ="loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter == 2, "Key press not implies right action")
+    lunit.assert_true(bottommenu.queue.loopCounter[1] == 2, "Key press not implies right action")
 
     local test_event = event:new("2", "down")
     bottommenu.selectingActionEdit=true
@@ -524,7 +528,7 @@ function test_key_press()
     bottommenu.inputArea = "loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter==3, "Key press not implies right action")
+    lunit.assert_true(bottommenu.queue.loopCounter[1]==3, "Key press not implies right action")
 
     local test_event = event:new("3", "down")
     bottommenu.inputArea = "queue"
@@ -539,22 +543,28 @@ function test_key_press()
     lunit.assert_true(bottommenu.selectingActionEdit == nil, "Key press not implies right action")
 
     local test_event = event:new("4", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea ="loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter == 4, "Key press not implies right action")
+    lunit.assert_true(bottommenu.queue.loopCounter[1] == 4, "Key press not implies right action")
 
     local test_event = event:new("5", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea ="loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter == 5, "Key press not implies right action")
+    lunit.assert_true(bottommenu.queue.loopCounter[1] == 5, "Key press not implies right action")
 
     local test_event = event:new("6", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea ="loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter == 6, "Key press not implies right action")
+    lunit.assert_true(bottommenu.queue.loopCounter[1] == 6, "Key press not implies right action")
 
     local test_event = event:new("6", "down")
     bottommenu.inputArea ="queue"
@@ -564,10 +574,13 @@ function test_key_press()
     lunit.assert_true(bottommenu.inputArea == "loop", "Key press not implies right action")
 
     local test_event = event:new("9", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopCounter = {}
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea ="loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter == 9, "Key press not implies right action")
+    lunit.assert_equal(9, bottommenu.queue.loopCounter[1], "Key press not implies right action")
 
     local test_event = event:new("up", "down")
     bottommenu.position = 9 --is not upper row

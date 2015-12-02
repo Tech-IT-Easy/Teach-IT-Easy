@@ -1,11 +1,7 @@
---Games = {} --MenuView:new()
--- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
 local Games = extends(Super)
---local GameProgress = require('toolkit.GameProgress')
 local Event = require('toolkit.Event')
 local GameFactory = require('games.GameFactory')
-
 
 -------------------------------------
 -- Creates the Games menu.
@@ -14,13 +10,10 @@ local GameFactory = require('games.GameFactory')
 -------------------------------------
 function Games:new()
   local o = Games:super()
-  --@member gameFactory:GameFactory
   o.gameFactory = GameFactory:new()
-  -- available games
   o.games = o.gameFactory.gameMatrix
   return Games:init(o)
 end
-
 
 -------------------------------------
 -- Handles the button-click sent from main.
@@ -64,8 +57,7 @@ function Games:loadview(input)
     self.pos = 1
     self.lastpos = 1
     self.usernamestring = platformContext.profile.name
-
-  self:renderui()
+    self:renderui()
 end
 
 -------------------------------------
@@ -74,27 +66,23 @@ end
 -------------------------------------
 function Games:renderui()
 
-    local avatarImageUrl = platformContext.profile.avatar
+  local avatarImageUrl = platformContext.profile.avatar
   self.avatarImage = gfx.loadpng(avatarImageUrl)
-    self.avatarImage:premultiply()
+  self.avatarImage:premultiply()
   local proggGameURL = "data/tie_prg.png"
   self.proggGameImage = gfx.loadpng(proggGameURL)
-    self.proggGameImage:premultiply()
+  self.proggGameImage:premultiply()
 
   local anotherGameURL = "data/MysteryPicture.png"
   self.anotherGameImage = gfx.loadpng(anotherGameURL)
-    self.proggGameImage:premultiply()
+  self.proggGameImage:premultiply()
 
-self.test21 = {self.proggGameImage,
-        self.anotherGameImage,
+self.gameLogos = {self.proggGameImage,
     self.anotherGameImage,
-        self.anotherGameImage }
+    self.anotherGameImage,
+    self.anotherGameImage }
 
-screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() *0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
-
-
-
-
+    screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() *0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
 
     local image1 = gfx.loadpng(platformContext.profile.avatar)
     image1:premultiply()
@@ -121,10 +109,8 @@ end
 -- @author Erik
 -------------------------------------
 function Games:buttonactive(x1)
-    screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
-
-  screen:copyfrom(self.test21[x1], nil, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1),  y = (screen:get_height() * 0.32), w = screen:get_width() * 0.15,  h = screen:get_height() * 0.25 })
-
+  screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
+  screen:copyfrom(self.gameLogos[x1], nil, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1),  y = (screen:get_height() * 0.32), w = screen:get_width() * 0.15,  h = screen:get_height() * 0.25 })
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
   games_trophiesfonts[x1]:draw_over_surface(screen,"Progress: " .. platformContext.profile.gameprogress:getprogressStart(self.games[x1][2]))
 end
@@ -135,12 +121,8 @@ end
 -- @author Erik
 -------------------------------------
 function Games:buttoninactive(x1)
-    screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
-
-
-  screen:copyfrom(self.test21[x1], nil, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1),  y = (screen:get_height() * 0.32), w = screen:get_width() * 0.15,  h = screen:get_height() * 0.25 })
-
-
+  screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 })
+  screen:copyfrom(self.gameLogos[x1], nil, { x = screen:get_width() * 0.095 + (screen:get_width() * 0.22) * (x1 - 1),  y = (screen:get_height() * 0.32), w = screen:get_width() * 0.15,  h = screen:get_height() * 0.25 })
   games_gamesfonts[x1]:draw_over_surface(screen, self.games[x1][1])
   games_trophiesfonts[x1]:draw_over_surface(screen,"Progress: " .. platformContext.profile.gameprogress:getprogressStart(self.games[x1][2]))
 end

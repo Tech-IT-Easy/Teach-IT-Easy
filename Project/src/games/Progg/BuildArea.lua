@@ -62,7 +62,7 @@ function BuildArea:show(queue, inputArea)
     elseif self.buildType == "loop" then
         self.drawBuildArea:icons(self.loopQueue, inputArea)
         self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.loopQueue)
-        self.drawBuildArea:drawLoopCounter(queue.loopCounter)
+        self.drawBuildArea:drawLoopCounter(queue.loopCounter[queue.loopPointer])
     elseif self.buildType == "if-wall" then
         self.drawBuildArea:icons(self.ifTrueQueue, inputArea)
         self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.ifTrueQueue)

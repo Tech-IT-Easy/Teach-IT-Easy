@@ -85,10 +85,17 @@ trophyroom_sidebuttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255
 
 -------------------------------------
 -- Freetype objects used in the instructions room
--- @author Erik
+-- @author Vilhelm
 -------------------------------------
 instructions_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.385, y = main_menu_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
 
+-------------------------------------
+-- Freetype objects used in the settings screen
+-- @author Vilhelm
+-------------------------------------
+settings_buttontext1 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.09, { x = screen:get_width() * 0.075, y = (screen:get_height() * 0.345) }, script_path .. 'data/condensed.ttf')
+settings_buttontext2 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.09, { x = screen:get_width() * 0.075, y = (screen:get_height() * 0.345) + ((screen:get_height() * 0.2125) * 1) }, script_path .. 'data/condensed.ttf')
+settings_buttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.09, { x = screen:get_width() * 0.075, y = (screen:get_height() * 0.345) + ((screen:get_height() * 0.2125) * 2) }, script_path .. 'data/condensed.ttf')
 
 -------------------------------------
 -- Freetype objects used in the game selection page.
@@ -192,3 +199,29 @@ page_txt = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_h
 page_nr = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.14, y = screen:get_height() * 0.21 }, script_path .. 'data/GROBOLD.ttf')
 page_of = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.165, y = screen:get_height() * 0.21 }, script_path .. 'data/GROBOLD.ttf')
 page_max = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.205, y = screen:get_height() * 0.21 }, script_path .. 'data/GROBOLD.ttf')
+
+-------------------------------------
+-- Freetype objects used in the selectlevel page.
+-- @author Marcus
+-------------------------------------
+
+level_1 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.13 + (screen:get_width() * 0.22) * (1 - 1), y = (screen:get_height() * 0.36) }, script_path .. 'data/GROBOLD.ttf')
+level_2 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.14 + (screen:get_width() * 0.22) * (2 - 1), y = (screen:get_height() * 0.36) }, script_path .. 'data/GROBOLD.ttf')
+level_3 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.15 + (screen:get_width() * 0.22) * (3 - 1), y = (screen:get_height() * 0.36) }, script_path .. 'data/GROBOLD.ttf')
+level_4 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.16 + (screen:get_width() * 0.22) * (4 - 1), y = (screen:get_height() * 0.36) }, script_path .. 'data/GROBOLD.ttf')
+level_5 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.13 + (screen:get_width() * 0.22) * (1 - 1), y = (screen:get_height() * 0.73) }, script_path .. 'data/GROBOLD.ttf')
+level_6 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.14 + (screen:get_width() * 0.22) * (2 - 1), y = (screen:get_height() * 0.73) }, script_path .. 'data/GROBOLD.ttf')
+level_7 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.15 + (screen:get_width() * 0.22) * (3 - 1), y = (screen:get_height() * 0.73) }, script_path .. 'data/GROBOLD.ttf')
+level_8 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.16 + (screen:get_width() * 0.22) * (4 - 1), y = (screen:get_height() * 0.73) }, script_path .. 'data/GROBOLD.ttf')
+level_fonts = {level_1, level_2, level_3, level_4, level_5, level_6, level_7, level_8}
+
+
+locked_level_1 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.13 + (screen:get_width() * 0.22) * (1 - 1), y = (screen:get_height() * 0.36) }, script_path .. 'data/GROBOLD.ttf')
+locked_level_2 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.14 + (screen:get_width() * 0.22) * (2 - 1), y = (screen:get_height() * 0.36) }, script_path .. 'data/GROBOLD.ttf')
+locked_level_3 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.15 + (screen:get_width() * 0.22) * (3 - 1), y = (screen:get_height() * 0.36) }, script_path .. 'data/GROBOLD.ttf')
+locked_level_4 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.16 + (screen:get_width() * 0.22) * (4 - 1), y = (screen:get_height() * 0.36) }, script_path .. 'data/GROBOLD.ttf')
+locked_level_5 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.13 + (screen:get_width() * 0.22) * (1 - 1), y = (screen:get_height() * 0.73) }, script_path .. 'data/GROBOLD.ttf')
+locked_level_6 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.14 + (screen:get_width() * 0.22) * (2 - 1), y = (screen:get_height() * 0.73) }, script_path .. 'data/GROBOLD.ttf')
+locked_level_7 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.15 + (screen:get_width() * 0.22) * (3 - 1), y = (screen:get_height() * 0.73) }, script_path .. 'data/GROBOLD.ttf')
+locked_level_8 = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.10, {  x = screen:get_width() * 0.16 + (screen:get_width() * 0.22) * (4 - 1), y = (screen:get_height() * 0.73) }, script_path .. 'data/GROBOLD.ttf')
+locked_levels = {locked_level_1, locked_level_2, locked_level_3, locked_level_4, locked_level_5, locked_level_6, locked_level_7, locked_level_8}
