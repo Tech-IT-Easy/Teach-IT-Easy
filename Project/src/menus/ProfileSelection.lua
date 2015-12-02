@@ -1,29 +1,19 @@
---ProfileSelection = {} --MenuView:new()
--- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
-
 local Profile = require('platform.Profile')
-
 local ProfileSelection = extends(Super)
-
 local Event = require('toolkit.Event')
 
 -- profiles
-profiles = {}
-table.insert(profiles, Profile:new("Knatte", 'data/avatar/cute_robot/DOWN.png'))
-table.insert(profiles, Profile:new("Fnatte", 'data/avatar/insect_robot/DOWN.png'))
-table.insert(profiles, Profile:new("Tjatte", 'data/avatar/cute_robot/UP.png'))
 
 -- images
-local image1 = gfx.loadpng(profiles[1].avatar)
+--[[local image1 = gfx.loadpng(profiles[1].avatar)
 image1:premultiply()
 local image2 = gfx.loadpng(profiles[2].avatar)
 image2:premultiply()
 local image3 = gfx.loadpng(profiles[3].avatar)
 image3:premultiply()
 
-images = { image1, image2, image3}
-
+images = { image1, image2, image3}]]
 
 -------------------------------------
 -- Creates the Profile selection-menu.
@@ -32,9 +22,16 @@ images = { image1, image2, image3}
 -------------------------------------
 function ProfileSelection:new()
   local o = ProfileSelection:super()
-  -- text placing
   o.appnamebaseline = screen:get_height() * 0.08
   o.pagenamebaseline = screen:get_height() * 0.15
+
+  o.images = {}
+
+   for i in pairs(profiles) do
+     o.image = gfx.loadpng(profiles[i].avatar)
+     table.insert(o.images, o.image)
+  end
+
   return ProfileSelection:init(o)
 end
 
@@ -46,12 +43,11 @@ end
 -------------------------------------
 function ProfileSelection:handleinput(event)
   collectgarbage()
-  -- each menu will have its own function to handle remote input
-
   self.lastpos = self.pos
   if event.key == Event.KEY_RIGHT and self.pos < #profiles then
     self.lastpos = self.pos
     self.pos = self.pos + 1
+
   elseif event.key == Event.KEY_LEFT and self.pos > 1 and self.pos < #profiles + 1 then
 
     self.pos = self.pos - 1
@@ -59,7 +55,7 @@ function ProfileSelection:handleinput(event)
 
     self.pos = 5
 
-  elseif event.key == Event.KEY_UP and self.pos == 5 then
+  elseif event.key == Event.KEY_UP and self.pos == 5 and #profiles ~= 0 then
 
     self.pos = 1
 
@@ -67,17 +63,10 @@ function ProfileSelection:handleinput(event)
       PlatformContext.profile = profiles[self.pos]
     return { "main", profiles[self.pos].name}
 
-
   elseif event.key == Event.KEY_OK and self.pos == 5 and #profiles <4 then
     return { "create" }
 
---  elseif event.key == Event.KEY_ONE and self.pos < 5 then
---    return { "main", usernames[self.pos] }
-
---  elseif event.key == Event.KEY_ONE and self.pos == 5 then
---    return { "create" }
   end
-
   return { " " }
 end
 
@@ -91,8 +80,13 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:loadview()
-  self.pos = 1
-  self.lastpos = 1
+  if #profiles ~= 0 then
+    self.pos = 1
+    self.lastpos = 1
+  else
+    self.pos = 5
+    self.lastpos = 5
+   end
   self:renderui()
 end
 
@@ -103,7 +97,11 @@ end
 function ProfileSelection:renderui()
   prof_sel_appname:draw_over_surface(screen, "TEACH IT EASY")
   prof_sel_pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
-  self:active(1)
+  if #profiles ~=0 then
+    self:active(1)
+  else
+    self:inactive(1)
+  end
   for i = 2, 5, 1 do
     self:inactive(i)
   end
@@ -119,8 +117,8 @@ function ProfileSelection:active(x1)
   if x1 < 5 then
     screen:clear({ g = 131, r = 0, b = 143 }, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1), y = prof_sel_itemy, w = prof_sel_itemwidth, h = prof_sel_itemheight })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1) + prof_sel_itemwidth * 0.02, y = prof_sel_activey, w = prof_sel_activewidth, h = prof_sel_activeheight })
-    if x1 < (#images + 1) then
-      screen:copyfrom(images[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = prof_sel_itemy + screen:get_height() * 0.045, w = image1:get_width() * 0.6, h = image1:get_height() * 0.6 }, true)
+    if x1 < (#self.images + 1) then
+      screen:copyfrom(self.images[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1) + screen:get_width() * 0.01, y = prof_sel_itemy + screen:get_height() * 0.02, w = self.images[x1]:get_width() * 0.6, h = self.images[x1]:get_height() * 0.6 }, true)
     end
   else
     screen:clear({ g = 131, r = 0, b = 143 }, { x = 0, y = prof_sel_addprofiley, w = screen:get_width(), h = prof_sel_addprofileheight })
@@ -138,8 +136,8 @@ end
 function ProfileSelection:inactive(x1)
   if x1 < 5 then
     screen:clear({ g = 228, r = 187, b = 235 }, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1), y = prof_sel_itemy, w = prof_sel_itemwidth, h = prof_sel_itemheight })
-    if x1 < (#images + 1) then
-      screen:copyfrom(images[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1) + screen:get_width() * 0.025, y = prof_sel_itemy + screen:get_height() * 0.045, w = image1:get_width() * 0.6, h = image1:get_height() * 0.6 }, true)
+    if x1 < (#self.images + 1) then
+      screen:copyfrom(self.images[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1) + screen:get_width() * 0.01, y = prof_sel_itemy + screen:get_height() * 0.02, w = self.images[x1]:get_width() * 0.6, h = self.images[x1]:get_height() * 0.6 }, true)
     end
   else
     screen:clear({ g = 228, r = 187, b = 235 }, { x = 0, y = prof_sel_addprofiley, w = screen:get_width(), h = prof_sel_addprofileheight })
@@ -153,9 +151,11 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:printnames()
+  local j = 1
   for i in pairs(profiles) do
-    prof_sel_usernamefonts[i]:draw_over_surface(screen, profiles[i].name)
+    prof_sel_usernamefonts[j]:draw_over_surface(screen, profiles[i].name)
     print (profiles[i])
+    j = j+1
   end
 
 end

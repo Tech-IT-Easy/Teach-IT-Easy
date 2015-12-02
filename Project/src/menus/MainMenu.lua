@@ -1,8 +1,5 @@
--- MainMenu = {} --MenuView:new()
--- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
 local MainMenu = extends(Super)
-
 local Event = require('toolkit.Event')
 -------------------------------------
 -- Creates the Main menu.
@@ -10,7 +7,7 @@ local Event = require('toolkit.Event')
 -- @author Erik
 -------------------------------------
 function MainMenu:new()
-  local o = MainMenu:super()
+    local o = MainMenu:super()
     o.sidebuttonfonts = { main_menu_sidebuttontext1, main_menu_sidebuttontext2, main_menu_sidebuttontext3 }
     return MainMenu:init(o)
 end
@@ -23,8 +20,8 @@ end
 -------------------------------------
 function MainMenu:handleinput(event)
 
-  collectgarbage()
-  self.lastpos = self.pos
+    collectgarbage()
+    self.lastpos = self.pos
 
     if event.key == Event.KEY_RIGHT and self.pos == 0 then
         self.pos = 1
@@ -40,12 +37,14 @@ function MainMenu:handleinput(event)
         return { "trophy", self.usernamestring }
     elseif event.key == Event.KEY_OK and self.pos == 2 then
         return { "instructions", self.usernamestring }
+    elseif event.key == Event.KEY_OK and self.pos == 3 then
+        return { "settings", self.usernamestring }
 
     elseif event.key == Event.KEY_BACK then
         return { "profilesel" }
     end
 
-  return { " " }
+    return { " " }
 end
 
 -------------------------------------
@@ -85,22 +84,70 @@ end
 -- @author Erik
 -------------------------------------
 function MainMenu:printbackground()
-  self.background = gfx.loadpng("data/background_h720.png")
-  screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-  self.background:destroy()
+    self.background = gfx.loadpng("data/background_h720.png")
+    screen:copyfrom(self.background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
+    self.background:destroy()
 end
 
 
 -------------------------------------
 -- Prints content on screen.
--- @author Erik
+-- @author Erik, Adam
 -------------------------------------
 function MainMenu:renderui()
 
     main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
     main_menu_pagename:draw_over_surface(screen, "MAIN MENU")
-    main_menu_username:draw_over_surface(screen, self.usernamestring)
-    screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+    main_menu_username:draw_over_surface(screen, platformContext.profile.name)
+
+    local avatarImageUrl = platformContext.profile.avatar
+
+    local trophyRoomImageActive="data/trophy_active.png"
+    local trophyRoomImageInactive="data/trophyinactive.png"
+    local SettingsMenuImageActive="data/settings_active.png"
+    local SettingsMenuImageInactive="data/settings_inactive.png"
+    local InstructionsMenuImageActive="data/instructions_active.png"
+    local InstructionsMenuImageInactive="data/instructions_inactive.png"
+
+    self.avatarImage = gfx.loadpng(avatarImageUrl)
+
+    local TrophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
+    local TrophyRoomImageInactiveImage = gfx.loadpng(trophyRoomImageInactive)
+    local SettingsMenuImageActiveImage = gfx.loadpng(SettingsMenuImageActive)
+    local SettingsMenuImageInactiveImage = gfx.loadpng(SettingsMenuImageInactive)
+
+    local InstructionsActiveImage = gfx.loadpng(InstructionsMenuImageActive)
+    local InstructionsInactiveImage = gfx.loadpng(InstructionsMenuImageInactive)
+    self.avatarImage:premultiply()
+
+    TrophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
+    TrophyRoomImageActiveImage:premultiply()
+    TrophyRoomImageInactiveImage = gfx.loadpng(trophyRoomImageInactive)
+    TrophyRoomImageInactiveImage:premultiply()
+    SettingsMenuImageActiveImage = gfx.loadpng(SettingsMenuImageActive)
+    SettingsMenuImageActiveImage:premultiply()
+    SettingsMenuImageInactiveImage = gfx.loadpng(SettingsMenuImageInactive)
+    SettingsMenuImageInactiveImage:premultiply()
+    InstructionsActiveImage = gfx.loadpng(InstructionsMenuImageActive)
+    InstructionsActiveImage:premultiply()
+    InstructionsInactiveImage = gfx.loadpng(InstructionsMenuImageInactive)
+    InstructionsInactiveImage:premultiply()
+
+    self.inactiveImages = {
+        TrophyRoomImageInactiveImage,
+        InstructionsInactiveImage,
+        SettingsMenuImageInactiveImage
+    }
+
+    self.activeImages = {
+        TrophyRoomImageActiveImage,
+        InstructionsActiveImage,
+        SettingsMenuImageActiveImage
+    }
+
+
+    screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+
     self:gamebuttonactive()
     for i = 1, 3, 1 do
         self:sidebuttoninactive(i)
@@ -118,6 +165,7 @@ end
 function MainMenu:gamebuttonactive()
     screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.3, w = screen:get_width() * 0.42, h = screen:get_height() * 0.61 })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.055, y = (screen:get_height() * 0.309), w = (screen:get_width() * 0.41), h = (screen:get_height() * 0.593) })
+    screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.10, y = screen:get_height() * 0.32 , w = screen:get_width() * 0.30, h = screen:get_height() * 0.45 })
     main_menu_games:draw_over_surface(screen, "Games")
 end
 
@@ -127,6 +175,7 @@ end
 -------------------------------------
 function MainMenu:gamebuttoninactive()
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.3, w = screen:get_width() * 0.42, h = screen:get_height() * 0.61 })
+    screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.10, y = screen:get_height() * 0.32 , w = screen:get_width() * 0.30, h = screen:get_height() * 0.45 })
     main_menu_games:draw_over_surface(screen, "Games")
 end
 
@@ -138,6 +187,7 @@ end
 function MainMenu:sidebuttonactive(x1)
     screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.5375, y = (screen:get_height() * 0.3) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = screen:get_width() * 0.425, h = screen:get_height() * 0.185 })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.5425, y = (screen:get_height() * 0.309) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = (screen:get_width() * 0.415), h = (screen:get_height() * 0.1685) })
+    screen:copyfrom(self.activeImages[x1], nil, { x = screen:get_width() * 0.5475, y = screen:get_height() * 0.33 + ((screen:get_height() * 0.2125) * (x1 - 1)), w = screen:get_width() * 0.090, h = screen:get_height() * 0.125 })
 
     self.sidebuttonfonts[x1]:draw_over_surface(screen, self.sidebuttons[x1])
 end
@@ -149,6 +199,7 @@ end
 -------------------------------------
 function MainMenu:sidebuttoninactive(x1)
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.5375, y = (screen:get_height() * 0.3) + ((screen:get_height() * 0.2125) * (x1 - 1)), w = screen:get_width() * 0.425, h = screen:get_height() * 0.185 })
+      screen:copyfrom(self.inactiveImages[x1], nil, { x = screen:get_width() * 0.5475, y = screen:get_height() *0.33 + ((screen:get_height() * 0.2125) * (x1 - 1)), w = screen:get_width() * 0.090, h = screen:get_height() * 0.125 })
 
     self.sidebuttonfonts[x1]:draw_over_surface(screen, self.sidebuttons[x1])
 end

@@ -208,7 +208,7 @@ function DrawBuildArea:getFileName(action)
     elseif action == "action" then
         return "data/progg_game_icons/action.png"
 
-    elseif action == "if" then
+    elseif action == "if-wall" then
         return "data/progg_game_icons/if_wall.png"
 
     elseif action == "loop" then

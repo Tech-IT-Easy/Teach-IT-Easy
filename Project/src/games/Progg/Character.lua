@@ -28,7 +28,7 @@ function Character:new(x,y, rightMenu, levelData, context)
   o.startPosition = {x = x, y = y}
   o.state = 0
   -- @member map:Map
-  o.map = Map:new()
+  o.map = Map:new(context)
   o.map:load(levelData)
   o.hasWon=false
   o.step = 1
@@ -129,6 +129,9 @@ function Character:startExecution(inqueue)
 
             --If the command IF is encountered or it is executing IF
           elseif (act == Commands.IF or self.onIf) then
+            if (act == Commands.IF) then
+              self.procProcess = 0
+            end
             self.isCompleted = self:executeIfStatement()
             if (self.isCompleted) then
               self.procProcess = self.procProcess + 1;
@@ -149,7 +152,9 @@ function Character:startExecution(inqueue)
         --Check if the goal has been reached
         if(self.map:isInGoal(self.position.x,self.position.y) and #self.map.inGameObjectives==0)then
           self.hasWon = true
-          self:updateProgress()
+          if(self.levelData.level > self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level) then
+            self:updateProgress()
+          end
         else
           self:reset()
           gfx.update()

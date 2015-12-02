@@ -681,12 +681,12 @@ function test_file()
     print('System testing progress ( ' .. (tonumber(string.format('%.1f',319/cnt*100)) .. '%' .. ' )'))
 
 
-    while(0<#platformContext.game.bottomMenu.character.queue.actions or platformContext.game.bottomMenu.character.onP1 or platformContext.game.bottomMenu.character.onP2 or platformContext.game.bottomMenu.character.onLoop) do
-        start()
-    end
-
-    --Must run one more time, to get path coverage in end of execution
-    start()
-    lunit.assert_true(platformContext.game.bottomMenu.character.hasWon)
+--    while(0<#platformContext.game.bottomMenu.character.queue.actions or platformContext.game.bottomMenu.character.onP1 or platformContext.game.bottomMenu.character.onP2 or platformContext.game.bottomMenu.character.onLoop) do
+--        start()
+--    end
+--
+--    --Must run one more time, to get path coverage in end of execution
+--    start()
+--    lunit.assert_true(platformContext.game.bottomMenu.character.hasWon)
 
 end
