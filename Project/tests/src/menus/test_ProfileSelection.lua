@@ -363,23 +363,28 @@ end
 -------------------------------------
 -- Tests if the right user is chosen when 1 is pressed
 -- @system_under_test: ProfileSelection:new(), ProfileSelection:handleinput(event)
--- @author name: Johanna
+-- @author name: Johanna; Erik
 -------------------------------------
 
 function test_handleinput_up_one()
   local ps = require(SUT)
   local a = ps:new()
  -- a.usernames = {"a", "b", "c"}
+
+  profiles = {1,1}
+  local ps2 = require("platform.PlatformContext")
+    local a = ps:new()
   a.pos = 1
+    PlatformContext = ps2:new()
   event.key = event.KEY_OK
   local b = a:handleinput(event)
-  assert_equal("Knatte", b[2], "should get username a")
+  assert_equal("main", b[1], "should get main menu a")
   a.pos = 2
   local b = a:handleinput(event)
-  assert_equal("Fnatte", b[2], "should get username b")
+  assert_equal("main", b[1], "should get main menu b")
   a.pos = 3
   local b = a:handleinput(event)
-  assert_equal("Tjatte", b[2], "should get username c")
+  assert_equal("main", b[1], "should get main menu c")
 
 end
 
