@@ -1,3 +1,3 @@
 return {
-    SELECTED = 'sv'
+    SELECTED = 'en'
 }
