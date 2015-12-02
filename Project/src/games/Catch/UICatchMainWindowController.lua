@@ -13,39 +13,32 @@ local UICatchMainWindowController = extends(UIWindowViewController)
 
 function UICatchMainWindowController:new(args)
   local o = UICatchMainWindowController:super(UICatchMainWindow:new())
-  
   o.levels = args.levels
   o.currentLevel = 1
-
-  o.correctWord = args.levels[o.currentLevel].word
-
-  o.maxNumberOfGuesses = args.levels[o.currentLevel].maxNumberOfGuesses
-
-  o.numberOfGuesses = 0
-
-  o.numberOfCorrect = 0
-
-  o.characters = {
-    "a", "b", "c",
-    "d", "e", "f",
-    "g", "h", "i"
-  }
-  
-  print("Correct answer: " .. o.correctWord)
-
   --o.window.button1.delegate = o
   --o.window.button2.delegate = o
-  o.window.characters = o.characters
-  o.window.word = o.correctWord 
+  function o:initialize()
+    --o.characters = based on letter, random some characters
+    o.correctWord = args.levels[o.currentLevel].word
+    o.maxNumberOfGuesses = args.levels[o.currentLevel].maxNumberOfGuesses
+    o.numberOfGuesses = 0
+    o.numberOfCorrect = 0
+    o.characters = {
+      "a", "b", "c",
+      "d", "e", "f",
+      "g", "h", "i"
+    }
+    o.window:initialize{characters=o.characters,correctWord=o.correctWord,currentLevel=o.currentLvel}
+  end
   
-  o.window.cop:print()
+  o:initialize()
+  
   o.game = args.game
   return UICatchMainWindowController:init(o)
 end
 
-function UICatchMainWindowController:initialize()
-  -- wait to implemented!
-end
+
+
 
 function UICatchMainWindowController:checkLetter(letter)
   return self.correctWord:sub(self.numberOfCorrect+1,self.numberOfCorrect+1) == letter
