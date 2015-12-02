@@ -18,12 +18,12 @@ local function create_queue(inqueue, type)
         inqueue:push(commands.MOVE, "queue")
         inqueue:push(commands.MOVE, "queue")
         inqueue:push(commands.MOVE, "queue")
-        inqueue:push(commands.MOVE, "queue")
+        --inqueue:push(commands.MOVE, "queue")
         inqueue:push(commands.TURN_RIGHT, "queue")
         inqueue:push(commands.MOVE, "queue")
         inqueue:push(commands.MOVE, "queue")
-        inqueue:push(commands.TURN_RIGHT, "queue")
-        inqueue:push(commands.MOVE, "queue")
+        --inqueue:push(commands.TURN_RIGHT, "queue")
+        --inqueue:push(commands.MOVE, "queue")
     else
         inqueue:push(commands.LOOP, "queue")
         inqueue.loopCounter=4
@@ -96,7 +96,9 @@ function test_start_executing_commands()
     context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
     context_sim.profile.gameprogress = GameProgress:new("test_avatar")
 
-    local character = require(SUT_1):new(1,5, rightMenu, leveldata[1],context_sim)
+    leveldata[4].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
+
+    local character = require(SUT_1):new(1,5, rightMenu, leveldata[4],context_sim)
     local myqueue=require(SUT_3):new(nil,nil,{["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
 
     create_queue(myqueue, "complex")

@@ -135,9 +135,11 @@ function test_adding_commands()
     context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
     context_sim.profile.gameprogress = GameProgress:new("test_avatar")
 
+    leveldata[4].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
+
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new(leveldata[1],context_sim)
+    local bottommenu = test:new(leveldata[4],context_sim)
     local test_event
     local bm_queue
     local test_command
@@ -490,9 +492,11 @@ function test_key_press()
     context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
     context_sim.profile.gameprogress = GameProgress:new("test_avatar")
 
+    leveldata[4].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
+
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new(leveldata[1], context_sim)
+    local bottommenu = test:new(leveldata[4], context_sim)
 
     local test_event = event:new("1", "down")
     bottommenu.inputArea = "loop"
