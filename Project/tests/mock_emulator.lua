@@ -88,6 +88,45 @@ newImage(mec.ANYARGS) ; mec:returns(data) :anytimes()
 getTime(mec.ANYARGS) ; mec:returns(0.1) :anytimes()
 nil_returner(mec.ANYARGS) ; mec:returns(nil) :anytimes()
 
+local Network = mec:mock()
+package.loaded['toolkit.Network'] = nil -- need to delete the package where the function is taken from.
+package.preload['toolkit.Network'] = function () -- Create preload. When the program wants to include love. This function will run instead
+    toolkit = {}
+    toolkit.Network = Network
+    return Network
+end
+
+Network.new(Network) ; mec:returns(nil) :anytimes()
+Network.getFirstname(Network,mec.ANYARGS) ; mec:returns("testname") :anytimes()
+Network.getProgress(Network, mec.ANYARGS) ; mec:returns(nil) :anytimes()
+Network.getLevels(Network, mec.ANYARGS) ; mec:returns({
+        {
+            level = 1, maxCommands = {["queue"] = 8, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "dfffffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 1, levelStartPosition = 33, objectives = {}
+        },
+        {
+            level = 2, maxCommands = {["queue"] = 8, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffffffffffff9aefffff5fffffff7fffffff", levelGoalPosition = 19, levelStartPosition = 33, objectives = {}
+        },
+        {
+            level = 3, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "fffffffffffffffff9efffff96ffffff7fffffff", levelGoalPosition = 19, levelStartPosition = 33, objectives = {26}
+        },
+        {
+            level = 4, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
+        },
+        {
+            level = 5, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aaaaacf59aaac5f55baa65f53aaaa6f7fffffff", levelGoalPosition = 19, levelStartPosition = 33, objectives = {}
+        },
+        {
+            level = 6, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
+        },
+        {
+            level = 7, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
+        },
+        {
+            level = 8, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
+        }
+
+    }) :anytimes()
+
 package.loaded['socket'] = nil -- need to delete the package where the function is taken from.
 package.preload['socket'] = function () -- Create preload. When the program wants to include love. This function will run instead
   local Socket = {}
