@@ -1,6 +1,6 @@
 require "games.Progg.BottomMenu"
 require "games.Progg.BuildArea"
-require "games.Progg.Character"
+--require "games.Progg.Character"
 require "games.Progg.Commands"
 require "games.Progg.DrawBottomMenu"
 require "games.Progg.DrawBuildArea"
