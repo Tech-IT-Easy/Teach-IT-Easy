@@ -342,10 +342,11 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then --Handles input when a command is selected or input when moving a command
                 print("Not allowed while selecting edit or moving action")
             else -- Handles input during normal state. Lets user add P1 to main queue.
-                if object:isBuildArea() == true or object.maxCommands["P1"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
+                if  object.maxCommands["P1"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
                     print("Action not allowed")
                     return;
                 end
+                --object:isBuildArea() == true or
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
                 object.buildArea:setBuildType("P1")
