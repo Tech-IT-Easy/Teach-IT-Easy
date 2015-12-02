@@ -1,8 +1,5 @@
--- MainMenu = {} --MenuView:new()
--- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
 local MainMenu = extends(Super)
-
 local Event = require('toolkit.Event')
 -------------------------------------
 -- Creates the Main menu.
@@ -95,7 +92,7 @@ end
 
 -------------------------------------
 -- Prints content on screen.
--- @author Erik
+-- @author Erik, Adam
 -------------------------------------
 function MainMenu:renderui()
 
@@ -112,7 +109,6 @@ function MainMenu:renderui()
     local InstructionsMenuImageActive="data/instructions_active.png"
     local InstructionsMenuImageInactive="data/instructions_inactive.png"
 
-
     self.avatarImage = gfx.loadpng(avatarImageUrl)
 
     local TrophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
@@ -123,6 +119,7 @@ function MainMenu:renderui()
     local InstructionsActiveImage = gfx.loadpng(InstructionsMenuImageActive)
     local InstructionsInactiveImage = gfx.loadpng(InstructionsMenuImageInactive)
     self.avatarImage:premultiply()
+
     TrophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
     TrophyRoomImageActiveImage:premultiply()
     TrophyRoomImageInactiveImage = gfx.loadpng(trophyRoomImageInactive)
@@ -136,8 +133,6 @@ function MainMenu:renderui()
     InstructionsInactiveImage = gfx.loadpng(InstructionsMenuImageInactive)
     InstructionsInactiveImage:premultiply()
 
-
-
     self.inactiveImages = {
         TrophyRoomImageInactiveImage,
         InstructionsInactiveImage,
@@ -149,10 +144,6 @@ function MainMenu:renderui()
         InstructionsActiveImage,
         SettingsMenuImageActiveImage
     }
-
-
-
-
 
 
     screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })

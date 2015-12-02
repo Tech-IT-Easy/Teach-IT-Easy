@@ -33,9 +33,9 @@ function ChooseAvatar:handleinput(event)
   collectgarbage()
 
   self.imagestrings = {'data/avatar/cute_robot/DOWN.png',
-  'data/avatar/insect_robot/DOWN.png',
-  'data/avatar/strong_robot/DOWN.png',
- 'data/avatar/insect_robot/UP.png' }
+    'data/avatar/insect_robot/DOWN.png',
+    'data/avatar/strong_robot/DOWN.png',
+    'data/avatar/insect_robot/UP.png' }
 
   self.folderimagestrings = {"/cute_robot/", "/insect_robot/", "/strong_robot/", "/fourth_robot/" }
 
