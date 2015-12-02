@@ -20,21 +20,13 @@ function UICatchMainWindow:new()
   -- private data model with <local>
   local thiefImage = UIImage:new(THEME.IMAGE.THIEF_BACKGROUND)
   local copImage = UIImage:new(THEME.IMAGE.COP_BACKGROUND)
-  local textlabel = UILabel:new{text="A",color=THEME.COLOR.BLUE,size=50,font=UILabel.FONT_GROBOLD}
-  
+
   -- components
   window.thief = Thief:new{frame={x=100,y=20,w=100,h=100},image=thiefImage,moveUnit=20}
   window.cop = Cop:new{frame={x=20,y=20,w=100,h=100},image=copImage,moveUnit=20,bonusMoveUnit=20}
-  --window.word = args.word
-  window.cop:run(true)
-  window.thief:run(false)
-  print(window.cop:catch(window.thief))
-  
-  --[[for i=0,string.len(window.word) do
-    window.wordsRectangle[i] = UIRectangleView:new{frame={x=300,y=20,w=80,h=80},borderColor={r=255,g=29,b=25},borderWidth = 4},
-  end
-  ]]--
-  
+
+
+
   window.words = {
     [1] = UIRectangleView:new{frame={x=300,y=20,w=80,h=80},borderColor=THEME.COLOR.LIGHT_BLUE,borderWidth = 4},
     [2] = UIRectangleView:new{frame={x=400,y=20,w=80,h=80},borderColor=THEME.COLOR.LIGHT_BLUE,borderWidth = 4}
@@ -62,7 +54,6 @@ function UICatchMainWindow:new()
   end
 
   local bottomPanel = UIPanelView:new{frame={x=0, y = screen:get_height() * 0.8,w=screen:get_width(),h=screen:get_height() * 0.2},backgroundColor=THEME.COLOR.DARK_GRAY}
-  --local textPanel = UIPanelView:new{frame={x= bottomPanel.frame.w*0.1, y = bottomPanel.frame.h*0.1,w=bottomPanel.frame.w*0.8,h=bottomPanel.frame.h*0.8},backgroundColor=THEME.COLOR.GREEN}
 
   mainPanel:addChildView(window.thief)
   mainPanel:addChildView(window.cop)
@@ -73,7 +64,6 @@ function UICatchMainWindow:new()
   for _,v in pairs(window.words) do
     bottomPanel:addChildView(v)
   end
-  --bottomPanel:addChildView(textPanel)
   window:addChildView(bottomPanel)
   
   -- properties of compnents
