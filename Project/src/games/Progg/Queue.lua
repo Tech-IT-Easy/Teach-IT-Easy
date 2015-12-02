@@ -228,9 +228,9 @@ function Queue:containsRecursion(action, Queue, queueType)
 --    return false
 --  else
 
-    if action == "loop" or action == "P1" or action == "P2" then --Remove when method calls are allowed
+    if action == "loop" or action == "P1"or action == "P2" then --Remove when method calls are allowed
     print("Calling a method from a method is not allowed yet") --Remove when method calls are allowed
-    return true --Remove when method calls are allowed
+    return false --Remove when method calls are allowed
 
 --    for i = 1, #Queue do
 --      if Queue[i] == action then
