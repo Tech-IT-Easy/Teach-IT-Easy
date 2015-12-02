@@ -30,6 +30,7 @@ function ProfileSelection:new()
 
    for i in pairs(profiles) do
      o.image = gfx.loadpng(profiles[i].avatar)
+     o.image:premultiply()
      table.insert(o.images, o.image)
   end
 

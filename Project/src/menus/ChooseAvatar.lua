@@ -48,10 +48,12 @@ function ChooseAvatar:handleinput(event)
   elseif (event.key == Event.KEY_OK) then
 
     self.image4 = self.myimages[self.pos]
-    table.insert(profiles, Profile:new(CreateProfile.profilename, self.imagestrings[self.pos], self.folderimagestrings[self.pos]))
+    local profile = Profile:new(CreateProfile.profilename, self.imagestrings[self.pos], self.folderimagestrings[self.pos])
+    table.insert(profiles, profile)
+    PlatformContext.profile = profile
 
     collectgarbage()
-    return { "profilesel", " " }
+    return { "main", profile.name }
   elseif (event.key == Event.KEY_BACK) then
     CreateProfile.profilename = ""
     return { "create" }
