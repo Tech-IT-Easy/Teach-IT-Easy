@@ -35,7 +35,32 @@ function Settings:handleinput(event)
     elseif event.key == Event.KEY_OK and self.pos == 1 then
         return { "updateavatar", self.usernamestring }
     elseif event.key == Event.KEY_OK and self.pos == 2 then
-        return { "delete", self.usernamestring }
+
+        local function table_invert(t)
+           local s={}
+           for k,v in pairs(t) do
+             s[v]=k
+           end
+           return s
+        end
+        local profIndex = table_invert(profiles)[platformContext.profile]
+        profiles[profIndex] = nil
+
+        local function CleanNils(t)
+          local ans = {}
+          for _,v in pairs(t) do
+            ans[ #ans+1 ] = v
+          end
+          return ans
+        end
+
+        profiles = CleanNils(profiles)
+
+
+
+        collectgarbage()
+        --return { "delete", self.usernamestring }
+        return { "profilesel" }
     elseif event.key == Event.KEY_BACK then
         return { "main" }
     end

@@ -9,10 +9,6 @@ local ProfileSelection = extends(Super)
 local Event = require('toolkit.Event')
 
 -- profiles
-profiles = {}
-table.insert(profiles, Profile:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
-table.insert(profiles, Profile:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
-table.insert(profiles, Profile:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
 -- images
 --[[local image1 = gfx.loadpng(profiles[1].avatar)
@@ -55,7 +51,6 @@ end
 function ProfileSelection:handleinput(event)
   collectgarbage()
   -- each menu will have its own function to handle remote input
-
   self.lastpos = self.pos
   if event.key == Event.KEY_RIGHT and self.pos < #profiles then
     self.lastpos = self.pos
@@ -67,7 +62,7 @@ function ProfileSelection:handleinput(event)
 
     self.pos = 5
 
-  elseif event.key == Event.KEY_UP and self.pos == 5 then
+  elseif event.key == Event.KEY_UP and self.pos == 5 and #profiles ~= 0 then
 
     self.pos = 1
 
@@ -99,8 +94,13 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:loadview()
-  self.pos = 1
-  self.lastpos = 1
+  if #profiles ~= 0 then
+    self.pos = 1
+    self.lastpos = 1
+  else
+    self.pos = 5
+    self.lastpos = 5
+   end
   self:renderui()
 end
 
@@ -111,7 +111,11 @@ end
 function ProfileSelection:renderui()
   prof_sel_appname:draw_over_surface(screen, "TEACH IT EASY")
   prof_sel_pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
-  self:active(1)
+  if #profiles ~=0 then
+    self:active(1)
+  else
+    self:inactive(1)
+  end
   for i = 2, 5, 1 do
     self:inactive(i)
   end
@@ -161,9 +165,11 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:printnames()
+  local j = 1
   for i in pairs(profiles) do
-    prof_sel_usernamefonts[i]:draw_over_surface(screen, profiles[i].name)
+    prof_sel_usernamefonts[j]:draw_over_surface(screen, profiles[i].name)
     print (profiles[i])
+    j = j+1
   end
 
 end
