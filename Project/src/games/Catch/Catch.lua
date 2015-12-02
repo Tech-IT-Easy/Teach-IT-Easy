@@ -6,21 +6,8 @@
 local Game = require('toolkit.Game')
 local Catch = extends(Game)
 
-local UIImage = require('toolkit.UIKit.UIImage')
-
-local Thief = require('games.Catch.Thief')
-local Cop = require('games.Catch.Cop')
-
-local UICatchMainWindow = require('games.Catch.UICatchMainWindow')
 local UICatchMainWindowController = require('games.Catch.UICatchMainWindowController')
 local UIAlertWindowController = require("toolkit.UIKit.UIAlertWindowController")
-
-
-local words = {
-  "Anka",
-  "Kaka"
-}
-
 
 -----------------------------------------------------------
 -- Constructor method, see 'toolkit.Game'
@@ -30,9 +17,18 @@ local words = {
 function Catch:new(context)
   local o = Catch:super()
   o.levels = {
-    {word="anka",maxNumberOfGuesses = 10},
-    {word="anka",maxNumberOfGuesses = 10},
-    {word="anka",maxNumberOfGuesses = 10}
+    {
+      word="anka",
+      maxNumberOfGuesses = 10
+    },
+    {
+      word="kaka",
+      maxNumberOfGuesses = 10
+    },
+    {
+      word="kanna",
+      maxNumberOfGuesses = 10
+    }
   }
   
   self.platformContext = context
@@ -49,9 +45,6 @@ end
 -- as of right now.
 -----------------------------------------------------------
 function Catch:load()
-  self.correctWord = words[math.random(#words)]
-  self.numberCorrect = 0
-  print("Correct answer: " .. self.correctWord)
 end
 
 -----------------------
@@ -68,12 +61,6 @@ end
 -- and are displayed on the screen
 ------------------------
 function Catch:update()
-  if self:completed() then
-    print("Game completed!")
-  else
-    print("Game not completed!")
-  end
-
   self.windowController:presentView()
   if self.alertController then
     self.alertController:presentView()
@@ -102,10 +89,6 @@ function Catch:exit()
   self.platformContext.platformEventListener:removeChainListener()
   self.platformContext:createNewMenu()
   self.platformContext.game = nil
-end
-
-function Catch:completed()
-  return #self.correctWord == self.guessedWord;
 end
 
 return Catch
