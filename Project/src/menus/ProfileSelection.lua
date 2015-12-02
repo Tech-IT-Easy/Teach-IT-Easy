@@ -2,6 +2,7 @@ local Super = require('toolkit.MenuSuperClass')
 local Profile = require('platform.Profile')
 local ProfileSelection = extends(Super)
 local Event = require('toolkit.Event')
+local LOCALE = require('i18n.main')
 
 -- profiles
 
@@ -95,8 +96,8 @@ end
 -- @author Erik/ Marcus
 -------------------------------------
 function ProfileSelection:renderui()
-  prof_sel_appname:draw_over_surface(screen, "TEACH IT EASY")
-  prof_sel_pagename:draw_over_surface(screen, "SELECT YOUR PROFILE")
+  prof_sel_appname:draw_over_surface(screen, LOCALE.APP_NAME)
+  prof_sel_pagename:draw_over_surface(screen, LOCALE.PROFILE_SELECT)
   if #profiles ~=0 then
     self:active(1)
   else
@@ -124,7 +125,7 @@ function ProfileSelection:active(x1)
     screen:clear({ g = 131, r = 0, b = 143 }, { x = 0, y = prof_sel_addprofiley, w = screen:get_width(), h = prof_sel_addprofileheight })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = 0, y = prof_sel_activeaddprofiley, w = screen:get_width(), h = prof_sel_activeaddprofileheight })
     prof_sel_addprofileplus:draw_over_surface(screen, "+")
-    prof_sel_addprofilename:draw_over_surface(screen, "ADD A PROFILE")
+    prof_sel_addprofilename:draw_over_surface(screen, LOCALE.PROFILE_ADD)
   end
 end
 
@@ -142,7 +143,7 @@ function ProfileSelection:inactive(x1)
   else
     screen:clear({ g = 228, r = 187, b = 235 }, { x = 0, y = prof_sel_addprofiley, w = screen:get_width(), h = prof_sel_addprofileheight })
     prof_sel_addprofileplus:draw_over_surface(screen, "+")
-    prof_sel_addprofilename:draw_over_surface(screen, "ADD A PROFILE")
+    prof_sel_addprofilename:draw_over_surface(screen, LOCALE.PROFILE_ADD)
   end
 end
 

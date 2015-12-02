@@ -4,6 +4,7 @@ local Super = require('toolkit.MenuSuperClass')
 local Settings = extends(Super)
 
 local Event = require('toolkit.Event')
+local LOCALE = require('i18n.main')
 -------------------------------------
 -- Creates the Main menu.
 -- @return self. The created menu-object.
@@ -86,7 +87,7 @@ end
 function Settings:loadview(input)
     self.pos = 0
     self.lastpos = self.pos
-    self.buttons = { "Update Name", "Update Avatar", "Delete Profile" }
+    self.buttons = { LOCALE.EDIT_NAME, LOCALE.EDIT_AVATAR, LOCALE.DELETE_PROFILE }
     self.usernamestring = input
     --self:printbackground()
     self:renderui()
@@ -109,8 +110,8 @@ end
 -------------------------------------
 function Settings:renderui()
 
-    main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
-    main_menu_pagename:draw_over_surface(screen, "MAIN MENU")
+    main_menu_appname:draw_over_surface(screen, LOCALE.APP_NAME)
+    main_menu_pagename:draw_over_surface(screen, LOCALE.MENU_MAIN)
     main_menu_username:draw_over_surface(screen, platformContext.profile.name)
 
     local avatarImageUrl = platformContext.profile.avatar
@@ -126,8 +127,8 @@ function Settings:renderui()
 
     screen:clear({ g = 0, r = 0, b = 0 }, { x = screen:get_width() * 0.8, y = screen:get_height() * 0.08, w = screen:get_width() * 0.05, h = screen:get_height() * 0.04 })
     screen:clear({ g = 230, r = 230, b = 230 }, { x = screen:get_width() * 0.803, y = screen:get_height() * 0.0845, w = screen:get_width() * 0.0455, h = screen:get_height() * 0.0308 })
-    main_menu_backbutton:draw_over_surface(screen, "BACK")
-    main_menu_backtext:draw_over_surface(screen, "Change profile")
+    main_menu_backbutton:draw_over_surface(screen, LOCALE.BACK)
+    main_menu_backtext:draw_over_surface(screen, LOCALE.PROFILE_CHANGE)
 end
 
 -------------------------------------
