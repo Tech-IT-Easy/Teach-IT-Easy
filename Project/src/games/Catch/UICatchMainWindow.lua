@@ -6,6 +6,8 @@ local UICollectionCellView = require("toolkit.UIKit.UICollectionCellView")
 local UIButtonView = require("toolkit.UIKit.UIButtonView")
 local UIImage = require("toolkit.UIKit.UIImage")
 local UILabel = require("toolkit.UIKit.UILabel")
+local Event = require("toolkit.Event")
+
 local THEME = require("games/Catch/data/theme")
 local Thief = require("games.Catch.Thief")
 local Cop = require("games.Catch.Cop")
@@ -58,22 +60,25 @@ function UICatchMainWindow:initialize(args)
  local characters = args.characters
 
  local rows = 3
- local columns = 2
+ local columns = 3
  local rightPanel = UICollectionView:new{frame={x=800,y=20,w=400,h=400},space=20,cols=columns,rows=rows,backgroundColor=THEME.COLOR.LIGHT_GRAY}
 
  local labels = {}
- local buttons = {}
+ self.buttons = {}
  local cells = {}
 
  for i = 1, rows do
    for j = 1, columns do
-     labels[i*rows+j] = UILabel:new{text=characters[i*rows+j],color=THEME.COLOR.RED,size=50,font=UILabel.FONT_GROBOLD }
-     buttons[i*rows+j] = UIButtonView:new{frame={x=1,y=1,w=100,h=100},borderColor={r=255,g=29,b=25},borderWidth = 6,backgroundImage=nil,label=labels[i*rows+j] }
-     cells[i*rows+j] = UICollectionCellView:new{view=buttons[i*rows+j],viewType="UIButtonView" }
-     rightPanel:fillWithCell(cells[i*rows+j],i-1,j-1)
+     local index = (i-1)*rows+j
+     labels[index] = UILabel:new{text=characters[index],color=THEME.COLOR.RED,size=50,font=UILabel.FONT_GROBOLD }
+     self.buttons[index] = UIButtonView:new{identity="button"..i,enableFocus=true,frame={x=1,y=1,w=100,h=100},borderColor={r=255,g=29,b=25},borderWidth = 6,backgroundImage=nil,label=labels[index] }
+     cells[index] = UICollectionCellView:new{view=self.buttons[index],viewType="UIButtonView" }
+     self:setShortcutKey(self.buttons[index], Event.formatSystemKey[""..index])
+     self:setFocusWeight{view=self.buttons[index], hWeight=1, vWeight=1}
+     rightPanel:fillWithCell(cells[index],i-1,j-1)
    end
  end
-
+ self:setFocusView(self.buttons[1]) --Chuck's Magic number :) Dont blame Daniel.
  self:addChildView(rightPanel)
  
  local word = args.word
