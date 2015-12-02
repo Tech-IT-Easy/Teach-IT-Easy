@@ -317,7 +317,7 @@ function TrophyRoom:printProgressionBar()
     else
     finishedLevels=0
     end
-    trophy_room_progress:draw_over_surface(screen, string.format(LOCALE.TROPHY_COMPLETED, finishedLevels, self.totalLevels)
+    trophy_room_progress:draw_over_surface(screen, string.format(LOCALE.TROPHY_COMPLETED, finishedLevels, self.totalLevels))
     local padding = (screen:get_width() * 0.16) / 2
     local bar = screen:get_width() - (padding * 2)
     local bluebar = bar * (finishedLevels / self.totalLevels)
