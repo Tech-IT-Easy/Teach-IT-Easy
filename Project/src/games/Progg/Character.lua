@@ -146,6 +146,8 @@ function Character:startExecution(inqueue)
               end
               act = self.queue.p2Actions[#self.queue.p2Actions - self.procProcess[self.recursionLevel] + 1]
              if(act == Commands.P1 or act == Commands.P2) then
+               self.recursionLevel=self.recursionLevel-1; 
+               self.procProcess[self.recursionLevel] = 0;
                if(act == Commands.P1)then
                   self.onP1 = true;
                   self.onP2 = false;
