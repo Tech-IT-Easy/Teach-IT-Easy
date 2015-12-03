@@ -11,9 +11,14 @@ module( "inttest_id_2", package.seeall, lunit.testcase )
 local SUT_1 = 'games.Progg.Character'
 local SUT_2 = 'games.Progg.Position'
 local SUT_3 = 'games.Progg.Queue'
-local commands=require('games.Progg.Commands')
+
 
 local function create_queue(inqueue, type)
+    package.loaded['games.Progg.Character'] = nil
+    package.loaded['games.Progg.Commands'] = nil
+    package.loaded['games.Progg.Position'] = nil
+    package.loaded['games.Progg.Queue'] = nil
+    local commands=require('games.Progg.Commands')
     if(type=="simple")then
         inqueue:push(commands.MOVE, "queue")
         inqueue:push(commands.MOVE, "queue")
@@ -45,6 +50,13 @@ local function create_queue(inqueue, type)
 end
 
 function test_execute_simple_commads()
+    package.loaded['games.Progg.Character'] = nil
+    package.loaded['games.Progg.Commands'] = nil
+    package.loaded['games.Progg.Position'] = nil
+    package.loaded['games.Progg.Queue'] = nil
+    package.loaded['games.Progg.levels.ProggLevels'] = nil
+    package.loaded['toolkit.GameProgress'] = nil
+    local commands=require('games.Progg.Commands')
     local levelData = require('games.Progg.levels.ProggLevels'):new()
     local leveldata = levelData:getProggLevels()
     local GameProgress = require('toolkit.GameProgress')
@@ -81,6 +93,13 @@ function test_execute_simple_commads()
 end
 
 function test_start_executing_commands()
+    package.loaded['games.Progg.Character'] = nil
+    package.loaded['games.Progg.Commands'] = nil
+    package.loaded['games.Progg.Position'] = nil
+    package.loaded['games.Progg.Queue'] = nil
+    package.loaded['games.Progg.levels.ProggLevels'] = nil
+    package.loaded['toolkit.GameProgress'] = nil
+    package.loaded["games.Progg.RightMenu"] = nil
     local RightMenu = require("games.Progg.RightMenu")
     local rightMenu = RightMenu:new()
     local levelData = require('games.Progg.levels.ProggLevels'):new()
