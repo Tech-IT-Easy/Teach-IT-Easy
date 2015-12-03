@@ -47,6 +47,9 @@ local SUT3 = 'games.Progg.BottomMenu'
 --  package.loaded['games.Progg.Queue'] = nil
 --  package.preload['games.Progg.Queue'] = nil
 --end
+function setup()
+    clear_mock()
+end
 
 -------------------------------------
 -- Test if what is built in BuildArea is drawed correctly from DrawBuildArea, if it is a loop

@@ -12,9 +12,9 @@ module( "test_Queue", package.seeall, lunit.testcase )
 
 local SUT = 'platform.Profile'
 
-function setup()
+--function setup()
 
-end
+--end
 
 
 function test_input_aName_picture1()

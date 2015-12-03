@@ -10,7 +10,7 @@
 
 lunit = require "lunit"
 module( "test_RightMenu", package.seeall, lunit.testcase )
-my_file = require "games.Progg.RightMenu"
+--my_file = require "games.Progg.RightMenu"
 
 local SUT = 'games.Progg.RightMenu'
 
@@ -38,6 +38,10 @@ end
 function teardown()
   package.loaded[SUT] = nil
   package.preload[SUT] = nil
+end
+
+function setup()
+    clear_mock()
 end
 
 -- Delete this function when the real test is done

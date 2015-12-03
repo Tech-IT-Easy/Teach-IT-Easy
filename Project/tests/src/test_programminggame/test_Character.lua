@@ -10,38 +10,6 @@ lunit = require "lunit"
 module( "test_Character", package.seeall, lunit.testcase )
 local SUT = 'games.Progg.Character'
 
---
---    local testsim = require('games.Progg.Map')
---    local lemock = require 'lemock' -- needed to be able to make a mock
---    local mc = lemock.controller() -- same here
---    local new = mc:mock()
---    local getPosition = mc:mock()
---    local load = mc:mock()
---    local canMove = mc:mock()
---    local setCharacter = mc:mock()
---    local moveCharacter = mc:mock()
---
---    package.preload['games.Progg.Map'].new = new
---    package.preload['games.Progg.Map'].getPosition = getPosition
---    package.preload['games.Progg.Map'].load = load
---    package.preload['games.Progg.Map'].canMove = canMove
---    package.preload['games.Progg.Map'].setCharacter = setCharacter
---    package.preload['games.Progg.Map'].moveCharacter = moveCharacter
---
---    new(mc.ANYARGS) ; mc:returns(load) :anytimes()
---    getPosition(mc.ANYARGS) ; mc:returns(nil) :anytimes()
---    load(mc.ANYARGS) ; mc:returns(nil) :anytimes()
---    canMove(mc.ANYARGS) ; mc:returns(true) :anytimes()
---    setCharacter(mc.ANYARGS) ; mc:returns(true) :anytimes()
---    moveCharacter(mc.ANYARGS) ; mc:returns(nil) :anytimes()
---
---    mc:close()
---    mc:replay()
---
---    local Character = require(SUT)
---
---    package.loaded['games.Progg.Map'] = nil
-
 function setup()
     clear_mock()
 end
@@ -57,18 +25,25 @@ function test_Character_new()
     local lemock = require 'lemock' -- needed to be able to make a mock
     local mc = lemock.controller() -- same here
     local Map_left = mc:mock()
-    local new_left = mc:mock()
+    --local new_left = mc:mock()
+    local getPosition = mc:mock()
+    local load = mc:mock()
+    local canMove = mc:mock()
+    local setCharacter = mc:mock()
+    local moveCharacter = mc:mock()
+
     package.loaded['games.Progg.Map'] = nil -- need to delete the package where the function is taken from.
     package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
         return Map_left
     end
 
-    Map_left.new(Map_left,mc.ANYARGS) ; mc:returns(new_left) :anytimes()
-    new_left.getPosition(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    new_left.load(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    new_left.canMove(new_left,mc.ANYARGS) ; mc:returns(true) :anytimes()
-    new_left.setCharacter(new_left,mc.ANYARGS) ; mc:returns(true) :anytimes()
-    new_left.moveCharacter(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    Map_left.new(Map_left,mc.ANYARGS) ; mc:returns({getPosition=getPosition, load=load, canMove=canMove, setCharacter=setCharacter
+    ,moveCharacter=moveCharacter, startPos = 2}) :anytimes() --startPos =2 <=> 2+(1-1)*8 = 2 = x + (y - 1) * self.columns in getPosition in Map class
+    getPosition(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    load(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    canMove(mc.ANYARGS) ; mc:returns(true) :anytimes()
+    setCharacter(mc.ANYARGS) ; mc:returns(true) :anytimes()
+    moveCharacter(mc.ANYARGS) ; mc:returns(nil) :anytimes()
 
     mc:close()
     mc:replay()
@@ -102,47 +77,29 @@ function test_Character_move()
     local lemock = require 'lemock' -- needed to be able to make a mock
     local mc = lemock.controller() -- same here
     local Map_left = mc:mock()
-    local new_left = mc:mock()
+    --local new_left = mc:mock()
+    local getPosition = mc:mock()
+    local load = mc:mock()
+    local canMove = mc:mock()
+    local setCharacter = mc:mock()
+    local moveCharacter = mc:mock()
+
     package.loaded['games.Progg.Map'] = nil -- need to delete the package where the function is taken from.
     package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
         return Map_left
     end
 
-    Map_left.new(Map_left,mc.ANYARGS) ; mc:returns(new_left) :anytimes()
-    new_left.getPosition(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    new_left.load(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    new_left.canMove(new_left,mc.ANYARGS) ; mc:returns(true) :anytimes()
-    new_left.setCharacter(new_left,mc.ANYARGS) ; mc:returns(true) :anytimes()
-    new_left.moveCharacter(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    Map_left.new(Map_left,mc.ANYARGS) ; mc:returns({getPosition=getPosition, load=load, canMove=canMove, setCharacter=setCharacter
+    ,moveCharacter=moveCharacter, startPos = 9}) :anytimes() --startPos =9 <=> 1+(2-1)*8 = 9 = x + (y - 1) * self.columns in getPosition in Map class
+    getPosition(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    load(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    canMove(mc.ANYARGS) ; mc:returns(true) :anytimes()
+    setCharacter(mc.ANYARGS) ; mc:returns(true) :anytimes()
+    moveCharacter(mc.ANYARGS) ; mc:returns(nil) :anytimes()
 
     mc:close()
     mc:replay()
     local Character = require(SUT)
-    --    local lemock = require 'lemock' -- needed to be able to make a mock
-    --    local mc = lemock.controller() -- same here
-    --    local Map_move = mc:mock()
-    --    local new_move = mc:mock()
-    --    package.loaded['games.Progg.Map'] = nil -- need to delete the package where the function is taken from.
-    --    package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
-    --        local games = {}
-    --        games.Progg = {}
-    --        games.Progg.Map = Map_move
-    --        return Map_move
-    --    end
-    --
-    --    print("MOVE",mc ," ",Map_move, " ", new_move)
-    --
-    --    Map_move.new(mc.ANYARGS) ; mc:returns(new_move) :anytimes()
-    --    new_move.load(mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    --    new_move.canMove(mc.ANYARGS) ; mc:returns(true) :anytimes()
-    --    new_move.setCharacter(mc.ANYARGS) ; mc:returns(true) :anytimes()
-    --    new_move.moveCharacter(mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    --
-    --    mc:close()
-    --    mc:replay()
-
-    --local Character = require(SUT)
-
     local Command = require('games.Progg.Commands')
     local char = Character:new(1,2,nil,{level = 1, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffff9aefffff5fffffff5fffffff7fffffff", levelGoalPosition = 11, levelStartPosition = 33, objectives = {} },nil)
 
@@ -167,7 +124,13 @@ function test_Character_turnLeft()
     local lemock = require 'lemock' -- needed to be able to make a mock
     local mc = lemock.controller() -- same here
     local Map_left = mc:mock()
-    local new_left = mc:mock()
+    --local new_left = mc:mock()
+    local getPosition = mc:mock()
+    local load = mc:mock()
+    local canMove = mc:mock()
+    local setCharacter = mc:mock()
+    local moveCharacter = mc:mock()
+
     package.loaded['games.Progg.Map'] = nil -- need to delete the package where the function is taken from.
     package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
     local games = {}
@@ -176,41 +139,18 @@ function test_Character_turnLeft()
     return Map_left
     end
 
-    Map_left.new(Map_left,mc.ANYARGS) ; mc:returns(new_left) :anytimes()
-    new_left.getPosition(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    new_left.load(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    new_left.canMove(new_left,mc.ANYARGS) ; mc:returns(true) :anytimes()
-    new_left.setCharacter(new_left,mc.ANYARGS) ; mc:returns(true) :anytimes()
-    new_left.moveCharacter(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    Map_left.new(Map_left,mc.ANYARGS) ; mc:returns({getPosition=getPosition, load=load, canMove=canMove, setCharacter=setCharacter
+    ,moveCharacter=moveCharacter, startPos = 33}) :anytimes()
+    getPosition(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    load(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    canMove(mc.ANYARGS) ; mc:returns(true) :anytimes()
+    setCharacter(mc.ANYARGS) ; mc:returns(true) :anytimes()
+    moveCharacter(mc.ANYARGS) ; mc:returns(nil) :anytimes()
 
     mc:close()
     mc:replay()
 
     local Character = require(SUT)
-    --    local lemock = require 'lemock' -- needed to be able to make a mock
-    --    local mc = lemock.controller() -- same here
-    --    local Map_left = mc:mock()
-    --    local new_left = mc:mock()
-    --    package.loaded['games.Progg.Map'] = nil -- need to delete the package where the function is taken from.
-    --    package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
-    --        local games = {}
-    --        games.Progg = {}
-    --        games.Progg.Map = Map_left
-    --        return Map_left
-    --    end
-    --    print("TURN-left",mc ," ", Map_left, " ", new_left)
-    --
-    --    Map_left.new(mc.ANYARGS) ; mc:returns(new_left) :anytimes()
-    --    new_left.getPosition(mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    --    new_left.load(mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    --    new_left.canMove(mc.ANYARGS) ; mc:returns(true) :anytimes()
-    --    new_left.setCharacter(mc.ANYARGS) ; mc:returns(true) :anytimes()
-    --    new_left.moveCharacter(mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    --
-    --    mc:close()
-    --    mc:replay()
-
-    --local Character = require(SUT)
     local Command = require('games.Progg.Commands')
     local char = Character:new(2,1,nil,{level = 1, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffff9aefffff5fffffff5fffffff7fffffff", levelGoalPosition = 11, levelStartPosition = 33, objectives = {} },nil)
     char:execute(Command.TURN_LEFT)
@@ -234,18 +174,25 @@ function test_Character_turnRight()
     local lemock = require 'lemock' -- needed to be able to make a mock
     local mc = lemock.controller() -- same here
     local Map_left = mc:mock()
-    local new_left = mc:mock()
+    --local new_left = mc:mock()
+    local getPosition = mc:mock()
+    local load = mc:mock()
+    local canMove = mc:mock()
+    local setCharacter = mc:mock()
+    local moveCharacter = mc:mock()
+
     package.loaded['games.Progg.Map'] = nil -- need to delete the package where the function is taken from.
     package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
         return Map_left
     end
 
-    Map_left.new(Map_left,mc.ANYARGS) ; mc:returns(new_left) :anytimes()
-    new_left.getPosition(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    new_left.load(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
-    new_left.canMove(new_left,mc.ANYARGS) ; mc:returns(true) :anytimes()
-    new_left.setCharacter(new_left,mc.ANYARGS) ; mc:returns(true) :anytimes()
-    new_left.moveCharacter(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    Map_left.new(Map_left,mc.ANYARGS) ; mc:returns({getPosition=getPosition, load=load, canMove=canMove, setCharacter=setCharacter
+    ,moveCharacter=moveCharacter, startPos = 33}) :anytimes()
+    getPosition(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    load(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    canMove(mc.ANYARGS) ; mc:returns(true) :anytimes()
+    setCharacter(mc.ANYARGS) ; mc:returns(true) :anytimes()
+    moveCharacter(mc.ANYARGS) ; mc:returns(nil) :anytimes()
 
     mc:close()
     mc:replay()

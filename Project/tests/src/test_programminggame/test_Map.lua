@@ -8,7 +8,7 @@
 
 lunit = require "lunit"
 module("src_games_Progg_Map", package.seeall, lunit.testcase)
-Map = require "games.Progg.Map"
+--Map = require "games.Progg.Map"
 
 local SUT = 'games.Progg.Map'
 
@@ -34,12 +34,15 @@ local function verify_mock(mc)
 end
 
 
-function setup()
-end
 
 function teardown()
     package.loaded['games.Progg.Map'] = nil
     package.preload['games.Progg.Map'] = nil
+end
+
+function setup()
+    clear_mock()
+    Map = require "games.Progg.Map"
 end
 
 -------------------------------------

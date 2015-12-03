@@ -36,7 +36,7 @@ end
 
 
 function setup()
-
+    clear_mock()
 end
 
 function teardown()

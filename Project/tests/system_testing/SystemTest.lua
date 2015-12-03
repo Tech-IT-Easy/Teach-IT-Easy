@@ -9,8 +9,10 @@
 lunit = require "lunit"
 module( "Main_test", package.seeall, lunit.testcase )
 
-
-main = require "main" -- import the main file
+function setup()
+    clear_mock()
+    main = require ("main") -- import the main file
+end
 
 -------------------------------------
 -- System test 1
@@ -19,6 +21,7 @@ main = require "main" -- import the main file
 -- @author name: Andreas Mansson & Jonathan Anderson
 -------------------------------------
 function test_file()
+
     onStart()
 --    onKey("ok","down")
 --    onKey("ok","down")
