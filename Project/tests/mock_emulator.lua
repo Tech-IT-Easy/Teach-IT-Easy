@@ -91,7 +91,7 @@ nil_returner(mec.ANYARGS) ; mec:returns(nil) :anytimes()
 local Network = mec:mock()
 package.loaded['toolkit.Network'] = nil -- need to delete the package where the function is taken from.
 package.preload['toolkit.Network'] = function () -- Create preload. When the program wants to include love. This function will run instead
-    toolkit = {}
+    local toolkit = {}
     toolkit.Network = Network
     return Network
 end

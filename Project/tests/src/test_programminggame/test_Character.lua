@@ -10,37 +10,64 @@ lunit = require "lunit"
 module( "test_Character", package.seeall, lunit.testcase )
 local SUT = 'games.Progg.Character'
 
-local function create_mock(class_to_mock)
-  -- unload the package if loaded to dissmiss previous mocks
-  package.loaded[class_to_mock] = nil
-  package.preload[class_to_mock] = nil
-  -- import lemock
-  local lemock = require 'lemock'
-  -- initiate mock controller
-  local mc = lemock.controller()
-  return mc
-end
+--    local lemock = require 'lemock' -- needed to be able to make a mock
+--    local mc = lemock.controller() -- same here
+--    local Map_left = mc:mock()
+--    local new_left = mc:mock()
+--    package.loaded['games.Progg.Map'] = nil -- need to delete the package where the function is taken from.
+--    package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
+--        local games = {}
+--        games.Progg = {}
+--        games.Progg.Map = Map_left
+--        return Map_left
+--    end
+--    print("TURN-left",mc ," ", Map_left, " ", new_left)
+--
+--    Map_left.new(Map_left,mc.ANYARGS) ; mc:returns(new_left) :anytimes()
+--    new_left.getPosition(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
+--    new_left.load(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
+--    new_left.canMove(new_left,mc.ANYARGS) ; mc:returns(true) :anytimes()
+--    new_left.setCharacter(new_left,mc.ANYARGS) ; mc:returns(true) :anytimes()
+--    new_left.moveCharacter(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
+--
+--    mc:close()
+--    mc:replay()
+--
+--    local Character = require(SUT)
+--
+--    package.loaded['games.Progg.Map'] = nil
+--    package.preload['games.Progg.Map'] = nil
 
-local function verify_mock(mc)
-  local status, err = pcall(function ()
-    -- Verify that the mocks has been called as stated.
-    mc:verify()
-  end)
-  if err then -- if error fail the test.
-    fail(err)
-  end
-end
+    local testsim = require('games.Progg.Map')
+    local lemock = require 'lemock' -- needed to be able to make a mock
+    local mc = lemock.controller() -- same here
+    local new = mc:mock()
+    local getPosition = mc:mock()
+    local load = mc:mock()
+    local canMove = mc:mock()
+    local setCharacter = mc:mock()
+    local moveCharacter = mc:mock()
 
+    package.loaded['games.Progg.Map'].new = new
+    package.loaded['games.Progg.Map'].getPosition = getPosition
+    package.loaded['games.Progg.Map'].load = load
+    package.loaded['games.Progg.Map'].canMove = canMove
+    package.loaded['games.Progg.Map'].setCharacter = setCharacter
+    package.loaded['games.Progg.Map'].moveCharacter = moveCharacter
 
-function setup()
+    new(mc.ANYARGS) ; mc:returns(load) :anytimes()
+    getPosition(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    load(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+    canMove(mc.ANYARGS) ; mc:returns(true) :anytimes()
+    setCharacter(mc.ANYARGS) ; mc:returns(true) :anytimes()
+    moveCharacter(mc.ANYARGS) ; mc:returns(nil) :anytimes()
 
-end
+    mc:close()
+    mc:replay()
 
-function teardown()
-  package.loaded['games.Progg.Map'] = nil
-  package.preload['games.Progg.Map'] = nil
-end
+    local Character = require(SUT)
 
+    package.loaded['games.Progg.Map'] = nil
 -------------------------------------
 -- Testing position of the character creation and state
 -- @system_under_test: Character:new(newPosition)
@@ -48,20 +75,43 @@ end
 -------------------------------------
 
 function test_Character_new()
-
-    local Character = require(SUT)
+--    local lemock = require 'lemock' -- needed to be able to make a mock
+--    local mc = lemock.controller() -- same here
+--    local Map_new = mc:mock()
+--    local new_new = mc:mock()
+--    package.loaded['games.Progg.Map'] = nil -- need to delete the package where the function is taken from.
+--    package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
+--        local games = {}
+--        games.Progg = {}
+--        games.Progg.Map = Map_new
+--        return Map_new
+--    end
+--
+--    print("NEW",mc ," ", Map_new, " ", new_new)
+--
+--    Map_new.new(mc.ANYARGS) ; mc:returns(new_new) :anytimes()
+--    new_new.load(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+--    new_new.canMove(mc.ANYARGS) ; mc:returns(true) :anytimes()
+--    new_new.setCharacter(mc.ANYARGS) ; mc:returns(true) :anytimes()
+--    new_new.moveCharacter(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+--
+--    mc:close()
+--    mc:replay()
 
     --local Character = require(SUT)
-    local char = Character:new(2,1,nil,{level = 1, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffff9aefffff5fffffff5fffffff7fffffff", levelGoalPosition = 11, levelStartPosition = 33, objectives = {} },context_sim)
+
+    --local Character = require(SUT)
+    local char = Character:new(2,1,nil,{level = 1, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffff9aefffff5fffffff5fffffff7fffffff", levelGoalPosition = 11, levelStartPosition = 33, objectives = {} },nil)
     local x = 2
     local y = 1
     local stt = 0
+
+    --package.preload['games.Progg.Map'] = nil
 
     lunit.assert_equal(char.position.x,x,"The character is not created on the right position X")
     lunit.assert_equal(char.position.y,y,"The character is not created on the right position Y")
     lunit.assert_equal(char.state,stt,"The character is not created on the right position Y")
     --mc:verify()
-    verify_mock(mc)
 end
 
 -------------------------------------
@@ -71,58 +121,93 @@ end
 -------------------------------------
 
 function test_Character_move()
+--    local lemock = require 'lemock' -- needed to be able to make a mock
+--    local mc = lemock.controller() -- same here
+--    local Map_move = mc:mock()
+--    local new_move = mc:mock()
+--    package.loaded['games.Progg.Map'] = nil -- need to delete the package where the function is taken from.
+--    package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
+--        local games = {}
+--        games.Progg = {}
+--        games.Progg.Map = Map_move
+--        return Map_move
+--    end
+--
+--    print("MOVE",mc ," ",Map_move, " ", new_move)
+--
+--    Map_move.new(mc.ANYARGS) ; mc:returns(new_move) :anytimes()
+--    new_move.load(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+--    new_move.canMove(mc.ANYARGS) ; mc:returns(true) :anytimes()
+--    new_move.setCharacter(mc.ANYARGS) ; mc:returns(true) :anytimes()
+--    new_move.moveCharacter(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+--
+--    mc:close()
+--    mc:replay()
 
-    local mc = create_mock(SUT)
-    local drawHighlight = mc:mock()
-    local ps=require(class_to_mock)
-    package.loaded[class_to_mock].drawHighlight = drawHighlight
-    drawHighlight(mc.ANYARGS) ;mc :returns(nil) :anytimes()
-
-  mc:replay()
-
-    local Character = require(SUT)
+    --local Character = require(SUT)
 
     local Command = require('games.Progg.Commands')
-    local char = Character:new(1,2,nil,{level = 1, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffff9aefffff5fffffff5fffffff7fffffff", levelGoalPosition = 11, levelStartPosition = 33, objectives = {} },context_sim)
+    local char = Character:new(1,2,nil,{level = 1, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffff9aefffff5fffffff5fffffff7fffffff", levelGoalPosition = 11, levelStartPosition = 33, objectives = {} },nil)
+
     char:execute(Command.MOVE)
-    
+
     lunit.assert_equal(char.position.y,1,"The character doesnt move forward up properly")
-    --mc:verify()
-    verify_mock(mc)
-end
 
--------------------------------------
--- Test for execute a command turn-left
--- @system_under_test: Character:new(newPosition), Character:execute(command)
--- @author name: ??
--------------------------------------
-
-function test_Character_turnLeft()
-
-local Character = require(SUT)
-    local Command = require('games.Progg.Commands')
-    local char = Character:new(2,1,nil,{level = 1, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffff9aefffff5fffffff5fffffff7fffffff", levelGoalPosition = 11, levelStartPosition = 33, objectives = {} },context_sim)
-    char:execute(Command.TURN_LEFT)
-
-    lunit.assert_equal(char.state,3,"The character doesnt change state properly when turned left")
-    --mc:verify()
-    verify_mock(mc)
 end
 
 ---------------------------------------
-----Test for execute a command turn-right
+---- Test for execute a command turn-left
 ---- @system_under_test: Character:new(newPosition), Character:execute(command)
 ---- @author name: ??
 ---------------------------------------
 
-function test_Character_turnRight()
+function test_Character_turnLeft()
+--    local lemock = require 'lemock' -- needed to be able to make a mock
+--    local mc = lemock.controller() -- same here
+--    local Map_left = mc:mock()
+--    local new_left = mc:mock()
+--    package.loaded['games.Progg.Map'] = nil -- need to delete the package where the function is taken from.
+--    package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
+--        local games = {}
+--        games.Progg = {}
+--        games.Progg.Map = Map_left
+--        return Map_left
+--    end
+--    print("TURN-left",mc ," ", Map_left, " ", new_left)
+--
+--    Map_left.new(mc.ANYARGS) ; mc:returns(new_left) :anytimes()
+--    new_left.getPosition(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+--    new_left.load(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+--    new_left.canMove(mc.ANYARGS) ; mc:returns(true) :anytimes()
+--    new_left.setCharacter(mc.ANYARGS) ; mc:returns(true) :anytimes()
+--    new_left.moveCharacter(mc.ANYARGS) ; mc:returns(nil) :anytimes()
+--
+--    mc:close()
+--    mc:replay()
 
-local Character = require(SUT)
+    --local Character = require(SUT)
     local Command = require('games.Progg.Commands')
-    local char = Character:new(2,1,nil,{level = 1, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffff9aefffff5fffffff5fffffff7fffffff", levelGoalPosition = 11, levelStartPosition = 33, objectives = {} },context_sim)
-    char:execute(Command.TURN_RIGHT)
+    local char = Character:new(2,1,nil,{level = 1, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffff9aefffff5fffffff5fffffff7fffffff", levelGoalPosition = 11, levelStartPosition = 33, objectives = {} },nil)
+    char:execute(Command.TURN_LEFT)
 
-    lunit.assert_equal(char.state,1,"The character doesnt change state propperly when turned right")
+    lunit.assert_equal(char.state,3,"The character doesnt change state properly when turned left")
+    --mc:verify()
 
-    verify_mock(mc)
 end
+
+-----------------------------------------
+------Test for execute a command turn-right
+------ @system_under_test: Character:new(newPosition), Character:execute(command)
+------ @author name: ??
+-----------------------------------------
+--
+--function test_Character_turnRight()
+--    teardown()
+--    local Character = require(SUT)
+--    local Command = require('games.Progg.Commands')
+--    local char = Character:new(2,1,nil,{level = 1, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffff9aefffff5fffffff5fffffff7fffffff", levelGoalPosition = 11, levelStartPosition = 33, objectives = {} },nil)
+--    char:execute(Command.TURN_RIGHT)
+--
+--    lunit.assert_equal(char.state,1,"The character doesnt change state propperly when turned right")
+--
+--end
