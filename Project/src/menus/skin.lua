@@ -119,7 +119,7 @@ games_appname = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:
 games_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.33, y = games_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
 games_username = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.035, { x = screen:get_width() * 0.15, y = games_usernamebaseline }, script_path .. 'data/GROBOLD.ttf')
 games_backbutton = sys.new_freetype({ g = 0, r = 0, b = 0, a = 255 }, screen:get_height() * 0.03, { x = screen:get_width() * 0.803 + (screen:get_width() * 0.803 * 0.005), y = screen:get_height() * 0.08046 }, script_path .. 'data/condensed.ttf')
-games_backtext = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.03, { x = screen:get_width() * 0.791, y = screen:get_height() * 0.125 }, script_path .. 'data/GROBOLD.ttf')
+games_backtext = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.03, { x = screen:get_width() * 0.78, y = screen:get_height() * 0.125 }, script_path .. 'data/GROBOLD.ttf')
 
 games_gamename1 = sys.new_freetype({ r = 78, g = 78, b = 78, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.095, y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.1, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
 games_trophies1 = sys.new_freetype({ r = 139, g = 139, b = 139, a = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.095, y = (screen:get_height() * 0.28) + (screen:get_height() * 0.28) * 1.3, w = screen:get_width() * 0.18, h = screen:get_height() * 0.45 }, script_path .. 'data/condensed.ttf')
