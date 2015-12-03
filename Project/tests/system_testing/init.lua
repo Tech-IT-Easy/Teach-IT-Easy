@@ -6,4 +6,4 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-require "tests.system_testing.SystemTest"
+--require "tests.system_testing.SystemTest"
