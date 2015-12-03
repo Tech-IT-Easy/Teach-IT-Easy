@@ -98,7 +98,7 @@ end
 
 Network.new(Network) ; mec:returns(nil) :anytimes()
 Network.getFirstname(Network,mec.ANYARGS) ; mec:returns("testname") :anytimes()
-Network.getProgress(Network, mec.ANYARGS) ; mec:returns(nil) :anytimes()
+Network.getProgress(Network, mec.ANYARGS) ; mec:returns({level = 1, proggGameLoopLevel = false, proggGameProcLevel= false, proggGameIfLevel = false }) :anytimes()
 Network.getLevels(Network, mec.ANYARGS) ; mec:returns({
         {
             level = 1, maxCommands = {["queue"] = 8, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "dfffffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 1, levelStartPosition = 33, objectives = {}
@@ -144,6 +144,30 @@ package.preload['ltn12'] = function () -- Create preload. When the program wants
   local Socket = {}
   return Socket
 end
+
+function new_freetype(fontColor, fontSize, drawingStartPoint, fontPath)
+  local freetype = freetype(fontColor, fontSize, drawingStartPoint, fontPath)
+  return freetype;
+end
+
+local sys_data = mec:mock()
+local sys_return = mec:mock()
+local return_time = mec:mock()
+package.loaded['SDK.Simulator.sys'] = nil -- need to delete the package where the function is taken from.
+package.preload['SDK.Simulator.sys'] = function () -- Create preload. When the program wants to include love. This function will run instead
+  local sys = {}
+  sys.new_timer = sys_data
+  sys.time = return_time
+  sys.stop = nil_returner
+  sys.root_path = love.filesystem.getUserDirectory()
+  sys.new_player = nil_returner
+  sys.new_freetype = new_freetype
+  return sys
+end
+
+sys_data(mec.ANYARGS) ; mec:returns(sys_return) :anytimes()
+sys_return:stop(mec.ANYARGS); mec:returns(nil_returner) : anytimes()
+return_time(mec.ANYARGS) ; mec:returns(1) :anytimes()
 
 mec:replay() -- Tells "now we start testing the code"
 _G.love = require "love"

@@ -8,12 +8,17 @@
 
 lunit = require "lunit"
 module( "inttest_id_4", package.seeall, lunit.testcase )
-local event = require ("toolkit.Event")
+
 
 local SUT1 = 'games.Progg.Commands'
 local SUT2 = 'games.Progg.BuildArea'
 local SUT3 = 'games.Progg.Character'
 local SUT4 = 'games.Progg.Queue'
+
+function setup()
+    clear_mock()
+    event = require ("toolkit.Event")
+end
 
 --Corresponds to function bottomMenuEventHandler:update(object,eventListener,event)
 --in BottomMenu

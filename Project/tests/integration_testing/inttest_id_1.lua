@@ -42,6 +42,10 @@ local SUT_2 = 'games.Progg.Commands'
 --  package.preload['games.Progg.Queue'] = nil
 --end
 
+function setup()
+    clear_mock()
+end
+
 function test_command_queue()
     local a = require(SUT_1)
     local b = require(SUT_2)

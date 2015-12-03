@@ -8,8 +8,7 @@
 
 lunit = require "lunit"
 module( "inttest_id_3", package.seeall, lunit.testcase )
-local event = require ("toolkit.Event")
-local Commands = require('games.Progg.Commands')
+
 local SUT1 = 'games.Progg.Commands'
 local SUT2 = 'games.Progg.BuildArea'
 local SUT3 = 'games.Progg.Character'
@@ -118,7 +117,11 @@ local SUT4 = 'games.Progg.Queue'
 --    --bm.queue:push(Commands.MOVE, "queue")
 --end
 
-
+function setup()
+    clear_mock()
+    event = require ("toolkit.Event")
+    Commands = require('games.Progg.Commands')
+end
 
 
 function test_adding_commands()

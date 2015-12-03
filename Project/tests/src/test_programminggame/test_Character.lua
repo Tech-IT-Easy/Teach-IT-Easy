@@ -41,6 +41,10 @@ local SUT = 'games.Progg.Character'
 --    local Character = require(SUT)
 --
 --    package.loaded['games.Progg.Map'] = nil
+
+function setup()
+    clear_mock()
+end
 -------------------------------------
 -- Testing position of the character creation and state
 -- @system_under_test: Character:new(newPosition)

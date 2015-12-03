@@ -62,6 +62,7 @@ function Character:startExecution(inqueue)
 
         end
         self.executionTimer:stop()
+        print("HOHOHHOHOHOH")
         self.executionTimer = nil
         gfx.update()
           return;
@@ -172,8 +173,10 @@ function Character:startExecution(inqueue)
 
     --Sets the timer
     self.executionTimer = sys.new_timer(500, "start")
+    print("TIMER", self.executionTimer)
 
   else --This is if the user wants to terminate the execution of the queue
+    print("PROBLEM")
     self.executionTimer:stop()
     self.executionTimer = nil
     self:reset()

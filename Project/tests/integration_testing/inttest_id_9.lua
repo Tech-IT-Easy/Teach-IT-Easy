@@ -9,7 +9,7 @@
 
 lunit = require "lunit"
 module( "inttest_id_9", package.seeall, lunit.testcase )
-local event = require ("toolkit.Event")
+--local event = require ("toolkit.Event")
 
 local SUT1 = 'games.Progg.BuildArea'
 local SUT2 = 'games.Progg.DrawBuildArea'
