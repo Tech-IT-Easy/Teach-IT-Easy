@@ -188,7 +188,7 @@ end
 --@ author Tobias Lundell
 ----------------------------------------
 function DrawBottomMenu:exitPopUp()
-    screen:clear({  r = 255,g = 235, b = 59}, { x = screen:get_width()*0.05 , y = screen:get_height()*0.1, w = screen:get_width()*0.65, h = screen:get_height()*0.46 })
+    screen:clear({  r = 255,g = 255, b = 255}, { x = screen:get_width()*0.05 , y = screen:get_height()*0.1, w = screen:get_width()*0.65, h = screen:get_height()*0.46 })
     screen:clear({ r = 78, g = 113, b = 215  }, { x = screen:get_width()*0.07 , y = screen:get_height()*0.13, w = screen:get_width()*0.61, h = screen:get_height()*0.4 })
     exit_1:draw_over_surface(screen, "Are you sure that")
     exit_2:draw_over_surface(screen, "you want to exit?")

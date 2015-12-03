@@ -109,7 +109,7 @@ function SelectLevel:active(x1)
   if x1 < 5 and x1 < self.unlockedLevels then
   screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
   screen:clear({ g = 255, r = 255, b = 255 }, { x = (screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 1)) + 4, y = (screen:get_height() * 0.28) + 4, w = screen:get_height() * 0.24, h = screen:get_height() * 0.24 })
-  screen:copyfrom(self.checkImage, nil, {x = (screen:get_width() * 0.13 + (screen:get_width() * 0.23) * (x1 - 1)) + 50, y = (screen:get_height() * 0.45), w = self.checkImage:get_width() * 0.05, h = self.checkImage:get_width() * 0.05})
+  screen:copyfrom(self.checkImage, nil, {x = (screen:get_width() * 0.13 + (screen:get_width() * 0.23) * (x1 - 1)) + 48, y = (screen:get_height() * 0.44), w = self.checkImage:get_width() * 0.05, h = self.checkImage:get_width() * 0.05})
   level_fonts[x1]:draw_over_surface(screen, ""..x1)
   elseif x1 < 5 and x1 == self.unlockedLevels then
     screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
@@ -120,7 +120,7 @@ function SelectLevel:active(x1)
   if (x1 > 4 and x1 < 9) and x1 < self.unlockedLevels then
   screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
   screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 5) + 4, y = (screen:get_height() * 0.65) + 4, w = screen:get_height() * 0.24, h = screen:get_height() * 0.24 })
-  screen:copyfrom(self.checkImage, nil, {x = (screen:get_width() * 0.13 + (screen:get_width() * 0.23) * (x1 - 5)) + 50, y = (screen:get_height() * 0.82), w = self.checkImage:get_width() * 0.05, h = self.checkImage:get_width() * 0.05})
+  screen:copyfrom(self.checkImage, nil, {x = (screen:get_width() * 0.13 + (screen:get_width() * 0.23) * (x1 - 5)) + 48, y = (screen:get_height() * 0.81), w = self.checkImage:get_width() * 0.05, h = self.checkImage:get_width() * 0.05})
   level_fonts[x1]:draw_over_surface(screen, ""..x1)
   elseif (x1 > 4 and x1 < 9) and x1 == self.unlockedLevels then
     screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
@@ -141,7 +141,7 @@ end
 function SelectLevel:inactive(x1)
   if x1 < 5 and x1 < self.unlockedLevels then
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
-  screen:copyfrom(self.checkImage, nil, {x = (screen:get_width() * 0.13 + (screen:get_width() * 0.23) * (x1 - 1)) + 50, y = (screen:get_height() * 0.45), w = self.checkImage:get_width() * 0.05, h = self.checkImage:get_width() * 0.05})
+  screen:copyfrom(self.checkImage, nil, {x = (screen:get_width() * 0.13 + (screen:get_width() * 0.23) * (x1 - 1)) + 48, y = (screen:get_height() * 0.44), w = self.checkImage:get_width() * 0.05, h = self.checkImage:get_width() * 0.05})
   level_fonts[x1]:draw_over_surface(screen, ""..x1)
   elseif x1 < 5 and x1 == self.unlockedLevels then
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
@@ -150,7 +150,7 @@ function SelectLevel:inactive(x1)
 
   if (x1 > 4 and x1 < 9) and x1 < self.unlockedLevels then
   screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
-  screen:copyfrom(self.checkImage, nil, {x = (screen:get_width() * 0.13 + (screen:get_width() * 0.23) * (x1 - 5)) + 50, y = (screen:get_height() * 0.82), w = self.checkImage:get_width() * 0.05, h = self.checkImage:get_width() * 0.05})
+  screen:copyfrom(self.checkImage, nil, {x = (screen:get_width() * 0.13 + (screen:get_width() * 0.23) * (x1 - 5)) + 48, y = (screen:get_height() * 0.81), w = self.checkImage:get_width() * 0.05, h = self.checkImage:get_width() * 0.05})
   level_fonts[x1]:draw_over_surface(screen, ""..x1)
   elseif (x1 > 4 and x1 < 9) and x1 == self.unlockedLevels then
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
@@ -185,8 +185,8 @@ end
 -- @author Marcus
 -------------------------------------
 function SelectLevel:renderui(unlocked)
-  create_prof_appname:draw_over_surface(screen, LOCALE.APP_NAME)
-  create_prof_pagename:draw_over_surface(screen, LOCALE.LEVEL_SELECT)
+  select_level_appname:draw_over_surface(screen, LOCALE.APP_NAME)
+  select_level_pagename:draw_over_surface(screen, LOCALE.LEVEL_SELECT)
 
   self:active(1)
   for i = 2, unlocked, 1 do

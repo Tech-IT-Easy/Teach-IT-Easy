@@ -52,7 +52,7 @@ function UpdateAvatar:handleinput(event)
     collectgarbage()
     return { "main" }
   elseif (event.key == Event.KEY_BACK) then
-    return { "main" }
+    return { "settings" }
   end
   return {" "}
 end
