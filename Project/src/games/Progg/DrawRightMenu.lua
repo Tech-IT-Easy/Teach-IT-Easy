@@ -89,6 +89,7 @@ function DrawRightMenu:drawHighlight(command)
     self:drawBox(255,192,0,203,212,214,xvalue,yvalue,command_width,command_height)
 
     self.image = gfx.loadpng(self:getFileName(command))
+    self.image:premultiply()
     screen:copyfrom(self.image, nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
     self.image:destroy()
 
@@ -108,6 +109,7 @@ function DrawRightMenu:drawRemoveHighlight(command)
     self:drawBox(34,59,94,203,212,214,xvalue,yvalue,command_width,command_height)
 
     self.image = gfx.loadpng(self:getFileName(command))
+    self.image:premultiply()
     screen:copyfrom(self.image, nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
     self.image:destroy()
 
@@ -178,6 +180,7 @@ end
 -------------------------------------
 function DrawRightMenu:addImage(command)
     self.image = gfx.loadpng(self:getFileName(command))
+    self.image:premultiply()
     local position= self:getPosition(command)
     local xvalue = first_column+((position-1)%3)*(command_width+row_spacing)+6
     local yvalue = first_row+math.floor((position-1)/3)*(command_height+col_spacing)+6
@@ -378,7 +381,7 @@ end
 -- @author Vilhelm
 -------------------------------------
 function DrawRightMenu:clearRow(row)
-    self:drawBox(92,128,149,92,128,149,first_column-command_width*0.20,first_row+(row-1)*(command_height+col_spacing)-command_height*0.20,3*command_width+2*row_spacing+command_width*0.20,command_height*1.4)
+    self:drawBox(92,128,149,92,128,149,first_column-command_width*0.20,first_row+(row-1)*(command_height+col_spacing)-command_height*0.20,3*command_width+2*row_spacing+command_width*0.40,command_height*1.4)
 end
 
 -------------------------------------
