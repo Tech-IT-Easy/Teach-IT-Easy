@@ -30,6 +30,7 @@ function Character:new(x,y, rightMenu, levelData, context)
   -- @member map:Map
   o.map = Map:new(context)
   o.map:load(levelData)
+  o.position = {x = o.map.startPos%8 , y = math.ceil(o.map.startPos/8)}
   o.hasWon=false
   o.step = 1
   o.rightMenu = rightMenu
