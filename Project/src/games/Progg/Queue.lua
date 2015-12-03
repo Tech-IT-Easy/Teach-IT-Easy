@@ -97,7 +97,8 @@ end
 ----------------------------------------------------------------
 function Queue:setPosition(currentPos, goalPos)
 
-  --When switching places of loops they must be switched in the table that contains all the loops as well.
+  -- When switching places of loops they must be switched in the table that contains all the loops as well.
+  -- firstLoop and secondLoop keeps track of where in self.loopActions the loops are
   local firstLoop = 0
       for i = currentPos, 0, -1 do
           if self.actions[i] == "loop" then
@@ -115,18 +116,22 @@ function Queue:setPosition(currentPos, goalPos)
       table.insert(self.loopActions, secondLoop, table.remove(self.loopActions, firstLoop))
       table.insert(self.loopCounter, secondLoop, table.remove(self.loopCounter, firstLoop))
   elseif self.actions[currentPos]=="loop" then
-    print("First: "..firstLoop.."Second: "..secondLoop.."#loopActions: "..#self.loopActions)
     if firstLoop > secondLoop then
       table.insert(self.loopActions, secondLoop + 1, table.remove(self.loopActions, firstLoop))
       table.insert(self.loopCounter, secondLoop + 1, table.remove(self.loopCounter, firstLoop))
     elseif secondLoop == #self.loopActions then
       table.insert(self.loopActions, table.remove(self.loopActions, firstLoop))
       table.insert(self.loopCounter, table.remove(self.loopCounter, firstLoop))
+    else
+      table.insert(self.loopActions, secondLoop, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, secondLoop, table.remove(self.loopCounter, firstLoop))
     end
   end
 
-  if currentPos < goalPos then
-    table.insert(self.actions, goalPos - 1, table.remove(self.actions, currentPos))
+  if currentPos > goalPos then
+    table.insert(self.actions, goalPos, table.remove(self.actions, currentPos))
+  elseif goalPos == #self.actions then
+    table.insert(self.actions, table.remove(self.actions, currentPos))
   else
     table.insert(self.actions, goalPos, table.remove(self.actions, currentPos))
   end
