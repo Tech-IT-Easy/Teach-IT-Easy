@@ -5,6 +5,7 @@ require "tests.src.menus.test_MainMenu"
 require "tests.src.menus.test_ProfileSelection"
 require "tests.src.menus.test_CreateProfile"
 require "tests.src.menus.test_Games"
+require "tests.src.menus.test_SelectLevel"
 
 require "tests.src.test_programminggame.test_Queue"
 require "tests.src.test_programminggame.test_BottomMenu"
