@@ -95,13 +95,18 @@ function test_setCharacter_one()
     local ps = require(SUT)
     local ps2 = require("platform.PlatformContext")
     local ps3 = require("platform.Profile")
+ --local ps2 = require("platform.Profile")
+    _G.profiles = {}
+    table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    table.insert(profiles, ps3:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+    table.insert(profiles, ps3:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
     mc:replay()
 
     local a = ps:new()
     local input = 8
     local context = ps2:new()
-    table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    --table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
 
     context.profile = profiles[1]
     a.context = context
@@ -115,6 +120,7 @@ function test_setCharacter_one()
     a:setCharacter(input)
 
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 function test_setCharacter_two()
@@ -122,11 +128,17 @@ function test_setCharacter_two()
     local ps = require(SUT)
     local ps2 = require("platform.PlatformContext")
 
+     local ps3 = require("platform.Profile")
+    _G.profiles = {}
+    table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    table.insert(profiles, ps3:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+    table.insert(profiles, ps3:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
     mc:replay()
     local a = ps:new()
-    local ps3 = require("platform.Profile")
+    --local ps3 = require("platform.Profile")
     local context = ps2:new()
-    table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    --table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
     context.profile = profiles[1]
     a.context = context
 
@@ -141,6 +153,7 @@ function test_setCharacter_two()
     a:setCharacter(input)
 
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 function test_setCharacter_three()
@@ -148,11 +161,17 @@ function test_setCharacter_three()
     local ps = require(SUT)
     local ps2 = require("platform.PlatformContext")
 
+     local ps3 = require("platform.Profile")
+    _G.profiles = {}
+    table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    table.insert(profiles, ps3:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+    table.insert(profiles, ps3:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
     mc:replay()
     local a = ps:new()
-    local ps3 = require("platform.Profile")
+    --local ps3 = require("platform.Profile")
     local context = ps2:new()
-    table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    --table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
     context.profile = profiles[1]
     a.context = context
 
@@ -168,6 +187,7 @@ function test_setCharacter_three()
     a:setCharacter(input)
 
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 function test_setCharacter_four()
@@ -178,8 +198,15 @@ function test_setCharacter_four()
     mc:replay()
     local a = ps:new()
     local ps3 = require("platform.Profile")
-    local context = ps2:new()
+
+     --local ps2 = require("platform.Profile")
+    _G.profiles = {}
     table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    table.insert(profiles, ps3:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+    table.insert(profiles, ps3:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
+    local context = ps2:new()
+    --table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
     context.profile = profiles[1]
     a.context = context
 
@@ -195,6 +222,7 @@ function test_setCharacter_four()
     a:setCharacter(input)
 
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 function test_setCharacter_five()
@@ -205,8 +233,14 @@ function test_setCharacter_five()
     mc:replay()
     local a = ps:new()
     local ps3 = require("platform.Profile")
-    local context = ps2:new()
+     --local ps2 = require("platform.Profile")
+    _G.profiles = {}
     table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    table.insert(profiles, ps3:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+    table.insert(profiles, ps3:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
+    local context = ps2:new()
+    --table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
     context.profile = profiles[1]
     a.context = context
 
@@ -222,6 +256,7 @@ function test_setCharacter_five()
     a:setCharacter(input)
 
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 -------------------------------------
