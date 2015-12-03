@@ -34,7 +34,7 @@ function Settings:handleinput(event)
     elseif event.key == Event.KEY_OK and self.pos == 0 then
         return { "updatename" }
     elseif event.key == Event.KEY_OK and self.pos == 1 then
-        return { "updateavatar", self.usernamestring }
+        return { "updateavatar"}
     elseif event.key == Event.KEY_OK and self.pos == 2 then
 
         local function table_invert(t)
@@ -84,11 +84,11 @@ end
 -- @param input:String the username
 -- @author Vilhelm
 -------------------------------------
-function Settings:loadview(input)
+function Settings:loadview()
     self.pos = 0
     self.lastpos = self.pos
     self.buttons = { LOCALE.EDIT_NAME, LOCALE.EDIT_AVATAR, LOCALE.DELETE_PROFILE }
-    self.usernamestring = input
+    self.usernamestring = platformContext.profile.name
     --self:printbackground()
     self:renderui()
 end

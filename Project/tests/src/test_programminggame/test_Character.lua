@@ -20,7 +20,11 @@ local SUT = 'games.Progg.Character'
 function test_Character_new()
 
     local Character = require(SUT)
-    local char = Character:new(2,1)
+    --x,y, rightMenu, levelData, context
+    local leveldata = {objectives={1}}
+    local rightmenu = {}
+    local context = {}
+    local char = Character:new(2,1, rightmenu, leveldata, context)
     local x = 2
     local y = 1
     local stt = 0

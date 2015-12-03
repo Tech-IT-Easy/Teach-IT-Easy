@@ -69,7 +69,7 @@ function SelectLevel:handleinput(event)
 
     collectgarbage()
   elseif (event.key == Event.KEY_BACK) then
-    return { "games", " " }
+    return { "games"}
   end
   return {" "}
 end
@@ -79,10 +79,10 @@ end
 -- @param input:String The username
 -- @author Marcus
 -------------------------------------
-function SelectLevel:loadview(input)
+function SelectLevel:loadview()
   self.pos = 1
   self.lastpos = 1
-  self.username = input
+  self.username = platformContext.profile.name
 
   self.unlockedLevels = self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level + 1
   self.checkImage = gfx.loadpng('data/check.png')
