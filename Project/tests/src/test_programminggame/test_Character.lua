@@ -48,12 +48,12 @@ local SUT = 'games.Progg.Character'
     local setCharacter = mc:mock()
     local moveCharacter = mc:mock()
 
-    package.loaded['games.Progg.Map'].new = new
-    package.loaded['games.Progg.Map'].getPosition = getPosition
-    package.loaded['games.Progg.Map'].load = load
-    package.loaded['games.Progg.Map'].canMove = canMove
-    package.loaded['games.Progg.Map'].setCharacter = setCharacter
-    package.loaded['games.Progg.Map'].moveCharacter = moveCharacter
+    package.preload['games.Progg.Map'].new = new
+    package.preload['games.Progg.Map'].getPosition = getPosition
+    package.preload['games.Progg.Map'].load = load
+    package.preload['games.Progg.Map'].canMove = canMove
+    package.preload['games.Progg.Map'].setCharacter = setCharacter
+    package.preload['games.Progg.Map'].moveCharacter = moveCharacter
 
     new(mc.ANYARGS) ; mc:returns(load) :anytimes()
     getPosition(mc.ANYARGS) ; mc:returns(nil) :anytimes()
