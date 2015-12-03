@@ -96,12 +96,9 @@ end
 -- @author Ludwig Wikblad
 ----------------------------------------------------------------
 function Queue:setPosition(currentPos, goalPos)
-  if currentPos == goalPos then
-    return
-  elseif currentPos > goalPos then
-    currentPos, goalPos = goalPos, currentPos
-  end
 
+  -- When switching places of loops they must be switched in the table that contains all the loops as well.
+  -- firstLoop and secondLoop keeps track of where in self.loopActions the loops are
   local firstLoop = 0
       for i = currentPos, 0, -1 do
           if self.actions[i] == "loop" then
@@ -116,21 +113,28 @@ function Queue:setPosition(currentPos, goalPos)
       end
 
   if(self.actions[currentPos]=="loop" and self.actions[goalPos]=="loop")then
-    self.loopActions[firstLoop], self.loopActions[secondLoop] = self.loopActions[secondLoop], self.loopActions[firstLoop]
-    self.loopCounter[firstLoop], self.loopCounter[secondLoop] = self.loopCounter[secondLoop], self.loopCounter[firstLoop]
+      table.insert(self.loopActions, secondLoop, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, secondLoop, table.remove(self.loopCounter, firstLoop))
   elseif self.actions[currentPos]=="loop" then
-    table.insert(self.loopActions, secondLoop + 1, self.loopActions[firstLoop])
-    table.remove(self.loopActions, firstLoop)
-    table.insert(self.loopCounter, secondLoop + 1, self.loopCounter[firstLoop])
-    table.remove(self.loopCounter, firstLoop)
-  elseif self.actions[goalPos] == "loop" then
-    table.insert(self.loopActions, firstLoop + 1, self.loopActions[secondLoop])
-    table.remove(self.loopActions, secondLoop + 1)
-    table.insert(self.loopCounter, firstLoop + 1, self.loopCounter[secondLoop])
-    table.remove(self.loopCounter, secondLoop + 1)
+    if firstLoop > secondLoop then
+      table.insert(self.loopActions, secondLoop + 1, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, secondLoop + 1, table.remove(self.loopCounter, firstLoop))
+    elseif secondLoop == #self.loopActions then
+      table.insert(self.loopActions, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, table.remove(self.loopCounter, firstLoop))
+    else
+      table.insert(self.loopActions, secondLoop, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, secondLoop, table.remove(self.loopCounter, firstLoop))
+    end
   end
 
-  self.actions[currentPos], self.actions[goalPos] = self.actions[goalPos], self.actions[currentPos]
+  if currentPos > goalPos then
+    table.insert(self.actions, goalPos, table.remove(self.actions, currentPos))
+  elseif goalPos == #self.actions then
+    table.insert(self.actions, table.remove(self.actions, currentPos))
+  else
+    table.insert(self.actions, goalPos, table.remove(self.actions, currentPos))
+  end
 
 end
 
@@ -230,9 +234,9 @@ function Queue:containsRecursion(action, Queue, queueType)
 --    return false
 --  else
 
-    if action == "loop" or action == "P1" or action == "P2" then --Remove when method calls are allowed
+    if action == "loop" or action == "P1"or action == "P2" then --Remove when method calls are allowed
     print("Calling a method from a method is not allowed yet") --Remove when method calls are allowed
-    return true --Remove when method calls are allowed
+    return false --Remove when method calls are allowed
 
 --    for i = 1, #Queue do
 --      if Queue[i] == action then
