@@ -91,7 +91,18 @@ function BottomMenu:show()
         self.drawBottomMenu:icons(self.queue.actions, self.inputArea)
         self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
     end
-    self.rightMenu:show(self.inputArea)
+    if (self.inputArea == "if-wall" and #self.queue.ifTrueActions == 0) then
+        if (self.preventFalse == false) then
+            self.rightMenu.preventFalseChanged = true
+        end
+        self.preventFalse = true
+    else
+        if (self.preventFalse == true) then
+            self.rightMenu.preventFalseChanged = true
+        end
+        self.preventFalse = false
+    end
+    self.rightMenu:show(self.inputArea, self.preventFalse)
 end
 
 --------------------------------------------
@@ -302,7 +313,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
 
-            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true or #object.queue.actions<object.maxCommands[object.inputArea] == false  or object.character.hasWon == true then -- Handles input when an action is selected, user is moving an action, loop has no available slots or (the main queue is full?)
+            elseif object:isBuildArea() == true or object.selectingActionEdit ~= nil or object.isMovingAction == true or #object.queue.actions<object.maxCommands[object.inputArea] == false  or object.character.hasWon == true then -- Handles input when an action is selected, user is moving an action, loop has no available slots or (the main queue is full?)
                 print("Not allowed")
             else -- Handles input during normal state. Lets user add loop to main queue.
                 if object:isBuildArea() == true or object.maxCommands["loop"] == 0 then
@@ -333,7 +344,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true  or object.character.hasWon == true then --Handles input when a command is selected or input when moving a command
                 print("Not allowed while selecting edit or moving action")
             else -- Handles input during normal state. Lets user add P1 to main queue.
-                if object:isBuildArea() == true or object.maxCommands["P1"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
+                if  object.maxCommands["P1"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
                     print("Action not allowed")
                     return;
                 end
@@ -359,7 +370,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true  or object.character.hasWon == true then --Handles input when a command is selected or input when moving a command
                 print("Not allowed")
             else -- Handles input during normal state. Lets user add P2 to main queue.
-                if object:isBuildArea() == true or object.maxCommands["P2"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
+                if object.maxCommands["P2"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
                     print("Action not allowed")
                     return;
                 end
@@ -421,7 +432,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil then  -- Handles input while an action is selected. Lets user deselect action.
                 object.selectingActionEdit = nil
-            elseif object.inputArea == "if-wall" then  -- Handles input while user in working in the if-true statement. Lets user switch to the if-not statement-
+            elseif object.inputArea == "if-wall" then
+                if #object.queue.ifTrueActions>0 then  -- Handles input while user in working in the if-true statement. Lets user switch to the if-not statement-
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
                 object.buildArea:setBuildType("if-not-wall")
@@ -431,6 +443,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.buildArea:setPosition(object.position)
                 object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.ifFalseQueue)
+                end
                 --object:updateInputArea(object.inputArea, true)
             elseif object.inputArea == "queue"  then  -- Handles input while user is working in main queue. Lets user execute the queue.
                 object.rightMenu:play()
@@ -625,9 +638,6 @@ function BottomMenu:moveAction(positionOne, positionTwo)
     local queuePosOne = positionOne
     local queuePosTwo = positionTwo
 
-    if queuePosOne < 2*self.rowLength and queuePosTwo < 2*self.rowLength and queuePosTwo < #self:getQueue(self.inputArea) then
-            self.queue:setPosition(self.posActionToMove, self.position)
-    else
         if queuePosOne > 2*self.rowLength then
             queuePosOne = queuePosOne - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
             queuePosTwo = queuePosTwo - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
@@ -637,6 +647,10 @@ function BottomMenu:moveAction(positionOne, positionTwo)
             print("Not allowed to move action to empty slot")
             return
         end
+
+        if (self.inputArea == "queue") and (self:getQueue(self.inputArea)[queuePosOne] == Commands.LOOP or self:getQueue(self.inputArea)[queuePosTwo] == Commands.LOOP) then
+            self.queue:setPosition(queuePosOne, queuePosTwo)
+        else
 
         local actionOne = self:getQueue(self.inputArea)[queuePosOne]
 
@@ -651,9 +665,9 @@ function BottomMenu:moveAction(positionOne, positionTwo)
             end
             self:getQueue(self.inputArea)[queuePosTwo] = actionOne
         end
-    end
 
-    self.actionToMove = nil
+        self.actionToMove = nil
+        end
 end
 
 -----------------------------------
