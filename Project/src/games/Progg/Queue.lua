@@ -97,6 +97,7 @@ end
 ----------------------------------------------------------------
 function Queue:setPosition(currentPos, goalPos)
 
+  --When switching places of loops they must be switched in the table that contains all the loops as well.
   local firstLoop = 0
       for i = currentPos, 0, -1 do
           if self.actions[i] == "loop" then

@@ -404,25 +404,41 @@ end
 -- Only a draft, don't mind this
 -- @author Ludwig Wikblad
 -----------------------------------
-
 function Character:startExecutionRec(inqueue)
   self.queue = inqueue:getExecutionQueue()
   self.resultQueue = {}
   self:executeRec(self.queue, self.resultQueue)
+  for i=1, #self.resultQueue do
+    self:execute(self.resultQueue[i])
+  end
 end
 
+-----------------------------------
+-- Only a draft, don't mind this
+-- @author Ludwig Wikblad
+-----------------------------------
 function Character:getNew(queueName)
+  local returnQueue = {}
   local i = 1
+
   if queueName == "P1" then
     for i = 0, #self.p1Actions do
-
+      returnQueue[i] = self.p1Actions[i]
     end
   elseif queueName == "P2" then
+    for i = 0, #self.p2Actions do
+      returnQueue[i] = self.p2Actions[i]
+    end
   elseif queueName == "trueIf" then
+    for i = 0, #self.ifTrueActions do
+      returnQueue[i] = self.ifTrueActions[i]
+    end
   elseif queueName == "falseIf" then
-
+    for i = 0, #self.ifFalseActions do
+      returnQueue[i] = self.ifFalseActions[i]
+    end
   end
-
+  return returnQueue
 end
 
 ----------------------------
@@ -442,9 +458,11 @@ function Character:executeRec(queue, resultQueue)
       table.remove(queue, #queue)
       self:executeRec(p2, resultQueue)
       elseif queue[#queue] == Commands.LOOP then
-      local p2 = self:getnew("loop")
+      -----------------------------------
+      -- To be implemented
+      -----------------------------------
       table.remove(queue, #queue)
-      self:executeRec(p2, resultQueue)
+      self:executeRec(loop, resultQueue)
     elseif queue[#queue] == Commands.IF then
       local myIf
       if self:checkCollision(self.position, self.state) then
