@@ -28,9 +28,9 @@ local function create_queue(inqueue, type)
     if(type=="simple")then
         inqueue:push(commands.MOVE, "queue")
         inqueue:push(commands.MOVE, "queue")
-        inqueue:push(commands.MOVE, "queue")
         --inqueue:push(commands.MOVE, "queue")
-        inqueue:push(commands.TURN_RIGHT, "queue")
+        --inqueue:push(commands.MOVE, "queue")
+        --inqueue:push(commands.TURN_RIGHT, "queue")
         inqueue:push(commands.MOVE, "queue")
         inqueue:push(commands.MOVE, "queue")
         --inqueue:push(commands.TURN_RIGHT, "queue")
@@ -39,7 +39,7 @@ local function create_queue(inqueue, type)
         inqueue:push(commands.LOOP, "queue")
         inqueue.loopCounter[1]=4
         inqueue:push(commands.MOVE, "loop")
-        inqueue:push(commands.FIX, "loop")
+        --inqueue:push(commands.FIX, "loop")
         inqueue:push(commands.TURN_RIGHT, "queue")
         inqueue:push(commands.P1, "queue")
         inqueue:push(commands.MOVE, "P1")
@@ -77,7 +77,7 @@ function test_execute_simple_commads()
     context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
     context_sim.profile.gameprogress = GameProgress:new("test_avatar")
 
-    local character = require(SUT_1):new(1,3,nil,leveldata[1],context_sim)
+    local character = require(SUT_1):new(1,5,nil,leveldata[1],context_sim)
     local myqueue=require(SUT_3):new(nil,nil,{["queue"] = 9, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
 
     create_queue(myqueue, "simple")
@@ -85,8 +85,6 @@ function test_execute_simple_commads()
     local executionqueue = myqueue:getExecutionQueue()
 
     local iterationcnt = #executionqueue.actions
-
-    print("Start timer")
 
     for i=1, iterationcnt do
         character:execute(executionqueue.actions[iterationcnt+1-i])
@@ -96,7 +94,7 @@ function test_execute_simple_commads()
     local y_position = character.position.y
 
     lunit.assert_equal(1, x_position, "Not correct x-position")
-    lunit.assert_equal(4, y_position, "Not correct y-position")
+    lunit.assert_equal(1, y_position, "Not correct y-position")
 end
 
 function test_start_executing_commands()
@@ -110,8 +108,6 @@ function test_start_executing_commands()
     package.loaded["games.Progg.RightMenu"] = nil
     local RightMenu = require("games.Progg.RightMenu")
     local rightMenu = RightMenu:new()
-    local levelData = require('games.Progg.levels.ProggLevels'):new()
-    local leveldata = levelData:getProggLevels()
     local GameProgress = require('toolkit.GameProgress')
 
     local context_sim = {}
@@ -123,26 +119,23 @@ function test_start_executing_commands()
     context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
     context_sim.profile.gameprogress = GameProgress:new("test_avatar")
 
-    leveldata[4].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
 
 
-    local character = require(SUT_1):new(1,5, rightMenu, leveldata[4],context_sim)
+    local character = require(SUT_1):new(1,5, rightMenu, {level = 4, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff", levelGoalPosition = 20, levelStartPosition = 33, objectives = {}}
+    ,context_sim)
     local myqueue=require(SUT_3):new(nil,nil,{["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
 
     create_queue(myqueue, "complex")
-
-    print("Start timer")
 
     character:startExecution(myqueue)
 
     --simulates the timer without delay
     while(0<#character.queue.actions or character.onP1 or character.onP2 or character.onLoop) do
-        print("STUCK IN LOOP")
         start()
     end
 
     --Must run one more time, to get path coverage in end of execution
-    --start()
+    start()
 
     local is_at_goal = character.hasWon
 

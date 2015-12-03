@@ -62,7 +62,6 @@ function test_Character_new()
     package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
         return Map_left
     end
-    print("TURN-left",mc ," ", Map_left, " ", new_left)
 
     Map_left.new(Map_left,mc.ANYARGS) ; mc:returns(new_left) :anytimes()
     new_left.getPosition(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
@@ -108,7 +107,6 @@ function test_Character_move()
     package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
         return Map_left
     end
-    print("TURN-left",mc ," ", Map_left, " ", new_left)
 
     Map_left.new(Map_left,mc.ANYARGS) ; mc:returns(new_left) :anytimes()
     new_left.getPosition(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
@@ -177,7 +175,6 @@ function test_Character_turnLeft()
     games.Progg.Map = Map_left
     return Map_left
     end
-    print("TURN-left",mc ," ", Map_left, " ", new_left)
 
     Map_left.new(Map_left,mc.ANYARGS) ; mc:returns(new_left) :anytimes()
     new_left.getPosition(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()
@@ -242,7 +239,6 @@ function test_Character_turnRight()
     package.preload['games.Progg.Map'] = function () -- Create preload. When the program wants to include love. This function will run instead
         return Map_left
     end
-    print("TURN-left",mc ," ", Map_left, " ", new_left)
 
     Map_left.new(Map_left,mc.ANYARGS) ; mc:returns(new_left) :anytimes()
     new_left.getPosition(new_left,mc.ANYARGS) ; mc:returns(nil) :anytimes()

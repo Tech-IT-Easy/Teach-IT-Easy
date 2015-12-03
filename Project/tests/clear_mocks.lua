@@ -7,7 +7,6 @@
 --
 
 function clear_mock()
-    print("Ja")
     package.preload["games.Progg.BottomMenu"]=nil
     package.preload["games.Progg.BuildArea"]=nil
     package.preload["games.Progg.Character"]=nil
