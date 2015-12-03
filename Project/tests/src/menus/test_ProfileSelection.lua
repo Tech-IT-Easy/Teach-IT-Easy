@@ -67,10 +67,18 @@ function test_loadview()
 
     mc:replay()
 
+    local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
+
     local b = ps:new()
     b:loadview()
 
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -98,6 +106,11 @@ function test_handleinput_right()
 
     -- Start the testing
     mc:replay()
+local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
     local a = ps:new()
     a.usernames = { "a", "b", "c" }
@@ -107,6 +120,8 @@ function test_handleinput_right()
     assert_equal(2, a.pos, "should move one step right, didn't")
 
     verify_mock(mc)
+
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -124,6 +139,11 @@ function test_handleinput_right_two()
     inactive(mc.ANYARGS); mc:returns(nil):anytimes()
     active(mc.ANYARGS); mc:returns(nil):anytimes()
     mc:replay()
+local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
     local a = ps:new()
     a.usernames = { "a", "b", "c" }
@@ -133,6 +153,7 @@ function test_handleinput_right_two()
     assert_equal(3, a.pos, "moved right even though it was positioned far right")
 
     verify_mock(mc)
+    _G.profiles =nil
 end
 
 -------------------------------------
@@ -150,6 +171,11 @@ function test_handleinput_left()
     inactive(mc.ANYARGS); mc:returns(nil):anytimes()
     active(mc.ANYARGS); mc:returns(nil):anytimes()
     mc:replay()
+local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
     local a = ps:new()
     a.usernames = { "a", "b", "c" }
@@ -158,6 +184,7 @@ function test_handleinput_left()
     a:handleinput(event)
     assert_equal(1, a.pos, "tried to move left even though is was posistioned far left")
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -175,6 +202,11 @@ function test_handleinput_left_two()
     inactive(mc.ANYARGS); mc:returns(nil):anytimes()
     active(mc.ANYARGS); mc:returns(nil):anytimes()
     mc:replay()
+local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
     local a = ps:new()
     a.usernames = { "a", "b", "c" }
@@ -183,6 +215,7 @@ function test_handleinput_left_two()
     a:handleinput(event)
     assert_equal(2, a.pos, "did not move left, should have.")
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -200,6 +233,11 @@ function test_handleinput_bottom_right()
     inactive(mc.ANYARGS); mc:returns(nil):anytimes()
     active(mc.ANYARGS); mc:returns(nil):anytimes()
     mc:replay()
+local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
     local a = ps:new()
     a.usernames = { "a", "b", "c" }
@@ -208,6 +246,8 @@ function test_handleinput_bottom_right()
     a:handleinput(event)
     assert_equal(5, a.pos, "moved from bottom when right was pressed")
     verify_mock(mc)
+
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -225,6 +265,11 @@ function test_handleinput_bottom_left()
     inactive(mc.ANYARGS); mc:returns(nil):anytimes()
     active(mc.ANYARGS); mc:returns(nil):anytimes()
     mc:replay()
+local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
     local a = ps:new()
     a.usernames = { "a", "b", "c" }
@@ -233,6 +278,8 @@ function test_handleinput_bottom_left()
     a:handleinput(event)
     assert_equal(5, a.pos, "moved from bottom when left was pressed")
     verify_mock(mc)
+
+    _G.profiles = nil
 end
 
 -------------------------------------
@@ -251,6 +298,13 @@ function test_handleinput_bottom_down()
     active(mc.ANYARGS); mc:returns(nil):anytimes()
     mc:replay()
 
+    local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
+
     local a = ps:new()
     a.usernames = { "a", "b", "c" }
     a.pos = 5
@@ -258,6 +312,7 @@ function test_handleinput_bottom_down()
     a:handleinput(event)
     assert_equal(5, a.pos, "moved from bottom when down was pressed")
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -275,6 +330,11 @@ function test_handleinput_bottom_up()
     inactive(mc.ANYARGS); mc:returns(nil):anytimes()
     active(mc.ANYARGS); mc:returns(nil):anytimes()
     mc:replay()
+local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
     local a = ps:new()
     a.usernames = { "a", "b", "c" }
@@ -283,6 +343,7 @@ function test_handleinput_bottom_up()
     a:handleinput(event)
     assert_equal(1, a.pos, "did not move up from bottom when up was pressed")
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -300,6 +361,11 @@ function test_handleinput_up_up()
     inactive(mc.ANYARGS); mc:returns(nil):anytimes()
     active(mc.ANYARGS); mc:returns(nil):anytimes()
     mc:replay()
+local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
     local a = ps:new()
     a.usernames = { "a", "b", "c" }
@@ -315,6 +381,8 @@ function test_handleinput_up_up()
     a:handleinput(event)
     assert_equal(3, a.pos, "tried to move from pos 3 when it was already up")
     verify_mock(mc)
+
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -332,6 +400,11 @@ function test_handleinput_up_down()
     inactive(mc.ANYARGS); mc:returns(nil):anytimes()
     active(mc.ANYARGS); mc:returns(nil):anytimes()
     mc:replay()
+local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
 
     local a = ps:new()
     a.usernames = { "a", "b", "c" }
@@ -346,6 +419,8 @@ function test_handleinput_up_down()
     a:handleinput(event)
     assert_equal(5, a.pos, "should have moved down from pos 3 to pos 5")
     verify_mock(mc)
+
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -355,11 +430,18 @@ end
 -------------------------------------
 function test_handleinput_up_one()
     local ps = require(SUT)
+
+        local ps2 = require("platform.PlatformContext")
+local ps3 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps3:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps3:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
     local a = ps:new()
     -- a.usernames = {"a", "b", "c"}
 
-    profiles = { 1, 1 }
-    local ps2 = require("platform.PlatformContext")
+
     local a = ps:new()
     a.pos = 1
     PlatformContext = ps2:new()
@@ -372,6 +454,8 @@ function test_handleinput_up_one()
     a.pos = 3
     local b = a:handleinput(event)
     assert_equal("main", b[1], "should get main menu c")
+
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -381,11 +465,18 @@ end
 -------------------------------------
 function test_handleinput_down_one()
     local ps = require(SUT)
+    local ps2 = require("platform.Profile")
+    _G.profiles = {}
+table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
     local a = ps:new()
     a.pos = 5
     event.key = event.KEY_OK
     local b = a:handleinput(event)
     assert_equal("create", b[1], "should get create")
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -397,7 +488,7 @@ function test_handleinput_any_other_button()
     local ps = require(SUT)
     require("platform.Profile")
 local ps2 = require("platform.Profile")
-profiles = {}
+_G.profiles = {}
 table.insert(profiles, ps2:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
 table.insert(profiles, ps2:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
 table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
@@ -407,5 +498,6 @@ table.insert(profiles, ps2:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/
     event.key = '7'
     local b = a:handleinput(event)
     assert_equal(" ", b[1], "should do nothing")
+    _G.profiles =nil
 end
 
