@@ -96,11 +96,6 @@ end
 -- @author Ludwig Wikblad
 ----------------------------------------------------------------
 function Queue:setPosition(currentPos, goalPos)
-  if currentPos == goalPos then
-    return
-  elseif currentPos > goalPos then
-    currentPos, goalPos = goalPos, currentPos
-  end
 
   local firstLoop = 0
       for i = currentPos, 0, -1 do
@@ -116,21 +111,24 @@ function Queue:setPosition(currentPos, goalPos)
       end
 
   if(self.actions[currentPos]=="loop" and self.actions[goalPos]=="loop")then
-    self.loopActions[firstLoop], self.loopActions[secondLoop] = self.loopActions[secondLoop], self.loopActions[firstLoop]
-    self.loopCounter[firstLoop], self.loopCounter[secondLoop] = self.loopCounter[secondLoop], self.loopCounter[firstLoop]
+      table.insert(self.loopActions, secondLoop, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, secondLoop, table.remove(self.loopCounter, firstLoop))
   elseif self.actions[currentPos]=="loop" then
-    table.insert(self.loopActions, secondLoop + 1, self.loopActions[firstLoop])
-    table.remove(self.loopActions, firstLoop)
-    table.insert(self.loopCounter, secondLoop + 1, self.loopCounter[firstLoop])
-    table.remove(self.loopCounter, firstLoop)
-  elseif self.actions[goalPos] == "loop" then
-    table.insert(self.loopActions, firstLoop + 1, self.loopActions[secondLoop])
-    table.remove(self.loopActions, secondLoop + 1)
-    table.insert(self.loopCounter, firstLoop + 1, self.loopCounter[secondLoop])
-    table.remove(self.loopCounter, secondLoop + 1)
+    print("First: "..firstLoop.."Second: "..secondLoop.."#loopActions: "..#self.loopActions)
+    if firstLoop > secondLoop then
+      table.insert(self.loopActions, secondLoop + 1, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, secondLoop + 1, table.remove(self.loopCounter, firstLoop))
+    elseif secondLoop == #self.loopActions then
+      table.insert(self.loopActions, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, table.remove(self.loopCounter, firstLoop))
+    end
   end
 
-  self.actions[currentPos], self.actions[goalPos] = self.actions[goalPos], self.actions[currentPos]
+  if currentPos < goalPos then
+    table.insert(self.actions, goalPos - 1, table.remove(self.actions, currentPos))
+  else
+    table.insert(self.actions, goalPos, table.remove(self.actions, currentPos))
+  end
 
 end
 
