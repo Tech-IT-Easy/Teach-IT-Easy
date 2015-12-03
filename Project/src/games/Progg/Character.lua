@@ -87,7 +87,7 @@ function Character:startExecution(inqueue)
               self.procProcess[1] = 0 --Counts the position inside the loop
             end
             if(self.nrOfIterations>0) then
-              act = self.queue.loopActions[self.loopNumber][self.procProcess]
+              act = self.queue.loopActions[self.loopNumber][self.procProcess[1]]
               if (act == Commands.IF) or self.onIf then
                   self.isCompleted = self:executeIfStatement()
                   if (self.isCompleted) then

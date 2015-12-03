@@ -190,6 +190,9 @@ function Queue:clearAll(queueType)
     for i=1, #self.actions do
         table.remove(self.actions)
     end
+    self.loopActions = {}
+    self.loopCounter = {}
+    self.loopPointer = 0
   elseif queueType == "loop" then
     for i=1, #self.loopActions do
         table.remove(self.loopActions)
