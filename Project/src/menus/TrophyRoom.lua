@@ -237,6 +237,7 @@ function TrophyRoom:sidebuttonactive(x1, content)
 
     --get info from tables
     local text = gfx.new_surface(self.boxwidth, self.boxheight)
+    text:premultiply()
     if (self.done[tostring(content)]) then
         trophyroom_sidebuttontext:draw_over_surface(text, self.achievementButtons[content][1])
         screen:copyfrom(text, nil, { x = screen:get_width() * 0.15 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding * 3, w = self.boxwidth, h = self.boxheight })
@@ -261,6 +262,7 @@ function TrophyRoom:sidebuttoninactive(x1, content)
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.08, y = self.starty + ((x1 - 1) * self.boxheight * 1.5), w = self.boxwidth, h = self.boxheight })
 
     local text = gfx.new_surface(self.boxwidth, self.boxheight)
+    text:premultiply()
     --get info from tables
     if (self.done[tostring(content)]) then
         trophyroom_sidebuttontext:draw_over_surface(text, self.achievementButtons[content][1])
