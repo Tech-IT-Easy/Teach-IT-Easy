@@ -91,7 +91,18 @@ function BottomMenu:show()
         self.drawBottomMenu:icons(self.queue.actions, self.inputArea)
         self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
     end
-    self.rightMenu:show(self.inputArea)
+    if (self.inputArea == "if-wall" and #self.queue.ifTrueActions == 0) then
+        if (self.preventFalse == false) then
+            self.rightMenu.preventFalseChanged = true
+        end
+        self.preventFalse = true
+    else
+        if (self.preventFalse == true) then
+            self.rightMenu.preventFalseChanged = true
+        end
+        self.preventFalse = false
+    end
+    self.rightMenu:show(self.inputArea, self.preventFalse)
 end
 
 --------------------------------------------
@@ -421,7 +432,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil then  -- Handles input while an action is selected. Lets user deselect action.
                 object.selectingActionEdit = nil
-            elseif object.inputArea == "if-wall" then  -- Handles input while user in working in the if-true statement. Lets user switch to the if-not statement-
+            elseif object.inputArea == "if-wall" then
+                if #object.queue.ifTrueActions>0 then  -- Handles input while user in working in the if-true statement. Lets user switch to the if-not statement-
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
                 object.buildArea:setBuildType("if-not-wall")
@@ -431,6 +443,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.buildArea:setPosition(object.position)
                 object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.ifFalseQueue)
+                end
                 --object:updateInputArea(object.inputArea, true)
             elseif object.inputArea == "queue"  then  -- Handles input while user is working in main queue. Lets user execute the queue.
                 object.rightMenu:play()

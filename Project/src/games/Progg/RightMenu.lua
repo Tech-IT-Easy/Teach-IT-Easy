@@ -30,6 +30,7 @@ function RightMenu:new(maxCommands)
     o.draw = drawRightMenu:new(maxCommands)
     o.currentHighlight = nil
     o.inputAreaChanged = false
+    o.preventFalseChanged = false
     o.inputArea = "queue"
     o.highlightTimer = nil
     o.isFirstTimeLoop = true
@@ -50,7 +51,7 @@ end
 -- Currently also used to test certain commands
 -- @author Vilhelm
 -------------------------------------
-function RightMenu:show(bottomInput)
+function RightMenu:show(bottomInput, preventFalse)
     --self:standardLayout()
     --self:optionsLayout(true)
     --self:highlight("action")
@@ -59,7 +60,7 @@ function RightMenu:show(bottomInput)
     --self:stop()
     --self:loopLayout()
     --self:buildLayout()
-    if (self.inputAreaChanged == true) then
+    if (self.inputAreaChanged == true or self.preventFalseChanged == true) then
         if (self.inputArea == "queue") then
             self:standardLayout()
         elseif(self.inputArea == "loop") then
@@ -67,18 +68,20 @@ function RightMenu:show(bottomInput)
         elseif(self.inputArea == "build") then
             self:buildLayout(bottomInput)
         elseif(self.inputArea == "if-wall") then
-            self:ifTrueLayout()
+            self:ifTrueLayout(preventFalse)
         elseif(self.inputArea == "options") then
             self:optionsLayout()
         elseif(self.inputArea == "confirm") then
             self:confirmLayout()
         end
+        self.inputAreaChanged = false
+        self.preventFalseChanged = false
     end
     if (self.toHighlight ~= nil) then
         self:highlight(self.toHighlight)
         self.toHighlight = nil
     end
-    self.inputAreaChanged = false
+
 
 end
 
@@ -193,14 +196,18 @@ end
 -- use with if-statements
 -- @author Vilhelm
 -------------------------------------
-function RightMenu:ifTrueLayout()
+function RightMenu:ifTrueLayout(preventFalse)
     self.draw:drawRow(1)
     self.draw:drawRow(2)
     self.draw:drawRow(3)
     self.draw:addNumbers()
     self.draw:addImages()
-    self.draw:addIfFalse()
+    self.draw:addIfFalse(preventFalse)
     self.draw:preventRecursion(false)
+end
+
+function RightMenu:preventIfFalse()
+    self.draw:addIfFalse(false)
 end
 -------------------------------------
 -- Called to replace buttons for
@@ -212,7 +219,6 @@ function RightMenu:optionsLayout()
     if(self.selectedCommand == "loop" or self.selectedCommand == "P1" or self.selectedCommand == "P2" or self.selectedCommand == "if-wall") then
         self.can_enter = true
     end
-
     self.draw:addOptions(self.can_enter)
 end
 

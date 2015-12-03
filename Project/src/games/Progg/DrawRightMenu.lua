@@ -267,9 +267,17 @@ end
 -- layout.
 -- @author Tobias Lundell
 -------------------------------------
-function DrawRightMenu:addIfFalse()
-    self:drawFullRow(4,78,113,215)
+function DrawRightMenu:addIfFalse(preventFalse)
+    self:clearRow(4)
+    if (preventFalse == true) then
+        print ("preventFalse")
+        self:drawFullRow(4,135,156,161)
+    else
+        print ("don't preventFalse")
+        self:drawFullRow(4,78,113,215)
+    end
     command_play:draw_over_surface(screen, "0 If false")
+
 end
 
 function DrawRightMenu:addConfirm()
@@ -356,6 +364,11 @@ function DrawRightMenu:preventRecursion(allow_if)
         self:addImage("if-wall")
         command_5:draw_over_surface(screen, "5")
     end
+end
+
+function DrawRightMenu:preventIfFalse()
+    self:drawFullRow(4,135,156,161)
+    command_play:draw_over_surface(screen, "0 If false")
 end
 
 
