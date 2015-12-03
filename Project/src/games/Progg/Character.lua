@@ -24,13 +24,14 @@ local executionProgress = 0
 ----
 function Character:new(x,y, rightMenu, levelData, context)
   local o = Character:super()
-  o.position = {x = x, y = y}
-  o.startPosition = {x = x, y = y}
+ -- o.position = {x = x, y = y}
+ -- o.startPosition = {x = x, y = y}
   o.state = 0
   -- @member map:Map
   o.map = Map:new(context)
   o.map:load(levelData)
-  o.position = {x = o.map.startPos%8 , y = math.ceil(o.map.startPos/8)}
+  o.position = {x = o.map.startPos%8 , y = math.ceil(o.map.startPos/8) }
+  o.startPosition = {x = o.map.startPos%8, y = math.ceil(o.map.startPos/8)}
   o.hasWon=false
   o.step = 1
   o.rightMenu = rightMenu

@@ -25,7 +25,7 @@ return {
 
     ["PROGRESS"] = "Avklarat",
 
-    ["TROPHY_MENU"] = "Trofér",
+    ["TROPHY_MENU"] = "Troféer",
     ["TROPHY_COMPLETED"] = "Du har klarat %s nivåer av %s",
 
     ["EDIT_NAME"] = "Ändra namn",

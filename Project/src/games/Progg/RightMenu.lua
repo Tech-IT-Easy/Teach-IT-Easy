@@ -206,9 +206,6 @@ function RightMenu:ifTrueLayout(preventFalse)
     self.draw:preventRecursion(false)
 end
 
-function RightMenu:preventIfFalse()
-    self.draw:addIfFalse(false)
-end
 -------------------------------------
 -- Called to replace buttons for
 -- options when selecting an action
