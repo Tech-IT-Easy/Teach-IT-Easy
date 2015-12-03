@@ -69,51 +69,26 @@ function Character:startExecution(inqueue)
             self.onLoop = true
             if(act == Commands.LOOP) then
               self.nrOfIterations = inqueue.loopCounter[self.loopNumber]
-              self.recursionLevel=self.recursionLevel+1 
-              self.procProcess[self.recursionLevel] = 0 --Counts the position inside the loop
-              self.recursionTrack[self.recursionLevel] = "LOOP" 
+              self.procProcess[1] = 0 --Counts the position inside the loop
             end
             if(self.nrOfIterations>0) then
               act = self.queue.loopActions[self.loopNumber][self.procProcess]
-              if(act == Commands.P1 or act == Commands.P2 or act == Commands.LOOP) then
-               self.recursionLevel=self.recursionLevel+1
-               self.procProcess[self.recursionLevel] = 0;
-               self.onLoop = false;
-                if(act == Commands.P2)then
-                  self.onP2 = true;
-                  self.recursionTrack[self.recursionLevel] = "P2"
-                elseif(act == Commands.P1)then
-                  self.onP1 = true;
-                  self.recursionTrack[self.recursionLevel] = "P1"
-                elseif(act == Commands.LOOP)then
-                  self.onLoop = true;
-                  self.recursionTrack[self.recursionLevel] = "LOOP"
-                end
-              end
-              
               if (act == Commands.IF) or self.onIf then
                   self.isCompleted = self:executeIfStatement()
                   if (self.isCompleted) then
-                    self.procProcess[self.recursionLevel] = self.procProcess[self.recursionLevel]+1;
+                    self.procProcess[1] = self.procProcess[1]+1;
                   end
               else
-                self.procProcess[self.recursionLevel] = self.procProcess[self.recursionLevel]+1;
+                self.procProcess[1] = self.procProcess[1]+1;
                 self:execute(act)
               end
-              if(self.procProcess[self.recursionLevel]>#self.queue.loopActions[self.loopNumber])then
-                self.procProcess[self.recursionLevel] = 0
+              if(self.procProcess[1]>#self.queue.loopActions[self.loopNumber])then
+                self.procProcess[1] = 0
                 self.nrOfIterations = self.nrOfIterations-1;
               end
             else
               self.onLoop = false
-               if(self.recursionTrack[self.recursionLevel]=="P1")then
-                self.onP1 = true
-              elseif(self.recursionTrack[self.recursionLevel]=="P2")then
-                self.onP2=true
-              elseif(self.recursionTrack[self.recursionLevel]=="LOOP")then
-                self.onLoop=true
-              end
-              self.loopNumber = self.loopNumber+1 
+              self.loopNumber = self.loopNumber+1
             end -- end of LOOP
 
             --If the command P1 is encounter or if its executing P1
@@ -124,24 +99,21 @@ function Character:startExecution(inqueue)
               self.recursionTrack[self.recursionLevel] = "P1"
             end
             self.onP1=true
+            print(self.procProcess[self.recursionLevel]);
             if(self.procProcess[self.recursionLevel]<#self.queue.p1Actions)then
               if (not self.onIf) then
                 self.procProcess[self.recursionLevel] =  self.procProcess[self.recursionLevel] + 1;
               end
               act = self.queue.p1Actions[#self.queue.p1Actions - self.procProcess[self.recursionLevel] + 1]
-              if(act == Commands.P1 or act == Commands.P2 or act == Commands.LOOP) then
+              if(act == Commands.P1 or act == Commands.P2) then
                self.recursionLevel=self.recursionLevel+1
                self.procProcess[self.recursionLevel] = 0;
-               self.onP1 = false;
                 if(act == Commands.P2)then
+                  self.onP1 = false;
                   self.onP2 = true;
                   self.recursionTrack[self.recursionLevel] = "P2"
-                elseif(act == Commands.P1)then
-                  self.onP1 = true;
+                else
                   self.recursionTrack[self.recursionLevel] = "P1"
-                elseif(act == Commands.LOOP)then
-                  self.onLoop = true;
-                  self.recursionTrack[self.recursionLevel] = "LOOP"
                 end
               end
                 
@@ -157,8 +129,6 @@ function Character:startExecution(inqueue)
                 self.onP1 = true
               elseif(self.recursionTrack[self.recursionLevel]=="P2")then
                 self.onP2=true
-              elseif(self.recursionTrack[self.recursionLevel]=="LOOP")then
-                self.onLoop=true
               end
             end-- end of P1
 
@@ -175,21 +145,17 @@ function Character:startExecution(inqueue)
                 self.procProcess[self.recursionLevel] =  self.procProcess[self.recursionLevel] + 1;
               end
               act = self.queue.p2Actions[#self.queue.p2Actions - self.procProcess[self.recursionLevel] + 1]
-             if(act == Commands.P1 or act == Commands.P2 or act == Commands.LOOP) then
-               self.recursionLevel=self.recursionLevel+1
+             if(act == Commands.P1 or act == Commands.P2) then
+               self.recursionLevel=self.recursionLevel-1; 
                self.procProcess[self.recursionLevel] = 0;
-               self.onP2 = false;
-                if(act == Commands.P2)then
-                  self.onP2 = true;
-                  self.recursionTrack[self.recursionLevel] = "P2"
-                elseif(act == Commands.P1)then
+               if(act == Commands.P1)then
                   self.onP1 = true;
+                  self.onP2 = false;
                   self.recursionTrack[self.recursionLevel] = "P1"
-                elseif(act == Commands.LOOP)then
-                  self.onLoop = true;
-                  self.recursionTrack[self.recursionLevel] = "LOOP"
+                else
+                  self.recursionTrack[self.recursionLevel] = "P2"
                 end
-              end
+               end
               if (act == Commands.IF) then
                 self.isCompleted = self:executeIfStatement()
               else
@@ -202,8 +168,6 @@ function Character:startExecution(inqueue)
                 self.onP1 = true
               elseif(self.recursionTrack[self.recursionLevel]=="P2")then
                 self.onP2=true
-              elseif(self.recursionTrack[self.recursionLevel]=="LOOP")then
-                self.onLoop=true
               end
             end-- end of P2
 

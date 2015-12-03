@@ -311,14 +311,13 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
 
-            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true or #object.queue.actions<object.maxCommands[object.inputArea] == false then -- Handles input when an action is selected, user is moving an action, loop has no available slots or (the main queue is full?)
+            elseif object:isBuildArea() == true or object.selectingActionEdit ~= nil or object.isMovingAction == true or #object.queue.actions<object.maxCommands[object.inputArea] == false then -- Handles input when an action is selected, user is moving an action, loop has no available slots or (the main queue is full?)
                 print("Not allowed while selecting edit or moving action")
             else -- Handles input during normal state. Lets user add loop to main queue.
                 if object.maxCommands["loop"] == 0 then
                     print("Action not allowed")
                     return;
                 end
-                --object:isBuildArea() == true or 
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "loop"
                 object.buildArea:setBuildType("loop")
