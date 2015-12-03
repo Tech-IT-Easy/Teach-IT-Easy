@@ -304,6 +304,9 @@ function Map:restartCharacter(x, y)
     local pos = self:getPosition(x, y)
     if pos == self.startPos then
         self:setStart(self.startPos)
+
+    elseif pos == self.goalPos then
+        self:setGoal(self.goalPos)
     else
         self:square(pos, self.tiles[pos])
     end
@@ -467,14 +470,14 @@ function Map:drawRightBorder(xPos, yPos)
 end
 
 function Map:winMessage()
-    screen:clear({  r = 255,g = 235, b = 59}, { x = screen:get_width()*0.05 , y = screen:get_height()*0.1, w = screen:get_width()*0.65, h = screen:get_height()*0.46 })
-    screen:clear({ r = 78, g = 113, b = 215  }, { x = screen:get_width()*0.07 , y = screen:get_height()*0.13, w = screen:get_width()*0.61, h = screen:get_height()*0.4 })
+    screen:clear({ r = 255, g = 235, b = 59 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.1, w = screen:get_width() * 0.65, h = screen:get_height() * 0.46 })
+    screen:clear({ r = 78, g = 113, b = 215 }, { x = screen:get_width() * 0.07, y = screen:get_height() * 0.13, w = screen:get_width() * 0.61, h = screen:get_height() * 0.4 })
     self.image = gfx.loadpng("data/trophy_active.png")
-    screen:copyfrom(self.image, nil, { x = screen:get_width()*0.52, y = screen:get_height()*0.18, w=screen:get_width()*0.18, h = screen:get_height()*0.3 }, true)
+    screen:copyfrom(self.image, nil, { x = screen:get_width() * 0.52, y = screen:get_height() * 0.18, w = screen:get_width() * 0.18, h = screen:get_height() * 0.3 }, true)
     self.image:destroy()
     win_1:draw_over_surface(screen, "Congratulations!")
     win_2:draw_over_surface(screen, "You Have Completed")
-    win_3:draw_over_surface(screen, "Level "..self.levelNmb)
+    win_3:draw_over_surface(screen, "Level " .. self.levelNmb)
     win_4:draw_over_surface(screen, "Press Enter To Continue")
     collectgarbage()
 end
@@ -486,6 +489,7 @@ function Map:drawTrophy()
 
     collectgarbage()
 end
+
 return Map
 
 

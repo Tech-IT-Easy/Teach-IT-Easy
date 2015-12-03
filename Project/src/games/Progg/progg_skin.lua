@@ -63,3 +63,8 @@ win_1 = sys.new_freetype({r=34, g=59, b=94, a=255}, screen:get_width()* 0.04, {x
 win_2 = sys.new_freetype({r=34, g=59, b=94, a=255}, screen:get_width()* 0.04, {x= screen:get_width()*0.08, y=screen:get_height()*0.24}, script_path..'data/GROBOLD.ttf')
 win_3 = sys.new_freetype({r=34, g=59, b=94, a=255}, screen:get_width()* 0.04, {x= screen:get_width()*0.08, y=screen:get_height()*0.33}, script_path..'data/GROBOLD.ttf')
 win_4 = sys.new_freetype({r=255, g=255, b=255, a=255}, screen:get_width()* 0.04, {x= screen:get_width()*0.08, y=screen:get_height()*0.42}, script_path..'data/GROBOLD.ttf')
+
+exit_1 = sys.new_freetype({r=34, g=59, b=94, a=255}, screen:get_width()* 0.04, {x= screen:get_width()*0.08, y=screen:get_height()*0.15}, script_path..'data/GROBOLD.ttf')
+exit_2 = sys.new_freetype({r=34, g=59, b=94, a=255}, screen:get_width()* 0.04, {x= screen:get_width()*0.08, y=screen:get_height()*0.24}, script_path..'data/GROBOLD.ttf')
+exit_3 = sys.new_freetype({r=225, g=225, b=255, a=255}, screen:get_width()* 0.04, {x= screen:get_width()*0.08, y=screen:get_height()*0.33}, script_path..'data/GROBOLD.ttf')
+exit_4 = sys.new_freetype({r=255, g=255, b=255, a=255}, screen:get_width()* 0.04, {x= screen:get_width()*0.08, y=screen:get_height()*0.42}, script_path..'data/GROBOLD.ttf')

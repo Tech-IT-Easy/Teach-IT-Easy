@@ -22,6 +22,7 @@ prof_sel_activeaddprofiley = prof_sel_addprofiley + (prof_sel_addprofileheight -
 
 main_menu_appnamebaseline = screen:get_height() * 0.08
 main_menu_pagenamebaseline = screen:get_height() * 0.15
+main_menu_subpagenamebaseline = screen:get_height() * 0.22
 main_menu_usernamebaseline = screen:get_height() * 0.125
 
 
@@ -78,9 +79,21 @@ main_menu_sidebuttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 
 
 trophy_room_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.28, y = main_menu_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
 trophy_room_progress = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.08, y = screen:get_height()*0.3 }, script_path .. 'data/GROBOLD.ttf')
-trophyroom_sidebuttontext1 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.65, y = (screen:get_height() * 0.36) }, script_path .. 'data/condensed.ttf')
-trophyroom_sidebuttontext2 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.65, y = (screen:get_height() * 0.36) + ((screen:get_height() * 0.2125) * 1) }, script_path .. 'data/condensed.ttf')
-trophyroom_sidebuttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.65, y = (screen:get_height() * 0.36) + ((screen:get_height() * 0.2125) * 2) }, script_path .. 'data/condensed.ttf')
+
+trophyroom_sidebuttontext = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.05, { x = 0, y = 0 }, script_path .. 'data/condensed.ttf')
+trophyroom_inactive_sidebuttontext = sys.new_freetype({ g = 178, r = 133, b = 201, a = 255 }, screen:get_height() * 0.05, { x = 0, y = 0 }, script_path .. 'data/condensed.ttf')
+
+trophyroom_contentheader = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.08, { x = screen:get_width() * 0.6, y = screen:get_height() * 0.45+12 }, script_path .. 'data/condensed.ttf')
+trophyroom_boxcontent = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.6, y = screen:get_height() * 0.55+12 }, script_path .. 'data/condensed.ttf')
+trophyroom_boxcontentrequirement = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.6, y = screen:get_height() * 0.61+12 }, script_path .. 'data/condensed.ttf')
+
+
+--trophyroom_sidebuttontext1 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.15, y = screen:get_height() * 0.45+12 }, script_path .. 'data/condensed.ttf')
+--trophyroom_sidebuttontext2 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.15, y = (screen:get_height() * 0.45 +  screen:get_height() * 0.1 * 1.5) + 12 }, script_path .. 'data/condensed.ttf')
+--trophyroom_sidebuttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.15, y =(screen:get_height() * 0.45 + 2 *  screen:get_height() * 0.1 * 1.5) + 12 }, script_path .. 'data/condensed.ttf')
+--trophyroom_inactive_sidebuttontext1 = sys.new_freetype({ g = 178, r = 133, b = 201, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.15, y = screen:get_height() * 0.45+12 }, script_path .. 'data/condensed.ttf')
+--trophyroom_inactive_sidebuttontext2 = sys.new_freetype({ g = 178, r = 133, b = 201, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.15, y = (screen:get_height() * 0.45 +  screen:get_height() * 0.1 * 1.5) + 12 }, script_path .. 'data/condensed.ttf')
+--trophyroom_inactive_sidebuttontext3 = sys.new_freetype({ g = 178, r = 133, b = 201, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.15, y =(screen:get_height() * 0.45 + 2 *  screen:get_height() * 0.1 * 1.5) + 12 }, script_path .. 'data/condensed.ttf')
 
 
 -------------------------------------
@@ -88,6 +101,7 @@ trophyroom_sidebuttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255
 -- @author Vilhelm
 -------------------------------------
 instructions_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.385, y = main_menu_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
+instructions_subpagename = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.03, { x = screen:get_width() * 0.42, y = main_menu_subpagenamebaseline}, script_path .. 'data/Chalkduster.ttf')
 
 -------------------------------------
 -- Freetype objects used in the settings screen

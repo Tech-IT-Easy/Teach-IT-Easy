@@ -367,7 +367,6 @@ function test_handleinput_two_from_any_pos()
   event.key = event.KEY_BACK
   local b = a:handleinput(event)
   assert_equal("profilesel", b[1], "should return profilesel ")
-  assert_equal(" ", b[2], "should return noting")
   verify_mock(mc)
 end
 

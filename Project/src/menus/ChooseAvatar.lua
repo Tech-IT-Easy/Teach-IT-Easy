@@ -53,7 +53,7 @@ function ChooseAvatar:handleinput(event)
     PlatformContext.profile = profile
 
     collectgarbage()
-    return { "main", profile.name }
+    return { "main" }
   elseif (event.key == Event.KEY_BACK) then
     CreateProfile.profilename = ""
     return { "create" }

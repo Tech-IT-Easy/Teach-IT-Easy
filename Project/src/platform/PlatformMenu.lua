@@ -96,7 +96,7 @@ end
 function PlatformMenu:changeview(newview)
     self.currentview = self.views[newview[1]]:new()
     screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-    self.currentview:loadview(newview[2])
+    self.currentview:loadview()
     collectgarbage()
 end
 

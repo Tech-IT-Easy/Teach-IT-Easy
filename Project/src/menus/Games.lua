@@ -30,7 +30,7 @@ function Games:handleinput(event)
   elseif event.key == Event.KEY_LEFT and self.pos > 1 then
     self.pos = self.pos - 1
   elseif event.key == Event.KEY_BACK then
-    return { "main", self.usernamestring }
+    return { "main" }
   elseif event.key == Event.KEY_OK and self.pos == 1 then
     return{"selectlevel"}
   elseif event.key == Event.KEY_OK then
@@ -54,7 +54,7 @@ end
 -- Loads the view to the screen.
 -- @author Erik
 -------------------------------------
-function Games:loadview(input)
+function Games:loadview()
     self.pos = 1
     self.lastpos = 1
     self.usernamestring = platformContext.profile.name
