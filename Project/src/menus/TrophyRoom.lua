@@ -133,7 +133,7 @@ function TrophyRoom:loadProgress(game)
     self.achievementButtons = {}
     self.done = {}
     if (game == "progg") then
-        self.totalLevels = 5
+        self.totalLevels = 8
         if (platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].proggGameLoopLevel) then
             table.insert(self.achievementButtons, { "Loop", "Loop is completed" })
             self.done["1"] = true
