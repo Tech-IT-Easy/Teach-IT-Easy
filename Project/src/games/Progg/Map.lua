@@ -304,6 +304,9 @@ function Map:restartCharacter(x, y)
     local pos = self:getPosition(x, y)
     if pos == self.startPos then
         self:setStart(self.startPos)
+
+    elseif pos == self.goalPos then
+        self:setGoal(self.goalPos)
     else
         self:square(pos, self.tiles[pos])
     end
@@ -479,7 +482,7 @@ function Map:winMessage()
     self.image:destroy()
     win_1:draw_over_surface(screen, "Congratulations!")
     win_2:draw_over_surface(screen, "You Have Completed")
-    win_3:draw_over_surface(screen, "Level "..self.levelNmb)
+    win_3:draw_over_surface(screen, "Level " .. self.levelNmb)
     win_4:draw_over_surface(screen, "Press OK To Continue")
     collectgarbage()
 end
@@ -491,6 +494,7 @@ function Map:drawTrophy()
 
     collectgarbage()
 end
+
 return Map
 
 

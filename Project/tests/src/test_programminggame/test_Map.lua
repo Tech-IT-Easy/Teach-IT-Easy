@@ -55,26 +55,32 @@ function test_load()
     local setGoal = mc:mock()
     local setStart = mc:mock()
     local setCharacter = mc:mock()
+    local printObjective = mc:mock()
     --local printbackground = mc:mock()
 
     local ps = require(SUT)
+
 
     package.loaded[SUT].square = square
     package.loaded[SUT].setGoal = setGoal
     package.loaded[SUT].setStart = setStart
     package.loaded[SUT].setCharacter = setCharacter
+    package.loaded[SUT].printObjective = printObjective
     -- package.loaded[SUT].printbackground = printbackground
 
     square(mc.ANYARGS); mc:returns(nil):times(40)
     setGoal(mc.ANYARGS); mc:returns(nil):times(1)
     setStart(mc.ANYARGS); mc:returns(nil):times(1)
     setCharacter(mc.ANYARGS); mc:returns(nil):times(1)
+    printObjective(mc.ANYARGS); mc:returns(nil):times(1)
     --printbackground(mc.ANYARGS) ;mc :returns(nil) :times(1)
 
     mc:replay()
 
     local b = ps:new()
-    b:load()
+
+    b.objectives = { 1, 1 }
+    b:load({ objectives = "s", mapData = "a" })
 
     verify_mock(mc)
 end
@@ -87,10 +93,24 @@ end
 function test_setCharacter_one()
     local mc = create_mock(SUT)
     local ps = require(SUT)
+    local ps2 = require("platform.PlatformContext")
+    local ps3 = require("platform.Profile")
+ --local ps2 = require("platform.Profile")
+    _G.profiles = {}
+    table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    table.insert(profiles, ps3:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+    table.insert(profiles, ps3:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
     mc:replay()
 
     local a = ps:new()
     local input = 8
+    local context = ps2:new()
+    --table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+
+    context.profile = profiles[1]
+    a.context = context
+
     a.columns = 8
     a.boxheight = 50
     a.startx = 200
@@ -100,14 +120,29 @@ function test_setCharacter_one()
     a:setCharacter(input)
 
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 function test_setCharacter_two()
     local mc = create_mock(SUT)
     local ps = require(SUT)
-    mc:replay()
+    local ps2 = require("platform.PlatformContext")
 
+     local ps3 = require("platform.Profile")
+    _G.profiles = {}
+    table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    table.insert(profiles, ps3:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+    table.insert(profiles, ps3:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
+    mc:replay()
     local a = ps:new()
+    --local ps3 = require("platform.Profile")
+    local context = ps2:new()
+    --table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    context.profile = profiles[1]
+    a.context = context
+
+
     local input = 16
     a.columns = 8
     a.boxheight = 50
@@ -118,14 +153,30 @@ function test_setCharacter_two()
     a:setCharacter(input)
 
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 function test_setCharacter_three()
     local mc = create_mock(SUT)
     local ps = require(SUT)
-    mc:replay()
+    local ps2 = require("platform.PlatformContext")
 
+     local ps3 = require("platform.Profile")
+    _G.profiles = {}
+    table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    table.insert(profiles, ps3:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+    table.insert(profiles, ps3:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
+    mc:replay()
     local a = ps:new()
+    --local ps3 = require("platform.Profile")
+    local context = ps2:new()
+    --table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    context.profile = profiles[1]
+    a.context = context
+
+
+
     local input = 24
     a.columns = 8
     a.boxheight = 50
@@ -136,14 +187,31 @@ function test_setCharacter_three()
     a:setCharacter(input)
 
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 function test_setCharacter_four()
     local mc = create_mock(SUT)
     local ps = require(SUT)
-    mc:replay()
+    local ps2 = require("platform.PlatformContext")
 
+    mc:replay()
     local a = ps:new()
+    local ps3 = require("platform.Profile")
+
+     --local ps2 = require("platform.Profile")
+    _G.profiles = {}
+    table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    table.insert(profiles, ps3:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+    table.insert(profiles, ps3:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
+    local context = ps2:new()
+    --table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    context.profile = profiles[1]
+    a.context = context
+
+
+
     local input = 32
     a.columns = 8
     a.boxheight = 50
@@ -154,14 +222,30 @@ function test_setCharacter_four()
     a:setCharacter(input)
 
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 function test_setCharacter_five()
     local mc = create_mock(SUT)
     local ps = require(SUT)
-    mc:replay()
+    local ps2 = require("platform.PlatformContext")
 
+    mc:replay()
     local a = ps:new()
+    local ps3 = require("platform.Profile")
+     --local ps2 = require("platform.Profile")
+    _G.profiles = {}
+    table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    table.insert(profiles, ps3:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+    table.insert(profiles, ps3:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
+    local context = ps2:new()
+    --table.insert(profiles, ps3:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+    context.profile = profiles[1]
+    a.context = context
+
+
+
     local input = 33
     a.columns = 8
     a.boxheight = 50
@@ -172,6 +256,7 @@ function test_setCharacter_five()
     a:setCharacter(input)
 
     verify_mock(mc)
+    _G.profiles=nil
 end
 
 -------------------------------------
@@ -793,7 +878,7 @@ function test_moveCharacter_one()
     local direction = 0
     a.columns = 8
     a.startPos = 1
-    a.tiles={0,0,0,0,0,0,0 }
+    a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
 
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
     square(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -823,7 +908,6 @@ function test_moveCharacter_two()
     package.loaded[SUT].setGoal = setGoal
     package.loaded[SUT].setStart = setStart
 
-
     local a = ps:new()
     a.inGameObjectives = {}
     local x = 2
@@ -832,12 +916,7 @@ function test_moveCharacter_two()
     a.columns = 8
     a.startPos = 1
     a.mapdata = {}
-    a.tiles={0,0,0,0,0,0,0 }
-
-
-
-
-
+    a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
 
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
     square(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -875,10 +954,7 @@ function test_moveCharacter_three()
     a.columns = 8
     a.startPos = 1
     a.mapdata = {}
-    a.tiles={0,0,0,0,0,0,0 }
-
-
-
+    a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
 
     setStart(mc.ANYARGS); mc:returns(nil):anytimes()
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -916,9 +992,7 @@ function test_moveCharacter_four()
     a.columns = 8
     a.startPos = 1
     a.mapdata = {}
-    a.tiles={0,0,0,0,0,0,0 }
-
-
+    a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
 
     setStart(mc.ANYARGS); mc:returns(nil):anytimes()
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -954,9 +1028,8 @@ function test_moveCharacter_five()
     local direction = 2
     a.columns = 8
     a.mapdata = {}
-    a.tiles={0,0,0,0,0,0,0 }
+    a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
     a.inGameObjectives = {}
-
 
     setStart(mc.ANYARGS); mc:returns(nil):anytimes()
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
@@ -984,7 +1057,8 @@ function test_canMove_one()
     package.loaded[SUT].getPosition = getPosition
 
     local a = ps:new()
-    a:load()
+    a.objectives = { 1, 2 }
+
     local tile = ps2:new("1")
 
 
@@ -1013,7 +1087,7 @@ function test_canMove_two()
     package.loaded[SUT].getPosition = getPosition
 
     local a = ps:new()
-    a:load()
+    -- a:load()
     local tile = ps2:new("8")
 
 
@@ -1043,7 +1117,7 @@ function test_canMove_three()
     package.loaded[SUT].getPosition = getPosition
 
     local a = ps:new()
-    a:load()
+    --a:load()
     local tile = ps2:new("3")
 
 
@@ -1071,7 +1145,7 @@ function test_canMove_four()
     package.loaded[SUT].getPosition = getPosition
 
     local a = ps:new()
-    a:load()
+    -- a:load()
     local tile = ps2:new("4")
 
 
@@ -1100,7 +1174,7 @@ function test_canMove_five()
     package.loaded[SUT].getPosition = getPosition
 
     local a = ps:new()
-    a:load()
+    -- a:load()
     local tile = ps2:new("2")
 
 
@@ -1302,7 +1376,7 @@ function test_printObjective_one()
     local a = ps:new()
 
     local i = 1
-    Map.OBJECTIVECOLOR= { g = 83, r = 101, b = 219 }
+    Map.OBJECTIVECOLOR = { g = 83, r = 101, b = 219 }
 
     printInnerBox(mc.ANYARGS); mc:returns(1):anytimes()
 
@@ -1329,7 +1403,7 @@ function test_printObjectiveAsDone_one()
     local a = ps:new()
 
     local i = 1
-    Map.INNERBOXCOLOR= { g = 83, r = 101, b = 219 }
+    Map.INNERBOXCOLOR = { g = 83, r = 101, b = 219 }
 
     printInnerBox(mc.ANYARGS); mc:returns(1):anytimes()
 
@@ -1363,7 +1437,7 @@ function test_isInGoal_one()
 
     mc:replay()
 
-    local answer = a:isInGoal(x,y)
+    local answer = a:isInGoal(x, y)
     assert_true(answer, "wrong return value")
 
     verify_mock(mc)
@@ -1381,25 +1455,34 @@ function test_restartCharacter_one()
     local getPosition = mc:mock()
     local square = mc:mock()
     local setCharacter = mc:mock()
+    local setStart = mc:mock()
+    local printObjective = mc:mock()
 
     package.loaded[SUT].getPosition = getPosition
     package.loaded[SUT].square = square
     package.loaded[SUT].setCharacter = setCharacter
+    package.loaded[SUT].setStart = setStart
+    package.loaded[SUT].printObjective = printObjective
 
     local a = ps:new()
+    a.columns = 1
+    a.objectives = { 1 }
+    a.inGameObjectives = { 1 }
 
     local x = 1
     local y = 1
     a.startPos = 1
-    a.tiles={}
+    a.tiles = {}
 
     getPosition(mc.ANYARGS); mc:returns(1):anytimes()
     square(mc.ANYARGS); mc:returns(nil):anytimes()
     setCharacter(mc.ANYARGS); mc:returns(nil):anytimes()
+    setStart(mc.ANYARGS); mc:returns(nil):anytimes()
+    printObjective(mc.ANYARGS); mc:returns(nil):anytimes()
 
     mc:replay()
 
-    a:restartCharacter(x,y)
+    a:restartCharacter(x, y)
 
     verify_mock(mc)
 end

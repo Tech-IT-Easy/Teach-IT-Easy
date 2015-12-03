@@ -54,7 +54,7 @@ function CreateProfile:handleinput(event)
     self.profilename = string.sub(self.profilename, 1, -2)
     self:updatetext()
   elseif event.key == Event.KEY_BACK then
-    return { "profilesel", " " }
+    return { "profilesel"}
   end
   return { " " }
 end
