@@ -22,6 +22,7 @@ prof_sel_activeaddprofiley = prof_sel_addprofiley + (prof_sel_addprofileheight -
 
 main_menu_appnamebaseline = screen:get_height() * 0.08
 main_menu_pagenamebaseline = screen:get_height() * 0.15
+main_menu_subpagenamebaseline = screen:get_height() * 0.22
 main_menu_usernamebaseline = screen:get_height() * 0.125
 
 
@@ -100,6 +101,7 @@ trophyroom_boxcontentrequirement = sys.new_freetype({ g = 131, r = 0, b = 143, a
 -- @author Vilhelm
 -------------------------------------
 instructions_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.385, y = main_menu_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
+instructions_subpagename = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.03, { x = screen:get_width() * 0.42, y = main_menu_subpagenamebaseline}, script_path .. 'data/Chalkduster.ttf')
 
 -------------------------------------
 -- Freetype objects used in the settings screen

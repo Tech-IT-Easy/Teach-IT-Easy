@@ -42,7 +42,7 @@ function BottomMenu:new(levelData,context)
     o.inExitPopUp = false
     o.inputArea = "queue"
     o.prevInputArea = "queue"
-    o.levelData = levelData
+    --o.levelData = levelData
     o.maxCommands = levelData.maxCommands
     o.position = 1     --Starting position for highlight
     o.rowLength = 8
@@ -512,7 +512,8 @@ function bottomMenuEventHandler:update(object,eventListener,event)
         elseif event.key == Event.KEY_BACK then --This terminates the game no matter what is happening.
             if object.inExitPopUp then
                 object.inExitPopUp = false
-                object.character.map:load(object.levelData)
+                object.character.map:load(object.character.
+                levelData)
                 collectgarbage()
             else
                 if (object.inputArea == "queue" and not inExitPopUp) then

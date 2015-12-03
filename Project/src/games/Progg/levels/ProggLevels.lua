@@ -14,6 +14,7 @@ local Network = require("toolkit.Network")
 
 function ProggLevels:new()
     local o = ProggLevels:super()
+    o.maxLevel = 8
     return ProggLevels:init(o)
 end
 
@@ -32,7 +33,7 @@ function ProggLevels:getProggLevels()
             level = 3, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "fffffffffffffffff9efffff96ffffff7fffffff", levelGoalPosition = 19, levelStartPosition = 33, objectives = {26}
         },
         {
-            level = 4, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
+            level = 4, maxCommands = {["queue"] = 4, ["loop"] = 0, ["P1"] = 8, ["P2"] = 8, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
         },
         {
             level = 5, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aaaaacf59aaac5f55baa65f53aaaa6f7fffffff", levelGoalPosition = 19, levelStartPosition = 33, objectives = {}
