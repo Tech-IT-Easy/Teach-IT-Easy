@@ -116,7 +116,7 @@ function Instructions:renderui()
         row_9:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME1_ROW9)
         row_10:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME1_ROW10)
         row_11:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME1_ROW11)
-        row_12:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME1_ROW12)
+        --row_12:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME1_ROW12)
     elseif self.page == 3  then
         print(self.page)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.41, y = screen:get_height() * 0.22, w = screen:get_width() * 0.22, h = screen:get_height() * 0.05})
