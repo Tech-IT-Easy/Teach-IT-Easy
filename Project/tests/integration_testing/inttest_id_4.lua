@@ -126,6 +126,14 @@ end
 
 
 --Test if character moved according to the added commands
+
+-------------------------------------
+-- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Adding commands to Queue from BottomMenu by simulating key presses.
+-- Then executing queue from BottomMenu by using Character functions.
+-- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
+-- @author name: Andreas
+-------------------------------------
 function test_execute_queue_1()
     local GameProgress = require('toolkit.GameProgress')
     local context_sim = {}

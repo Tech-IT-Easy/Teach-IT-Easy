@@ -126,6 +126,14 @@ end
 
 
 --Test if character moved according to the added loop
+
+-------------------------------------
+-- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Adding loop with commands to Queue from BottomMenu by simulating key presses.
+-- Then executing queue from BottomMenu by using Character functions.
+-- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
+-- @author name: Andreas
+-------------------------------------
 function test_execute_queue_2()
     local levelData = require('games.Progg.levels.ProggLevels'):new()
     local leveldata = levelData:getProggLevels()

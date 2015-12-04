@@ -123,7 +123,12 @@ function setup()
     Commands = require('games.Progg.Commands')
 end
 
-
+-------------------------------------
+-- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Adding commands from bottommenu by simulating key presses.
+-- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
+-- @author name: Andreas
+-------------------------------------
 function test_adding_commands()
     local levelData = require('games.Progg.levels.ProggLevels'):new()
     local leveldata = levelData:getProggLevels()
@@ -420,6 +425,13 @@ function test_adding_commands()
 
 end
 
+
+-------------------------------------
+-- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Deleting commands from bottommenu by simulating key presses.
+-- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
+-- @author name: Andreas
+-------------------------------------
 function test_delete()
     local levelData = require('games.Progg.levels.ProggLevels'):new()
     local leveldata = levelData:getProggLevels()
@@ -481,6 +493,13 @@ function test_delete()
     lunit.assert_equal(commands.TURN_RIGHT, cmd_2, "Not right command in position 2")
 end
 
+
+-------------------------------------
+-- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Tests if correct actions is taken by simulating different key presses.
+-- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
+-- @author name: Andreas
+-------------------------------------
 function test_key_press()
     local levelData = require('games.Progg.levels.ProggLevels'):new()
     local leveldata = levelData:getProggLevels()

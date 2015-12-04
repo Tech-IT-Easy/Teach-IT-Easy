@@ -55,6 +55,11 @@ local function create_queue(inqueue, type)
     end
 end
 
+-------------------------------------
+-- Test interface betwwen Character and queue. Test level 1, with simple commands
+-- @system_under_test: Queue, Character:execute(command)
+-- @author name: Andreas
+-------------------------------------
 function test_execute_simple_commads()
     clear_mock()
     package.loaded['games.Progg.Character'] = nil
@@ -97,6 +102,11 @@ function test_execute_simple_commads()
     lunit.assert_equal(1, y_position, "Not correct y-position")
 end
 
+-------------------------------------
+-- Test interface betwwen Character and queue. Test level 4, requires more complex quque of commands
+-- @system_under_test: Queue, Character:execute(command)
+-- @author name: Andreas
+-------------------------------------
 function test_start_executing_commands()
     clear_mock()
     package.loaded['games.Progg.Character'] = nil
