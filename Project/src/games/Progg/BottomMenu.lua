@@ -455,7 +455,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object:setPosition(1)
             end
         elseif event.key == Event.KEY_ZERO and not object.inExitPopUp then
-            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
+            if object.character.hasWon == true then
+                print("Not allowed")
+            elseif(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
             object.queue.loopCounter[object.queue.loopPointer] = object.queue.INFINITY
             object.selectingLoopCounter=false
             object.rightMenu.inputAreaChanged = true
@@ -479,8 +481,6 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.inputArea == "queue"  then  -- Handles input while user is working in main queue. Lets user execute the queue.
             object.rightMenu:play()
             object:executeQueue()
-            elseif object.character.hasWon == true then
-                print("Not allowed")
             else -- Handles input when user is working in buildArea. Let's user back out to the main queue.
             if object.selectingLoopCounter == true then
                 object.selectingLoopCounter = false
