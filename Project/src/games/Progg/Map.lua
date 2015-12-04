@@ -42,6 +42,12 @@ end
 function Map:load(levelData)
     -- implement parameter with mapdata
     self.levelNmb = levelData.level
+
+
+    -- test
+
+
+
     self.background = gfx.loadpng('data/game_background_small.png')
 
     screen:copyfrom(self.background, nil, {
@@ -118,6 +124,13 @@ function Map:load(levelData)
     for i = 1, #self.objectives, 1 do
         self:printObjective(self.objectives[i])
     end
+
+
+       -- screen:clear({  r = 255, g = 255, b = 255}, { x = screen:get_width()*0.05 , y = screen:get_height()*0.1, w = screen:get_width()*0.65, h = screen:get_height()*0.46 })
+
+    self:level_indicator("level "..self.levelNmb);
+
+
 end
 
 
@@ -494,6 +507,21 @@ function Map:drawTrophy()
 
     collectgarbage()
 end
+
+
+function Map:level_indicator(level)
+    level_indicator:draw_over_surface(screen, level)
+    collectgarbage()
+end
+
+
+
+
+
+
+
+
+
 
 return Map
 
