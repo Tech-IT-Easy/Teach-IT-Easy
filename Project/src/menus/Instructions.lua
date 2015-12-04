@@ -54,6 +54,7 @@ end
 -------------------------------------
 function Instructions:update()
     self:renderui()
+    collectgarbage()
 end
 
 
@@ -64,6 +65,7 @@ end
 function Instructions:loadview()
     self.usernamestring = platformContext.profile.name
     self:renderui()
+    collectgarbage()
 end
 
 -------------------------------------
@@ -160,7 +162,8 @@ function Instructions:renderui()
     elseif self.page == 6  then
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.41, y = screen:get_height() * 0.22, w = screen:get_width() * 0.22, h = screen:get_height() * 0.05})
         instructions_subpagename:draw_over_surface(screen, LOCALE.INSTRUCTIONS_PROGRAMMING_GAME)
-        screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
+        screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() *
+0.98, h = screen:get_height() * 0.62})
         row_1:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME5_ROW1)
         row_2:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME5_ROW2)
         row_3:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME5_ROW3)
