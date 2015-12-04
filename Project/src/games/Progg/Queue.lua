@@ -197,6 +197,7 @@ function Queue:clearAll(queueType)
     for i=1, #self.loopActions do
         table.remove(self.loopActions)
     end
+    if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions[self.loopPointer], queueType) end
   elseif queueType == "P1" then
     for i=1, #self.p1Actions do
         table.remove(self.p1Actions)
