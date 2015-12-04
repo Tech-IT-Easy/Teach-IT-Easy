@@ -76,7 +76,7 @@ end
 -- @author Mikael
 -------------------------------------
 function Instructions:renderui()
-
+    collectgarbage()
     main_menu_appname:draw_over_surface(screen, LOCALE.APP_NAME)
     instructions_pagename:draw_over_surface(screen, LOCALE.INSTRUCTIONS)
 

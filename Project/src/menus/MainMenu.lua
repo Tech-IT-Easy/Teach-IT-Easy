@@ -38,8 +38,7 @@ function MainMenu:handleinput(event)
     elseif event.key == Event.KEY_OK and self.pos == 1 then
         return { "trophy" }
     elseif event.key == Event.KEY_OK and self.pos == 2 then
-        print("Opening instructions")
-        return { "instructions" }
+        return { "instructions", PlatformContext.profile.name }
     elseif event.key == Event.KEY_OK and self.pos == 3 then
         return { "settings"}
 
