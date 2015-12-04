@@ -55,6 +55,7 @@ end
 -- @author Erik
 -------------------------------------
 function Instructions:update()
+    print("update(): Next step, renderui()")
     self:renderui()
     collectgarbage()
 end
@@ -65,7 +66,7 @@ end
 -- @author Erik
 -------------------------------------
 function Instructions:loadview()
-    self.usernamestring = platformContext.profile.name
+    print("Loadview(): Next step, renderui()")
     self:renderui()
     collectgarbage()
 end
@@ -81,7 +82,9 @@ function Instructions:renderui()
 
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.19, w = screen:get_width() * 0.18, h = screen:get_height() * 0.08})
     page_txt:draw_over_surface(screen, "Page "..self.page.." of "..self.maxPage)
+    print("printing")
     if self.page == 1 then
+        print(self.page)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.41, y = screen:get_height() * 0.22, w = screen:get_width() * 0.22, h = screen:get_height() * 0.05})
         instructions_subpagename:draw_over_surface(screen, LOCALE.INSTRUCTIONS_MENU_NAVIGATION)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
@@ -98,6 +101,7 @@ function Instructions:renderui()
         row_11:draw_over_surface(screen,LOCALE.INSTRUCTIONS_MENU_NAVIGATION_ROW11)
         row_12:draw_over_surface(screen,LOCALE.INSTRUCTIONS_MENU_NAVIGATION_ROW12)
     elseif self.page == 2  then
+        print(self.page)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.41, y = screen:get_height() * 0.22, w = screen:get_width() * 0.22, h = screen:get_height() * 0.05})
         instructions_subpagename:draw_over_surface(screen, LOCALE.INSTRUCTIONS_PROGRAMMING_GAME)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
@@ -114,6 +118,7 @@ function Instructions:renderui()
         row_11:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME1_ROW11)
         row_12:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME1_ROW12)
     elseif self.page == 3  then
+        print(self.page)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.41, y = screen:get_height() * 0.22, w = screen:get_width() * 0.22, h = screen:get_height() * 0.05})
         instructions_subpagename:draw_over_surface(screen, LOCALE.INSTRUCTIONS_PROGRAMMING_GAME)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
@@ -130,6 +135,7 @@ function Instructions:renderui()
         row_11:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME2_ROW11)
         row_12:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME2_ROW12)
     elseif self.page == 4  then
+        print(self.page)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.41, y = screen:get_height() * 0.22, w = screen:get_width() * 0.22, h = screen:get_height() * 0.05})
         instructions_subpagename:draw_over_surface(screen, LOCALE.INSTRUCTIONS_PROGRAMMING_GAME)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
@@ -146,6 +152,7 @@ function Instructions:renderui()
         row_11:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME3_ROW11)
         row_12:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME3_ROW12)
     elseif self.page == 5  then
+        print(self.page)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.41, y = screen:get_height() * 0.22, w = screen:get_width() * 0.22, h = screen:get_height() * 0.05})
         instructions_subpagename:draw_over_surface(screen, LOCALE.INSTRUCTIONS_PROGRAMMING_GAME)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
@@ -162,6 +169,7 @@ function Instructions:renderui()
         row_11:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME4_ROW11)
         row_12:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME4_ROW12)
     elseif self.page == 6  then
+        print(self.page)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.41, y = screen:get_height() * 0.22, w = screen:get_width() * 0.22, h = screen:get_height() * 0.05})
         instructions_subpagename:draw_over_surface(screen, LOCALE.INSTRUCTIONS_PROGRAMMING_GAME)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() *
@@ -179,6 +187,7 @@ function Instructions:renderui()
         row_11:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME5_ROW11)
         row_12:draw_over_surface(screen,LOCALE.INSTRUCTIONS_PROGRAMMING_GAME5_ROW12)
     elseif self.page == 7  then
+        print(self.page)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.41, y = screen:get_height() * 0.22, w = screen:get_width() * 0.22, h = screen:get_height() * 0.05})
         instructions_subpagename:draw_over_surface(screen, LOCALE.INSTRUCTIONS_TROPHY_ROOM)
         screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.28, w = screen:get_width() * 0.98, h = screen:get_height() * 0.62})
