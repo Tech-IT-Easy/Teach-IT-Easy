@@ -58,7 +58,7 @@ function Network:getProgress(game, name)
   elseif name == "Fnatte" then
       table = {level = 3, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = false, proggGameMasterProc = false }
   elseif name == "Tjatte" then
-      table  = {level = 5, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = true, proggGameMasterProc = false }
+      table  = {level = 8, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = true, proggGameMasterProc = false }
   else
       table = {level = 0, proggGameLoopLevel = false, proggGameProcLevel= false, proggGameIfLevel = false, proggGameMasterProc = false }
   end
