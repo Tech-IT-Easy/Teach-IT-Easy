@@ -20,8 +20,8 @@ local LOCALE = require('i18n.main')
 function TrophyRoom:new()
     local o = TrophyRoom:super()
     --o.totalTrophies = 5
-    --o.sidebuttonfonts = { trophyroom_sidebuttontext1, trophyroom_sidebuttontext2, trophyroom_sidebuttontext3 }
-    --o.inactivesidebuttonfonts = { trophyroom_inactive_sidebuttontext1, trophyroom_inactive_sidebuttontext2, trophyroom_inactive_sidebuttontext3 }
+    o.sidebuttonfonts = { trophyroom_sidebuttontext1, trophyroom_sidebuttontext2, trophyroom_sidebuttontext3 }
+    o.inactivesidebuttonfonts = { trophyroom_inactive_sidebuttontext1, trophyroom_inactive_sidebuttontext2, trophyroom_inactive_sidebuttontext3 }
     return TrophyRoom:init(o)
 end
 
@@ -236,21 +236,21 @@ function TrophyRoom:sidebuttonactive(x1, content)
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding, w = self.innerboxwidth, h = self.innerboxheight })
 
     --get info from tables
-    local text = gfx.new_surface(self.boxwidth, self.boxheight)
-    text:premultiply()
+    --local text = gfx.new_surface(self.boxwidth, self.boxheight)
+    --text:premultiply()
     if (self.done[tostring(content)]) then
-        trophyroom_sidebuttontext:draw_over_surface(text, self.achievementButtons[content][1])
-        screen:copyfrom(text, nil, { x = screen:get_width() * 0.15 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding * 3, w = self.boxwidth, h = self.boxheight })
+        ---trophyroom_sidebuttontext:draw_over_surface(text, self.achievementButtons[content][1])
+        --screen:copyfrom(text, nil, { x = screen:get_width() * 0.15 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding * 3, w = self.boxwidth, h = self.boxheight })
 
-        --self.sidebuttonfonts[x1]:draw_over_surface(screen, self.achievementButtons[x1][1])
+        self.sidebuttonfonts[x1]:draw_over_surface(screen, self.achievementButtons[x1][1])
     else
-        trophyroom_inactive_sidebuttontext:draw_over_surface(text, self.achievementButtons[content][1])
-        screen:copyfrom(text, nil, { x = screen:get_width() * 0.15 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding * 3, w = self.boxwidth, h = self.boxheight })
+        --trophyroom_inactive_sidebuttontext:draw_over_surface(text, self.achievementButtons[content][1])
+        --screen:copyfrom(text, nil, { x = screen:get_width() * 0.15 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding * 3, w = self.boxwidth, h = self.boxheight })
 
 
-        --self.inactivesidebuttonfonts[x1]:draw_over_surface(screen, self.achievementButtons[x1][1])
+        self.inactivesidebuttonfonts[x1]:draw_over_surface(screen, self.achievementButtons[x1][1])
     end
-    text:destroy()
+    --text:destroy()
 end
 
 -------------------------------------
