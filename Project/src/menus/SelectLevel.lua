@@ -84,7 +84,7 @@ function SelectLevel:loadview()
   self.lastpos = 1
   self.username = platformContext.profile.name
 
-  self.unlockedLevels = self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level + 3
+  self.unlockedLevels = self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level + 1
   --self.unlockedLevels = 9
   self.checkImage = gfx.loadpng('data/check.png')
   self.checkImage:premultiply()
