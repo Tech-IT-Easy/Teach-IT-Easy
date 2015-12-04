@@ -35,6 +35,7 @@ return {
     ["MENU_MAIN_TROPHY_ROOM"] = "Trophy room",
     ["MENU_MAIN_INSTRUCTIONS"] = "Instructions",
     ["MENU_MAIN_SETTINGS"] = "Settings",
+
     ["INSTRUCTIONS_MENU_NAVIGATION"] = "Menu Navigation",
     ["INSTRUCTIONS_MENU_NAVIGATION_ROW1"] = "The game is navigated with the arrow buttons on the remote. To select an item press OK.",
     ["INSTRUCTIONS_MENU_NAVIGATION_ROW2"] = "To move back to another menu use the BACK button.",
