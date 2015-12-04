@@ -7,7 +7,7 @@
 --
 
 local Super = require('toolkit.MenuSuperClass')
-Instructions = extends(Super)
+local Instructions = extends(Super)
 
 local Event = require('toolkit.Event')
 local LOCALE = require('i18n.main')
@@ -19,6 +19,7 @@ local LOCALE = require('i18n.main')
 -- @author Erik
 -------------------------------------
 function Instructions:new()
+    print("Instructions created")
     self.page = 1
     self.maxPage = 7
     return self
@@ -33,6 +34,7 @@ end
 function Instructions:handleinput(event)
     collectgarbage()
     self.lastpos = self.pos
+    print("Input recieved")
     if event.key == Event.KEY_BACK then
             return { "main"}
     elseif event.key == Event.KEY_RIGHT then
