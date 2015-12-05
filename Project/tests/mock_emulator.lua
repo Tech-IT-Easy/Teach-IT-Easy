@@ -98,10 +98,11 @@ end
 
 Network.new(Network) ; mec:returns(nil) :anytimes()
 Network.getFirstname(Network,mec.ANYARGS) ; mec:returns("testname") :anytimes()
-Network.getProgress(Network, mec.ANYARGS) ; mec:returns({level = 1, proggGameLoopLevel = false, proggGameProcLevel= false, proggGameIfLevel = false }) :anytimes()
-Network.getLevels(Network, mec.ANYARGS) ; mec:returns({
+Network.getProgress(Network, mec.ANYARGS) ; mec:returns({level = 8, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = true, proggGameMasterProc = false }) :anytimes()
+Network.getLevels(Network, mec.ANYARGS) ; mec:returns(
+    {
         {
-            level = 1, maxCommands = {["queue"] = 8, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "dfffffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 1, levelStartPosition = 33, objectives = {}
+            level = 1, maxCommands = {["queue"] = 8, ["loop"] = 16, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "dfffffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 1, levelStartPosition = 33, objectives = {}
         },
         {
             level = 2, maxCommands = {["queue"] = 8, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffffffffffff9aefffff5fffffff7fffffff", levelGoalPosition = 19, levelStartPosition = 33, objectives = {}
@@ -110,19 +111,19 @@ Network.getLevels(Network, mec.ANYARGS) ; mec:returns({
             level = 3, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "fffffffffffffffff9efffff96ffffff7fffffff", levelGoalPosition = 19, levelStartPosition = 33, objectives = {26}
         },
         {
-            level = 4, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
+            level = 4, maxCommands = {["queue"] = 4, ["loop"] = 0, ["P1"] = 8, ["P2"] = 8, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
         },
         {
             level = 5, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aaaaacf59aaac5f55baa65f53aaaa6f7fffffff", levelGoalPosition = 19, levelStartPosition = 33, objectives = {}
         },
         {
-            level = 6, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
+            level = 6, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "fffffffff9aa8acff5ff5f7ff7ff5fffffff7fff", levelGoalPosition = 26, levelStartPosition = 37, objectives = {23}
         },
         {
-            level = 7, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
+            level = 7, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "fffd9acff9c55f5ff5555f5ff5322a6ff7ffffff", levelGoalPosition = 7, levelStartPosition = 34, objectives = {4,31}
         },
         {
-            level = 8, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
+            level = 8, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9ac9cf9c5f553a655f10ae945f559a653a632aa6", levelGoalPosition = 17, levelStartPosition = 35, objectives = {40,22,14}
         }
 
     }) :anytimes()
