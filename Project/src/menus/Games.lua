@@ -78,10 +78,10 @@ function Games:renderui()
   self.anotherGameImage = gfx.loadpng(anotherGameURL)
   self.proggGameImage:premultiply()
 
-self.gameLogos = {self.proggGameImage
---    self.anotherGameImage,
---    self.anotherGameImage,
---    self.anotherGameImage
+self.gameLogos = {self.proggGameImage,
+    self.proggGameImage,
+    self.proggGameImage,
+    self.proggGameImage
 }
 
     screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() *0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
