@@ -90,7 +90,7 @@ self.gameLogos = {self.proggGameImage,
 
     games_appname:draw_over_surface(screen, LOCALE.APP_NAME)
     games_pagename:draw_over_surface(screen, LOCALE.GAME_CHOOSE)
-    games_username:draw_over_surface(screen, self.usernamestring)
+    games_username:draw_over_surface(screen, PlatformContext.profile.name)
 
     screen:copyfrom(image1, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
 
