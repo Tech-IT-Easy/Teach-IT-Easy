@@ -50,7 +50,7 @@ function UICatchLevelWindow:new()
   window:setFocusView(window.buttons[1])
   window:addChildView(window.menuPanel)
   window:addChildView(window.title)
-  print("new level window")
+
   return UICatchLevelWindow:init(window)
 end
 

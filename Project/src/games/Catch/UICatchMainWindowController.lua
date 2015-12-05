@@ -28,10 +28,7 @@ function UICatchMainWindowController:new(args)
     o.numberOfCorrect = 0
     o.correctChar = o.correctWord:sub(o.numberOfCorrect+1,o.numberOfCorrect+1)
     
-    o.window.correctWord = o.correctWord
-    o.window.wordImage = o.wordImage
-    o.window.correctChar = o.correctChar
-    o.window.moveUnit = o.moveUnit
+    o.window:configure{correctWord=o.correctWord,wordImage=o.wordImage,moveUnit=o.moveUnit}
     o.window:initialize()
   end
   o:initialize()
@@ -75,6 +72,7 @@ function UICatchMainWindowController:onClickEvent(sender)
             if sender.identity=="OK" then
               self.currentLevel = self.currentLevel + 1
               self:initialize()
+              return
             else
               self.game:windowOpen{windowName="levelWindow"}
               return

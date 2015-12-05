@@ -23,37 +23,63 @@ function UICatchMainWindow:new()
   local thiefImage = UIImage:new(THEME.IMAGE.THIEF_BACKGROUND)
   local copImage = UIImage:new(THEME.IMAGE.COP_BACKGROUND)
 
-  -- components
-  window.defaultMoveUnit = 20
-  window.thief = Thief:new{frame=THEME.FRAME.THIEF,image=thiefImage,moveUnit=window.defaultMoveUnit}
-  window.cop = Cop:new{frame=THEME.FRAME.COP,image=copImage,moveUnit=window.defaultMoveUnit,bonusMoveUnit=0}
-
+ -- member components
   window.buttons = {}
   window.words = {}
-window.letters = {
-   "a", "b", "c",
-      "d", "e", "f",
-      "g", "h", "i",
-      "j", "k", "l",
-      "m", "n", "o",
-      "p", "q", "r",
-      "s", "t", "u",
-      "v", "w", "x",
-      "y", "z"
+  window.letters = {
+    "a", "b", "c",
+    "d", "e", "f",
+    "g", "h", "i",
+    "j", "k", "l",
+    "m", "n", "o",
+    "p", "q", "r",
+    "s", "t", "u",
+    "v", "w", "x",
+    "y", "z"
   }
-  -- layouts,left right and bottom
+  
+  -- layout panel components
   local proportion = 0.8
   window.mainPanel = UIPanelView:new{frame={x=0, y = 0,w = screen:get_width()*proportion,h=screen:get_height()*proportion},backgroundImage=gameBackground }
+  window.thief = Thief:new{frame=THEME.FRAME.THIEF,image=thiefImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
+  window.cop = Cop:new{frame=THEME.FRAME.COP,image=copImage,moveUnit=THEME.DEFAULT.MOVE_UNIT,bonusMoveUnit=0}
+  window.mainPanel:addChildView(window.thief)
+  window.mainPanel:addChildView(window.cop)
   window.rightPanel = UIPanelView:new{frame={x=screen:get_width()*proportion,y=0,w=screen:get_width()*(1-proportion),h=screen:get_height()*proportion},backgroundColor=THEME.COLOR.LIGHT_GRAY }
   window.collectionPanel = UICollectionView:new{frame={x=0,y=40,w=screen:get_width()*(1-proportion),h=screen:get_width()*(1-proportion)},space=10,cols=THEME.MENU.COLUMNS,rows=THEME.MENU.ROWS,backgroundColor=THEME.COLOR.LIGHT_GRAY}
+  window.wordImageView = UIImageView:new{image=nil,frame={x=10,y=window.rightPanel.frame.w+80,w=window.rightPanel.frame.w-40,h=window.rightPanel.frame.w-40}}
   window.rightPanel:addChildView(window.collectionPanel)
+  window.rightPanel:addChildView(window.wordImageView)
   window.bottomPanel = UIPanelView:new{frame={x=0, y = screen:get_height()*proportion,w=screen:get_width(),h=screen:get_height() * (1-proportion)},backgroundColor=THEME.COLOR.DARK_GRAY}
-
   window:addChildView(window.mainPanel)
   window:addChildView(window.rightPanel)
   window:addChildView(window.bottomPanel)
-
+  
+  
+  -- layout right menu
+  local textAlignCenterPosition = {x=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2,y=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2}
+  local labels = {}
+  local cells = {}
+  for i = 1, THEME.MENU.ROWS do
+    for j = 1, THEME.MENU.COLUMNS do
+      local index = (i-1) * THEME.MENU.ROWS + j
+        labels[index] = UILabel:new{text='-',color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
+        window.buttons[index] = UIButtonView:new{identity="button"..i,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=labels[index],labelPosition=textAlignCenterPosition}
+        cells[index] = UICollectionCellView:new{view=window.buttons[index],viewType="UIButtonView" }
+        window:setShortcutKey(window.buttons[index], Event.formatSystemKey[""..index])
+        window:setFocusWeight{view=window.buttons[index], hWeight=1, vWeight=1}
+        window.collectionPanel:fillWithCell(cells[index],i-1,j-1)
+    end
+  end
+  window:setFocusView(window.buttons[1]) --Chuck's Magic number :) Dont blame Daniel.
+  
+ 
   return UICatchMainWindow:init(window)
+end
+function UICatchMainWindow:configure(args)
+   self.correctWord = args.correctWord
+    self.wordImage = UIImage:new(args.wordImage)
+    self.moveUnit = args.moveUnit or THEME.DEFAULT.MOVE_UNIT
 end
 
 function UICatchMainWindow:initialize()
@@ -97,9 +123,8 @@ function UICatchMainWindow:updateWindowWords(number)
 end
 
 function UICatchMainWindow:updateMenuLabels(correctChar)
-  self.correctChar = correctChar
+  self.correctChar = correctChar 
   self:generateRandomCharacters()
-
   for i = 1, THEME.MENU.ROWS do
     for j = 1, THEME.MENU.COLUMNS do
       local index = (i-1) * THEME.MENU.ROWS + j
@@ -111,30 +136,8 @@ function UICatchMainWindow:updateMenuLabels(correctChar)
 end
 
 function UICatchMainWindow:setMenu()
-  -- initialize right menu
-  
-  local textAlignCenterPosition = {x=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2,y=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2}
-  local labels = {}
-  local cells = {}
-  
-  self:generateRandomCharacters()
-  assert(self.characters,"UICatchMainWindow:setMenu(),self.characters is nil")
-  for i = 1, THEME.MENU.ROWS do
-    for j = 1, THEME.MENU.COLUMNS do
-      local index = (i-1) * THEME.MENU.ROWS + j
-      if self.buttons[index]~=nil and self.buttons[index].label~=nil then
-        self.buttons[index].label.text = self.characters[index]
-      else
-        labels[index] = UILabel:new{text=self.characters[index],color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
-        self.buttons[index] = UIButtonView:new{identity="button"..i,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=labels[index],labelPosition=textAlignCenterPosition}
-        cells[index] = UICollectionCellView:new{view=self.buttons[index],viewType="UIButtonView" }
-        self:setShortcutKey(self.buttons[index], Event.formatSystemKey[""..index])
-        self:setFocusWeight{view=self.buttons[index], hWeight=1, vWeight=1}
-        self.collectionPanel:fillWithCell(cells[index],i-1,j-1)
-      end
-    end
-  end
-  self:setFocusView(self.buttons[1]) --Chuck's Magic number :) Dont blame Daniel.
+  local correctChar = self.correctWord:sub(1,1)
+  self:updateMenuLabels(correctChar)
 end
 
 
@@ -148,15 +151,11 @@ end
 function UICatchMainWindow:setPlayers()
   assert(self.correctWord,"UICatchMainWindow:setGuessWordBox, self.correctWord is nil")
   -- initialize players
-  local a = {}
-  a = THEME.FRAME.THIEF
   self.thief:setFrame(copy(THEME.FRAME.THIEF))
-  self.thief.moveUnit = self.moveUnit or self.defaultMoveUnit
+  self.thief.moveUnit = self.moveUnit
   self.cop:setFrame(copy(THEME.FRAME.COP))
-  self.thief.moveUnit = self.moveUnit or self.defaultMoveUnit
+  self.thief.moveUnit = self.moveUnit
   self.cop.bonusMoveUnit = (self.thief.frame.x - self.cop.frame.x) / string.len(self.correctWord)
-  self.mainPanel:addChildView(self.thief)
-  self.mainPanel:addChildView(self.cop)
 end
 
 function UICatchMainWindow:setGuessWordBox()
@@ -164,6 +163,7 @@ function UICatchMainWindow:setGuessWordBox()
   local count = string.len(self.correctWord)
   local boxesLength = (THEME.FRAME.RECTANGLE.w + THEME.FRAME.RECTANGLE.x) * (count-1) + THEME.FRAME.RECTANGLE.w
   local startX = (self.bottomPanel.frame.w - boxesLength) / 2
+  self.bottomPanel:emptyChildView()
   for i =1,count do
     self.words[i] = UIRectangleView:new{frame={x=THEME.FRAME.RECTANGLE.w*i + startX,y=THEME.FRAME.RECTANGLE.y,w=THEME.FRAME.RECTANGLE.w,h=THEME.FRAME.RECTANGLE.h},borderColor=THEME.COLOR.LIGHT_BLUE,borderWidth = THEME.MENU.BORDER_WIDTH}
     self.bottomPanel:addChildView(self.words[i])
@@ -172,9 +172,7 @@ end
 
 function UICatchMainWindow:setGuessImage()
   assert(self.wordImage,"UICatchMainWindow:setGuessImage, self.wordImage is nil")
-  local wordImage = UIImage:new(self.wordImage)
-  self.wordImageView = UIImageView:new{image=wordImage,frame={x=10,y=self.rightPanel.frame.w+80,w=self.rightPanel.frame.w-40,h=self.rightPanel.frame.w-40}}
-  self.rightPanel:addChildView(self.wordImageView)
+  self.wordImageView:setImage(self.wordImage)
 end
 
 return UICatchMainWindow
