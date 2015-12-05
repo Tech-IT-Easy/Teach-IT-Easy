@@ -14,6 +14,7 @@ function UIWindowView:new(args)
   --@member window toolbar, for future development
   --o.toolbar = UIToolBar:new(nil)
   --@member window body which is a blank panel filling with whole window
+  
   o.body = UIPanelView:new{container=o,frame={x=0,y=0,w=o.frame.w,h=o.frame.h},backgroundImage = args.backgroundImage,backgroundColor=args.backgroundColor}--[[frame=frame-o.toolbar.frame]]--
   --@member delegate for events process
   --o.footbarHeight = args.footbarHeight or 20
@@ -22,6 +23,7 @@ function UIWindowView:new(args)
   o.verticalFocusConfig = List:new()
   o.shortcuts = {}
   o.focusingView = nil
+  o.enterEnable = true
   return UIWindowView:init(o)
 end
 
@@ -72,6 +74,10 @@ end
 function UIWindowView:setFocusView(view)
   assert(view,"UIWindowView:setFocusView(view),error: view is nil")
   assert(self.horizontalFocusConfig.currentNode or self.verticalFocusConfig.currentNode,"UIWindowView:setFocusView(view),error: never set any weight with setFocusWeight method")
+  
+  if self.focusingView then
+    self.focusingView:unFocused()
+  end
   local node = ListNode:new{view=view,focusWeight=nil}
   
   if self.horizontalFocusConfig.current then
@@ -82,7 +88,7 @@ function UIWindowView:setFocusView(view)
     self.verticalFocusConfig:setCurrentNode(node,compareView)
   end 
   
-  self.focusingView = self.horizontalFocusConfig:currentNode().view
+  self.focusingView = view--self.horizontalFocusConfig:currentNode().view
   
   ADLogger.trace("UIWindowView:setFocusView(view)")
 end

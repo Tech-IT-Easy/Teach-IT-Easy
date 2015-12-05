@@ -38,24 +38,25 @@ function UIWindowViewController:process(listener,event)
   elseif event.key == Event.KEY_DOWN and event.state == Event.KEY_STATE_DOWN then
     self.window:moveToDownFocus()
   elseif event.key == Event.KEY_OK and event.state == Event.KEY_STATE_DOWN then
-    local sender = self.window.focusingView
-    if sender then
-      self:onClickEvent(sender)
-      local identity = sender.identity
-      if identity and sender.delegate and sender.delegate[identity.."_OnClickEvent"] then
-        sender.delegate[identity.."_OnClickEvent"]()
+    if self.window.enterEnable == true then
+      local sender = self.window.focusingView
+      if sender then
+        self:onClickEvent(sender)
+        local identity = sender.identity
+        if identity and sender.delegate and sender.delegate[identity.."_OnClickEvent"] then
+          sender.delegate[identity.."_OnClickEvent"]()
+        end
       end
     end
   elseif event.state == Event.KEY_STATE_DOWN then
     -- if there is shortcut key then make a click event 
- 
     local isKey = self.window:moveTofocusByKey(event.key)
     if isKey then
       local sender = self.window.focusingView
       self:onClickEvent(sender)
     end
-    print("listener count:"..#listener.observers)
   end
+  self:onKeyEvent(event)
 end
 function UIWindowViewController:onKeyEvent(event)
   -- subclass can implemented this as customer
