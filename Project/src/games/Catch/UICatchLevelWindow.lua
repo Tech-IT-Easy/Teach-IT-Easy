@@ -44,7 +44,6 @@ function UICatchLevelWindow:new()
         cells[index] = UICollectionCellView:new{view=window.buttons[index],viewType="UIButtonView" }
         window:setFocusWeight{view=window.buttons[index], hWeight=index, vWeight=i}
         window.collectionPanel:fillWithCell(cells[index],i-1,j-1)
-      print(index.." = index")
     end
   end
   window:setFocusView(window.buttons[1])
