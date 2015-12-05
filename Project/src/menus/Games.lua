@@ -93,7 +93,7 @@ self.gameLogos = {self.proggGameImage,
     games_pagename:draw_over_surface(screen, LOCALE.GAME_CHOOSE)
     games_username:draw_over_surface(screen, PlatformContext.profile.name)
 
-    screen:copyfrom(image1, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+    --screen:copyfrom(image1, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
 
     self:buttonactive(1)
     for i = 2, #self.games, 1 do
