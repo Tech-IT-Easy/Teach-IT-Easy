@@ -151,9 +151,9 @@ function test_execute_queue_2()
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
 
-    leveldata[4].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
+    leveldata[5].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
 
-    local bottommenu = test:new(leveldata[4],context_sim)
+    local bottommenu = test:new(leveldata[5],context_sim)
     local test_event
     local bm_queue
     local test_command
