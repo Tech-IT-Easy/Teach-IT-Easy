@@ -17,7 +17,7 @@ function UICollectionView:new(args)
   --@member cols
   o.cols = args.cols
   --@member background color default {r=0,g=255,b=255}
-  o.backgroundColor = args.backgroundColor or {r=0,g=255,b=255}
+  o.backgroundColor = args.backgroundColor-- or {r=0,g=255,b=255}
   --@member cell size calculated automatically
   o.cell = {
     width = (o.frame.w-(o.cols-1)*o.space)/o.cols,
@@ -51,8 +51,9 @@ end
 
 function UICollectionView:show()
   -- draw background
-  screen:clear(self.backgroundColor, self.globalFrame)
-  
+  if self.backgroundColor then
+    screen:clear(self.backgroundColor, self.globalFrame)
+  end
   -- draw cells
   for i = 0,self.rows do
     for j = 0,self.cols do

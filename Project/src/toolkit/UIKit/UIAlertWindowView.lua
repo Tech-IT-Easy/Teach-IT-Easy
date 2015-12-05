@@ -22,9 +22,9 @@ function UIAlertWindowView:new(args)
   local titleLabel = UILabel:new{text=args.title,color=COLOR.RED,size=20,font=UILabel.FONT_GROBOLD}
   window.titleLabelView = UILabelView:new{frame={x=0,y=0,w=200,h=80},label=titleLabel}
   
-  local OKLabel = UILabel:new{text="OK",color=COLOR.DARK_GRAY,size=20,font=UILabel.FONT_GROBOLD}
+  local OKLabel = UILabel:new{text=args.OK or "OK",color=COLOR.DARK_GRAY,size=20,font=UILabel.FONT_GROBOLD}
   window.OKButton = UIButtonView:new{identity="OK",enableFocus = true,frame={x=120,y=1,w=80,h=30},borderWidth = 2,label=OKLabel,labelPosition={x=10,y=5}}
-  local CancelLabel = UILabel:new{text="Cancel",color=COLOR.DARK_GRAY,size=20,font=UILabel.FONT_GROBOLD}
+  local CancelLabel = UILabel:new{text=args.Cancel or "Cancel",color=COLOR.DARK_GRAY,size=20,font=UILabel.FONT_GROBOLD}
   window.CancelButton = UIButtonView:new{identity="Cancel",enableFocus = true,frame={x=20,y=1,w=80,h=30},borderWidth = 2,label = CancelLabel,labelPosition={x=10,y=5}}
   
   -- create layout view to organization them

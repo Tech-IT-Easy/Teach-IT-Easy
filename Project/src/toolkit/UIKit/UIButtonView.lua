@@ -141,7 +141,23 @@ end
 function UIButtonView:unFocused()
   self.isFocused = false
 end
+--[[
+function UIButtonView:setLabel(label,position)
+  self.label = label
+  self.labelPosition = position or {x=0,y=0}
+  self:updateLabelPosition()
+end
 
+function UIButtonView:updateLabelPosition()
+  if self.label then
+    self.labelAbsolutePosition = {
+      x = self.globalFrame.x + self.labelPosition.x,
+      y = self.globalFrame.y + self.labelPosition.y
+    }
+    self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,self.label.font)
+  end
+end
+]]--
 -----------------------------------
 --@ delegate 
 -----------------------------------

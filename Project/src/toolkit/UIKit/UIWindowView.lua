@@ -107,7 +107,9 @@ function UIWindowView:moveTofocusByKey(key)
     self.horizontalFocusConfig:setCurrentNode(node,compareView)
     self.verticalFocusConfig:setCurrentNode(node,compareView)
     ADLogger.trace("UIWindowView:moveTofocusByKey("..key..")")
+    return true
   end
+  return false
 end
 
 function UIWindowView:show()
