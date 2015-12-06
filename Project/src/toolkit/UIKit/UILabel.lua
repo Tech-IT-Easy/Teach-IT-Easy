@@ -11,6 +11,7 @@ UILabel.FONT_GROBOLD = 'data/GROBOLD.ttf'
 
 function UILabel:new(args)
   local o = UILabel:super()
+  o.identity = args.identity
   --@memeber text string e.g. "label"
   o.text = args.text
   --@member color e.g. {r=2,g=2,b=2}

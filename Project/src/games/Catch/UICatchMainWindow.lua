@@ -44,14 +44,14 @@ function UICatchMainWindow:new()
   window.mainPanel = UIPanelView:new{frame={x=0, y = 0,w = screen:get_width()*proportion,h=screen:get_height()*proportion},backgroundImage=window.gameBackground }
   window.thief = People:new{frame=THEME.FRAME.THIEF,image=window.thiefImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
   window.cop = People:new{frame=THEME.FRAME.COP,image=window.copImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
-  window.tryCountLabelView = UILabelView:new{identity="tryCountLabel",frame={x=20,y=20,w=0,h=0},label=UILabel:new{text="20 / 20",color=THEME.COLOR.WHITE,size=30,font=UILabel.FONT_GROBOLD}}
+  window.tryCountLabelView = UILabelView:new{identity="tryCountLabel",frame={x=20,y=20,w=0,h=0},label=UILabel:new{identity="20 / 20",text="20 / 20",color=THEME.COLOR.WHITE,size=30,font=UILabel.FONT_GROBOLD}}
   window.mainPanel:addChildView(window.thief)
   window.mainPanel:addChildView(window.cop)
   window.mainPanel:addChildView(window.tryCountLabelView)
   window.rightPanel = UIPanelView:new{frame={x=screen:get_width()*proportion,y=0,w=screen:get_width()*(1-proportion),h=screen:get_height()*proportion},backgroundColor=THEME.COLOR.LIGHT_GRAY }
   window.collectionPanel = UICollectionView:new{frame={x=0,y=80,w=screen:get_width()*(1-proportion),h=screen:get_width()*(1-proportion)},space=10,cols=THEME.MENU.COLUMNS,rows=THEME.MENU.ROWS,backgroundColor=THEME.COLOR.LIGHT_GRAY}
   window.wordImageView = UIImageView:new{image=nil,frame={x=10,y=window.collectionPanel.frame.h+100,w=window.rightPanel.frame.w-40,h=window.rightPanel.frame.w-40}}
-  window.levelLabelView = UILabelView:new{identity="levelLabel",frame={x=25,y=10,w=0,h=0},label=UILabel:new{text="LEVEL 1",color=THEME.COLOR.WHITE,size=50,font=UILabel.FONT_GROBOLD}}
+  window.levelLabelView = UILabelView:new{identity="levelLabel",frame={x=25,y=10,w=0,h=0},label=UILabel:new{identity="LEVEL 1",text="LEVEL 1",color=THEME.COLOR.WHITE,size=50,font=UILabel.FONT_GROBOLD}}
   
   window.rightPanel:addChildView(window.collectionPanel)
   window.rightPanel:addChildView(window.wordImageView)
@@ -70,7 +70,7 @@ function UICatchMainWindow:new()
   for i = 1, THEME.MENU.ROWS do
     for j = 1, THEME.MENU.COLUMNS do
       local index = (i-1) * THEME.MENU.ROWS + j
-        window.labels[index] = UILabel:new{text='-',color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
+        window.labels[index] = UILabel:new{identity="menuRow"..i.."Col"..j,text='-',color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
         window.buttons[index] = UIButtonView:new{identity="button"..index,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=window.labels[index],labelPosition=textAlignCenterPosition}
         window.cells[index] = UICollectionCellView:new{view=window.buttons[index],viewType="UIButtonView" }
         window:setShortcutKey(window.buttons[index], Event.formatSystemKey[""..index])
@@ -120,13 +120,8 @@ function UICatchMainWindow:generateRandomCharacters()
 end
 
 function UICatchMainWindow:updateWindowWords(number)
-  if self.words[number] then
-    local borderWidth = 4
-    local RectangleSize = self.words[number].frame.w - 2*borderWidth
-    local fontSize=50
-    local textAlignCenterPosition = {x=(RectangleSize-fontSize)/2,y=(RectangleSize-fontSize)/2}
-    local textlabel = UILabel:new{text=self.correctWord:sub(number,number),color=THEME.COLOR.DARK_GRAY,size=50,font=UILabel.FONT_GROBOLD}
-    self.words[number]:setLabel(textlabel,textAlignCenterPosition)
+  if self.words[number] and self.words[number].label then
+    self.words[number].label.text = self.correctWord:sub(number,number)
   end
 end
 
@@ -160,8 +155,6 @@ end
 function UICatchMainWindow:setPlayers()
   --assert(self.correctWord,"UICatchMainWindow:setGuessWordBox, self.correctWord is nil")
   -- initialize players
-  
-  
   self.thief:setFrame(copy(THEME.FRAME.THIEF))
   self.cop:setFrame(copy(THEME.FRAME.COP))
   self.moveUnit = (self.mainPanel.frame.w - self.thief.frame.x - self.thief.frame.w) / self.maxNumberOfGuesses
@@ -173,12 +166,17 @@ end
 function UICatchMainWindow:setGuessWordBox()
   assert(self.characters,"UICatchMainWindow:setGuessWordBox, self.characters is nil")
   local count = string.len(self.correctWord)
-  print(count)
   local boxesLength = (THEME.WORDBOX.RECTANGLE_SIZE + THEME.WORDBOX.RECTANGLE_SPACE) * (count-1) + THEME.WORDBOX.RECTANGLE_SIZE
   local startX = (self.bottomPanel.frame.w - boxesLength) / 2
   self.bottomPanel:emptyChildView()
-  for i =1,count do
-    self.words[i] = UIRectangleView:new{frame={x=startX + THEME.WORDBOX.RECTANGLE_SIZE*(i-1),y=THEME.FRAME.RECTANGLE.y,w=THEME.FRAME.RECTANGLE.w,h=THEME.FRAME.RECTANGLE.h},borderColor=THEME.COLOR.LIGHT_BLUE,borderWidth = THEME.MENU.BORDER_WIDTH}
+  local borderWidth = 4
+  local fontSize=50
+  local RectangleSize = THEME.FRAME.RECTANGLE.w - 2 * THEME.MENU.BORDER_WIDTH
+  local textAlignCenterPosition = {x=(RectangleSize-fontSize)/2,y=(RectangleSize-fontSize)/2}
+  self.wordlabel = {}
+  for i = 1,count do
+    self.wordlabel[i] = UILabel:new{identity="mainWindowChar"..i, text=" ",color=THEME.COLOR.DARK_GRAY,size=fontSize,font=UILabel.FONT_GROBOLD}
+    self.words[i] = UIRectangleView:new{label=self.wordlabel[i],identity="setGuessWordBox"..i,frame={x=startX + THEME.WORDBOX.RECTANGLE_SIZE*(i-1),y=THEME.FRAME.RECTANGLE.y,w=THEME.FRAME.RECTANGLE.w,h=THEME.FRAME.RECTANGLE.h},borderColor=THEME.COLOR.LIGHT_BLUE,borderWidth = THEME.MENU.BORDER_WIDTH}
     self.bottomPanel:addChildView(self.words[i])
   end
 end
@@ -189,6 +187,7 @@ function UICatchMainWindow:setGuessImage()
 end
 
 function UICatchMainWindow:updateLevelText(currentLevel)
+  self.levelLabelView.label.identity = "LEVEL "..currentLevel
   self.levelLabelView.label.text = "LEVEL "..currentLevel
 end
 

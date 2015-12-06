@@ -1,15 +1,13 @@
+SystemFreeType = require("toolkit.UIKit.UISystemFreeType")
 local UIView = require("toolkit.UIKit.UIView")
 local UIRectangleView = extends(UIView)
 
-local script_path = nil
-if ADConfig.isSimulator then
-  script_path = ""
-else
-  script_path = sys.root_path()
-end
+
 
 function UIRectangleView:new(args)
   local o = UIRectangleView:super{frame=args.frame,container=args.container}
+  assert(args.identity,"UIRectangleView:new(args):identity is nil")
+  o.identity = args.identity
   --@member background color {r=2,g=2,b=3}
   o.backgroundColor = args.backgroundColor or {r=255,g=255,b=255}
   --@member background image.Type of UIImage
@@ -37,7 +35,7 @@ function UIRectangleView:new(args)
       x = o.globalFrame.x + o.labelPosition.x,
       y = o.globalFrame.y + o.labelPosition.y
     }
-    o.labelData = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,script_path..o.label.font)
+    
   end
   return UIRectangleView:init(o)
 end
@@ -64,7 +62,6 @@ function UIRectangleView:updateLabelPosition()
       x = self.globalFrame.x + self.labelPosition.x,
       y = self.globalFrame.y + self.labelPosition.y
     }
-    self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,script_path..self.label.font)
   end
 end
 -- show the button on specific position
@@ -98,8 +95,8 @@ function UIRectangleView:show()
   -- end draw background image
 
   -- draw text,
-  if self.label and self.labelData then
-    self.labelData:draw_over_surface(screen, self.label.text)
+  if self.label and self.labelAbsolutePosition then
+    SystemFreeType:drawLabel(self.label,self.labelAbsolutePosition)
   end
   -- end draw text
 end
