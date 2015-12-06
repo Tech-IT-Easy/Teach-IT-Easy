@@ -35,6 +35,10 @@ local function verify_mock(mc)
   end
 end
 
+function setup()
+    clear_mock()
+end
+
 -------------------------------------
 -- Testing that the getPosition returns a correct
 -- number for a command

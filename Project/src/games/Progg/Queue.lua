@@ -18,8 +18,9 @@ function Queue:new(newBottomMenu, newBuildArea, maxCommands)
   o.ifTrueActions = {}
   o.ifFalseActions = {}
   o.maxCommands = maxCommands
-  o.loopCounter = 2
+  o.loopCounter = {}
   o.INFINITY = 999
+  o.loopPointer = 0
   -- @member bottomMenu:BottomMenu
   if newBottomMenu ~= nil then o.bottomMenu = newBottomMenu end
   -- @member buildArea:BuildArea
@@ -35,15 +36,27 @@ end
 -- @author Ludwig Wikblad
 -------------------------------------
 function Queue:push(action, queueType)
+    print(self.loopPointer)
   if queueType == "queue" or queueType == nil then
     if  queueType == nil or self.maxCommands[queueType] > #self.actions then
         table.insert(self.actions,action)
-        if self.bottomMenu ~= nil then self.bottomMenu:setQueue(self) end
+        if(action=="loop")then
+          table.insert(self.loopActions,{})
+          self.loopPointer = self.loopPointer+1
+        end
+        if self.bottomMenu ~= nil then 
+          self.bottomMenu:setQueue(self) 
+        end
     end
   elseif queueType == "loop" then
     if self.maxCommands[queueType] > #self.loopActions and self:containsRecursion(action, self.loopActions, queueType) == false then
-        table.insert(self.loopActions,action)
-        if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions, queueType) end
+        print("#loopActions ="..#self.loopActions)
+        print(self.loopActions[self.loopPointer])
+        for i=1, #self.loopActions do
+            print(self.loopActions[i])
+        end
+        table.insert(self.loopActions[self.loopPointer],action)
+        if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions[self.loopPointer], queueType) end
     end
   elseif queueType == "P1" then
     if self.maxCommands[queueType] > #self.p1Actions and self:containsRecursion(action, self.p1Actions, queueType) == false then
@@ -89,7 +102,46 @@ end
 -- @author Ludwig Wikblad
 ----------------------------------------------------------------
 function Queue:setPosition(currentPos, goalPos)
-  self.actions[currentPos], self.actions[goalPos] = self.actions[goalPos], self.actions[currentPos]
+
+  -- When switching places of loops they must be switched in the table that contains all the loops as well.
+  -- firstLoop and secondLoop keeps track of where in self.loopActions the loops are
+  local firstLoop = 0
+      for i = currentPos, 0, -1 do
+          if self.actions[i] == "loop" then
+              firstLoop = firstLoop + 1
+          end
+      end
+  local secondLoop = 0
+      for i = goalPos, 0, -1 do
+          if self.actions[i] == "loop" then
+              secondLoop = secondLoop + 1
+          end
+      end
+
+  if(self.actions[currentPos]=="loop" and self.actions[goalPos]=="loop")then
+      table.insert(self.loopActions, secondLoop, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, secondLoop, table.remove(self.loopCounter, firstLoop))
+  elseif self.actions[currentPos]=="loop" then
+    if firstLoop > secondLoop then
+      table.insert(self.loopActions, secondLoop + 1, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, secondLoop + 1, table.remove(self.loopCounter, firstLoop))
+    elseif secondLoop == #self.loopActions then
+      table.insert(self.loopActions, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, table.remove(self.loopCounter, firstLoop))
+    else
+      table.insert(self.loopActions, secondLoop, table.remove(self.loopActions, firstLoop))
+      table.insert(self.loopCounter, secondLoop, table.remove(self.loopCounter, firstLoop))
+    end
+  end
+
+  if currentPos > goalPos then
+    table.insert(self.actions, goalPos, table.remove(self.actions, currentPos))
+  elseif goalPos == #self.actions then
+    table.insert(self.actions, table.remove(self.actions, currentPos))
+  else
+    table.insert(self.actions, goalPos, table.remove(self.actions, currentPos))
+  end
+
 end
 
 
@@ -108,7 +160,7 @@ function Queue:getExecutionQueue()
   end
   if self.loopActions ~= nil then
     for i = 1, #self.loopActions do
-      table.insert(executionQueue.loopActions, i, self.loopActions[#self.loopActions - i + 1])
+      table.insert(executionQueue.loopActions, i, self.loopActions[i])
     end
   end
   if self.p1Actions ~= nil then
@@ -144,10 +196,15 @@ function Queue:clearAll(queueType)
     for i=1, #self.actions do
         table.remove(self.actions)
     end
+    self.loopActions = {}
+    self.loopCounter = {}
+    self.loopPointer = 0
   elseif queueType == "loop" then
-    for i=1, #self.loopActions do
-        table.remove(self.loopActions)
+    for i=1, #self.loopActions[self.loopPointer] do
+        table.remove(self.loopActions[self.loopPointer])
     end
+
+    if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions[self.loopPointer], queueType) end
   elseif queueType == "P1" then
     for i=1, #self.p1Actions do
         table.remove(self.p1Actions)
@@ -188,9 +245,9 @@ function Queue:containsRecursion(action, Queue, queueType)
 --    return false
 --  else
 
-    if action == "loop" or action == "P1" or action == "P2" then --Remove when method calls are allowed
+    if action == "loop" or action == "P1"or action == "P2" then --Remove when method calls are allowed
     print("Calling a method from a method is not allowed yet") --Remove when method calls are allowed
-    return true --Remove when method calls are allowed
+    return false --Remove when method calls are allowed
 
 --    for i = 1, #Queue do
 --      if Queue[i] == action then

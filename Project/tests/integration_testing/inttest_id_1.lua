@@ -11,45 +11,50 @@ module( "inttest_id_1", package.seeall, lunit.testcase )
 
 local SUT_1 = 'games.Progg.Queue'
 local SUT_2 = 'games.Progg.Commands'
-local SUT_3 = 'games.Progg.BottomMenu'
 
-local function create_mock(class_to_mock)
-  -- unload the package if loaded to dissmiss previous mocks
-  package.loaded[class_to_mock] = nil
-  package.preload[class_to_mock] = nil
-  -- import lemock
-  local lemock = require 'lemock'
-  -- initiate mock controller
-  local mc = lemock.controller()
-  return mc
-end
-
-local function verify_mock(mc)
-  local status, err = pcall(function ()
-    -- Verify that the mocks has been called as stated.
-    mc:verify()
-  end)
-  if err then -- if error fail the test.
-    fail(err)
-  end
-end
+--local function create_mock(class_to_mock)
+--  -- unload the package if loaded to dissmiss previous mocks
+--  package.loaded[class_to_mock] = nil
+--  package.preload[class_to_mock] = nil
+--  -- import lemock
+--  local lemock = require 'lemock'
+--  -- initiate mock controller
+--  local mc = lemock.controller()
+--  return mc
+--end
+--
+--local function verify_mock(mc)
+--  local status, err = pcall(function ()
+--    -- Verify that the mocks has been called as stated.
+--    mc:verify()
+--  end)
+--  if err then -- if error fail the test.
+--    fail(err)
+--  end
+--end
+--
+--function setup()
+--
+--end
+--
+--function teardown()
+--  package.loaded['games.Progg.Queue'] = nil
+--  package.preload['games.Progg.Queue'] = nil
+--end
 
 function setup()
-
+    clear_mock()
 end
 
-function teardown()
-  package.loaded['games.Progg.Queue'] = nil
-  package.preload['games.Progg.Queue'] = nil
-end
-
+-------------------------------------
+-- Test if commands can be added to the queue, in the right order
+-- @system_under_test: Queue:push(action, queueType), Commands
+-- @author name: Andreas
+-------------------------------------
 function test_command_queue()
     local a = require(SUT_1)
     local b = require(SUT_2)
-    local c = require(SUT_3)
 
-
-    local bottommenu = c:new()
     local queue = a:new(nil, nil, {["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 })
     local commands = b:new()
 
@@ -89,16 +94,16 @@ function test_command_queue()
     lunit.assert_equal(commands.LOOP, queue.actions[5], "Did not get the right value from the queue")
 
     queue:push(commands.MOVE, "loop")
-    lunit.assert_equal(commands.MOVE, queue.loopActions[1], "Did not get the right value from the queue")
+    lunit.assert_equal(commands.MOVE, queue.loopActions[1][1], "Did not get the right value from the queue")
 
     queue:push(commands.MOVE, "loop")
-    lunit.assert_equal(commands.MOVE, queue.loopActions[2], "Did not get the right value from the queue")
+    lunit.assert_equal(commands.MOVE, queue.loopActions[1][2], "Did not get the right value from the queue")
 
     queue:push(commands.TURN_LEFT, "loop")
-    lunit.assert_equal(commands.TURN_LEFT, queue.loopActions[3], "Did not get the right value from the queue")
+    lunit.assert_equal(commands.TURN_LEFT, queue.loopActions[1][3], "Did not get the right value from the queue")
 
     queue:push(commands.TURN_RIGHT, "loop")
-    lunit.assert_equal(commands.TURN_RIGHT, queue.loopActions[4], "Did not get the right value from the queue")
+    lunit.assert_equal(commands.TURN_RIGHT, queue.loopActions[1][4], "Did not get the right value from the queue")
 
     queue:push(commands.MOVE, "queue")
     lunit.assert_equal(commands.MOVE, queue.actions[6], "Did not get the right value from the queue")

@@ -61,4 +61,4 @@ require "toolkit.MenuSuperClass"
 --require "toolkit.Network"
 require "toolkit.Object"
 
-require "main"
+--require "main"

@@ -1,9 +1,8 @@
--- MainMenu = {} --MenuView:new()
--- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
 local MainMenu = extends(Super)
-
 local Event = require('toolkit.Event')
+local LOCALE = require('i18n.main')
+
 -------------------------------------
 -- Creates the Main menu.
 -- @return self. The created menu-object.
@@ -35,11 +34,13 @@ function MainMenu:handleinput(event)
     elseif event.key == Event.KEY_LEFT and self.pos > 0 and self.pos < 4 then
         self.pos = 0
     elseif event.key == Event.KEY_OK and self.pos == 0 then
-        return { "games", self.usernamestring }
+        return { "games" }
     elseif event.key == Event.KEY_OK and self.pos == 1 then
-        return { "trophy", self.usernamestring }
+        return { "trophy" }
     elseif event.key == Event.KEY_OK and self.pos == 2 then
-        return { "instructions", self.usernamestring }
+        return { "instructions"}
+    elseif event.key == Event.KEY_OK and self.pos == 3 then
+        return { "settings"}
 
     elseif event.key == Event.KEY_BACK then
         return { "profilesel" }
@@ -71,11 +72,11 @@ end
 -- @param input:String the username
 -- @author Erik
 -------------------------------------
-function MainMenu:loadview(input)
+function MainMenu:loadview()
     self.pos = 0
     self.lastpos = self.pos
-    self.sidebuttons = { "Trophy room", "Instructions", "Settings" }
-    self.usernamestring = input
+    self.sidebuttons = { LOCALE.MENU_MAIN_TROPHY_ROOM, LOCALE.MENU_MAIN_INSTRUCTIONS, LOCALE.MENU_MAIN_SETTINGS}
+    self.usernamestring = platformContext.profile.name
     --self:printbackground()
     self:renderui()
 end
@@ -93,12 +94,12 @@ end
 
 -------------------------------------
 -- Prints content on screen.
--- @author Erik
+-- @author Erik, Adam
 -------------------------------------
 function MainMenu:renderui()
 
-    main_menu_appname:draw_over_surface(screen, "TEACH IT EASY")
-    main_menu_pagename:draw_over_surface(screen, "MAIN MENU")
+    main_menu_appname:draw_over_surface(screen, LOCALE.APP_NAME)
+    main_menu_pagename:draw_over_surface(screen, LOCALE.MENU_MAIN)
     main_menu_username:draw_over_surface(screen, platformContext.profile.name)
 
     local avatarImageUrl = platformContext.profile.avatar
@@ -107,12 +108,10 @@ function MainMenu:renderui()
     local trophyRoomImageInactive="data/trophyinactive.png"
     local SettingsMenuImageActive="data/settings_active.png"
     local SettingsMenuImageInactive="data/settings_inactive.png"
+    local InstructionsMenuImageActive="data/instructions_active.png"
+    local InstructionsMenuImageInactive="data/instructions_inactive.png"
 
-    local InstructionsMenuImageActive="data/MysteryPicture.png"
-    local InstructionsMenuImageInactive="data/MysteryPicture.png"
-
-
-    local avatarImage = gfx.loadpng(avatarImageUrl)
+    self.avatarImage = gfx.loadpng(avatarImageUrl)
 
     local TrophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
     local TrophyRoomImageInactiveImage = gfx.loadpng(trophyRoomImageInactive)
@@ -121,7 +120,8 @@ function MainMenu:renderui()
 
     local InstructionsActiveImage = gfx.loadpng(InstructionsMenuImageActive)
     local InstructionsInactiveImage = gfx.loadpng(InstructionsMenuImageInactive)
-    avatarImage:premultiply()
+    self.avatarImage:premultiply()
+
     TrophyRoomImageActiveImage = gfx.loadpng(trophyRoomImageActive)
     TrophyRoomImageActiveImage:premultiply()
     TrophyRoomImageInactiveImage = gfx.loadpng(trophyRoomImageInactive)
@@ -134,8 +134,6 @@ function MainMenu:renderui()
     InstructionsActiveImage:premultiply()
     InstructionsInactiveImage = gfx.loadpng(InstructionsMenuImageInactive)
     InstructionsInactiveImage:premultiply()
-
-
 
     self.inactiveImages = {
         TrophyRoomImageInactiveImage,
@@ -150,11 +148,7 @@ function MainMenu:renderui()
     }
 
 
-
-
-
-
-    screen:copyfrom(avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+    screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
 
     self:gamebuttonactive()
     for i = 1, 3, 1 do
@@ -162,8 +156,8 @@ function MainMenu:renderui()
     end
     screen:clear({ g = 0, r = 0, b = 0 }, { x = screen:get_width() * 0.8, y = screen:get_height() * 0.08, w = screen:get_width() * 0.05, h = screen:get_height() * 0.04 })
     screen:clear({ g = 230, r = 230, b = 230 }, { x = screen:get_width() * 0.803, y = screen:get_height() * 0.0845, w = screen:get_width() * 0.0455, h = screen:get_height() * 0.0308 })
-    main_menu_backbutton:draw_over_surface(screen, "BACK")
-    main_menu_backtext:draw_over_surface(screen, "Change profile")
+    main_menu_backbutton:draw_over_surface(screen, LOCALE.BACK)
+    main_menu_backtext:draw_over_surface(screen, LOCALE.PROFILE_CHANGE)
 end
 
 -------------------------------------
@@ -173,7 +167,8 @@ end
 function MainMenu:gamebuttonactive()
     screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.3, w = screen:get_width() * 0.42, h = screen:get_height() * 0.61 })
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.055, y = (screen:get_height() * 0.309), w = (screen:get_width() * 0.41), h = (screen:get_height() * 0.593) })
-    main_menu_games:draw_over_surface(screen, "Games")
+    screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.10, y = screen:get_height() * 0.32 , w = screen:get_width() * 0.30, h = screen:get_height() * 0.45 })
+    main_menu_games:draw_over_surface(screen, LOCALE.GAMES)
 end
 
 -------------------------------------
@@ -182,7 +177,8 @@ end
 -------------------------------------
 function MainMenu:gamebuttoninactive()
     screen:clear({ g = 228, r = 187, b = 235 }, { x = screen:get_width() * 0.05, y = screen:get_height() * 0.3, w = screen:get_width() * 0.42, h = screen:get_height() * 0.61 })
-    main_menu_games:draw_over_surface(screen, "Games")
+    screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.10, y = screen:get_height() * 0.32 , w = screen:get_width() * 0.30, h = screen:get_height() * 0.45 })
+    main_menu_games:draw_over_surface(screen, LOCALE.GAMES)
 end
 
 -------------------------------------

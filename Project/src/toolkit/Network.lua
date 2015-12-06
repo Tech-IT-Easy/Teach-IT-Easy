@@ -54,15 +54,32 @@ function Network:getProgress(game, name)
 
   local table
   if name == "Knatte" then
-      table = {level = 1, proggGameLoopLevel = false, proggGameProcLevel= false, proggGameIfLevel = false }
+      table = {level = 1, proggGameLoopLevel = false, proggGameProcLevel= false, proggGameIfLevel = false, proggGameMasterProc = false }
   elseif name == "Fnatte" then
-      table = {level = 3, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = false }
+      table = {level = 3, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = false, proggGameMasterProc = false }
   elseif name == "Tjatte" then
-      table  = {level = 5, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = true }
+      table  = {level = 8, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = true, proggGameMasterProc = false }
   else
-      table = {level = 0, proggGameLoopLevel = false, proggGameProcLevel= false, proggGameIfLevel = false }
+      table = {level = 0, proggGameLoopLevel = false, proggGameProcLevel= false, proggGameIfLevel = false, proggGameMasterProc = false }
   end
   return table
+end
+
+
+function Network:getLevels(game)
+  local t = {}
+  http.request{
+    --url = "http://2015-3.pumi.ida.liu.se:9000/".. game .."/levels/",
+    url = "http://localhost:8000/"..game.."/levels/",
+    sink = ltn12.sink.table(t)
+  }
+  local table = table.concat(t)
+  if table == not nil then
+    print("Got levels from server")
+    return table
+  else
+    print("No levels from server")
+  end
 end
 
 return Network

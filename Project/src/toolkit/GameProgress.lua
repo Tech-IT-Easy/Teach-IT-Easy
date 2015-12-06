@@ -35,7 +35,7 @@ function GameProgress:getprogressStart(game)
         return "N/A"
     else
 --        print("Getting progress for game: "..game)
-        return self.progress[game].level.."/5"
+        return self.progress[game].level.."/8"
     end
 end
 

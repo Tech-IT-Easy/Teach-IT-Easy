@@ -24,18 +24,23 @@ local executionProgress = 0
 ----
 function Character:new(x,y, rightMenu, levelData, context)
   local o = Character:super()
-  o.position = {x = x, y = y}
-  o.startPosition = {x = x, y = y}
+ -- o.position = {x = x, y = y}
+ -- o.startPosition = {x = x, y = y}
   o.state = 0
   -- @member map:Map
   o.map = Map:new(context)
   o.map:load(levelData)
+  o.position = {x = o.map.startPos%8 , y = math.ceil(o.map.startPos/8) }
+  o.startPosition = {x = o.map.startPos%8, y = math.ceil(o.map.startPos/8)}
   o.hasWon=false
   o.step = 1
   o.rightMenu = rightMenu
   o.ifIterations = 0
   o.context = context
   o.levelData = levelData
+  o.procProcess = {}
+  o.recursionLevel = 0
+  o.recursionTrack = {}
   return Character:init(o)
 end
 
@@ -49,9 +54,24 @@ function Character:startExecution(inqueue)
   if self.executionTimer == nil then
     self.queue = inqueue:getExecutionQueue()
     self.j = 0 --Keeps track of number of commands.
-
+    self.loopNumber = 1
 
     start = function(timer)
+      --Check if the goal has been reached
+      if(self.map:isInGoal(self.position.x,self.position.y) and #self.map.inGameObjectives==0)then
+        self.hasWon = true
+        self.map:winMessage()
+        if(self.levelData.level > self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level) then
+          self:updateProgress()
+          self.map:drawTrophy()
+
+        end
+        self.executionTimer:stop()
+        self.executionTimer = nil
+        gfx.update()
+          return;
+      end
+
       if(0<#self.queue.actions or self.onP1 or self.onP2 or self.onLoop or self.onIf) then
         local act
         if(not self.onP1 and not self.onP2 and not self.onLoop and not self.onIf)then
@@ -65,73 +85,117 @@ function Character:startExecution(inqueue)
           if (act == Commands.LOOP or self.onLoop) then
             self.onLoop = true
             if(act == Commands.LOOP) then
-              self.nrOfIterations = inqueue.loopCounter
-              self.procProcess = 0 --Counts the position inside the loop
+              self.nrOfIterations = inqueue.loopCounter[self.loopNumber]
+              self.procProcess[1] = 0 --Counts the position inside the loop
             end
             if(self.nrOfIterations>0) then
-              act = self.queue.loopActions[#self.queue.loopActions - self.procProcess + 1]
+              act = self.queue.loopActions[self.loopNumber][self.procProcess[1]]
               if (act == Commands.IF) or self.onIf then
                   self.isCompleted = self:executeIfStatement()
                   if (self.isCompleted) then
-                    self.procProcess = self.procProcess+1;
+                    self.procProcess[1] = self.procProcess[1]+1;
                   end
               else
-                self.procProcess = self.procProcess+1;
+                self.procProcess[1] = self.procProcess[1]+1;
                 self:execute(act)
               end
-              if(self.procProcess>#self.queue.loopActions)then
-                self.procProcess = 0
+              if(self.procProcess[1]>#self.queue.loopActions[self.loopNumber])then
+                self.procProcess[1] = 0
                 self.nrOfIterations = self.nrOfIterations-1;
               end
             else
               self.onLoop = false
+              self.loopNumber = self.loopNumber+1
             end -- end of LOOP
 
             --If the command P1 is encounter or if its executing P1
           elseif (act == Commands.P1 or self.onP1) then
             if(act == Commands.P1) then
-              self.procProcess = 0
+              self.recursionLevel=self.recursionLevel+1
+              self.procProcess[self.recursionLevel] = 0
+              self.recursionTrack[self.recursionLevel] = "P1"
             end
             self.onP1=true
-            if(self.procProcess<#self.queue.p1Actions)then
+            print(self.procProcess[self.recursionLevel]);
+            if(self.procProcess[self.recursionLevel]<#self.queue.p1Actions)then
               if (not self.onIf) then
-                self.procProcess =  self.procProcess + 1;
+                self.procProcess[self.recursionLevel] =  self.procProcess[self.recursionLevel] + 1;
               end
-              act = self.queue.p1Actions[#self.queue.p1Actions - self.procProcess + 1]
+              act = self.queue.p1Actions[#self.queue.p1Actions - self.procProcess[self.recursionLevel] + 1]
+              if(act == Commands.P1 or act == Commands.P2) then
+               self.recursionLevel=self.recursionLevel+1
+               self.procProcess[self.recursionLevel] = 0;
+                if(act == Commands.P2)then
+                  self.onP1 = false;
+                  self.onP2 = true;
+                  self.recursionTrack[self.recursionLevel] = "P2"
+                else
+                  self.recursionTrack[self.recursionLevel] = "P1"
+                end
+              end
+                
               if (act == Commands.IF) then
                 self.isCompleted = self:executeIfStatement()
               else
                 self:execute(act)
               end
             else
+              self.recursionLevel=self.recursionLevel-1;
               self.onP1=false
+              if(self.recursionTrack[self.recursionLevel]=="P1")then
+                self.onP1 = true
+              elseif(self.recursionTrack[self.recursionLevel]=="P2")then
+                self.onP2=true
+              end
             end-- end of P1
 
             --If the command P2 is encounter or if its executing P2
           elseif (act == Commands.P2 or self.onP2) then
             if(act == Commands.P2) then
-              self.procProcess = 0
+              self.recursionLevel=self.recursionLevel+1;
+              self.procProcess[self.recursionLevel] = 0
+              self.recursionTrack[self.recursionLevel] = "P2"
             end
             self.onP2=true
-            if(self.procProcess<#self.queue.p2Actions)then
+            if(self.procProcess[self.recursionLevel]<#self.queue.p2Actions)then
               if (not self.onIf) then
-                self.procProcess =  self.procProcess + 1;
+                self.procProcess[self.recursionLevel] =  self.procProcess[self.recursionLevel] + 1;
               end
-              act = self.queue.p2Actions[#self.queue.p2Actions - self.procProcess + 1]
+              act = self.queue.p2Actions[#self.queue.p2Actions - self.procProcess[self.recursionLevel] + 1]
+             if(act == Commands.P1 or act == Commands.P2) then
+               self.recursionLevel=self.recursionLevel-1; 
+               self.procProcess[self.recursionLevel] = 0;
+               if(act == Commands.P1)then
+                  self.onP1 = true;
+                  self.onP2 = false;
+                  self.recursionTrack[self.recursionLevel] = "P1"
+                else
+                  self.recursionTrack[self.recursionLevel] = "P2"
+                end
+               end
               if (act == Commands.IF) then
                 self.isCompleted = self:executeIfStatement()
               else
                 self:execute(act)
               end
             else
+              self.recursionLevel=self.recursionLevel-1; 
               self.onP2=false
+              if(self.recursionTrack[self.recursionLevel]=="P1")then
+                self.onP1 = true
+              elseif(self.recursionTrack[self.recursionLevel]=="P2")then
+                self.onP2=true
+              end
             end-- end of P2
 
             --If the command IF is encountered or it is executing IF
           elseif (act == Commands.IF or self.onIf) then
+            if (act == Commands.IF) then
+              self.procProcess[1] = 0
+            end
             self.isCompleted = self:executeIfStatement()
             if (self.isCompleted) then
-              self.procProcess = self.procProcess + 1;
+              self.procProcess[1] = self.procProcess[1] + 1;
             end
           else
             --If not executing any procedure or loop -> normal queue
@@ -146,22 +210,14 @@ function Character:startExecution(inqueue)
           self.executionTimer = nil
         end
         collectgarbage()
-        --Check if the goal has been reached
-        if(self.map:isInGoal(self.position.x,self.position.y) and #self.map.inGameObjectives==0)then
-          self.hasWon = true
-          if(self.levelData.level > self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level) then
-            self:updateProgress()
-          end
-        else
           self:reset()
           gfx.update()
-        end
       end -- end of QUEUE
     end
 
     --Sets the timer
     self.executionTimer = sys.new_timer(500, "start")
-
+    
   else --This is if the user wants to terminate the execution of the queue
     self.executionTimer:stop()
     self.executionTimer = nil
@@ -293,11 +349,14 @@ function Character:reset()
   self.onIfTrue = false
   self.onIfFalse = false
   self.j = 0
-  self.rightMenu:stop()
+  self.procProcess = {}
+  self.recursionLevel = 0
+  self.recursionTrack = {}
+  if self.rightMenu ~= nil then  self.rightMenu:stop() end
 end
 
 ---------------------------------------
--- Resets the character to it's start position.
+-- Saves the progress into the current profile
 -- @author Ludwig Wikblad
 ---------------------------------------
 function Character:updateProgress()

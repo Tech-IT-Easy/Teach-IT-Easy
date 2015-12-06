@@ -8,8 +8,7 @@
 
 lunit = require "lunit"
 module( "inttest_id_3", package.seeall, lunit.testcase )
-local event = require ("toolkit.Event")
-local Commands = require('games.Progg.Commands')
+
 local SUT1 = 'games.Progg.Commands'
 local SUT2 = 'games.Progg.BuildArea'
 local SUT3 = 'games.Progg.Character'
@@ -18,35 +17,35 @@ local SUT4 = 'games.Progg.Queue'
 --Corresponds to function bottomMenuEventHandler:update(object,eventListener,event)
 --in BottomMenu
 
-local function create_mock(class_to_mock)
-  -- unload the package if loaded to dissmiss previous mocks
-  package.loaded[class_to_mock] = nil
-  package.preload[class_to_mock] = nil
-  -- import lemock
-  local lemock = require 'lemock'
-  -- initiate mock controller
-  local mc = lemock.controller()
-  return mc
-end
-
-local function verify_mock(mc)
-  local status, err = pcall(function ()
-    -- Verify that the mocks has been called as stated.
-    mc:verify()
-  end)
-  if err then -- if error fail the test.
-    fail(err)
-  end
-end
-
-function setup()
-
-end
-
-function teardown()
-  package.loaded['games.Progg.Queue'] = nil
-  package.preload['games.Progg.Queue'] = nil
-end
+--local function create_mock(class_to_mock)
+--  -- unload the package if loaded to dissmiss previous mocks
+--  package.loaded[class_to_mock] = nil
+--  package.preload[class_to_mock] = nil
+--  -- import lemock
+--  local lemock = require 'lemock'
+--  -- initiate mock controller
+--  local mc = lemock.controller()
+--  return mc
+--end
+--
+--local function verify_mock(mc)
+--  local status, err = pcall(function ()
+--    -- Verify that the mocks has been called as stated.
+--    mc:verify()
+--  end)
+--  if err then -- if error fail the test.
+--    fail(err)
+--  end
+--end
+--
+--function setup()
+--
+--end
+--
+--function teardown()
+--  package.loaded['games.Progg.Queue'] = nil
+--  package.preload['games.Progg.Queue'] = nil
+--end
 
 
 --function test_update_queue()
@@ -118,13 +117,37 @@ end
 --    --bm.queue:push(Commands.MOVE, "queue")
 --end
 
+function setup()
+    clear_mock()
+    event = require ("toolkit.Event")
+    Commands = require('games.Progg.Commands')
+end
 
-
-
+-------------------------------------
+-- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Adding commands from bottommenu by simulating key presses.
+-- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
+-- @author name: Andreas
+-------------------------------------
 function test_adding_commands()
+    local levelData = require('games.Progg.levels.ProggLevels'):new()
+    local leveldata = levelData:getProggLevels()
+    local GameProgress = require('toolkit.GameProgress')
+
+    local context_sim = {}
+    context_sim.profile={}
+    context_sim.profile.images={}
+    context_sim.profile.images.UP='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.DOWN='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.RIGHT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.gameprogress = GameProgress:new("test_avatar")
+
+    leveldata[5].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
+
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 },nil)
+    local bottommenu = test:new(leveldata[5],context_sim)
     local test_event
     local bm_queue
     local test_command
@@ -195,13 +218,13 @@ function test_adding_commands()
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
     local loopCounter = bottommenu.queue.loopCounter
     --print("Number of iterations: " .. loopCounter)
-    lunit.assert_equal(5, loopCounter, "Not correct number of iterations")
+    lunit.assert_equal(5, loopCounter[1], "Not correct number of iterations")
 
     --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "1"
     --Adding MOVE-action to loop
     test_event = event:new("1", "down") --simulates a key press on key 1
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.loopActions[1]
+    bm_queue = bottommenu.queue.loopActions[1][1]
     --print("Added " .. bm_queue .. " in the loop-queue")
     test_command = commands.MOVE
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
@@ -210,7 +233,7 @@ function test_adding_commands()
     --Adding TURN_LEFT-action to loop
     test_event = event:new("2", "down") --simulates a key press on key 2
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.loopActions[2]
+    bm_queue = bottommenu.queue.loopActions[1][2]
     --print("Added " .. bm_queue .. " in the loop-queue")
     test_command = commands.TURN_LEFT
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
@@ -219,7 +242,7 @@ function test_adding_commands()
     --Adding TURN_RIGHT-action to loop
     test_event = event:new("3", "down") --simulates a key press on key 3
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    bm_queue = bottommenu.queue.loopActions[3]
+    bm_queue = bottommenu.queue.loopActions[1][3]
     --print("Added " .. bm_queue .. " in the loop-queue")
     test_command = commands.TURN_RIGHT
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
@@ -402,10 +425,30 @@ function test_adding_commands()
 
 end
 
+
+-------------------------------------
+-- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Deleting commands from bottommenu by simulating key presses.
+-- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
+-- @author name: Andreas
+-------------------------------------
 function test_delete()
+    local levelData = require('games.Progg.levels.ProggLevels'):new()
+    local leveldata = levelData:getProggLevels()
+    local GameProgress = require('toolkit.GameProgress')
+
+    local context_sim = {}
+    context_sim.profile={}
+    context_sim.profile.images={}
+    context_sim.profile.images.UP='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.DOWN='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.RIGHT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.gameprogress = GameProgress:new("test_avatar")
+
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 },nil)
+    local bottommenu = test:new(leveldata[1],context_sim)
     local test_event
     local bm_queue
     local test_command
@@ -450,16 +493,40 @@ function test_delete()
     lunit.assert_equal(commands.TURN_RIGHT, cmd_2, "Not right command in position 2")
 end
 
+
+-------------------------------------
+-- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Tests if correct actions is taken by simulating different key presses.
+-- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
+-- @author name: Andreas
+-------------------------------------
 function test_key_press()
+    local levelData = require('games.Progg.levels.ProggLevels'):new()
+    local leveldata = levelData:getProggLevels()
+    local GameProgress = require('toolkit.GameProgress')
+
+    local context_sim = {}
+    context_sim.profile={}
+    context_sim.profile.images={}
+    context_sim.profile.images.UP='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.DOWN='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.RIGHT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.gameprogress = GameProgress:new("test_avatar")
+
+    leveldata[5].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
+
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 , ["if-wall"] = 16, ["if-not-wall"] = 16} ,nil)
+    local bottommenu = test:new(leveldata[5], context_sim)
 
     local test_event = event:new("1", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea = "loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter==1, "Key press not implies right action")
+    lunit.assert_equal(1, bottommenu.queue.loopCounter[1], "Key press not implies right action")
 
     local test_event = event:new("1", "down")
     bottommenu.selectingActionEdit=true
@@ -467,10 +534,12 @@ function test_key_press()
     lunit.assert_true(bottommenu.isMovingAction == true, "Key press not implies right action")
 
     local test_event = event:new("2", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea ="loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter == 2, "Key press not implies right action")
+    lunit.assert_true(bottommenu.queue.loopCounter[1] == 2, "Key press not implies right action")
 
     local test_event = event:new("2", "down")
     bottommenu.selectingActionEdit=true
@@ -481,7 +550,7 @@ function test_key_press()
     bottommenu.inputArea = "loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter==3, "Key press not implies right action")
+    lunit.assert_true(bottommenu.queue.loopCounter[1]==3, "Key press not implies right action")
 
     local test_event = event:new("3", "down")
     bottommenu.inputArea = "queue"
@@ -496,22 +565,28 @@ function test_key_press()
     lunit.assert_true(bottommenu.selectingActionEdit == nil, "Key press not implies right action")
 
     local test_event = event:new("4", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea ="loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter == 4, "Key press not implies right action")
+    lunit.assert_true(bottommenu.queue.loopCounter[1] == 4, "Key press not implies right action")
 
     local test_event = event:new("5", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea ="loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter == 5, "Key press not implies right action")
+    lunit.assert_true(bottommenu.queue.loopCounter[1] == 5, "Key press not implies right action")
 
     local test_event = event:new("6", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea ="loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter == 6, "Key press not implies right action")
+    lunit.assert_true(bottommenu.queue.loopCounter[1] == 6, "Key press not implies right action")
 
     local test_event = event:new("6", "down")
     bottommenu.inputArea ="queue"
@@ -521,10 +596,13 @@ function test_key_press()
     lunit.assert_true(bottommenu.inputArea == "loop", "Key press not implies right action")
 
     local test_event = event:new("9", "down")
+    bottommenu.queue.loopActions = {{} }
+    bottommenu.queue.loopCounter = {}
+    bottommenu.queue.loopPointer = 1
     bottommenu.inputArea ="loop"
     bottommenu.selectingLoopCounter=true
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
-    lunit.assert_true(bottommenu.queue.loopCounter == 9, "Key press not implies right action")
+    lunit.assert_equal(9, bottommenu.queue.loopCounter[1], "Key press not implies right action")
 
     local test_event = event:new("up", "down")
     bottommenu.position = 9 --is not upper row

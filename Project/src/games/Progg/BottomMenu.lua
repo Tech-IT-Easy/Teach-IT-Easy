@@ -22,6 +22,7 @@ local Queue = require('games.Progg.Queue')
 local BottomMenu = extends(Controllable)
 local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 local rightMenu = require("games.Progg.RightMenu")
+local Stack = require('toolkit.Utils.Stack')
 
 -------------------------------------------------
 -- Constructor method for the BottomMenu.
@@ -39,8 +40,14 @@ function BottomMenu:new(levelData,context)
     o.isMovingAction = false
     o.posActionToMove = nil
     o.selectingLoopCounter = true
+    o.inExitPopUp = false
     o.inputArea = "queue"
-    o.prevInputArea = "queue"
+    o.prevInputArea = nil
+    -- @member stack:Stack
+    o.inputAreaStack = Stack:new()
+    o.inputAreaStack = Stack:Create()
+    o.inputAreaChanged = false
+    --o.levelData = levelData
     o.maxCommands = levelData.maxCommands
     o.position = 1     --Starting position for highlight
     o.rowLength = 8
@@ -77,13 +84,14 @@ end
 -- @ author Mikael Ögren; Tobias Lundell
 --------------------------------------------
 function BottomMenu:show()
-    if (self.prevInputArea ~= self.inputArea) then
+    --if (self.prevInputArea ~= self.inputArea) then
+    if (self.inputAreaChanged) then
         if (self.inputArea == "queue") then
-            self:updateInputArea(self.prevInputArea, false)
+            self:updateInputArea(self.inputAreaStack:peek(), false)
         else
             self:updateInputArea(self.inputArea, true)
         end
-        self.prevInputArea = self.inputArea
+        self.inputAreaChanged = false
     end
     if (self.inputArea ~= "queue") then
         self.buildArea:show(self.queue, self.inputArea)
@@ -91,7 +99,18 @@ function BottomMenu:show()
         self.drawBottomMenu:icons(self.queue.actions, self.inputArea)
         self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
     end
-    self.rightMenu:show(self.inputArea)
+    if (self.inputArea == "if-wall" and #self.queue.ifTrueActions == 0) then
+        if (self.preventFalse == false) then
+            self.rightMenu.preventFalseChanged = true
+        end
+        self.preventFalse = true
+    else
+        if (self.preventFalse == true) then
+            self.rightMenu.preventFalseChanged = true
+        end
+        self.preventFalse = false
+    end
+    self.rightMenu:show(self.inputArea, self.preventFalse)
 end
 
 --------------------------------------------
@@ -155,131 +174,126 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
     if(event.state==Event.KEY_STATE_DOWN) then
         --Switch for all the input handling to implement
-        if event.key == Event.KEY_ONE then
-            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then   --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 1
-                object.selectingLoopCounter=false
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
+        if event.key == Event.KEY_ONE and not object.inExitPopUp then
+            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
+            object.queue.loopCounter[object.queue.loopPointer] = 1
+            object.selectingLoopCounter=false
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
             elseif object.clearAllCheck == true then  --Handles input when confirming if user wants to clear a queue
-                object.queue:clearAll(object.inputArea)
-                object.clearAllCheck = false
-                object.rightMenu.inputAreaChanged = true
-                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
-                    object.rightMenu.inputArea = "build"
-                elseif object.inputArea == "if-wall"  then
-                    object.rightMenu.inputArea = "if-wall"
-                else
-                    object.rightMenu.inputArea = "queue"
-                end
-            elseif object.selectingActionEdit ~= nil then   --Handles input when a command is selected
-                object.isMovingAction = true
-                object.posActionToMove = object.position
-                object.selectingActionEdit = nil
-            elseif object.isMovingAction == true then  -- Handles input while user is moving an action
-                print("Not allowed while moving an action")
-            else -- Handles input during normal state. Lets user add "move forward" to current queue.
-                object.queue:push(Commands.MOVE, object.inputArea)
-                object.rightMenu.toHighlight = (Commands.MOVE)
-            end
-
-        elseif event.key == Event.KEY_TWO then
-            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 2
-                object.selectingLoopCounter=false
-                object.rightMenu.inputAreaChanged = true
+            object.queue:clearAll(object.inputArea)
+            object.clearAllCheck = false
+            object.rightMenu.inputAreaChanged = true
+            object.inputAreaChanged = true
+            if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
                 object.rightMenu.inputArea = "build"
-            elseif object.clearAllCheck == true then --Handles input when confirming if user wants to clear a queue
-                object.clearAllCheck = false
-                object.rightMenu.inputAreaChanged = true
-                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
-                    object.rightMenu.inputArea = "build"
-                elseif object.inputArea == "if-wall"  then
-                    object.rightMenu.inputArea = "if-wall"
-                else
-                    object.rightMenu.inputArea = "queue"
-                end
-            elseif object.selectingActionEdit ~= nil then --Handles input when a command is selected
-                object:deleteAction(object.position, object.inputArea)
-                object:updateInputArea(object.inputArea, true)
-                object.selectingActionEdit = nil
-                if object.inputArea == "queue" then
-                    object.rightMenu.inputAreaChanged = true
-                    object.rightMenu.inputArea = object.inputArea
-                else
-                    object.rightMenu.inputAreaChanged = true
-                    object.rightMenu.inputArea = "build"
-                end
-            elseif object.isMovingAction == true then -- Handles input while user is moving an action
-                print("Not allowed while moving an action")
-            else -- Handles input during normal state. Lets user add "turn left" to current queue.
-                object.queue:push(Commands.TURN_LEFT, object.inputArea)
-                object.rightMenu.toHighlight = (Commands.TURN_LEFT)
-            end
-
-        elseif event.key == Event.KEY_THREE then
-            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 3
-                object.selectingLoopCounter=false
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
-            elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" then -- Handles input while a method is selected. Lets user enter the selected method.
-                object:enterMethod()
-                object.selectingActionEdit = nil
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
-            elseif object.selectingActionEdit == "if-wall"  then -- Handles input while a method is selected. Lets user enter the selected method.
-                object:enterMethod()
-                object.selectingActionEdit = nil
-                object.rightMenu.inputAreaChanged = true
+            elseif object.inputArea == "if-wall"  then
                 object.rightMenu.inputArea = "if-wall"
-            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then  --Handles input when a command is selected and it's not a method or input when moving a command
-                print("Not allowed while moving an action")
-                print("Cannot enter command that is not a loop or procedure")
-                --object.selectingActionEdit = nil
-            else -- Handles input during normal state. Lets user add "turn right" to current queue.
-                object.queue:push(Commands.TURN_RIGHT, object.inputArea)
-                object.rightMenu.toHighlight = (Commands.TURN_RIGHT)
+            else
+                object.rightMenu.inputArea = "queue"
+            end
+            elseif object.selectingActionEdit ~= nil then   --Handles input when a command is selected
+            object.isMovingAction = true
+            object.posActionToMove = object.position
+            object.selectingActionEdit = nil
+            elseif object.isMovingAction == true or object.character.hasWon == true then  -- Handles input while user is moving an action, or while victory screen is open.
+            print("Not allowed")
+            else -- Handles input during normal state. Lets user add "move forward" to current queue.
+            object.queue:push(Commands.MOVE, object.inputArea)
+            object.rightMenu.toHighlight = (Commands.MOVE)
             end
 
-        elseif event.key == Event.KEY_FOUR then
-            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 4
-                object.selectingLoopCounter=false
+        elseif event.key == Event.KEY_TWO and not object.inExitPopUp then
+            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then--Handles input when selecting how many times a loop should repeat
+            object.queue.loopCounter[object.queue.loopPointer]  = 2
+            object.selectingLoopCounter=false
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
+            elseif object.clearAllCheck == true then --Handles input when confirming if user wants to clear a queue
+            object.clearAllCheck = false
+            object.rightMenu.inputAreaChanged = true
+            if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
+                object.rightMenu.inputArea = "build"
+            elseif object.inputArea == "if-wall"  then
+                object.rightMenu.inputArea = "if-wall"
+            else
+                object.rightMenu.inputArea = "queue"
+            end
+            elseif object.selectingActionEdit ~= nil then --Handles input when a command is selected
+            object:deleteAction(object.position, object.inputArea)
+            object:updateInputArea(object.inputArea, true)
+            object.selectingActionEdit = nil
+            if object.inputArea == "queue" then
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = object.inputArea
+            else
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
-            elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" or object.selectingActionEdit == "if"  then
-                --object:enterMethod()
-                object.selectingActionEdit = nil
-                object.rightMenu.inputAreaChanged = true
-                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if"  then
-                    object.rightMenu.inputArea = "build"
-                else
-                    object.rightMenu.inputArea = "queue"
-                end
+            end
+            elseif object.isMovingAction == true  or object.character.hasWon == true then -- Handles input while user is moving an action or when victory screen is open.
+            print("Not allowed")
+            else -- Handles input during normal state. Lets user add "turn left" to current queue.
+            object.queue:push(Commands.TURN_LEFT, object.inputArea)
+            object.rightMenu.toHighlight = (Commands.TURN_LEFT)
+            end
+
+        elseif event.key == Event.KEY_THREE and not object.inExitPopUp then
+            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then--Handles input when selecting how many times a loop should repeat
+            object.queue.loopCounter[object.queue.loopPointer]  = 3
+            object.selectingLoopCounter=false
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
+            elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" or object.selectingActionEdit == "if"  then -- Handles input while a method is selected. Lets user enter the selected method.
+            if(object.selectingActionEdit == "loop")then
+                object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")
+            end
+            object:enterMethod()
+            object.selectingActionEdit = nil
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
+            elseif object.selectingActionEdit == "if-wall"  then -- Handles input while a method is selected. Lets user enter the selected method.
+            object:enterMethod()
+            object.selectingActionEdit = nil
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "if-wall"
+            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true  or object.character.hasWon == true then  --Handles input when a command is selected and it's not a method or input when moving a command or when vicotry screen is open
+            print("Not allowed")
+            --object.selectingActionEdit = nil
+            else -- Handles input during normal state. Lets user add "turn right" to current queue.
+            object.queue:push(Commands.TURN_RIGHT, object.inputArea)
+            object.rightMenu.toHighlight = (Commands.TURN_RIGHT)
+            end
+
+        elseif event.key == Event.KEY_FOUR and not object.inExitPopUp then
+            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
+            object.queue.loopCounter[object.queue.loopPointer]  = 4
+            object.selectingLoopCounter=false
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
+            elseif object.character.hasWon == true then
+                print("Not allowed")
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then --Handles input when a command is selected and it's not a method or input when moving a command
-                print("Not allowed while moving an action")
-                print("Cannot enter command that is not a loop or procedure")
-                object.selectingActionEdit = nil
-                object.rightMenu.inputAreaChanged = true
-                if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-wall"  then
-                    object.rightMenu.inputArea = "build"
-                else
-                    object.rightMenu.inputArea = "queue"
-                end
+            object.selectingActionEdit = nil
+            object.isMovingAction = false
+            object.rightMenu.inputAreaChanged = true
+            if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-wall"  then
+                object.rightMenu.inputArea = "build"
+            else
+                object.rightMenu.inputArea = "queue"
+            end
             else
                 object.queue:push(Commands.FIX, object.inputArea)
                 --object.rightMenu.toHighlight = (Commands.FIX)
             end
 
-        elseif event.key == Event.KEY_FIVE then
+        elseif event.key == Event.KEY_FIVE and not object.inExitPopUp then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 5
-                object.selectingLoopCounter=false
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
-            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then --Handles input when a command is selected or input when moving a command
-                print("Not allowed while selecting edit or moving action")
+            object.queue.loopCounter[object.queue.loopPointer]  = 5
+            object.selectingLoopCounter=false
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
+            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true or object.maxCommands["if-wall"] == 0  or object.character.hasWon == true then --Handles input when a command is selected, when moving a command or when loop has no available slots
+            print("Not allowed")
             else
                 if #object.queue.actions<object.maxCommands[object.inputArea] == false then
                     print("Action not allowed")
@@ -293,7 +307,14 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputArea = "if-wall"
                 object.buildArea:setBuildType("if-wall")
                 object.queue:push(Commands.IF, object.inputArea)
+                -- object.prevInputArea = object.inputArea
+
+                --print (object.stack:pop(1))
+                if (object.inputArea ~= object.inputAreaStack:peek()) then
+                    object.inputAreaStack:push(object.inputArea)
+                end
                 object.inputArea = "if-wall"
+                object.inputAreaChanged = true
                 object.prevPosition = object.position
                 object.position = 2*object.rowLength + 1
                 object.buildArea:setPosition(object.position)
@@ -301,148 +322,196 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.ifTrueQueue)
             end
 
-        elseif event.key == Event.KEY_SIX then
+        elseif event.key == Event.KEY_SIX and not object.inExitPopUp then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 6
-                object.selectingLoopCounter=false
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
+            object.queue.loopCounter[object.queue.loopPointer]  = 6
+            object.selectingLoopCounter=false
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
 
-            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true or #object.queue.actions<object.maxCommands[object.inputArea] == false then -- Handles input when an action is selected or user is moving an action or (the main queue is full?)
-                print("Not allowed while selecting edit or moving action")
+            elseif object:isBuildArea() == true or object.selectingActionEdit ~= nil or object.isMovingAction == true or #object.queue.actions<object.maxCommands[object.inputArea] == false  or object.character.hasWon == true then -- Handles input when an action is selected, user is moving an action, loop has no available slots or (the main queue is full?)
+            print("Not allowed")
             else -- Handles input during normal state. Lets user add loop to main queue.
-                if object:isBuildArea() == true or object.maxCommands["loop"] == 0 then
-                    print("Action not allowed")
-                    return;
-                end
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "loop"
-                object.buildArea:setBuildType("loop")
-                object.queue:push(Commands.LOOP, object.inputArea)
-                object.inputArea = "loop"
-                object.selectingLoopCounter=true
-                object.prevPosition = object.position
-                object.position = 2*object.rowLength + 1
-                object.buildArea:setPosition(object.position)
-                object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
-                object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.loopQueue)
+            if object:isBuildArea() == true or object.maxCommands["loop"] == 0 then
+                print("Action not allowed")
+                return;
+            end
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "loop"
+            object.buildArea:setBuildType("loop")
+            object.queue:push(Commands.LOOP, object.inputArea)
+            --object.prevInputArea = object.inputArea
+            if (object.inputArea ~= object.inputAreaStack:peek()) then
+                object.inputAreaStack:push(object.inputArea)
+            end
+            object.inputArea = "loop"
+            object.inputAreaChanged = true
+            object.selectingLoopCounter=true
+            object.prevPosition = object.position
+            object.position = 2*object.rowLength + 1
+            object.buildArea:setPosition(object.position)
+            object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+            object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.loopQueue)
+            object.queue.loopPointer = #object.queue.loopActions
+            object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")
             end
 
-        elseif event.key == Event.KEY_SEVEN then
+        elseif event.key == Event.KEY_SEVEN and not object.inExitPopUp then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 7
-                object.selectingLoopCounter=false
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
-            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then --Handles input when a command is selected or input when moving a command
-                print("Not allowed while selecting edit or moving action")
+            object.queue.loopCounter[object.queue.loopPointer]  = 7
+            object.selectingLoopCounter=false
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
+            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true  or object.character.hasWon == true then --Handles input when a command is selected or input when moving a command
+            print("Not allowed while selecting edit or moving action")
             else -- Handles input during normal state. Lets user add P1 to main queue.
-                if object:isBuildArea() == true or object.maxCommands["P1"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
-                    print("Action not allowed")
-                    return;
-                end
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
-                object.buildArea:setBuildType("P1")
-                object.queue:push(Commands.P1, object.inputArea)
-                object.inputArea = "P1"
+            if  object.maxCommands["P1"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
+                print("Action not allowed")
+                return;
+            end
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
+            object.buildArea:setBuildType("P1")
+            object.queue:push(Commands.P1, object.inputArea)
+            --object.prevInputArea = object.inputArea
+            if (object.inputArea ~= object.inputAreaStack:peek()) then
+                object.inputAreaStack:push(object.inputArea)
+            end
+            object.inputArea = "P1"
+            object.inputAreaChanged = true
 
-                object.prevPosition = object.position
-                object.position = 2*object.rowLength + 1
-                object.buildArea:setPosition(object.position)
-                object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
-                object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.p1Queue)
+            object.prevPosition = object.position
+            object.position = 2*object.rowLength + 1
+            object.buildArea:setPosition(object.position)
+            object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+            object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.p1Queue)
             end
 
-        elseif event.key == Event.KEY_EIGHT then
+        elseif event.key == Event.KEY_EIGHT and not object.inExitPopUp then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 8
-                object.selectingLoopCounter=false
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
-            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then --Handles input when a command is selected or input when moving a command
-                print("Not allowed while selecting edit or moving action")
+            object.queue.loopCounter[object.queue.loopPointer]  = 8
+            object.selectingLoopCounter=false
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
+            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true  or object.character.hasWon == true then --Handles input when a command is selected or input when moving a command
+            print("Not allowed")
             else -- Handles input during normal state. Lets user add P2 to main queue.
-                if object:isBuildArea() == true or object.maxCommands["P2"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
-                    print("Action not allowed")
-                    return;
-                end
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
-                object.buildArea:setBuildType("P2")
-                object.queue:push(Commands.P2, object.inputArea)
-                object.inputArea = "P2"
-
-                object.prevPosition = object.position
-                object.position = 2*object.rowLength + 1
-                object.buildArea:setPosition(object.position)
-                object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
-                object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.p2Queue)
+            if object.maxCommands["P2"] == 0 or #object.queue.actions<object.maxCommands[object.inputArea] == false then
+                print("Action not allowed")
+                return;
             end
-        elseif event.key == Event.KEY_NINE then
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
+            object.buildArea:setBuildType("P2")
+            object.queue:push(Commands.P2, object.inputArea)
+            --object.prevInputArea = object.inputArea
+            if (object.inputArea ~= object.inputAreaStack:peek()) then
+                object.inputAreaStack:push(object.inputArea)
+            end
+            object.inputArea = "P2"
+            object.inputAreaChanged = true
+
+            object.prevPosition = object.position
+            object.position = 2*object.rowLength + 1
+            object.buildArea:setPosition(object.position)
+            object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+            object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.p2Queue)
+            end
+        elseif event.key == Event.KEY_NINE and not object.inExitPopUp then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = 9
-                object.selectingLoopCounter=false
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
-            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then --Handles input when a command is selected or input when moving a command
-                print("Not allowed while selecting edit or moving action")
+            object.queue.loopCounter[object.queue.loopPointer]  = 9
+            object.selectingLoopCounter=false
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
+            elseif object.selectingActionEdit ~= nil or object.isMovingAction == true  or object.character.hasWon == true then --Handles input when a command is selected or input when moving a command
+            print("Not allowed")
             else  -- Handles input during normal state. Sends user to the clearAll confirmation.
-                object.clearAllCheck = true
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "confirm"
+            object.clearAllCheck = true
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "confirm"
             end
 
-        elseif event.key == Event.KEY_UP then
-            if object.selectingActionEdit ~= nil then -- Handles input while a command is selected
-                print("Not allowed while selecting edit")
+        elseif event.key == Event.KEY_UP and not object.inExitPopUp then
+            if object.selectingActionEdit ~= nil or object.character.hasWon == true then -- Handles input while a command is selected
+            print("Not allowed")
             elseif  object:isUpperRow(object.position) == false then -- Handles input while navigating. Checks to see that the move is ok.
-                object:setPosition(-object.rowLength)
+            object:setPosition(-object.rowLength)
             end
-        elseif event.key == Event.KEY_DOWN then
-            if object.selectingActionEdit ~= nil then -- Handles input while a command is selected
-                print("Not allowed while selecting edit")
+        elseif event.key == Event.KEY_DOWN and not object.inExitPopUp then
+            if object.selectingActionEdit ~= nil  or object.character.hasWon == true then -- Handles input while a command is selected
+            print("Not allowed")
             elseif  object:isAllowedDown() then -- Handles input while navigating. Checks to see that the move is ok.
-                object:setPosition(object.rowLength)
+            object:setPosition(object.rowLength)
             end
-        elseif event.key == Event.KEY_LEFT then
-            if object.selectingActionEdit ~= nil then -- Handles input while a command is selected
-                print("Not allowed while selecting edit")
+        elseif event.key == Event.KEY_LEFT and not object.inExitPopUp then
+            if object.selectingActionEdit ~= nil  or object.character.hasWon == true then -- Handles input while a command is selected
+            print("Not allowed")
             elseif object.position > 1 and object.position ~= 2*object.rowLength + 1 then -- Handles input while navigating. Checks to see that the move is ok.
-                object:setPosition(-1)
+            object:setPosition(-1)
             end
-        elseif event.key == Event.KEY_RIGHT then
-            if object.selectingActionEdit ~= nil then -- Handles input while a command is selected
-                print("Not allowed while selecting edit")
+        elseif event.key == Event.KEY_RIGHT and not object.inExitPopUp then
+            if object.selectingActionEdit ~= nil  or object.character.hasWon == true then -- Handles input while a command is selected
+            print("Not allowed")
             elseif object:isAllowedRight() then -- Handles input while navigating. Checks to see that the move is ok.
-                object:setPosition(1)
+            object:setPosition(1)
             end
-        elseif event.key == Event.KEY_ZERO then
-            if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-                object.queue.loopCounter = object.queue.INFINITY
-                object.selectingLoopCounter=false
-                object.rightMenu.inputAreaChanged = true
-                object.rightMenu.inputArea = "build"
+        elseif event.key == Event.KEY_ZERO and not object.inExitPopUp then
+            if object.character.hasWon == true then
+                print("Not allowed")
+            elseif(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
+            object.queue.loopCounter[object.queue.loopPointer] = object.queue.INFINITY
+            object.selectingLoopCounter=false
+            object.rightMenu.inputAreaChanged = true
+            object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil then  -- Handles input while an action is selected. Lets user deselect action.
-                object.selectingActionEdit = nil
-            elseif object.inputArea == "if-wall" then  -- Handles input while user in working in the if-true statement. Lets user switch to the if-not statement-
+            object.selectingActionEdit = nil
+            elseif object.inputArea == "if-wall" then
+                if #object.queue.ifTrueActions>0 then  -- Handles input while user in working in the if-true statement. Lets user switch to the if-not statement-
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
                 object.buildArea:setBuildType("if-not-wall")
+                object.inputAreaStack:push(object.inputArea)
                 object.inputArea = "if-not-wall"
+                object.inputAreaChanged = true
                 object.prevPosition = object.position
                 object.position = 2*object.rowLength + 1
                 object.buildArea:setPosition(object.position)
-                object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.ifFalseQueue)
-                --object:updateInputArea(object.inputArea, true)
-            elseif object.inputArea == "queue"  then  -- Handles input while user is working in main queue. Lets user execute the queue.
-                object.rightMenu:play()
-                object:executeQueue()
-            else -- Handles input when user is working in buildArea. Let's user back out to the main queue.
-                if object.selectingLoopCounter == true then
-                    object.selectingLoopCounter = false
                 end
+            elseif object.inputArea == "queue"  then  -- Handles input while user is working in main queue. Lets user execute the queue.
+            object.rightMenu:play()
+            object:executeQueue()
+            else -- Handles input when user is working in buildArea. Let's user back out to the main queue.
+            if object.selectingLoopCounter == true then
+                object.selectingLoopCounter = false
+            end
+            if (object.inputAreaStack:peek() ~= "queue") then
+                object.rightMenu.inputArea = "build"
+                object.prevInputArea = object.inputArea
+                object.inputArea = object.inputAreaStack:pop()
+                if (object.inputArea == "if-wall") then
+                    object.prevInputArea = object.inputArea
+                    object.inputArea = object.inputAreaStack:pop()
+                end
+                if (object.inputArea ~= "queue") then
+                    object.buildArea:setBuildType(object.inputArea)
+                    object.prevPosition = object.position
+                    object.position = 2*object.rowLength + 1
+                    object.buildArea:setPosition(object.position)
+                    object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+                else
+                    object.prevPosition = object.position
+                    object.position = 1
+                    object.buildArea:setPosition(object.position)
+                    object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+
+                    object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.prevInputArea))
+                    object.rightMenu.inputAreaChanged = true
+                    object.rightMenu.inputArea = "queue"
+                    object.buildArea:setBuildType(object.prevInputArea)
+                    object.inputAreaStack:push(object.prevInputArea)
+                end
+            else
                 object.prevPosition = object.position
                 object.position = 1
                 object.buildArea:setPosition(object.position)
@@ -450,36 +519,113 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "queue"
-                object.inputArea = "queue"
+                object.prevInputArea = object.inputArea
+                object.buildArea:setBuildType(object.prevInputArea)
+                object.inputArea = object.inputAreaStack:pop()
+                object.inputAreaStack:push(object.prevInputArea)
+            end
+            object.inputAreaChanged = true
             end
         elseif event.key == Event.KEY_OK then
+            if object.inExitPopUp then
+                object:returnToMenus()
+                return
+            end
+
             local queuePos = object.position
             if queuePos > 2*object.rowLength then
                 queuePos = queuePos - 2*object.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
             end
-            if object.isMovingAction == true then   -- Handles input while user is moving an action
-                object:moveAction(object.posActionToMove, object.position)
-                object.isMovingAction = false
-                object:updateInputArea(object.inputArea, true)
-                if object.inputArea == "queue" then
-                    object.rightMenu.inputAreaChanged = true
-                    object.rightMenu.inputArea = object.inputArea
-                else
-                    object.rightMenu.inputAreaChanged = true
-                    object.rightMenu.inputArea = "build"
-                end
-            else   --Handles input during regular state. Let's user select a command.
-                object.rightMenu.selectedCommand = object:getQueue(object.inputArea)[queuePos]
-                print(object:getQueue(object.inputArea)[queuePos])
 
-                if object.rightMenu.selectedCommand ~= nil then
-                    object.rightMenu.inputAreaChanged = true
-                    object.rightMenu.inputArea = "options"
+            if object.isMovingAction == true then   -- Handles input while user is moving an action
+            object:moveAction(object.posActionToMove, object.position)
+            object.isMovingAction = false
+            object:updateInputArea(object.inputArea, true)
+            if object.inputArea == "queue" then
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = object.inputArea
+            else
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "build"
+            end
+            elseif object.character.hasWon == true then
+                object:returnToMenus()
+            else --Handles input during regular state. Let's user select a command.
+            local count = 0
+            for i = queuePos, 0, -1 do
+                if object.queue.actions[i] == Commands.LOOP then
+                    count = count + 1
                 end
-                object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
+            end
+            object.queue.loopPointer = count
+            --                if(object:getQueue(object.inputArea)[queuePos] == Commands.LOOP)then
+            --                    object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")
+            --                end
+            object.rightMenu.selectedCommand = object:getQueue(object.inputArea)[queuePos]
+            print(object:getQueue(object.inputArea)[queuePos])
+
+            if object.rightMenu.selectedCommand ~= nil then
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "options"
+            end
+            object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
             end
         elseif event.key == Event.KEY_BACK then --This terminates the game no matter what is happening.
-            object:returnToMenus()
+        if object.inExitPopUp then
+            object.inExitPopUp = false
+            object.character.map:load(object.character.
+            levelData)
+            collectgarbage()
+        else
+            if (object.inputArea == "queue" and not inExitPopUp) then
+                object.inExitPopUp = true
+                object:confirmExit()
+            else
+                if object.selectingLoopCounter == true then
+                    object.selectingLoopCounter = false
+                end
+                if (object.inputAreaStack:peek() ~= "queue") then
+                    object.rightMenu.inputArea = "build"
+                    object.prevInputArea = object.inputArea
+                    object.inputArea = object.inputAreaStack:pop()
+                    if (object.inputArea == "if-wall") then
+                        object.prevInputArea = object.inputArea
+                        object.inputArea = object.inputAreaStack:pop()
+                    end
+                    if (object.inputArea ~= "queue") then
+                        object.buildArea:setBuildType(object.inputArea)
+                        object.prevPosition = object.position
+                        object.position = 2*object.rowLength + 1
+                        object.buildArea:setPosition(object.position)
+                        object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+                    else
+                        object.prevPosition = object.position
+                        object.position = 1
+                        object.buildArea:setPosition(object.position)
+                        object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+
+                        object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.prevInputArea))
+                        object.rightMenu.inputAreaChanged = true
+                        object.rightMenu.inputArea = "queue"
+                        object.buildArea:setBuildType(object.prevInputArea)
+                        object.inputAreaStack:push(object.prevInputArea)
+                    end
+                else
+                    object.prevPosition = object.position
+                    object.position = 1
+                    object.buildArea:setPosition(object.position)
+                    object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+                    object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+                    object.rightMenu.inputAreaChanged = true
+                    object.rightMenu.inputArea = "queue"
+                    object.prevInputArea = object.inputArea
+                    object.buildArea:setBuildType(object.prevInputArea)
+                    object.inputArea = object.inputAreaStack:pop()
+                    object.inputAreaStack:push(object.prevInputArea)
+                end
+                object.inputAreaChanged =  true
+            end
+        end
         end
     end
 end
@@ -492,6 +638,14 @@ function BottomMenu:isBuildArea()
     end
 end
 
+--------------------------------------
+-- Shows a confirmation pop up asking if
+-- user really wants to exit the game.
+-- @author Tobias Lundell
+--------------------------------------
+function BottomMenu:confirmExit()
+    self.drawBottomMenu:exitPopUp()
+end
 --------------------------------------
 -- Sets the position in the build area
 -- @ param change:Integer. The change in position.
@@ -550,7 +704,10 @@ function BottomMenu:enterMethod()
     end
     if self.maxCommands[self:getQueue(self.inputArea)[queuePos]] > 0 then
         self.buildArea:setBuildType(self:getQueue(self.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
+        --self.prevInputArea = self.inputArea
+        self.inputAreaStack:push(self.inputArea)
         self.inputArea = self:getQueue(self.inputArea)[queuePos]
+        self.inputAreaChanged = true
         self.prevPosition = self.position
         self.position = 2*self.rowLength + 1
         self.buildArea:setPosition(self.position)
@@ -582,6 +739,17 @@ end
 -----------------------------------
 function BottomMenu:deleteAction(position, inputArea)
     local queuePos = position
+    if self:getQueue(inputArea)[queuePos] == Commands.LOOP then
+        local counter = 0
+        for i = position, 0, -1 do
+            if self.queue.actions[i] == "loop" then
+                counter = counter + 1
+            end
+        end
+        table.remove(self.queue.loopActions, counter)
+        table.remove(self.queue.loopCounter, counter)
+    end
+
     if queuePos > 2*self.rowLength then
         queuePos = queuePos - 2*self.rowLength -- Must be done if clicking a command in buildArea to get correct position in queue
     end
@@ -613,21 +781,25 @@ function BottomMenu:moveAction(positionOne, positionTwo)
         return
     end
 
-    local actionOne = self:getQueue(self.inputArea)[queuePosOne]
-
-    if queuePosOne > queuePosTwo then
-        for i = queuePosOne, queuePosTwo + 1, -1 do
-            self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i-1]
-        end
-        self:getQueue(self.inputArea)[queuePosTwo] = actionOne
+    if (self.inputArea == "queue") and (self:getQueue(self.inputArea)[queuePosOne] == Commands.LOOP or self:getQueue(self.inputArea)[queuePosTwo] == Commands.LOOP) then
+        self.queue:setPosition(queuePosOne, queuePosTwo)
     else
-        for i = queuePosOne, queuePosTwo - 1 do
-            self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i+1]
-        end
-        self:getQueue(self.inputArea)[queuePosTwo] = actionOne
-    end
 
-    self.actionToMove = nil
+        local actionOne = self:getQueue(self.inputArea)[queuePosOne]
+
+        if queuePosOne > queuePosTwo then
+            for i = queuePosOne, queuePosTwo + 1, -1 do
+                self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i-1]
+            end
+            self:getQueue(self.inputArea)[queuePosTwo] = actionOne
+        else
+            for i = queuePosOne, queuePosTwo - 1 do
+                self:getQueue(self.inputArea)[i] = self:getQueue(self.inputArea)[i+1]
+            end
+            self:getQueue(self.inputArea)[queuePosTwo] = actionOne
+        end
+        self.actionToMove = nil
+    end
 end
 
 -----------------------------------
@@ -639,7 +811,7 @@ function BottomMenu:getQueue(inputArea)
     if inputArea == "queue" then
         return self.queue.actions
     elseif inputArea == "loop" then
-        return self.queue.loopActions
+        return self.queue.loopActions[self.queue.loopPointer]
     elseif inputArea == "P1" then
         return self.queue.p1Actions
     elseif inputArea == "P2" then

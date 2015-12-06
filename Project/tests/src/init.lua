@@ -20,4 +20,3 @@ require "tests.src.test_programminggame.test_DrawRightMenu"
 require "tests.src.test_programminggame.test_Tile"
 
 require "tests.src.test_programminggame.test_Profile"
-

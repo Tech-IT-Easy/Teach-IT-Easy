@@ -89,6 +89,7 @@ function DrawRightMenu:drawHighlight(command)
     self:drawBox(255,192,0,203,212,214,xvalue,yvalue,command_width,command_height)
 
     self.image = gfx.loadpng(self:getFileName(command))
+    self.image:premultiply()
     screen:copyfrom(self.image, nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
     self.image:destroy()
 
@@ -108,6 +109,7 @@ function DrawRightMenu:drawRemoveHighlight(command)
     self:drawBox(34,59,94,203,212,214,xvalue,yvalue,command_width,command_height)
 
     self.image = gfx.loadpng(self:getFileName(command))
+    self.image:premultiply()
     screen:copyfrom(self.image, nil, { x = xvalue+6, y = yvalue+6, w=command_width-12, h = command_height-12 }, true)
     self.image:destroy()
 
@@ -178,6 +180,7 @@ end
 -------------------------------------
 function DrawRightMenu:addImage(command)
     self.image = gfx.loadpng(self:getFileName(command))
+    self.image:premultiply()
     local position= self:getPosition(command)
     local xvalue = first_column+((position-1)%3)*(command_width+row_spacing)+6
     local yvalue = first_row+math.floor((position-1)/3)*(command_height+col_spacing)+6
@@ -267,9 +270,17 @@ end
 -- layout.
 -- @author Tobias Lundell
 -------------------------------------
-function DrawRightMenu:addIfFalse()
-    self:drawFullRow(4,78,113,215)
+function DrawRightMenu:addIfFalse(preventFalse)
+    self:clearRow(4)
+    if (preventFalse == true) then
+        print ("preventFalse")
+        self:drawFullRow(4,135,156,161)
+    else
+        print ("don't preventFalse")
+        self:drawFullRow(4,78,113,215)
+    end
     command_play:draw_over_surface(screen, "0 If false")
+
 end
 
 function DrawRightMenu:addConfirm()
@@ -311,7 +322,7 @@ function DrawRightMenu:addOptions(can_enter)
 
     self:drawFullRow(4,78,113,215)
     command_10:draw_over_surface(screen, "4")
-    nr_10:draw_over_surface(screen, "Exit")
+    nr_10:draw_over_surface(screen, "Back")
 end
 
 -------------------------------------
@@ -341,20 +352,26 @@ end
 -- @author Vilhelm
 -------------------------------------
 function DrawRightMenu:preventRecursion(allow_if)
-    self:drawBox(34,59,94,135,156,161,first_column,first_row+(3-1)*(command_height+col_spacing),command_width,command_height)
-    self:drawBox(34,59,94,135,156,161,first_column+(command_width+row_spacing),first_row+(3-1)*(command_height+col_spacing),command_width,command_height)
+--Only on the loops now. Recursion enabled on procedures
+    --self:drawBox(34,59,94,135,156,161,first_column,first_row+(3-1)*(command_height+col_spacing),command_width,command_height)
+    --self:drawBox(34,59,94,135,156,161,first_column+(command_width+row_spacing),first_row+(3-1)*(command_height+col_spacing),command_width,command_height)
     self:drawBox(34,59,94,135,156,161,first_column+2*(command_width+row_spacing),first_row+(2-1)*(command_height+col_spacing),command_width,command_height)
-    self:addImage("P1")
-    self:addImage("P2")
+    --self:addImage("P1")
+    --self:addImage("P2")
     self:addImage("loop")
     command_6:draw_over_surface(screen, "6")
-    command_7:draw_over_surface(screen, "7")
-    command_8:draw_over_surface(screen, "8")
+    --command_7:draw_over_surface(screen, "7")
+    --command_8:draw_over_surface(screen, "8")
     if allow_if == false then
         self:drawBox(34,59,94,135,156,161,first_column+(command_width+row_spacing),first_row+(2-1)*(command_height+col_spacing),command_width,command_height)
         self:addImage("if-wall")
         command_5:draw_over_surface(screen, "5")
     end
+end
+
+function DrawRightMenu:preventIfFalse()
+    self:drawFullRow(4,135,156,161)
+    command_play:draw_over_surface(screen, "0 If false")
 end
 
 
@@ -364,7 +381,7 @@ end
 -- @author Vilhelm
 -------------------------------------
 function DrawRightMenu:clearRow(row)
-    self:drawBox(92,128,149,92,128,149,first_column-command_width*0.20,first_row+(row-1)*(command_height+col_spacing)-command_height*0.20,3*command_width+2*row_spacing+command_width*0.20,command_height*1.4)
+    self:drawBox(92,128,149,92,128,149,first_column-command_width*0.20,first_row+(row-1)*(command_height+col_spacing)-command_height*0.20,3*command_width+2*row_spacing+command_width*0.40,command_height*1.4)
 end
 
 -------------------------------------

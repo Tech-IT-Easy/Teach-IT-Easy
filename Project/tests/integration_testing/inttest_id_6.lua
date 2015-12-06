@@ -8,45 +8,50 @@
 
 lunit = require "lunit"
 module( "inttest_id_6", package.seeall, lunit.testcase )
-local event = require ("toolkit.Event")
 
 local SUT1 = 'games.Progg.Commands'
 local SUT2 = 'games.Progg.BuildArea'
 local SUT3 = 'games.Progg.Character'
 local SUT4 = 'games.Progg.Queue'
 
+function setup()
+    clear_mock()
+    event = require ("toolkit.Event")
+end
+
+
 --Corresponds to function bottomMenuEventHandler:update(object,eventListener,event)
 --in BottomMenu
 
-local function create_mock(class_to_mock)
-  -- unload the package if loaded to dissmiss previous mocks
-  package.loaded[class_to_mock] = nil
-  package.preload[class_to_mock] = nil
-  -- import lemock
-  local lemock = require 'lemock'
-  -- initiate mock controller
-  local mc = lemock.controller()
-  return mc
-end
-
-local function verify_mock(mc)
-  local status, err = pcall(function ()
-    -- Verify that the mocks has been called as stated.
-    mc:verify()
-  end)
-  if err then -- if error fail the test.
-    fail(err)
-  end
-end
-
-function setup()
-
-end
-
-function teardown()
-  package.loaded['games.Progg.Queue'] = nil
-  package.preload['games.Progg.Queue'] = nil
-end
+--local function create_mock(class_to_mock)
+--  -- unload the package if loaded to dissmiss previous mocks
+--  package.loaded[class_to_mock] = nil
+--  package.preload[class_to_mock] = nil
+--  -- import lemock
+--  local lemock = require 'lemock'
+--  -- initiate mock controller
+--  local mc = lemock.controller()
+--  return mc
+--end
+--
+--local function verify_mock(mc)
+--  local status, err = pcall(function ()
+--    -- Verify that the mocks has been called as stated.
+--    mc:verify()
+--  end)
+--  if err then -- if error fail the test.
+--    fail(err)
+--  end
+--end
+--
+--function setup()
+--
+--end
+--
+--function teardown()
+--  package.loaded['games.Progg.Queue'] = nil
+--  package.preload['games.Progg.Queue'] = nil
+--end
 
 
 --function test_update_queue()
@@ -119,10 +124,34 @@ end
 --end
 
 --Test if character moved according to the added procedure
+
+-------------------------------------
+-- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Adding procedure with commands to Queue from BottomMenu by simulating key presses.
+-- Then executing queue from BottomMenu by using Character functions.
+-- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
+-- @author name: Andreas
+-------------------------------------
 function test_execute_queue_3()
+    local levelData = require('games.Progg.levels.ProggLevels'):new()
+    local leveldata = levelData:getProggLevels()
+    local GameProgress = require('toolkit.GameProgress')
+
+    local context_sim = {}
+    context_sim.profile={}
+    context_sim.profile.images={}
+    context_sim.profile.images.UP='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.DOWN='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.RIGHT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.images.LEFT='data/avatar/cute_robot/UP.png'
+    context_sim.profile.gameprogress = GameProgress:new("test_avatar")
+
     local test = require("games.Progg.BottomMenu")
     local commands = require('games.Progg.Commands')
-    local bottommenu = test:new({["queue"] = 16, ["loop"] = 11, ["P1"] = 13, ["P2"] = 16 },nil)
+
+    leveldata[4].mapData = "9acfffff5f3cffff5ff7ffff5fffffff7fffffff"
+
+    local bottommenu = test:new(leveldata[4],context_sim)
     local test_event
     local bm_queue
     local test_command

@@ -82,6 +82,10 @@ function PlatformContext:createNewMenu()
   if self.platformMenu == nil then
     self.platformMenu = PlatformMenu:new()
     self.platformEventListener:attach(self.platformMenu)
+    local newview = {}
+    table.insert(newview, "selectlevel")
+    table.insert(newview, self.profile.name)
+    self.platformMenu:changeview(newview)
     self.platformMenu:show()
   end
 end

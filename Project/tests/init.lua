@@ -1,5 +1,6 @@
 require "luacov"
 require "tests.mock_emulator"
+require "tests.clear_mocks"
 
 -- Put your files after this line:
 require "tests.src"

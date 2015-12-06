@@ -78,10 +78,8 @@ data:getWidth(mec.ANYARGS) ; mec:returns(50) :anytimes()
 data:getDimensions(mec.ANYARGS) ; mec:returns(50, 50) :anytimes()
 data:setPixel(mec.ANYARGS) ; mec:returns(nil) :anytimes()
 data:getPixel(mec.ANYARGS) ; mec:returns(0,0,0,0) :anytimes()
-
 local canvas_data = mec:mock()
 canvas_data:getImageData(mec.ANYARGS) ; mec:returns(data) :anytimes()
-
 newCanvas(mec.ANYARGS) ; mec:returns(canvas_data) :anytimes()
 newImageData(mec.ANYARGS) ; mec:returns(data) :anytimes()
 newFileData(mec.ANYARGS) ; mec:returns(data) :anytimes()
@@ -89,6 +87,89 @@ getColor(mec.ANYARGS) ; mec:returns(0,0,0,0) :anytimes()
 newImage(mec.ANYARGS) ; mec:returns(data) :anytimes()
 getTime(mec.ANYARGS) ; mec:returns(0.1) :anytimes()
 nil_returner(mec.ANYARGS) ; mec:returns(nil) :anytimes()
+
+local Network = mec:mock()
+package.loaded['toolkit.Network'] = nil -- need to delete the package where the function is taken from.
+package.preload['toolkit.Network'] = function () -- Create preload. When the program wants to include love. This function will run instead
+    local toolkit = {}
+    toolkit.Network = Network
+    return Network
+end
+
+Network.new(Network) ; mec:returns(nil) :anytimes()
+Network.getFirstname(Network,mec.ANYARGS) ; mec:returns("testname") :anytimes()
+Network.getProgress(Network, mec.ANYARGS) ; mec:returns({level = 8, proggGameLoopLevel = true, proggGameProcLevel= true, proggGameIfLevel = true, proggGameMasterProc = false }) :anytimes()
+Network.getLevels(Network, mec.ANYARGS) ; mec:returns(
+    {
+        {
+            level = 1, maxCommands = {["queue"] = 8, ["loop"] = 16, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "dfffffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 1, levelStartPosition = 33, objectives = {}
+        },
+        {
+            level = 2, maxCommands = {["queue"] = 8, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "ffffffffffffffff9aefffff5fffffff7fffffff", levelGoalPosition = 19, levelStartPosition = 33, objectives = {}
+        },
+        {
+            level = 3, maxCommands = {["queue"] = 16, ["loop"] = 0, ["P1"] = 0, ["P2"] = 0, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "fffffffffffffffff9efffff96ffffff7fffffff", levelGoalPosition = 19, levelStartPosition = 33, objectives = {26}
+        },
+        {
+            level = 4, maxCommands = {["queue"] = 4, ["loop"] = 0, ["P1"] = 8, ["P2"] = 8, ["if-wall"] = 0, ["if-not-wall"] = 0 }, mapData = "9aefffff5fffffff5fffffff5fffffff7fffffff", levelGoalPosition = 3, levelStartPosition = 33, objectives = {}
+        },
+        {
+            level = 5, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9aaaaacf59aaac5f55baa65f53aaaa6f7fffffff", levelGoalPosition = 19, levelStartPosition = 33, objectives = {}
+        },
+        {
+            level = 6, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "fffffffff9aa8acff5ff5f7ff7ff5fffffff7fff", levelGoalPosition = 26, levelStartPosition = 37, objectives = {23}
+        },
+        {
+            level = 7, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "fffd9acff9c55f5ff5555f5ff5322a6ff7ffffff", levelGoalPosition = 7, levelStartPosition = 34, objectives = {4,31}
+        },
+        {
+            level = 8, maxCommands = {["queue"] = 16, ["loop"] = 16, ["P1"] = 16, ["P2"] = 16, ["if-wall"] = 16, ["if-not-wall"] = 16 }, mapData = "9ac9cf9c5f553a655f10ae945f559a653a632aa6", levelGoalPosition = 17, levelStartPosition = 35, objectives = {40,22,14}
+        }
+
+    }) :anytimes()
+
+package.loaded['socket'] = nil -- need to delete the package where the function is taken from.
+package.preload['socket'] = function () -- Create preload. When the program wants to include love. This function will run instead
+  local Socket = {}
+  return Socket
+end
+
+package.loaded['socket.http'] = nil -- need to delete the package where the function is taken from.
+package.preload['socket.http'] = function () -- Create preload. When the program wants to include love. This function will run instead
+  local Socket = {}
+  return Socket
+end
+
+package.loaded['ltn12'] = nil -- need to delete the package where the function is taken from.
+package.preload['ltn12'] = function () -- Create preload. When the program wants to include love. This function will run instead
+  local Socket = {}
+  return Socket
+end
+
+function new_freetype(fontColor, fontSize, drawingStartPoint, fontPath)
+  local freetype = freetype(fontColor, fontSize, drawingStartPoint, fontPath)
+  return freetype;
+end
+
+local sys_data = mec:mock()
+local sys_return = mec:mock()
+local return_time = mec:mock()
+package.loaded['SDK.Simulator.sys'] = nil -- need to delete the package where the function is taken from.
+package.preload['SDK.Simulator.sys'] = function () -- Create preload. When the program wants to include love. This function will run instead
+  local sys = {}
+  sys.new_timer = sys_data
+  sys.time = return_time
+  sys.stop = nil_returner
+  sys.root_path = love.filesystem.getUserDirectory()
+  sys.new_player = nil_returner
+  sys.new_freetype = new_freetype
+  return sys
+end
+
+sys_data(mec.ANYARGS) ; mec:returns(sys_return) :anytimes()
+sys_return:stop(mec.ANYARGS); mec:returns(nil_returner) : anytimes()
+return_time(mec.ANYARGS) ; mec:returns(1) :anytimes()
+
 mec:replay() -- Tells "now we start testing the code"
 _G.love = require "love"
 _G.ADConfig = require("Config.ADConfig")

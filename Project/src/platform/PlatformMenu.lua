@@ -23,6 +23,16 @@ local ChooseAvatar = require('menus.ChooseAvatar')
 local TrophyRoom = require('menus.TrophyRoom')
 local Instructions = require('menus.Instructions')
 local SelectLevel = require('menus.SelectLevel')
+local UpdateAvatar = require('menus.UpdateAvatar')
+local UpdateName = require('menus.UpdateName')
+local Settings = require('menus.Settings')
+local Profile = require('platform.Profile')
+
+profiles = {}
+table.insert(profiles, Profile:new("Knatte", 'data/avatar/cute_robot/DOWN.png', "/cute_robot/"))
+table.insert(profiles, Profile:new("Fnatte", 'data/avatar/insect_robot/DOWN.png', "/insect_robot/"))
+table.insert(profiles, Profile:new("Tjatte", 'data/avatar/strong_robot/DOWN.png', "/strong_robot/"))
+
 
 -----------------------------------------------------------
 -- Constructor method
@@ -70,7 +80,10 @@ function PlatformMenu:loadviews()
         chooseavatar = ChooseAvatar,
         trophy = TrophyRoom,
         instructions = Instructions,
-        selectlevel = SelectLevel
+        selectlevel = SelectLevel,
+        settings = Settings,
+        updatename = UpdateName,
+        updateavatar = UpdateAvatar
     }
     collectgarbage()
 end
@@ -83,7 +96,7 @@ end
 function PlatformMenu:changeview(newview)
     self.currentview = self.views[newview[1]]:new()
     screen:copyfrom(background, nil, { x = 0, y = 0, w = screen:get_width(), h = screen:get_height() }, true)
-    self.currentview:loadview(newview[2])
+    self.currentview:loadview()
     collectgarbage()
 end
 

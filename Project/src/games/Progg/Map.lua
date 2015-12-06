@@ -9,6 +9,7 @@
 local Object = require('toolkit.Object')
 local Tile = require('games.Progg.Tile')
 local Map = extends(Object)
+skin = require('games.Progg.progg_skin')
 
 
 Map.UP = 0
@@ -29,7 +30,6 @@ Map.OBJECTIVECOLOR = { g = 9, r = 115, b = 13 }
 function Map:new(context)
     local o = Map:super()
     o.context = context
-
     return Map:init(o)
 end
 
@@ -41,6 +41,12 @@ end
 -------------------------------------
 function Map:load(levelData)
     -- implement parameter with mapdata
+    self.levelNmb = levelData.level
+
+
+    -- test
+
+
 
     self.background = gfx.loadpng('data/game_background_small.png')
 
@@ -98,8 +104,8 @@ function Map:load(levelData)
     end
 
 
-    self.goalPos = 20
-    self.startPos = 33
+    self.goalPos = levelData.levelGoalPosition
+    self.startPos = levelData.levelStartPosition
     self.charPos = self.startPos
 
     --Loop builds map
@@ -118,6 +124,13 @@ function Map:load(levelData)
     for i = 1, #self.objectives, 1 do
         self:printObjective(self.objectives[i])
     end
+
+
+       -- screen:clear({  r = 255, g = 255, b = 255}, { x = screen:get_width()*0.05 , y = screen:get_height()*0.1, w = screen:get_width()*0.65, h = screen:get_height()*0.46 })
+
+    self:level_indicator("level "..self.levelNmb);
+
+
 end
 
 
@@ -253,6 +266,8 @@ function Map:moveCharacter(x, y, direction)
 
     if pos == self.startPos then
         self:setStart(pos)
+    elseif pos == self.goalPos then
+        self:setGoal(pos)
     elseif isObjective then
         self:printObjective(pos)
     else
@@ -302,6 +317,9 @@ function Map:restartCharacter(x, y)
     local pos = self:getPosition(x, y)
     if pos == self.startPos then
         self:setStart(self.startPos)
+
+    elseif pos == self.goalPos then
+        self:setGoal(self.goalPos)
     else
         self:square(pos, self.tiles[pos])
     end
@@ -328,12 +346,16 @@ function Map:setCharacter(i, direction)
     self.image1:premultiply()
     if direction == Map.UP then
         self.image1 = gfx.loadpng(images.UP)
+        self.image1:premultiply()
     elseif direction == Map.DOWN then
         self.image1 = gfx.loadpng(images.DOWN)
+        self.image1:premultiply()
     elseif direction == Map.RIGHT then
         self.image1 = gfx.loadpng(images.RIGHT)
+        self.image1:premultiply()
     elseif direction == Map.LEFT then
         self.image1 = gfx.loadpng(images.LEFT)
+        self.image1:premultiply()
     end
 
     screen:copyfrom(self.image1, nil, {
@@ -463,6 +485,43 @@ function Map:drawRightBorder(xPos, yPos)
     xPos = xPos + self.boxheight - self.borderthickness
     screen:clear({ g = 255, r = 255, b = 255 }, { x = xPos, y = yPos, w = self.borderthickness, h = self.boxheight })
 end
+
+function Map:winMessage()
+    screen:clear({  r = 255, g = 255, b = 255}, { x = screen:get_width()*0.05 , y = screen:get_height()*0.1, w = screen:get_width()*0.65, h = screen:get_height()*0.46 })
+    screen:clear({ r = 78, g = 113, b = 215  }, { x = screen:get_width()*0.07 , y = screen:get_height()*0.13, w = screen:get_width()*0.61, h = screen:get_height()*0.4 })
+    self.image = gfx.loadpng("data/trophy_active.png")
+    self.image:premultiply()
+    screen:copyfrom(self.image, nil, { x = screen:get_width()*0.52, y = screen:get_height()*0.18, w=screen:get_width()*0.18, h = screen:get_height()*0.3 }, true)
+    self.image:destroy()
+    win_1:draw_over_surface(screen, "Congratulations!")
+    win_2:draw_over_surface(screen, "You Have Completed")
+    win_3:draw_over_surface(screen, "Level " .. self.levelNmb)
+    win_4:draw_over_surface(screen, "Press OK To Continue")
+    collectgarbage()
+end
+
+function Map:drawTrophy()
+    --self.image = gfx.loadpng("trophy_active")
+    --screen:copyfrom(self.image, nil, { x = screen:get_width()*0.5, y = screen:get_height()*0.15, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+    self.image:destroy()
+
+    collectgarbage()
+end
+
+
+function Map:level_indicator(level)
+    level_indicator:draw_over_surface(screen, level)
+    collectgarbage()
+end
+
+
+
+
+
+
+
+
+
 
 return Map
 
