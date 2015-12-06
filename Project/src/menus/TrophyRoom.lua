@@ -324,9 +324,12 @@ function TrophyRoom:printProgressionBar()
     local bar = screen:get_width() - (padding * 2)
     local bluebar = bar * (finishedLevels / self.totalLevels)
     local whitebar = bar - bluebar
-
-    screen:clear({ g = 131, r = 0, b = 143 }, { x = padding, y = screen:get_height() * 0.351, w = bluebar, h = screen:get_height() * 0.0308 })
-    screen:clear({ g = 255, r = 255, b = 255 }, { x = padding + bluebar, y = screen:get_height() * 0.351, w = whitebar, h = screen:get_height() * 0.0308 })
+    if bluebar > 0 then
+        screen:clear({ g = 131, r = 0, b = 143 }, { x = padding, y = screen:get_height() * 0.351, w = bluebar, h = screen:get_height() * 0.0308 })
+    end
+    if whitebar > 0 then
+        screen:clear({ g = 255, r = 255, b = 255 }, { x = padding + bluebar, y = screen:get_height() * 0.351, w = whitebar, h = screen:get_height() * 0.0308 })
+    end
 end
 
 return TrophyRoom
