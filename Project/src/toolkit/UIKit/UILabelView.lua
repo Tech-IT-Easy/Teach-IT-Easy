@@ -11,7 +11,7 @@ local UILabelView = extends(UIView)
 
 --@member static constant 
 UILabelView.FONT_GROBOLD = 'data/GROBOLD.ttf'
-UILabelView.FONT_CHALKDUSTER = 'Chalkduster.ttf'
+UILabelView.FONT_CHALKDUSTER = 'data/Chalkduster.ttf'
 
 function UILabelView:new(args)
   --@member container which contains this LabelView,default nil which means whole window
