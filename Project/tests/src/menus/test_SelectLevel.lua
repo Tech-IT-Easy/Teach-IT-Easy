@@ -53,6 +53,7 @@ function test_loadview()
     a.lastpos = 1
     a.username = input
     a.unlockedLevels = 5
+
     a:renderui(5)
 
     verify_mock(mc)
