@@ -74,7 +74,7 @@ function Games:renderui()
   self.proggGameImage = gfx.loadpng(proggGameURL)
   self.proggGameImage:premultiply()
 
-  local anotherGameURL = "data/MysteryPicture.png"
+  local anotherGameURL = "data/tie24_reading.png"
   self.anotherGameImage = gfx.loadpng(anotherGameURL)
   self.anotherGameImage:premultiply()
 
