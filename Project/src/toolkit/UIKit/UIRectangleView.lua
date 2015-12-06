@@ -1,5 +1,11 @@
 local UIView = require("toolkit.UIKit.UIView")
 local UIRectangleView = extends(UIView)
+local script_path = nil
+if ADConfig.isSimulator then
+  script_path = ""
+else
+  script_path = sys.root_path()
+end
 
 function UIRectangleView:new(args)
   local o = UIRectangleView:super{frame=args.frame,container=args.container}
@@ -30,7 +36,7 @@ function UIRectangleView:new(args)
       x = o.globalFrame.x + o.labelPosition.x,
       y = o.globalFrame.y + o.labelPosition.y
     }
-    o.labelData = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,o.label.font)
+    o.labelData = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,script_path..o.label.font)
   end
   return UIRectangleView:init(o)
 end
@@ -57,7 +63,7 @@ function UIRectangleView:updateLabelPosition()
       x = self.globalFrame.x + self.labelPosition.x,
       y = self.globalFrame.y + self.labelPosition.y
     }
-    self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,self.label.font)
+    self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,script_path..self.label.font)
   end
 end
 -- show the button on specific position
