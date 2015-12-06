@@ -10,8 +10,14 @@ local UIView = require("toolkit.UIKit.UIView")
 local UILabelView = extends(UIView)
 
 --@member static constant 
-UILabelView.FONT_GROBOLD = 'data/GROBOLD.ttf'
-UILabelView.FONT_CHALKDUSTER = 'data/Chalkduster.ttf'
+
+if ADConfig.isSimulator then
+  script_path = ""
+else
+  script_path = sys.root_path()
+end
+UILabelView.FONT_GROBOLD = script_path..'data/GROBOLD.ttf'
+UILabelView.FONT_CHALKDUSTER = script_path..'data/Chalkduster.ttf'
 
 function UILabelView:new(args)
   --@member container which contains this LabelView,default nil which means whole window
