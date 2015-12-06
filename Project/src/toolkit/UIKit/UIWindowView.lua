@@ -18,49 +18,102 @@ function UIWindowView:new(args)
   --@member delegate for events process
   --o.footbarHeight = args.footbarHeight or 20
   --o.footbar = UIPanelView:new{frame={x = 0,y = self.frame.h-o.footbarHeight,w = self.frame.w,h = o.footbarHeight},container = o}
-  o.focusList = List:new()
+  o.horizontalFocusConfig = List:new()
+  o.verticalFocusConfig = List:new()
+  o.shortcuts = {}
   o.focusingView = nil
-  self:canvas()
   return UIWindowView:init(o)
 end
 
-function UIWindowView:addView(view,weight)
+function UIWindowView:addChildView(view)
+  assert(view,"UIWindowView:addChildView(view),error: view is nil")
   self.body:addChildView(view)
-  self:addToFocusHeap(view,weight)
-  if(self.focusList.currentNode ~= nil) then
-    self.focusingView = self.focusList:currentNode().view
+end
+
+
+-- private 
+-- comparator between two nodes,when node1<=node2 return -1  
+local function compare(node1,node2)
+  if node1.value.focusWeight > node2.value.focusWeight then
+    return  1
+  elseif node1.value.focusWeight < node2.value.focusWeight then
+    return -1
+  else
+    return 0
   end
 end
 
-function UIWindowView:canvas()
---code
+local function compareView(node1,node2)
+  if node1.value.view == node2.value.view then
+    return 0
+  else
+    return 1
+  end
 end
 
-function UIWindowView:addToFocusHeap(view,weight)
-  if (view.enableFocus == nil or view.enableFocus== false) and view.children == nil then
-    return
-  elseif (view.enableFocus == true) then
-    local node = ListNode:new{view=view,focusWeight=weight}
+function UIWindowView:setFocusWeight(args)
+  assert(args,"UIWindowView:setFocusWeight({view=view,hWeight=hWeight,vWeight=vWeight}),error: args is nil")
+  assert(args.view and args.view.enableFocus,"UIWindowView:setFocusWeight({view=view...}),error: view is nil or view.enableFocus is false ")
+  assert(args.hWeight or vWeight,"UIWindowView:setFocusWeight({view=view,hWeight=hWeight,vWeight=vWeight}),error: hWeight and vWeight are both nil")
+
+  if args.hWeight then
+    local node = ListNode:new{view=args.view,focusWeight=args.hWeight}
+    self.horizontalFocusConfig:push(node,compare)
+  end
+  
+  if args.vWeight then
+    local node = ListNode:new{view=args.view,focusWeight=args.vWeight}
+    self.verticalFocusConfig:push(node,compare)
+  end
+  
+  ADLogger.trace("UIWindowView:setFocusWeight({view=view,hWeight="..(args.hWeight or "nil")..",vWeight="..(args.vWeight or "nil")..")")
+end
+
+function UIWindowView:setFocusView(view)
+  assert(view,"UIWindowView:setFocusView(view),error: view is nil")
+  assert(self.horizontalFocusConfig.currentNode or self.verticalFocusConfig.currentNode,"UIWindowView:setFocusView(view),error: never set any weight with setFocusWeight method")
+  local node = ListNode:new{view=view,focusWeight=nil}
+  
+  if self.horizontalFocusConfig.current then
+    self.horizontalFocusConfig:setCurrentNode(node,compareView)
+  end
+  
+  if self.verticalFocusConfig.current then
+    self.verticalFocusConfig:setCurrentNode(node,compareView)
+  end 
+  
+  self.focusingView = self.horizontalFocusConfig:currentNode().view
+  
+  ADLogger.trace("UIWindowView:setFocusView(view)")
+end
+
+
+function UIWindowView:setShortcutKey(view,key)
+  assert(view and view.enableFocus,"UIWindowView:setShortcutKey(view,"..key.."), error:view is nil or view.enableFocus is false")
+  assert(self.shortcuts[key]==nil,"UIWindowView:setShortcutKey(view,"..key.."), error:repeated key")
+  
+  self.shortcuts[key] = view
+  
+  ADLogger.trace("setShortcutKey(view,"..key..")")
+end
+
+function UIWindowView:moveTofocusByKey(key)
+  if self.shortcuts[key] then
+    assert(self.horizontalFocusConfig.first,"UIWindowView:moveTofocusByKey("..key.."),error: no enable focused view in current window ")
     
-    -- comparator between two nodes,when node1<=node2 return -1
-    function compare(node1,node2)
-      return (((node1.value.focusWeight > node2.value.focusWeight) and 1) or -1)
-    end
-    -- end comparator definition
-    self.focusList:push(node,compare)
-  elseif view.children ~= nil then
-    local views = view:getChildViews()
-    for _,v in pairs(views) do
-      self:addToFocusHeap(v,weight)
-      print("recursive")
-    end
+    self.focusingView:unFocused()
+    self.focusingView = self.shortcuts[key]
+    local node = ListNode:new{view=self.focusingView,focusWeight=nil}
+    self.horizontalFocusConfig:setCurrentNode(node,compareView)
+    self.verticalFocusConfig:setCurrentNode(node,compareView)
+    ADLogger.trace("UIWindowView:moveTofocusByKey("..key..")")
   end
 end
 
 function UIWindowView:show()
-  
-  self.focusingView:focused()
-  
+  if self.focusingView then
+    self.focusingView:focused()
+  end
   -- now we only have body
   self.body:show()
   -- draw title somewhere...
@@ -70,37 +123,59 @@ end
 function UIWindowView:moveToPreFocus()
   if self.focusingView then
     self.focusingView:unFocused()
-    self.focusingView = self.focusList:preNode().view
+    local node = self.horizontalFocusConfig:preDifferNode(compare)
+    self.focusingView = node.value.view
+    self.verticalFocusConfig:setCurrentNode(node,compareView)
   end
 end
 
 function UIWindowView:moveToNextFocus()
   if self.focusingView then
     self.focusingView:unFocused()
-    self.focusingView = self.focusList:nextNode().view
+    local node = self.horizontalFocusConfig:nextDifferNode(compare)
+    self.focusingView = node.value.view
+    self.verticalFocusConfig:setCurrentNode(node,compareView)
   end
 end
 
---[[
-function UIWindowView:interestInEvent(event)
-  return true
-end
-
------------------------------------------------------------
--- Get event inform form listener
--- @listener which is the listener who send notify message,
---           it is kept for future extention
--- @event which will be judged
------------------------------------------------------------
-function UIWindowView:process(listener,event)
-  if event.key == Event.KEY_LEFT and event.state == Event.KEY_STATE_DOWN then
-    self:moveToPreFocus()
-  elseif event.key == Event.KEY_RIGHT and event.state == Event.KEY_STATE_DOWN then
-    self:moveToNextFocus()
-  elseif event.key == Event.KEY_OK and event.state == Event.KEY_STATE_DOWN then
-    self.delegate:onOKEvent(focusingView)
+function UIWindowView:moveToUpFocus()
+  if self.focusingView then
+    self.focusingView:unFocused()
+    local node = self.verticalFocusConfig:preDifferNode(compare)
+    self.focusingView = node.value.view
+    self.horizontalFocusConfig:setCurrentNode(node,compareView)
   end
 end
-]]-- move to controller
 
+function UIWindowView:moveToDownFocus()
+  if self.focusingView then
+    self.focusingView:unFocused()
+    local node = self.verticalFocusConfig:nextDifferNode(compare)
+    self.focusingView = node.value.view
+    self.horizontalFocusConfig:setCurrentNode(node,compareView)
+  end
+end
+
+
+
+
+ --[[
+-- private
+function UIWindowView:addToFocusHeap(view,weight)
+    local node = ListNode:new{view=view,focusWeight=weight}
+    -- comparator between two nodes,when node1<=node2 return -1
+    function compare(node1,node2)
+      return (((node1.value.focusWeight > node2.value.focusWeight) and 1) or -1)
+    end
+    -- end comparator definition
+    self.horizontalFocusConfig:push(node,compare)
+ 
+  elseif view.children ~= nil then
+    local views = view:getChildViews()
+    for _,v in pairs(views) do
+      self:addToFocusHeap(v,weight)
+    end
+  end
+end
+]]--
 return UIWindowView

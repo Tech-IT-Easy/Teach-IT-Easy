@@ -46,6 +46,62 @@ function List:push(listNode,comp)
 
   self.current = self.first
 end
+
+
+-- performance is slow
+function List:reset(listNode,comp)
+  local v = self:getNodeByValue(listNode)
+  if v then
+    remove(listNode)
+  end
+  self:push(listNode,comp)
+end
+
+function List:remove(listNode)
+  if listNode then
+    if self.first == self.last then
+      self.first = nil
+      self.last = nil
+      self.current = nil
+    else
+      if listNode == self.current then
+        self.current = self.current.next
+      end
+      listNode.pre.next = listNode.next
+      listNode.next.pre = listNode.pre
+    end
+  end
+end
+
+function List:getNodeByValue(node,comp)
+  if self.first == nil then
+    return nil
+  end
+  
+  if comp(self.last,node)==0 then
+    return self.last
+  end
+  
+  local iter = self.first
+  while (iter ~= self.last) and comp(iter,node)~=0 do
+    iter = iter.next
+  end
+  if comp(iter,node)==0 then
+    return iter
+  end
+  
+  return nil
+end
+
+
+function List:setCurrentNode(node,comp)
+  assert(self.first,"List:setCurrentNode(view),error: list is null")
+  local v = self:getNodeByValue(node,comp)
+  assert(v,"List:setCurrentNode(view),error: view is not found")
+  self.current = v
+end
+
+
 function List:currentNode()
   return self.current.value;
 end
@@ -53,6 +109,31 @@ function List:nextNode()
   self.current = self.current.next
   return self.current.value
 end
+
+function List:nextDifferNode(comp)
+  local currentPre = self.current.pre
+  local iter = self.current
+  while ((iter~=currentPre) and (comp(iter,iter.next)==0)) do
+    iter = iter.next
+  end
+  
+  self.current = iter.next
+  return self.current
+end
+
+function List:preDifferNode(comp)
+  local currentNext = self.current
+  local iter = self.current.pre
+  
+   
+  while ((iter~=currentNext) and (comp(iter,iter.pre)==0)) do
+    iter = iter.pre
+  end
+  
+  self.current = iter
+  return self.current
+end
+
 
 function List:preNode()
   self.current = self.current.pre
