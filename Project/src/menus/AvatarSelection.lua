@@ -51,7 +51,7 @@ function AvatarSelection:loadview(input)
   self.image2:premultiply()
   self.image3 = gfx.loadpng('data/avatar/strong_robot/DOWN.png')
   self.image3:premultiply()
-  self.image4 = gfx.loadpng('data/avatar/insect_robot/UP.png')
+  self.image4 = gfx.loadpng('data/avatar/fourth_robot/DOWN.png')
   self.image4:premultiply()
   self.myimages = { self.image1, self.image2, self.image3, self.image4 }
   self:renderui()
