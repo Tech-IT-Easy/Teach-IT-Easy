@@ -7,6 +7,12 @@
 local UIDefaultTheme = require("toolkit.UIKit.UIDefaultTheme")
 local UIView = require("toolkit.UIKit.UIView")
 local UIButtonView = extends(UIView)
+local script_path = nil
+if ADConfig.isSimulator then
+  script_path = ""
+else
+  script_path = sys.root_path()
+end
 
 -- args = {frame={x=1,y=1,w=50,h=50},}
 function UIButtonView:new(args)
@@ -51,7 +57,7 @@ function UIButtonView:new(args)
       x = o.globalFrame.x + o.labelPosition.x,
       y = o.globalFrame.y + o.labelPosition.y
     }
-    o.labelData = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,o.label.font)
+    o.labelData = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,script_path..o.label.font)
   end
 
   return UIButtonView:init(o)
@@ -75,7 +81,7 @@ function UIButtonView:afterUpdateGlobalFrame()
       x = self.globalFrame.x + self.labelPosition.x,
       y = self.globalFrame.y + self.labelPosition.y
     }
-    self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,self.label.font)
+    self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,script_path..self.label.font)
   end
 end
 

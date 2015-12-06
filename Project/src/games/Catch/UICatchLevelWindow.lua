@@ -52,6 +52,7 @@ function UICatchLevelWindow:new()
   
   window:addChildView(window.menuPanel)]]--
   window:addChildView(window.title)
+  
   window.button = UIButtonView:new{frame={x=50,y=50,w=100,h=100},borderColor={g=255, r=255, b=255, a=255},borderWidth = 16,backgroundImage=nil}
   window:addChildView(window.button)
   
