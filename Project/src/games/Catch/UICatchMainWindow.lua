@@ -44,10 +44,10 @@ function UICatchMainWindow:new()
   window.mainPanel = UIPanelView:new{frame={x=0, y = 0,w = screen:get_width()*proportion,h=screen:get_height()*proportion},backgroundImage=gameBackground }
   window.thief = People:new{frame=THEME.FRAME.THIEF,image=thiefImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
   window.cop = People:new{frame=THEME.FRAME.COP,image=copImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
-  window.tryCountLabelView = UILabelView:new{frame={x=20,y=20,w=0,h=0},label=UILabel:new{text="20 / 20",color=THEME.COLOR.WHITE,size=30,font=UILabel.FONT_GROBOLD}}
+  --window.tryCountLabelView = UILabelView:new{frame={x=20,y=20,w=0,h=0},label=UILabel:new{text="20 / 20",color=THEME.COLOR.WHITE,size=30,font=UILabel.FONT_GROBOLD}}
   window.mainPanel:addChildView(window.thief)
   window.mainPanel:addChildView(window.cop)
-  window.mainPanel:addChildView(window.tryCountLabelView)
+  --window.mainPanel:addChildView(window.tryCountLabelView)
   --[[window.rightPanel = UIPanelView:new{frame={x=screen:get_width()*proportion,y=0,w=screen:get_width()*(1-proportion),h=screen:get_height()*proportion},backgroundColor=THEME.COLOR.LIGHT_GRAY }
   window.collectionPanel = UICollectionView:new{frame={x=0,y=80,w=screen:get_width()*(1-proportion),h=screen:get_width()*(1-proportion)},space=10,cols=THEME.MENU.COLUMNS,rows=THEME.MENU.ROWS,backgroundColor=THEME.COLOR.LIGHT_GRAY}
   window.wordImageView = UIImageView:new{image=nil,frame={x=10,y=window.collectionPanel.frame.h+100,w=window.rightPanel.frame.w-40,h=window.rightPanel.frame.w-40}}
@@ -158,7 +158,7 @@ local function copy(obj)
 end
 
 function UICatchMainWindow:setPlayers()
-  assert(self.correctWord,"UICatchMainWindow:setGuessWordBox, self.correctWord is nil")
+  --assert(self.correctWord,"UICatchMainWindow:setGuessWordBox, self.correctWord is nil")
   -- initialize players
   
   

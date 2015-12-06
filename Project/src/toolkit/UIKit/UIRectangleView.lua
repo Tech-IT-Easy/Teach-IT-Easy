@@ -1,5 +1,6 @@
 local UIView = require("toolkit.UIKit.UIView")
 local UIRectangleView = extends(UIView)
+
 local script_path = nil
 if ADConfig.isSimulator then
   script_path = ""
