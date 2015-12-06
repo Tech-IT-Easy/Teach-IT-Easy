@@ -9,24 +9,24 @@ local Event = require('toolkit.Event')
 local UICatchMainWindowController = extends(UIWindowViewController)
 
 function UICatchMainWindowController:new(args)
-  
+
   local o = UICatchMainWindowController:super(UICatchMainWindow:new())
   --assert(args and args.game,"UICatchMainWindowController:new:error game parameter is nil")
   o.game = args.game
   o.levels = o.game.levels
   o.currentLevel = tonumber(args.level)
-  
-  function o:initialize(flag)
-    --o.characters = based on letter, random some characters
-    o.correctWord = o.levels[o.currentLevel].word
-    o.maxNumberOfGuesses = o.levels[o.currentLevel].maxNumberOfGuesses
-    o.wordImage = o.levels[o.currentLevel].wordImage
-    o.numberOfGuesses = 0
-    o.numberOfCorrect = 0
-    o.correctChar = o.correctWord:sub(o.numberOfCorrect+1,o.numberOfCorrect+1)
-    
-    o.window:configure{correctWord=o.correctWord,wordImage=o.wordImage,maxNumberOfGuesses=o.maxNumberOfGuesses,currentLevel=o.currentLevel}
-    o.window:initialize()
+
+  function o:initialize()
+    --self.characters = based on letter, random some characters
+    self.correctWord = self.levels[self.currentLevel].word
+    self.maxNumberOfGuesses = self.levels[self.currentLevel].maxNumberOfGuesses
+    self.wordImage = self.levels[self.currentLevel].wordImage
+    self.numberOfGuesses = 0
+    self.numberOfCorrect = 0
+    self.correctChar = self.correctWord:sub(self.numberOfCorrect+1,self.numberOfCorrect+1)
+
+    self.window:configure{correctWord=self.correctWord,wordImage=self.wordImage,maxNumberOfGuesses=self.maxNumberOfGuesses,currentLevel=self.currentLevel}
+    self.window:initialize()
   end
   o:initialize()
   return UICatchMainWindowController:init(o)
@@ -52,69 +52,82 @@ function UICatchMainWindowController:updateWindowWords(number)
 end
 
 function UICatchMainWindowController:onClickEvent(sender)
-  keyLetter = sender.label.text
-  --print(sender.label.text)
-  if keyLetter then
-    self.numberOfGuesses = self.numberOfGuesses+1
-    -- identify whether it's correct
-    local flag = false
-    self.window:updateTryCountText(self.maxNumberOfGuesses-self.numberOfGuesses)
-    
-    -- if start for check letter
-    if self:checkLetter(keyLetter) == true then
-      flag = true
-      self.numberOfCorrect = self.numberOfCorrect + 1
-      self.window:updateWindowWords(self.numberOfCorrect)
-      if self.numberOfCorrect == string.len(self.correctWord) then
-        -- show another window to say success
-        if self.currentLevel == #self.levels then
-          self.game:alertWindowOpen{title="Congratulations, mission completed! ", OK="Exit",Cancel="Retry",
+local nextLevel = false
+  -- start  if sender and sender.label
+  if sender and sender.label then
+       keyLetter = sender.label.text
+    -- start  if keyletter is not nil
+    if keyLetter then
+      self.numberOfGuesses = self.numberOfGuesses+1
+      -- identify whether it's correct
+      local flag = false
+      self.window:updateTryCountText(self.maxNumberOfGuesses-self.numberOfGuesses)
+
+      -- if start for check letter
+      if self:checkLetter(keyLetter) == true then
+        flag = true
+        self.numberOfCorrect = self.numberOfCorrect + 1
+        self.window:updateWindowWords(self.numberOfCorrect)
+        -- start if self.numberOfCorrect == string.len(self.correctWord)
+        if self.numberOfCorrect == string.len(self.correctWord) then
+          -- start if self.currentLevel == #self.levels then
+          if self.currentLevel == #self.levels then
+            -- open Congratulations window to say success
+            self.game:alertWindowOpen{title="Congratulations, mission completed! ", OK="Exit",Cancel="Retry",
+              callback=function(sender)
+                if sender.identity=="OK" then
+                  self.game:exit()
+                else
+                  self.game:windowOpen{windowName="levelWindow"}
+                end
+              end
+            }
+            --end open Congratulations window
+          else  -- else if self.currentLevel ~= #self.levels then
+            -- open window
+            nextLevel = true--[[
+            self.game:alertWindowOpen{title="You win, Next level or Retry?", OK="Next",Cancel="Retry",
+              callback=function(sender)
+                if sender.identity=="OK" then
+                  self.currentLevel = self.currentLevel + 1
+                  self.window:updateLevelText(self.currentLevel)
+                  self:initialize()
+                else
+                  self:initialize()
+                end
+              end
+            }]]--
+            -- end open window
+          end -- end if self.currentLevel == #self.levels then
+        else  --else if self.numberOfCorrect ~= string.len(self.correctWord)
+          self.window:updateMenuLabels(self:getNextCorrectChar())
+        end
+        -- end if start for check letter
+     
+      elseif self.numberOfGuesses >= self.maxNumberOfGuesses then -- self:checkLetter(keyLetter) ~= false and self.numberOfGuesses >= self.maxNumberOfGuesses
+        self.game:alertWindowOpen{title="You failed,Do you want to try again?", OK="Again",Cancel="No",
           callback=function(sender)
             if sender.identity=="OK" then
-              self.game:exit()
-              return
+              self:initialize()
             else
               self.game:windowOpen{windowName="levelWindow"}
-              return
             end
           end
         }
-        else
-        self.game:alertWindowOpen{title="You win, Next level or Retry?", OK="Next",Cancel="Retry",
-          callback=function(sender)
-            if sender.identity=="OK" then
-              self.currentLevel = self.currentLevel + 1
-              self.window:updateLevelText(self.currentLevel)
-              self:initialize()
-              return
-            else
-              self:initialize()
-              return
-            end
-          end
-        }
-        end
-      else
-        self.window:updateMenuLabels(self:getNextCorrectChar())
       end
-    -- end if start for check letter
-    -- if start for check numberOfGuesses
-    elseif self.numberOfGuesses >= self.maxNumberOfGuesses then
-      self.game:alertWindowOpen{title="You failed,Do you want to try again?", OK="Again",Cancel="No",
-        callback=function(sender)
-          if sender.identity=="OK" then
-            self:initialize()
-            return
-          else
-            self.game:windowOpen{windowName="levelWindow"}
-            return
-          end
-        end
-      }
+      -- end self:checkLetter(keyLetter) ~= false 
+
+      if self.numberOfGuesses < self.maxNumberOfGuesses then
+        self.window.cop:run(flag)
+        self.window.thief:run()
+      end
     end
-    -- end if start for check numberOfGuesses
-    self.window.cop:run(flag)
-    self.window.thief:run()
+    -- end if keyletter is not nil
+  end
+  -- end if sender and sender.label
+  if nextLevel then
+    self:initialize()
+    print("next Level")
   end
 end
 

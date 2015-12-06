@@ -20,7 +20,7 @@ function UIAlertWindowView:new(args)
   
   -- create member UIView
   local titleLabel = UILabel:new{text=args.title,color=COLOR.RED,size=20,font=UILabel.FONT_GROBOLD}
-  window.titleLabelView = UILabelView:new{frame={x=20,y=50,w=200,h=80},label=titleLabel}
+  window.titleLabelView = UILabelView:new{identity="alterWindowTitleLabel",frame={x=20,y=50,w=200,h=80},label=titleLabel}
   
   local OKLabel = UILabel:new{text=args.OK or "OK",color=COLOR.DARK_GRAY,size=20,font=UILabel.FONT_GROBOLD}
   window.OKButton = UIButtonView:new{identity="OK",enableFocus = true,frame={x=200,y=10,w=80,h=30},borderWidth = 2,label=OKLabel,labelPosition={x=10,y=5}}

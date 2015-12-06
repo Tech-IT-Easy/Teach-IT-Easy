@@ -55,15 +55,16 @@ function UIButtonView:new(args)
   -- firstly change position relative to button frame
   if o.label then
     assert(args.identity,"UIButtonView:new(args), args.identity is nil")
-    assert(SystemFreeType[args.identity.."1"]==nil,"UIButtonView:new(args), args.identity exists")
+    --assert(SystemFreeType[args.identity.."1"]==nil,"UIButtonView:new(args), args.identity exists")
     o.freeTypeCount = 1
     
     o.labelAbsolutePosition = {
       x = o.globalFrame.x + o.labelPosition.x,
       y = o.globalFrame.y + o.labelPosition.y
     }
-    
-    SystemFreeType[o.identity..o.freeTypeCount] = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,script_path..o.label.font)
+    if SystemFreeType[o.identity..o.freeTypeCount] == nil then
+      SystemFreeType[o.identity..o.freeTypeCount] = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,script_path..o.label.font)
+    end
     o.labelData = SystemFreeType[o.identity..o.freeTypeCount]
   end
 
@@ -90,7 +91,9 @@ function UIButtonView:afterUpdateGlobalFrame()
     }
     
     self.freeTypeCount = self.freeTypeCount + 1
-    SystemFreeType[self.identity..self.freeTypeCount] = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,script_path..self.label.font)
+    if SystemFreeType[self.identity..self.freeTypeCount] == nil then
+      SystemFreeType[self.identity..self.freeTypeCount] = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,script_path..self.label.font)
+    end
     self.labelData = SystemFreeType[self.identity..self.freeTypeCount]
   end
 end

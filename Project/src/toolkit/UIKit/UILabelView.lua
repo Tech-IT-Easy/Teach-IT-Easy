@@ -27,10 +27,14 @@ function UILabelView:new(args)
   o.label = args.label
   --@member label data
   assert(args.identity,"UILabelView:new(args), args.identity is nil")
-  assert(SystemFreeType[args.identity.."1"]==nil,"UILabelView:new(args), args.identity exists")
+  --assert(SystemFreeType[args.identity.."1"]==nil,"UILabelView:new(args), args.identity exists")
+  
+  
   o.identity = args.identity
   o.freeTypeCount = 1
-  SystemFreeType[o.identity..o.freeTypeCount] = sys.new_freetype(o.label.color, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},script_path..o.label.font)
+  if SystemFreeType[o.identity..o.freeTypeCount] == nil then
+    SystemFreeType[o.identity..o.freeTypeCount] = sys.new_freetype(o.label.color, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},script_path..o.label.font)
+  end
   o.labelData = SystemFreeType[o.identity..o.freeTypeCount]--sys.new_freetype(o.label.color, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},script_path..o.label.font)
   
   return UILabelView:init(o)
@@ -42,7 +46,9 @@ end
 
 function UILabelView:afterUpdateGlobalFrame()
   self.freeTypeCount = self.freeTypeCount + 1
-  SystemFreeType[self.identity..self.freeTypeCount] = sys.new_freetype(self.label.color, self.label.size,{x = self.globalFrame.x,y = self.globalFrame.y},script_path..self.label.font)
+  if SystemFreeType[self.identity..self.freeTypeCount] == nil then
+    SystemFreeType[self.identity..self.freeTypeCount] = sys.new_freetype(self.label.color, self.label.size,{x = self.globalFrame.x,y = self.globalFrame.y},script_path..self.label.font)
+  end
   self.labelData = SystemFreeType[self.identity..self.freeTypeCount]
 end
 

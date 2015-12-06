@@ -19,9 +19,9 @@ function UICatchMainWindow:new()
   local window = UICatchMainWindow:super{title="Window Title"}
 
   -- private data model with <local>
-  local gameBackground = UIImage:new(THEME.IMAGE.GAME_BACKGROUND)
-  local thiefImage = UIImage:new(THEME.IMAGE.THIEF_BACKGROUND)
-  local copImage = UIImage:new(THEME.IMAGE.COP_BACKGROUND)
+  window.gameBackground = UIImage:new(THEME.IMAGE.GAME_BACKGROUND)
+  window.thiefImage = UIImage:new(THEME.IMAGE.THIEF_BACKGROUND)
+  window.copImage = UIImage:new(THEME.IMAGE.COP_BACKGROUND)
 
  -- member components
   window.enterEnable = false
@@ -41,9 +41,9 @@ function UICatchMainWindow:new()
   
   -- layout panel components
   local proportion = 0.8
-  window.mainPanel = UIPanelView:new{frame={x=0, y = 0,w = screen:get_width()*proportion,h=screen:get_height()*proportion},backgroundImage=gameBackground }
-  window.thief = People:new{frame=THEME.FRAME.THIEF,image=thiefImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
-  window.cop = People:new{frame=THEME.FRAME.COP,image=copImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
+  window.mainPanel = UIPanelView:new{frame={x=0, y = 0,w = screen:get_width()*proportion,h=screen:get_height()*proportion},backgroundImage=window.gameBackground }
+  window.thief = People:new{frame=THEME.FRAME.THIEF,image=window.thiefImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
+  window.cop = People:new{frame=THEME.FRAME.COP,image=window.copImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
   window.tryCountLabelView = UILabelView:new{identity="tryCountLabel",frame={x=20,y=20,w=0,h=0},label=UILabel:new{text="20 / 20",color=THEME.COLOR.WHITE,size=30,font=UILabel.FONT_GROBOLD}}
   window.mainPanel:addChildView(window.thief)
   window.mainPanel:addChildView(window.cop)
@@ -65,17 +65,17 @@ function UICatchMainWindow:new()
   
   -- layout right menu
   local textAlignCenterPosition = {x=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2,y=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2}
-  local labels = {}
-  local cells = {}
+  window.labels = {}
+  window.cells = {}
   for i = 1, THEME.MENU.ROWS do
     for j = 1, THEME.MENU.COLUMNS do
       local index = (i-1) * THEME.MENU.ROWS + j
-        labels[index] = UILabel:new{text='-',color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
-        window.buttons[index] = UIButtonView:new{identity="button"..index,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=labels[index],labelPosition=textAlignCenterPosition}
-        cells[index] = UICollectionCellView:new{view=window.buttons[index],viewType="UIButtonView" }
+        window.labels[index] = UILabel:new{text='-',color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
+        window.buttons[index] = UIButtonView:new{identity="button"..index,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=window.labels[index],labelPosition=textAlignCenterPosition}
+        window.cells[index] = UICollectionCellView:new{view=window.buttons[index],viewType="UIButtonView" }
         window:setShortcutKey(window.buttons[index], Event.formatSystemKey[""..index])
         window:setFocusWeight{view=window.buttons[index], hWeight=1, vWeight=1}
-        window.collectionPanel:fillWithCell(cells[index],i-1,j-1)
+        window.collectionPanel:fillWithCell(window.cells[index],i-1,j-1)
     end
   end
  
