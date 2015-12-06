@@ -573,8 +573,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
         elseif event.key == Event.KEY_BACK then --This terminates the game no matter what is happening.
         if object.inExitPopUp then
             object.inExitPopUp = false
-            object.character.map:load(object.character.
-            levelData)
+            object.character.map:load(object.character.levelData)
             collectgarbage()
         else
             if (object.inputArea == "queue" and not inExitPopUp) then
@@ -704,9 +703,13 @@ function BottomMenu:enterMethod()
     end
     if self.maxCommands[self:getQueue(self.inputArea)[queuePos]] > 0 then
         self.buildArea:setBuildType(self:getQueue(self.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
-        --self.prevInputArea = self.inputArea
         self.inputAreaStack:push(self.inputArea)
         self.inputArea = self:getQueue(self.inputArea)[queuePos]
+        if (self.inputArea == "if-wall") then
+            self.rightMenu.inputArea = "if-wall"
+        else
+            self.rightMenu.inputArea = "build"
+        end
         self.inputAreaChanged = true
         self.prevPosition = self.position
         self.position = 2*self.rowLength + 1
