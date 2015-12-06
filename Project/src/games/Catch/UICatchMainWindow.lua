@@ -101,7 +101,7 @@ function UICatchMainWindow:generateRandomCharacters()
   assert(self.correctChar,"UICatchMainWindow:generateRandomCharacters(),self.correctChar is nil")
   self.characters = {}
   math.randomseed(os.time())
-  local rightLetterIndex = math.random(1,9)
+  local rightLetterIndex = 1--math.random(1,9)
   self.characters[rightLetterIndex] = self.correctChar
   local tmp = 0
   local differ = {}
@@ -176,7 +176,7 @@ function UICatchMainWindow:setGuessWordBox()
   self.wordlabel = {}
   for i = 1,count do
     self.wordlabel[i] = UILabel:new{identity="mainWindowChar"..i, text=" ",color=THEME.COLOR.DARK_GRAY,size=fontSize,font=UILabel.FONT_GROBOLD}
-    self.words[i] = UIRectangleView:new{label=self.wordlabel[i],identity="setGuessWordBox"..i,frame={x=startX + THEME.WORDBOX.RECTANGLE_SIZE*(i-1),y=THEME.FRAME.RECTANGLE.y,w=THEME.FRAME.RECTANGLE.w,h=THEME.FRAME.RECTANGLE.h},borderColor=THEME.COLOR.LIGHT_BLUE,borderWidth = THEME.MENU.BORDER_WIDTH}
+    self.words[i] = UIButtonView:new{identity="setGuessWordBox"..i,frame={x=startX + THEME.WORDBOX.RECTANGLE_SIZE*(i-1),y=THEME.FRAME.RECTANGLE.y,w=THEME.FRAME.RECTANGLE.w,h=THEME.FRAME.RECTANGLE.h},borderColor=THEME.COLOR.LIGHT_BLUE,borderWidth = THEME.MENU.BORDER_WIDTH,label= self.wordlabel[i],labelPosition=textAlignCenterPosition}
     self.bottomPanel:addChildView(self.words[i])
   end
 end
