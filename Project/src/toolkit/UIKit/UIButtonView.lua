@@ -8,6 +8,12 @@ SystemFreeType = require("toolkit.UIKit.UISystemFreeType")
 local UIDefaultTheme = require("toolkit.UIKit.UIDefaultTheme")
 local UIView = require("toolkit.UIKit.UIView")
 local UIButtonView = extends(UIView)
+local script_path = nil
+if ADConfig.isSimulator then
+  script_path = ""
+else
+  script_path = sys.root_path()
+end
 
 -- args = {frame={x=1,y=1,w=50,h=50},}
 function UIButtonView:new(args)
@@ -57,7 +63,7 @@ function UIButtonView:new(args)
       y = o.globalFrame.y + o.labelPosition.y
     }
     
-    SystemFreeType[o.identity..o.freeTypeCount] = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,o.label.font)
+    SystemFreeType[o.identity..o.freeTypeCount] = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,script_path..o.label.font)
     o.labelData = SystemFreeType[o.identity..o.freeTypeCount]
   end
 
@@ -84,7 +90,7 @@ function UIButtonView:afterUpdateGlobalFrame()
     }
     
     self.freeTypeCount = self.freeTypeCount + 1
-    SystemFreeType[self.identity..self.freeTypeCount] = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,self.label.font)
+    SystemFreeType[self.identity..self.freeTypeCount] = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,script_path..self.label.font)
     self.labelData = SystemFreeType[self.identity..self.freeTypeCount]
   end
 end

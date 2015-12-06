@@ -59,6 +59,7 @@ function NiceMarioHelpTest:run()
   --image = UIImageView:new{imagePath="data/arrow_up.png",imageType="png",width=200,height=200}
   -- create a UIButtonView with label changing text and no image but selected
   textlabel.text = "2"
+  textlabel = UILabel:new{text="1",color=COLOR.RED,size=50,font=UILabel.FONT_GROBOLD}
   button = UIButtonView:new{frame={x=50,y=50,w=100,h=100},borderColor={r=255,g=29,b=25},borderWidth = 16,backgroundImage=nil,label=textlabel}
   button:selected()
   button:show()

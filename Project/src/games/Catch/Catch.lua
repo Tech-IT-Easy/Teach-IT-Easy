@@ -9,7 +9,7 @@ local Catch = extends(Game)
 local UICatchMainWindowController = require('games.Catch.UICatchMainWindowController')
 local UICatchLevelWindowController = require('games.Catch.UICatchLevelWindowController')
 local UIAlertWindowController = require("toolkit.UIKit.UIAlertWindowController")
-local UILabelView = require("toolkit.UIKit.UILabelView")
+local UIButtonView = require("toolkit.UIKit.UIButtonView")
 local UILabel = require("toolkit.UIKit.UILabel")
 local THEME = require("games/Catch/data/theme")
 
