@@ -1,6 +1,5 @@
 local UIWindowView = require("toolkit.UIKit.UIWindowView")
 local UIPanelView = require("toolkit.UIKit.UIPanelView")
-local UIRectangleView = require("toolkit.UIKit.UIRectangleView")
 local UICollectionView = require("toolkit.UIKit.UICollectionView")
 local UICollectionCellView = require("toolkit.UIKit.UICollectionCellView")
 local UIButtonView = require("toolkit.UIKit.UIButtonView")
@@ -9,9 +8,6 @@ local UIImage = require("toolkit.UIKit.UIImage")
 local UILabel = require("toolkit.UIKit.UILabel")
 local Event = require("toolkit.Event")
 local THEME = require("games/Catch/data/theme")
-local Thief = require("games.Catch.Thief")
-local Cop = require("games.Catch.Cop")
-
 -- This is a instance window, which is created for using when required
 local UICatchLevelWindow = extends(UIWindowView)
 

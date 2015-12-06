@@ -4,8 +4,6 @@
 local UIWindowViewController = require("toolkit.UIKit.UIWindowViewController")
 local UICatchLevelWindow = require('games.Catch.UICatchLevelWindow')
 local Event = require('toolkit.Event')
-local UILabel = require("toolkit.UIKit.UILabel")
-local THEME = require("games/Catch/data/theme")
 
 
 local UICatchLevelWindowController = extends(UIWindowViewController)
