@@ -1,13 +1,17 @@
 local UIWindowView = require("toolkit.UIKit.UIWindowView")
 local UIPanelView = require("toolkit.UIKit.UIPanelView")
+--[[local UIRectangleView = require("toolkit.UIKit.UIRectangleView")
 local UICollectionView = require("toolkit.UIKit.UICollectionView")
 local UICollectionCellView = require("toolkit.UIKit.UICollectionCellView")
 local UIButtonView = require("toolkit.UIKit.UIButtonView")
 local UILabelView = require("toolkit.UIKit.UILabelView")
-local UIImage = require("toolkit.UIKit.UIImage")
+
 local UILabel = require("toolkit.UIKit.UILabel")
+]]--
+local UIImage = require("toolkit.UIKit.UIImage")
 local Event = require("toolkit.Event")
 local THEME = require("games/Catch/data/theme")
+
 -- This is a instance window, which is created for using when required
 local UICatchLevelWindow = extends(UIWindowView)
 
@@ -17,8 +21,8 @@ function UICatchLevelWindow:new()
   -- private data model with <local>
   -- components
   window.buttons = {}
-  local textLabel = UILabel:new{text="CHOOSE LEVEL",color=THEME.COLOR.WHITE,size=70,font=UILabel.FONT_GROBOLD} 
-  window.title = UILabelView:new{frame={x=400,y=20,w=0,h=0},label=textLabel}
+  --local textLabel = UILabel:new{text="CHOOSE LEVEL",color=THEME.COLOR.WHITE,size=70,font=UILabel.FONT_GROBOLD} 
+  --window.title = UILabelView:new{frame={x=400,y=20,w=0,h=0},label=textLabel}
   
   -- calculate menuPanel width,height,pisition based on menu item size
   local menuPanelWidth = (THEME.LEVEL.RECTANGLE_SIZE + THEME.LEVEL.RECTANGLE_SPACE) * THEME.LEVEL.COLUMNS - THEME.LEVEL.RECTANGLE_SPACE
@@ -26,10 +30,10 @@ function UICatchLevelWindow:new()
   local menuPanelAlignCenterPosition = {x=(screen:get_width()-menuPanelWidth)/2,y = (screen:get_height()-menuPanelHeight)/2}
   
   window.menuPanel = UIPanelView:new{frame={x=menuPanelAlignCenterPosition.x, y = menuPanelAlignCenterPosition.y,w=menuPanelWidth,h=menuPanelHeight}}--,backgroundColor=THEME.COLOR.DARK_GRAY}
-  window.collectionPanel = UICollectionView:new{frame={x=0,y=0,w=menuPanelWidth,h=menuPanelHeight},space=THEME.LEVEL.RECTANGLE_SPACE,cols=THEME.LEVEL.COLUMNS,rows=THEME.LEVEL.ROWS}--,backgroundColor=THEME.COLOR.LIGHT_GRAY}
-  window.menuPanel:addChildView(window.collectionPanel)
+  --window.collectionPanel = UICollectionView:new{frame={x=0,y=0,w=menuPanelWidth,h=menuPanelHeight},space=THEME.LEVEL.RECTANGLE_SPACE,cols=THEME.LEVEL.COLUMNS,rows=THEME.LEVEL.ROWS}--,backgroundColor=THEME.COLOR.LIGHT_GRAY}
+  --window.menuPanel:addChildView(window.collectionPanel)
   --layout menu items with collection layout view
-  local labels = {}
+  --[[local labels = {}
   local cells = {}
   local textAlignCenterPosition = {x=(THEME.LEVEL.RECTANGLE_SIZE - THEME.LEVEL.FONT_SIZE)/2,y=(THEME.LEVEL.RECTANGLE_SIZE - THEME.LEVEL.FONT_SIZE)/2}
   for i = 1, THEME.LEVEL.ROWS do
@@ -42,9 +46,9 @@ function UICatchLevelWindow:new()
         window.collectionPanel:fillWithCell(cells[index],i-1,j-1)
     end
   end
-  window:setFocusView(window.buttons[1])
+  window:setFocusView(window.buttons[1])]]--
   window:addChildView(window.menuPanel)
-  window:addChildView(window.title)
+  --window:addChildView(window.title)
 
   return UICatchLevelWindow:init(window)
 end
