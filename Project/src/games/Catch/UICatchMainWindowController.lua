@@ -52,7 +52,6 @@ function UICatchMainWindowController:updateWindowWords(number)
 end
 
 function UICatchMainWindowController:onClickEvent(sender)
-local nextLevel = false
   -- start  if sender and sender.label
   if sender and sender.label then
        keyLetter = sender.label.text
@@ -85,7 +84,6 @@ local nextLevel = false
             --end open Congratulations window
           else  -- else if self.currentLevel ~= #self.levels then
             -- open window
-            nextLevel = true--[[
             self.game:alertWindowOpen{title="You win, Next level or Retry?", OK="Next",Cancel="Retry",
               callback=function(sender)
                 if sender.identity=="OK" then
@@ -96,7 +94,7 @@ local nextLevel = false
                   self:initialize()
                 end
               end
-            }]]--
+            }
             -- end open window
           end -- end if self.currentLevel == #self.levels then
         else  --else if self.numberOfCorrect ~= string.len(self.correctWord)
@@ -125,10 +123,6 @@ local nextLevel = false
     -- end if keyletter is not nil
   end
   -- end if sender and sender.label
-  if nextLevel then
-    self:initialize()
-    print("next Level")
-  end
 end
 
 return UICatchMainWindowController
