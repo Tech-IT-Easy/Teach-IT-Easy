@@ -38,7 +38,7 @@ function TrophyRoom:handleinput(event)
     self.lastcontent = self.content
     if event.key == Event.KEY_RIGHT then
         self.currentGame = "reading"
-self:scrollGames()
+        self:scrollGames()
     elseif event.key == Event.KEY_DOWN and self.pos > 0 and self.pos < 3 then
         self.pos = self.pos + 1
         self.content = self.content + 1
@@ -78,8 +78,8 @@ end
 -------------------------------------
 function TrophyRoom:loadview()
 
-   self:setPosition()
-    self.games = { "progg", "reading" }
+    self:setPosition()
+    self.games = { progg = 1, reading = 2 }
     self.currentGame = "progg"
     self.usernamestring = platformContext.profile.name
     self:loadProgress(self.currentGame)
@@ -91,7 +91,7 @@ end
 -- @author Erik
 -------------------------------------
 function TrophyRoom:setPosition()
-     self.pos = 1
+    self.pos = 1
     self.lastpos = self.pos
     self.content = 1
     self.lastcontent = self.content
@@ -102,11 +102,11 @@ end
 -- @author Erik
 -------------------------------------
 function TrophyRoom:renderui()
-    self:printTopPanel()
     self:printProgressionBar()
     self:loadButtons()
     self:printAchievementBox()
     self:loadButtonContent()
+    self:printTopPanel()
 end
 
 -------------------------------------
@@ -161,9 +161,13 @@ function TrophyRoom:loadProgress(game)
         -- progGameMasterProc = false
     elseif (game == "reading") then
         self.totalLevels = 10
-        self.achievementButtons = { { "ABC", "Learn the alphabet", "Finish level 1" },
-            { "Kindergarten", "Can you read?", "Finish level 2" }, { "Sentances", "This needs skill",
-                "Finish level 4" }, { "Phd", "Some serious stuff", "Buy levels for 20$" }, {"Shakespeare", "Real pro", "Level soon in stores"} }
+        self.achievementButtons = {
+            { "ABC", "Learn the alphabet", "Finish level 1" },
+            { "Kindergarten", "Can you read?", "Finish level 2" }, {
+                "Sentances", "This needs skill",
+                "Finish level 4"
+            }, { "Phd", "Some serious stuff", "Buy levels for 20$" }, { "Shakespeare", "Real pro", "Level soon in stores" }
+        }
     end
 end
 
@@ -203,11 +207,12 @@ function TrophyRoom:scrollGames()
     self:loadProgress(self.currentGame)
 
 
-    self:printTopPanel()
+
     self:printProgressionBar()
     self:loadButtons()
     self:printAchievementBox()
     self:loadButtonContent()
+    self:printTopPanel()
 end
 
 -------------------------------------
@@ -239,8 +244,8 @@ function TrophyRoom:sidebuttonactive(x1, content)
     --local text = gfx.new_surface(self.boxwidth, self.boxheight)
     --text:premultiply()
     if (self.done[tostring(content)]) then
-        ---trophyroom_sidebuttontext:draw_over_surface(text, self.achievementButtons[content][1])
-        --screen:copyfrom(text, nil, { x = screen:get_width() * 0.15 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding * 3, w = self.boxwidth, h = self.boxheight })
+        --- trophyroom_sidebuttontext:draw_over_surface(text, self.achievementButtons[content][1])
+        -- screen:copyfrom(text, nil, { x = screen:get_width() * 0.15 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding * 3, w = self.boxwidth, h = self.boxheight })
 
         self.sidebuttonfonts[x1]:draw_over_surface(screen, self.achievementButtons[content][1])
     else
@@ -265,7 +270,7 @@ function TrophyRoom:sidebuttoninactive(x1, content)
     --text:premultiply()
     --get info from tables
     if (self.done[tostring(content)]) then
-       -- trophyroom_sidebuttontext:draw_over_surface(text, self.achievementButtons[content][1])
+        -- trophyroom_sidebuttontext:draw_over_surface(text, self.achievementButtons[content][1])
         --screen:copyfrom(text, nil, { x = screen:get_width() * 0.15 + self.boxpadding, y = (self.starty + ((x1 - 1) * self.boxheight * 1.5)) + self.boxpadding * 3, w = self.boxwidth, h = self.boxheight })
 
 
@@ -300,6 +305,22 @@ function TrophyRoom:printTopPanel()
     end
     trophy_room_pagename:draw_over_surface(screen, pageTitle)
 
+    local count = 0
+    for _ in pairs(self.games) do
+        count = count + 1
+    end
+    print(count)
+
+    if self.games[self.currentGame] < count then
+        --print right arrow
+        print("rightarrow")
+        trophy_room_rightarrow:draw_over_surface(screen, "-->")
+    end
+    if self.games[self.currentGame] > 1 then
+        --print left arrow
+        trophy_room_leftarrow:draw_over_surface(screen, "<--")
+    end
+
     games_username:draw_over_surface(screen, self.usernamestring)
     screen:copyfrom(image1, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
     screen:clear({ g = 0, r = 0, b = 0 }, { x = screen:get_width() * 0.8, y = screen:get_height() * 0.08, w = screen:get_width() * 0.05, h = screen:get_height() * 0.04 })
@@ -314,10 +335,10 @@ end
 -------------------------------------
 function TrophyRoom:printProgressionBar()
     local finishedLevels
-    if self.currentGame=="progg" then
-    finishedLevels = platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].level
+    if self.currentGame == "progg" then
+        finishedLevels = platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].level
     else
-    finishedLevels=0
+        finishedLevels = 0
     end
     trophy_room_progress:draw_over_surface(screen, string.format(LOCALE.TROPHY_COMPLETED, finishedLevels, self.totalLevels))
     local padding = (screen:get_width() * 0.16) / 2
