@@ -11,7 +11,7 @@ local UICatchMainWindowController = extends(UIWindowViewController)
 function UICatchMainWindowController:new(args)
   
   local o = UICatchMainWindowController:super(UICatchMainWindow:new())
-  assert(args and args.game,"UICatchMainWindowController:new:error game parameter is nil")
+  --assert(args and args.game,"UICatchMainWindowController:new:error game parameter is nil")
   o.game = args.game
   o.levels = o.game.levels
   o.currentLevel = tonumber(args.level)
@@ -52,7 +52,7 @@ function UICatchMainWindowController:updateWindowWords(number)
 end
 
 function UICatchMainWindowController:onClickEvent(sender)
-  
+  --[[
   keyLetter = sender.label.text
   --print(sender.label.text)
   if keyLetter then
@@ -117,7 +117,7 @@ function UICatchMainWindowController:onClickEvent(sender)
     self.window.cop:run(flag)
     self.window.thief:run()
   end
-
+]]--
 end
 
 return UICatchMainWindowController
