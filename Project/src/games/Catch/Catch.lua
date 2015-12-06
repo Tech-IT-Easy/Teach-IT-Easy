@@ -76,21 +76,13 @@ end
 -----------------------
 --When the platform launches the game it calls this function
 -----------------------
---
- script_path = nil
-  title = nil
+
 function Catch:start()
   self:load()
   self.windowController = UICatchLevelWindowController:new({game=self,immediateResponse=false}) --UICatchMainWindowController
   self.gameEventListener:attach(self.windowController)
   print("Starting game Catch...")
- 
-  if ADConfig.isSimulator then
-  script_path = ""
-else
-  script_path = sys.root_path()
-end
-title = sys.new_freetype({g=255, r=255, b=255, a=255}, 70, {x= 20, y=20}, script_path..'data/GROBOLD.ttf')
+
 end
 
 
@@ -101,8 +93,6 @@ end
 function Catch:update()
   if self.windowController then
     self.windowController:presentView()
-    
-title:draw_over_surface(screen, "Choose Level")
   end
   if self.alertController then
     self.alertController:presentView()
