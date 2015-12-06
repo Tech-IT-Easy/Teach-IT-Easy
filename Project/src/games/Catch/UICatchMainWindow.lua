@@ -48,7 +48,7 @@ function UICatchMainWindow:new()
   window.mainPanel:addChildView(window.thief)
   window.mainPanel:addChildView(window.cop)
   window.mainPanel:addChildView(window.tryCountLabelView)
-  window.rightPanel = UIPanelView:new{frame={x=screen:get_width()*proportion,y=0,w=screen:get_width()*(1-proportion),h=screen:get_height()*proportion},backgroundColor=THEME.COLOR.LIGHT_GRAY }
+  --[[window.rightPanel = UIPanelView:new{frame={x=screen:get_width()*proportion,y=0,w=screen:get_width()*(1-proportion),h=screen:get_height()*proportion},backgroundColor=THEME.COLOR.LIGHT_GRAY }
   window.collectionPanel = UICollectionView:new{frame={x=0,y=80,w=screen:get_width()*(1-proportion),h=screen:get_width()*(1-proportion)},space=10,cols=THEME.MENU.COLUMNS,rows=THEME.MENU.ROWS,backgroundColor=THEME.COLOR.LIGHT_GRAY}
   window.wordImageView = UIImageView:new{image=nil,frame={x=10,y=window.collectionPanel.frame.h+100,w=window.rightPanel.frame.w-40,h=window.rightPanel.frame.w-40}}
   window.levelLabelView = UILabelView:new{frame={x=25,y=10,w=0,h=0},label=UILabel:new{text="LEVEL 1",color=THEME.COLOR.WHITE,size=50,font=UILabel.FONT_GROBOLD}}
@@ -56,15 +56,15 @@ function UICatchMainWindow:new()
   window.rightPanel:addChildView(window.collectionPanel)
   window.rightPanel:addChildView(window.wordImageView)
   window.rightPanel:addChildView(window.levelLabelView)
-  
+  ]]--
   window.bottomPanel = UIPanelView:new{frame={x=0, y = screen:get_height()*proportion,w=screen:get_width(),h=screen:get_height() * (1-proportion)},backgroundColor=THEME.COLOR.DARK_GRAY}
   window:addChildView(window.mainPanel)
-  window:addChildView(window.rightPanel)
+  --window:addChildView(window.rightPanel)
   window:addChildView(window.bottomPanel)
   
   
   -- layout right menu
-  local textAlignCenterPosition = {x=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2,y=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2}
+  --[[local textAlignCenterPosition = {x=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2,y=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2}
   local labels = {}
   local cells = {}
   for i = 1, THEME.MENU.ROWS do
@@ -78,7 +78,7 @@ function UICatchMainWindow:new()
         window.collectionPanel:fillWithCell(cells[index],i-1,j-1)
     end
   end
- 
+ ]]--
   return UICatchMainWindow:init(window)
 end
 function UICatchMainWindow:configure(args)
@@ -90,11 +90,11 @@ end
 
 function UICatchMainWindow:initialize()
   self:setPlayers()
-  self:setMenu()
-  self:setGuessWordBox()
-  self:setGuessImage()
-  self:updateLevelText(self.currentLevel)
-  self:updateTryCountText(self.maxNumberOfGuesses)
+  --self:setMenu()
+  --self:setGuessWordBox()
+  --self:setGuessImage()
+  --self:updateLevelText(self.currentLevel)
+  --self:updateTryCountText(self.maxNumberOfGuesses)
 end
 
 function UICatchMainWindow:generateRandomCharacters()
