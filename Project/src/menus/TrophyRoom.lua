@@ -134,29 +134,29 @@ function TrophyRoom:loadProgress(game)
     self.done = {}
     if (game == "progg") then
         self.totalLevels = 8
-        if (platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].proggGameLoopLevel) then
-            table.insert(self.achievementButtons, { "Loop", "Loop is completed" })
+        if (platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].proggGameBasicLevel) then
+            table.insert(self.achievementButtons, { "Basic Actions", "Basic Actions is completed" })
             self.done["1"] = true
         else
-            table.insert(self.achievementButtons, { "Loop", "Unlock loop levels", "Finish level 2" })
+            table.insert(self.achievementButtons, { "Basic Actions", "Unlocks procedure levels", "Finish level 3" })
         end
         if (platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].proggGameProcLevel) then
             table.insert(self.achievementButtons, { "Procedure", "Procedure is completed" })
             self.done["2"] = true
         else
-            table.insert(self.achievementButtons, { "Procedure", "Unlock proceure levels", "Finish level 2 and 3" })
+            table.insert(self.achievementButtons, { "Procedure", "Unlocks loop levels", "Finish level 4" })
         end
-        if (platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].proggGameIfLevel) then
-            table.insert(self.achievementButtons, { "If statement", "If statement is completed" })
+        if (platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].proggGameLoopLevel) then
+            table.insert(self.achievementButtons, { "Loop", "Loop level completed" })
             self.done["3"] = true
         else
-            table.insert(self.achievementButtons, { "If statement", "Unlock if statement", "Finish level 4 and 5" })
+            table.insert(self.achievementButtons, { "Loop", "Unlocks mixed levels", "Finish level 5" })
         end
-        if (platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].proggGameMasterProc) then
-            table.insert(self.achievementButtons, { "Procedure master", "You are awesome" })
-            self.done["3"] = true
+        if (platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].proggGameMaster) then
+            table.insert(self.achievementButtons, { "Programming master", "You are awesome" })
+            self.done["4"] = true
         else
-            table.insert(self.achievementButtons, { "Procedure master", "Master the procedures", "Release date coming soon" })
+            table.insert(self.achievementButtons, { "Programming master", "Master of programming", "Finish all levels" })
         end
         -- progGameMasterProc = false
     elseif (game == "reading") then

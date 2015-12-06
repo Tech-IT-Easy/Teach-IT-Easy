@@ -362,12 +362,14 @@ end
 function Character:updateProgress()
     local progress = self.context.profile.gameprogress:getProgress("games.Progg.ProggGame")
     progress.level = self.levelData.level
-    if (self.levelData.level == 2) then
-        progress.proggGameLoopLevel = true
-    elseif (self.levelData.level == 3) then
-        progress.proggGameProcLevel = true
+    if (self.levelData.level == 3) then
+        progress.proggGameBasicLevel = true
     elseif (self.levelData.level == 4) then
-        progress.proggGameIfLevel = true
+        progress.proggGameProcLevel = true
+    elseif (self.levelData.level == 5) then
+        progress.proggGameLoopLevel = true
+    elseif (self.levelData.level == 8) then
+        progress.proggGameMaster = true
     end
     self.context.profile.gameprogress:setProgress("games.Progg.ProggGame", progress)
 end
