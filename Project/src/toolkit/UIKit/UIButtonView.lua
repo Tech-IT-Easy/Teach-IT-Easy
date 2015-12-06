@@ -4,15 +4,10 @@
 --
 -- @Author:Created by Chuck, NOV 19,2015
 -----------------------------------------------------------
+SystemFreeType = require("toolkit.UIKit.UISystemFreeType")
 local UIDefaultTheme = require("toolkit.UIKit.UIDefaultTheme")
 local UIView = require("toolkit.UIKit.UIView")
 local UIButtonView = extends(UIView)
-local script_path = nil
-if ADConfig.isSimulator then
-  script_path = ""
-else
-  script_path = sys.root_path()
-end
 
 -- args = {frame={x=1,y=1,w=50,h=50},}
 function UIButtonView:new(args)
@@ -53,11 +48,17 @@ function UIButtonView:new(args)
   -- @member labelData
   -- firstly change position relative to button frame
   if o.label then
+    assert(args.identity,"UIButtonView:new(args), args.identity is nil")
+    assert(SystemFreeType[args.identity.."1"]==nil,"UIButtonView:new(args), args.identity exists")
+    o.freeTypeCount = 1
+    
     o.labelAbsolutePosition = {
       x = o.globalFrame.x + o.labelPosition.x,
       y = o.globalFrame.y + o.labelPosition.y
     }
-    o.labelData = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,script_path..o.label.font)
+    
+    SystemFreeType[o.identity..o.freeTypeCount] = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,o.label.font)
+    o.labelData = SystemFreeType[o.identity..o.freeTypeCount]
   end
 
   return UIButtonView:init(o)
@@ -81,7 +82,10 @@ function UIButtonView:afterUpdateGlobalFrame()
       x = self.globalFrame.x + self.labelPosition.x,
       y = self.globalFrame.y + self.labelPosition.y
     }
-    self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,script_path..self.label.font)
+    
+    self.freeTypeCount = self.freeTypeCount + 1
+    SystemFreeType[self.identity..self.freeTypeCount] = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,self.label.font)
+    self.labelData = SystemFreeType[self.identity..self.freeTypeCount]
   end
 end
 
@@ -147,23 +151,7 @@ end
 function UIButtonView:unFocused()
   self.isFocused = false
 end
---[[
-function UIButtonView:setLabel(label,position)
-  self.label = label
-  self.labelPosition = position or {x=0,y=0}
-  self:updateLabelPosition()
-end
 
-function UIButtonView:updateLabelPosition()
-  if self.label then
-    self.labelAbsolutePosition = {
-      x = self.globalFrame.x + self.labelPosition.x,
-      y = self.globalFrame.y + self.labelPosition.y
-    }
-    self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,self.label.font)
-  end
-end
-]]--
 -----------------------------------
 --@ delegate 
 -----------------------------------

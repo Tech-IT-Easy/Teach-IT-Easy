@@ -24,7 +24,7 @@ function UICatchLevelWindow:new()
   -- components
   window.buttons = {}
   local textLabel = UILabel:new{text="CHOOSE LEVEL",color=THEME.COLOR.WHITE,size=70,font=UILabel.FONT_GROBOLD} 
-  window.title = UILabelView:new{frame={x=400,y=20,w=0,h=0},label=textLabel}
+  window.title = UILabelView:new{identity="catachWindowTitle",frame={x=400,y=20,w=0,h=0},label=textLabel}
 
   -- calculate menuPanel width,height,pisition based on menu item size
   local menuPanelWidth = (THEME.LEVEL.RECTANGLE_SIZE + THEME.LEVEL.RECTANGLE_SPACE) * THEME.LEVEL.COLUMNS - THEME.LEVEL.RECTANGLE_SPACE
@@ -42,7 +42,7 @@ function UICatchLevelWindow:new()
     for j = 1, THEME.LEVEL.COLUMNS do
       local index = (i-1) * THEME.LEVEL.COLUMNS + j
         labels[index] = UILabel:new{text=index.."",color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
-        window.buttons[index] = UIButtonView:new{identity="button"..i,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=labels[index],labelPosition=textAlignCenterPosition}
+        window.buttons[index] = UIButtonView:new{identity="catchWindowLevelSelect"..index,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=labels[index],labelPosition=textAlignCenterPosition}
         cells[index] = UICollectionCellView:new{view=window.buttons[index],viewType="UIButtonView" }
         window:setFocusWeight{view=window.buttons[index], hWeight=index, vWeight=i}
         window.collectionPanel:fillWithCell(cells[index],i-1,j-1)

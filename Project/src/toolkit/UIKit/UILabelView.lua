@@ -8,7 +8,7 @@
 --
 local UIView = require("toolkit.UIKit.UIView")
 local UILabelView = extends(UIView)
-
+SystemFreeType = require("toolkit.UIKit.UISystemFreeType")
 --@member static constant
 UILabelView.FONT_GROBOLD = 'data/GROBOLD.ttf'
 UILabelView.FONT_CHALKDUSTER = 'data/Chalkduster.ttf'
@@ -26,7 +26,13 @@ function UILabelView:new(args)
   --@member label UILabel type
   o.label = args.label
   --@member label data
-  o.labelData = sys.new_freetype(o.label.color, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},script_path..o.label.font)
+  assert(args.identity,"UILabelView:new(args), args.identity is nil")
+  assert(SystemFreeType[args.identity.."1"]==nil,"UILabelView:new(args), args.identity exists")
+  o.identity = args.identity
+  o.freeTypeCount = 1
+  SystemFreeType[o.identity..o.freeTypeCount] = sys.new_freetype(o.label.color, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},script_path..o.label.font)
+  o.labelData = SystemFreeType[o.identity..o.freeTypeCount]--sys.new_freetype(o.label.color, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},script_path..o.label.font)
+  
   return UILabelView:init(o)
 end
 
@@ -35,7 +41,9 @@ function UILabelView:show()
 end
 
 function UILabelView:afterUpdateGlobalFrame()
-  self.labelData = sys.new_freetype(self.label.color, self.label.size,{x = self.globalFrame.x,y = self.globalFrame.y},script_path..self.label.font)
+  self.freeTypeCount = self.freeTypeCount + 1
+  SystemFreeType[self.identity..self.freeTypeCount] = sys.new_freetype(self.label.color, self.label.size,{x = self.globalFrame.x,y = self.globalFrame.y},script_path..self.label.font)
+  self.labelData = SystemFreeType[self.identity..self.freeTypeCount]
 end
 
 return UILabelView

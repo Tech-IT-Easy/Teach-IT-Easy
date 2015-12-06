@@ -12,6 +12,7 @@ local UIAlertWindowController = require("toolkit.UIKit.UIAlertWindowController")
 local UILabelView = require("toolkit.UIKit.UILabelView")
 local UILabel = require("toolkit.UIKit.UILabel")
 local THEME = require("games/Catch/data/theme")
+
 -----------------------------------------------------------
 -- Constructor method, see 'toolkit.Game'
 -- @param context - A pointer to the context that the game exists in
