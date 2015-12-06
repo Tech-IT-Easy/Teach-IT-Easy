@@ -70,15 +70,15 @@ function Games:renderui()
   local avatarImageUrl = platformContext.profile.avatar
   self.avatarImage = gfx.loadpng(avatarImageUrl)
   self.avatarImage:premultiply()
-  --local proggGameURL = "data/tie_prg.png"
-  --self.proggGameImage = gfx.loadpng(proggGameURL)
-  --self.proggGameImage:premultiply()
+  local proggGameURL = "data/tie_programming.png"
+  self.proggGameImage = gfx.loadpng(proggGameURL)
+  self.proggGameImage:premultiply()
 
-  local anotherGameURL = "data/MysteryPicture.png"
+  local anotherGameURL = "data/tie_reading.png"
   self.anotherGameImage = gfx.loadpng(anotherGameURL)
   self.anotherGameImage:premultiply()
 
-self.gameLogos = {self.anotherGameImage,
+self.gameLogos = {self.proggGameImage,
     self.anotherGameImage
 }
 
