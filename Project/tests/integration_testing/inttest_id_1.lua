@@ -46,6 +46,11 @@ function setup()
     clear_mock()
 end
 
+-------------------------------------
+-- Test if commands can be added to the queue, in the right order
+-- @system_under_test: Queue:push(action, queueType), Commands
+-- @author name: Andreas
+-------------------------------------
 function test_command_queue()
     local a = require(SUT_1)
     local b = require(SUT_2)

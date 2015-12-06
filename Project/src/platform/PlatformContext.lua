@@ -31,6 +31,8 @@ local Event = require('toolkit.Event')
 local ProggLevels = require("games.Progg.levels.ProggLevels")
 local GameProgress =require('toolkit.GameProgress')
 
+local UIStartWindowController = require('platform.UIStartWindowController')
+
 
 PlatformContext = extends(Object)
 
@@ -66,7 +68,9 @@ function PlatformContext:new()
   --------------
   -- code
   --------------
-
+  --UIKit example
+  --o.window = UIStartWindowController:new()
+  --o.platformEventListener:attach(o.window)
   return PlatformContext:init(o)
 end
 ------------------------------------
@@ -107,7 +111,9 @@ function PlatformContext:show()
   -- code
   --------------
   self.platformMenu:show()
-
+  
+  --UIKit example
+  --self.window:presentView()
   gfx.update()
 end
 
@@ -125,6 +131,9 @@ function PlatformContext:update()
   if self.platformMenu ~= nil then
     self.platformMenu:update()
   end
+  
+  --UIKit example
+  --self.window:presentView()
   -- code
   gfx.update()
   --collectgarbage()

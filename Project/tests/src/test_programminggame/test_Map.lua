@@ -83,7 +83,7 @@ function test_load()
     local b = ps:new()
 
     b.objectives = { 1, 1 }
-    b:load({ objectives = "s", mapData = "a" })
+    b:load({ objectives = "s", mapData = "a", level=1 })
 
     verify_mock(mc)
 end

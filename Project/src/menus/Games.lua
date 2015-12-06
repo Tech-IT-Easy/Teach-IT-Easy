@@ -70,18 +70,17 @@ function Games:renderui()
   local avatarImageUrl = platformContext.profile.avatar
   self.avatarImage = gfx.loadpng(avatarImageUrl)
   self.avatarImage:premultiply()
-  local proggGameURL = "data/tie_prg.png"
+  local proggGameURL = "data/tie24_prog.png"
   self.proggGameImage = gfx.loadpng(proggGameURL)
   self.proggGameImage:premultiply()
 
-  local anotherGameURL = "data/MysteryPicture.png"
+  local anotherGameURL = "data/tie24_reading.png"
   self.anotherGameImage = gfx.loadpng(anotherGameURL)
-  self.proggGameImage:premultiply()
+  self.anotherGameImage:premultiply()
 
 self.gameLogos = {self.proggGameImage,
-    self.anotherGameImage,
-    self.anotherGameImage,
-    self.anotherGameImage }
+    self.anotherGameImage
+}
 
     screen:copyfrom(self.avatarImage, nil, { x = screen:get_width() * 0.08, y = screen:get_height() *0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
 
@@ -90,9 +89,9 @@ self.gameLogos = {self.proggGameImage,
 
     games_appname:draw_over_surface(screen, LOCALE.APP_NAME)
     games_pagename:draw_over_surface(screen, LOCALE.GAME_CHOOSE)
-    games_username:draw_over_surface(screen, self.usernamestring)
+    games_username:draw_over_surface(screen, PlatformContext.profile.name)
 
-    screen:copyfrom(image1, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
+    --screen:copyfrom(image1, nil, { x = screen:get_width() * 0.08, y = screen:get_height() * 0.09, w = screen:get_width() * 0.06, h = screen:get_height() * 0.1 })
 
     self:buttonactive(1)
     for i = 2, #self.games, 1 do

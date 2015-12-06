@@ -21,8 +21,8 @@ function GameFactory:new()
   o.gameMatrix = {}
   o.gameMatrix[1] = {"Programming", "games.Progg.ProggGame" }
   o.gameMatrix[2] = {"Other game", nil }
-  o.gameMatrix[3] = {"Test game", nil }
-  o.gameMatrix[4] = {"Pony game", nil }
+--  o.gameMatrix[3] = {"Test game", nil }
+--  o.gameMatrix[4] = {"Pony game", nil }
   --o.gameMatrix[4] = {"Mario", "games.mario.Mario" }
   return GameFactory:init(o)
 end

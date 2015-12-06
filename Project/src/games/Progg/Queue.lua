@@ -36,6 +36,7 @@ end
 -- @author Ludwig Wikblad
 -------------------------------------
 function Queue:push(action, queueType)
+    print(self.loopPointer)
   if queueType == "queue" or queueType == nil then
     if  queueType == nil or self.maxCommands[queueType] > #self.actions then
         table.insert(self.actions,action)
@@ -49,6 +50,11 @@ function Queue:push(action, queueType)
     end
   elseif queueType == "loop" then
     if self.maxCommands[queueType] > #self.loopActions and self:containsRecursion(action, self.loopActions, queueType) == false then
+        print("#loopActions ="..#self.loopActions)
+        print(self.loopActions[self.loopPointer])
+        for i=1, #self.loopActions do
+            print(self.loopActions[i])
+        end
         table.insert(self.loopActions[self.loopPointer],action)
         if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions[self.loopPointer], queueType) end
     end
@@ -194,9 +200,11 @@ function Queue:clearAll(queueType)
     self.loopCounter = {}
     self.loopPointer = 0
   elseif queueType == "loop" then
-    for i=1, #self.loopActions do
-        table.remove(self.loopActions)
+    for i=1, #self.loopActions[self.loopPointer] do
+        table.remove(self.loopActions[self.loopPointer])
     end
+
+    if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions[self.loopPointer], queueType) end
   elseif queueType == "P1" then
     for i=1, #self.p1Actions do
         table.remove(self.p1Actions)

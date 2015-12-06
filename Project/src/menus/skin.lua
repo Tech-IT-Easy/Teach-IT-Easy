@@ -246,3 +246,11 @@ locked_levels = {locked_level_1, locked_level_2, locked_level_3, locked_level_4,
 
 select_level_appname = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.04, { x = screen:get_width() * 0.43, y = main_menu_appnamebaseline }, script_path .. 'data/BlackoutMidnight.ttf')
 select_level_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.35, y = main_menu_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
+
+
+
+-------------------------------------
+-- Level indicator during gameplay
+-- @author Adam
+-------------------------------------
+level_indicator = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.05, { x = screen:get_width() * 0.01, y = screen:get_height() * 0.01}, script_path .. 'data/GROBOLD.ttf')

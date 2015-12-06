@@ -22,6 +22,7 @@ local Queue = require('games.Progg.Queue')
 local BottomMenu = extends(Controllable)
 local newDrawBottomMenu = require("games.Progg.DrawBottomMenu")
 local rightMenu = require("games.Progg.RightMenu")
+local Stack = require('toolkit.Utils.Stack')
 
 -------------------------------------------------
 -- Constructor method for the BottomMenu.
@@ -41,7 +42,11 @@ function BottomMenu:new(levelData,context)
     o.selectingLoopCounter = true
     o.inExitPopUp = false
     o.inputArea = "queue"
-    o.prevInputArea = "queue"
+    o.prevInputArea = nil
+    -- @member stack:Stack
+    o.inputAreaStack = Stack:new()
+    o.inputAreaStack = Stack:Create()
+    o.inputAreaChanged = false
     --o.levelData = levelData
     o.maxCommands = levelData.maxCommands
     o.position = 1     --Starting position for highlight
@@ -79,13 +84,14 @@ end
 -- @ author Mikael Ögren; Tobias Lundell
 --------------------------------------------
 function BottomMenu:show()
-    if (self.prevInputArea ~= self.inputArea) then
+    --if (self.prevInputArea ~= self.inputArea) then
+    if (self.inputAreaChanged) then
         if (self.inputArea == "queue") then
-            self:updateInputArea(self.prevInputArea, false)
+            self:updateInputArea(self.inputAreaStack:peek(), false)
         else
             self:updateInputArea(self.inputArea, true)
         end
-        self.prevInputArea = self.inputArea
+        self.inputAreaChanged = false
     end
     if (self.inputArea ~= "queue") then
         self.buildArea:show(self.queue, self.inputArea)
@@ -178,6 +184,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.queue:clearAll(object.inputArea)
             object.clearAllCheck = false
             object.rightMenu.inputAreaChanged = true
+            object.inputAreaChanged = true
             if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
                 object.rightMenu.inputArea = "build"
             elseif object.inputArea == "if-wall"  then
@@ -300,7 +307,14 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputArea = "if-wall"
                 object.buildArea:setBuildType("if-wall")
                 object.queue:push(Commands.IF, object.inputArea)
+                -- object.prevInputArea = object.inputArea
+
+                --print (object.stack:pop(1))
+                if (object.inputArea ~= object.inputAreaStack:peek()) then
+                    object.inputAreaStack:push(object.inputArea)
+                end
                 object.inputArea = "if-wall"
+                object.inputAreaChanged = true
                 object.prevPosition = object.position
                 object.position = 2*object.rowLength + 1
                 object.buildArea:setPosition(object.position)
@@ -326,7 +340,12 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.rightMenu.inputArea = "loop"
             object.buildArea:setBuildType("loop")
             object.queue:push(Commands.LOOP, object.inputArea)
+            --object.prevInputArea = object.inputArea
+            if (object.inputArea ~= object.inputAreaStack:peek()) then
+                object.inputAreaStack:push(object.inputArea)
+            end
             object.inputArea = "loop"
+            object.inputAreaChanged = true
             object.selectingLoopCounter=true
             object.prevPosition = object.position
             object.position = 2*object.rowLength + 1
@@ -354,7 +373,12 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.rightMenu.inputArea = "build"
             object.buildArea:setBuildType("P1")
             object.queue:push(Commands.P1, object.inputArea)
+            --object.prevInputArea = object.inputArea
+            if (object.inputArea ~= object.inputAreaStack:peek()) then
+                object.inputAreaStack:push(object.inputArea)
+            end
             object.inputArea = "P1"
+            object.inputAreaChanged = true
 
             object.prevPosition = object.position
             object.position = 2*object.rowLength + 1
@@ -380,7 +404,12 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.rightMenu.inputArea = "build"
             object.buildArea:setBuildType("P2")
             object.queue:push(Commands.P2, object.inputArea)
+            --object.prevInputArea = object.inputArea
+            if (object.inputArea ~= object.inputAreaStack:peek()) then
+                object.inputAreaStack:push(object.inputArea)
+            end
             object.inputArea = "P2"
+            object.inputAreaChanged = true
 
             object.prevPosition = object.position
             object.position = 2*object.rowLength + 1
@@ -441,14 +470,14 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
                 object.buildArea:setBuildType("if-not-wall")
+                object.inputAreaStack:push(object.inputArea)
                 object.inputArea = "if-not-wall"
+                object.inputAreaChanged = true
                 object.prevPosition = object.position
                 object.position = 2*object.rowLength + 1
                 object.buildArea:setPosition(object.position)
-                object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
                 object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object.buildArea.ifFalseQueue)
                 end
-                --object:updateInputArea(object.inputArea, true)
             elseif object.inputArea == "queue"  then  -- Handles input while user is working in main queue. Lets user execute the queue.
             object.rightMenu:play()
             object:executeQueue()
@@ -456,14 +485,46 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if object.selectingLoopCounter == true then
                 object.selectingLoopCounter = false
             end
-            object.prevPosition = object.position
-            object.position = 1
-            object.buildArea:setPosition(object.position)
-            object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
-            object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
-            object.rightMenu.inputAreaChanged = true
-            object.rightMenu.inputArea = "queue"
-            object.inputArea = "queue"
+            if (object.inputAreaStack:peek() ~= "queue") then
+                object.rightMenu.inputArea = "build"
+                object.prevInputArea = object.inputArea
+                object.inputArea = object.inputAreaStack:pop()
+                if (object.inputArea == "if-wall") then
+                    object.prevInputArea = object.inputArea
+                    object.inputArea = object.inputAreaStack:pop()
+                end
+                if (object.inputArea ~= "queue") then
+                    object.buildArea:setBuildType(object.inputArea)
+                    object.prevPosition = object.position
+                    object.position = 2*object.rowLength + 1
+                    object.buildArea:setPosition(object.position)
+                    object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+                else
+                    object.prevPosition = object.position
+                    object.position = 1
+                    object.buildArea:setPosition(object.position)
+                    object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+
+                    object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.prevInputArea))
+                    object.rightMenu.inputAreaChanged = true
+                    object.rightMenu.inputArea = "queue"
+                    object.buildArea:setBuildType(object.prevInputArea)
+                    object.inputAreaStack:push(object.prevInputArea)
+                end
+            else
+                object.prevPosition = object.position
+                object.position = 1
+                object.buildArea:setPosition(object.position)
+                object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+                object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "queue"
+                object.prevInputArea = object.inputArea
+                object.buildArea:setBuildType(object.prevInputArea)
+                object.inputArea = object.inputAreaStack:pop()
+                object.inputAreaStack:push(object.prevInputArea)
+            end
+            object.inputAreaChanged = true
             end
         elseif event.key == Event.KEY_OK then
             if object.inExitPopUp then
@@ -510,19 +571,46 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object.selectingActionEdit = object:getQueue(object.inputArea)[queuePos]
             end
         elseif event.key == Event.KEY_BACK then --This terminates the game no matter what is happening.
-            if object.inExitPopUp then
-                object.inExitPopUp = false
-                object.character.map:load(object.character.
-                levelData)
-                collectgarbage()
+        if object.inExitPopUp then
+            object.inExitPopUp = false
+            object.character.map:load(object.character.
+            levelData)
+            collectgarbage()
+        else
+            if (object.inputArea == "queue" and not inExitPopUp) then
+                object.inExitPopUp = true
+                object:confirmExit()
             else
-                if (object.inputArea == "queue" and not inExitPopUp) then
-                    object.inExitPopUp = true
-                    object:confirmExit()
-                else
-                    if object.selectingLoopCounter == true then
-                        object.selectingLoopCounter = false
+                if object.selectingLoopCounter == true then
+                    object.selectingLoopCounter = false
+                end
+                if (object.inputAreaStack:peek() ~= "queue") then
+                    object.rightMenu.inputArea = "build"
+                    object.prevInputArea = object.inputArea
+                    object.inputArea = object.inputAreaStack:pop()
+                    if (object.inputArea == "if-wall") then
+                        object.prevInputArea = object.inputArea
+                        object.inputArea = object.inputAreaStack:pop()
                     end
+                    if (object.inputArea ~= "queue") then
+                        object.buildArea:setBuildType(object.inputArea)
+                        object.prevPosition = object.position
+                        object.position = 2*object.rowLength + 1
+                        object.buildArea:setPosition(object.position)
+                        object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
+                    else
+                        object.prevPosition = object.position
+                        object.position = 1
+                        object.buildArea:setPosition(object.position)
+                        object.drawBottomMenu:clearPos(object.prevPosition, object.queue.actions)
+
+                        object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.prevInputArea))
+                        object.rightMenu.inputAreaChanged = true
+                        object.rightMenu.inputArea = "queue"
+                        object.buildArea:setBuildType(object.prevInputArea)
+                        object.inputAreaStack:push(object.prevInputArea)
+                    end
+                else
                     object.prevPosition = object.position
                     object.position = 1
                     object.buildArea:setPosition(object.position)
@@ -530,9 +618,14 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                     object.buildArea.drawBuildArea:clearPos(object.buildArea.prevPosition, object:getQueue(object.inputArea))
                     object.rightMenu.inputAreaChanged = true
                     object.rightMenu.inputArea = "queue"
-                    object.inputArea = "queue"
+                    object.prevInputArea = object.inputArea
+                    object.buildArea:setBuildType(object.prevInputArea)
+                    object.inputArea = object.inputAreaStack:pop()
+                    object.inputAreaStack:push(object.prevInputArea)
                 end
+                object.inputAreaChanged =  true
             end
+        end
         end
     end
 end
@@ -611,7 +704,10 @@ function BottomMenu:enterMethod()
     end
     if self.maxCommands[self:getQueue(self.inputArea)[queuePos]] > 0 then
         self.buildArea:setBuildType(self:getQueue(self.inputArea)[queuePos]) --object:getQueue(object.inputArea)[queuePos] is the command you clicked on
+        --self.prevInputArea = self.inputArea
+        self.inputAreaStack:push(self.inputArea)
         self.inputArea = self:getQueue(self.inputArea)[queuePos]
+        self.inputAreaChanged = true
         self.prevPosition = self.position
         self.position = 2*self.rowLength + 1
         self.buildArea:setPosition(self.position)
