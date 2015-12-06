@@ -11,13 +11,9 @@ local UILabelView = extends(UIView)
 
 --@member static constant 
 
-if ADConfig.isSimulator then
-  script_path = ""
-else
-  script_path = sys.root_path()
-end
-UILabelView.FONT_GROBOLD = script_path..'data/GROBOLD.ttf'
-UILabelView.FONT_CHALKDUSTER = script_path..'data/Chalkduster.ttf'
+
+UILabelView.FONT_GROBOLD = 'data/GROBOLD.ttf'
+UILabelView.FONT_CHALKDUSTER = 'data/Chalkduster.ttf'
   
 function UILabelView:new(args)
   --@member container which contains this LabelView,default nil which means whole window
@@ -25,9 +21,16 @@ function UILabelView:new(args)
   --@member label UILabel type 
   o.label = args.label
   --@member label data 
-  --o.labelData = sys.new_freetype(o.label.color, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},o.label.font)
-  o.labelData = sys.new_freetype({g=255, r=255, b=255, a=255}, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},script_path..'data/GROBOLD.ttf')
   
+  local script_path = nil
+  if ADConfig.isSimulator then
+    script_path = ""
+  else
+    script_path = sys.root_path()
+  end
+  -- o.labelData = sys.new_freetype(o.label.color, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},o.label.font)
+  o.labelData = sys.new_freetype({g=255, r=255, b=255, a=255}, 70, {x= 20, y=20}, script_path..'data/GROBOLD.ttf')
+
   return UILabelView:init(o)
 end
 
@@ -36,7 +39,8 @@ function UILabelView:show()
 end
 
 function UILabelView:afterUpdateGlobalFrame()
-  self.labelData = sys.new_freetype(self.label.color, self.label.size,{x = self.globalFrame.x,y = self.globalFrame.y},self.label.font)
+  self.labelData = sys.new_freetype({g=255, r=255, b=255, a=255}, 70, {x= 20, y=20}, script_path..'data/GROBOLD.ttf')
+  --self.labelData = sys.new_freetype(self.label.color, self.label.size,{x = self.globalFrame.x,y = self.globalFrame.y},self.label.font)
 end
 
 return UILabelView
