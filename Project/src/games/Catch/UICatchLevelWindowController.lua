@@ -26,7 +26,7 @@ function UICatchLevelWindowController:onClickEvent(sender)
 end
 
 function UICatchLevelWindowController:onKeyEvent(event)
-  if event.key == Event.KEY_ZERO and event.state == Event.KEY_STATE_DOWN then
+  if event.key == Event.KEY_BACK and event.state == Event.KEY_STATE_DOWN then
     self.game:exit()
   end
 end

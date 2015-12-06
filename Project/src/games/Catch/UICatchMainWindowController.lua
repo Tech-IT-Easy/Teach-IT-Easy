@@ -125,4 +125,10 @@ function UICatchMainWindowController:onClickEvent(sender)
   -- end if sender and sender.label
 end
 
+function UICatchMainWindowController:onKeyEvent(event)
+  if event.key == Event.KEY_BACK and event.state == Event.KEY_STATE_DOWN then
+    self.game:exit()
+  end
+end
+
 return UICatchMainWindowController
