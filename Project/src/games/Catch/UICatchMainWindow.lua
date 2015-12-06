@@ -10,8 +10,7 @@ local UIImage = require("toolkit.UIKit.UIImage")
 local UILabel = require("toolkit.UIKit.UILabel")
 local Event = require("toolkit.Event")
 local THEME = require("games/Catch/data/theme")
-local Thief = require("games.Catch.Thief")
-local Cop = require("games.Catch.Cop")
+local People = require("games.Catch.People")
 
 -- This is a instance window, which is created for using when required
 local UICatchMainWindow = extends(UIWindowView)
@@ -43,8 +42,8 @@ function UICatchMainWindow:new()
   -- layout panel components
   local proportion = 0.8
   window.mainPanel = UIPanelView:new{frame={x=0, y = 0,w = screen:get_width()*proportion,h=screen:get_height()*proportion},backgroundImage=gameBackground }
-  window.thief = Thief:new{frame=THEME.FRAME.THIEF,image=thiefImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
-  window.cop = Cop:new{frame=THEME.FRAME.COP,image=copImage,moveUnit=THEME.DEFAULT.MOVE_UNIT,bonusMoveUnit=0}
+  window.thief = People:new{frame=THEME.FRAME.THIEF,image=thiefImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
+  window.cop = People:new{frame=THEME.FRAME.COP,image=copImage,moveUnit=THEME.DEFAULT.MOVE_UNIT}
   window.tryCountLabelView = UILabelView:new{frame={x=20,y=20,w=0,h=0},label=UILabel:new{text="20 / 20",color=THEME.COLOR.WHITE,size=30,font=UILabel.FONT_GROBOLD}}
   window.mainPanel:addChildView(window.thief)
   window.mainPanel:addChildView(window.cop)

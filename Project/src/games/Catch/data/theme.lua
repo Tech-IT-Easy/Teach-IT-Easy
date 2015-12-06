@@ -1,14 +1,14 @@
 local THEME = {}
 
 THEME.COLOR = {
-  RED = {r=0,g=255,b=0},
-  WHITE = {r=255,g=255,b=255},
-  BLUE =  {r=0,g=0,b=255},
-  LIGHT_BLUE = {r=78,g=114,b=210},
-  GREEN = {r=0,g=255,b=0},
-  DARK_GRAY = {r=27,g=29,b=52},
-  DARK_GRAY_1 = {r=36,g=60,b=93},
-  LIGHT_GRAY = {r=92,g=128,b=149},
+  RED = {r=0,g=255,b=0,a=255 },
+  WHITE = {r=255,g=255,b=255,a=255 },
+  BLUE =  {r=0,g=0,b=255,a=255 },
+  LIGHT_BLUE = {r=78,g=114,b=210,a=255 },
+  GREEN = {r=0,g=255,b=0,a=255 },
+  DARK_GRAY = {r=27,g=29,b=52,a=255 },
+  DARK_GRAY_1 = {r=36,g=60,b=93,a=255 },
+  LIGHT_GRAY = {r=92,g=128,b=149,a=255 },
 }
 
 THEME.IMAGE = {
