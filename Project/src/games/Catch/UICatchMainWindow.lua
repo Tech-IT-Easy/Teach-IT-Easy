@@ -27,17 +27,7 @@ function UICatchMainWindow:new()
   window.enterEnable = false
   window.buttons = {}
   window.words = {}
-  window.letters = {
-    "a", "b", "c",
-    "d", "e", "f",
-    "g", "h", "i",
-    "j", "k", "l",
-    "m", "n", "o",
-    "p", "q", "r",
-    "s", "t", "u",
-    "v", "w", "x",
-    "y", "z"
-  }
+  window.letters = {"a", "b", "c","d", "e", "f","g", "h", "i","j", "k", "l","m", "n", "o","p", "q", "r","s", "t", "u","v", "w", "x","y", "z"}
   
   -- layout panel components
   local proportion = 0.8
@@ -101,7 +91,7 @@ function UICatchMainWindow:generateRandomCharacters()
   assert(self.correctChar,"UICatchMainWindow:generateRandomCharacters(),self.correctChar is nil")
   self.characters = {}
   math.randomseed(os.time())
-  local rightLetterIndex = 1--math.random(1,9)
+  local rightLetterIndex = math.random(1,9)
   self.characters[rightLetterIndex] = self.correctChar
   local tmp = 0
   local differ = {}
