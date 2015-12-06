@@ -22,9 +22,9 @@ function UICatchLevelWindow:new()
   -- private data model with <local>
   -- components
   window.buttons = {}
-  local textLabel = UILabel:new{text="CHOOSE LEVEL",color=THEME.COLOR.WHITE,size=70,font=UILabel.FONT_GROBOLD} 
-  window.title = UILabelView:new{frame={x=400,y=20,w=0,h=0},label=textLabel}
-  
+  --local textLabel = UILabel:new{text="CHOOSE LEVEL",color=THEME.COLOR.WHITE,size=70,font=UILabel.FONT_GROBOLD} 
+  --window.title = UILabelView:new{frame={x=400,y=20,w=0,h=0},label=textLabel}
+
   -- calculate menuPanel width,height,pisition based on menu item size
   local menuPanelWidth = (THEME.LEVEL.RECTANGLE_SIZE + THEME.LEVEL.RECTANGLE_SPACE) * THEME.LEVEL.COLUMNS - THEME.LEVEL.RECTANGLE_SPACE
   local menuPanelHeight = (THEME.LEVEL.RECTANGLE_SIZE + THEME.LEVEL.RECTANGLE_SPACE) * THEME.LEVEL.ROWS - THEME.LEVEL.RECTANGLE_SPACE
@@ -49,7 +49,7 @@ function UICatchLevelWindow:new()
   end
   window:setFocusView(window.buttons[1])]]--
   window:addChildView(window.menuPanel)
-  window:addChildView(window.title)
+  --window:addChildView(window.title)
 
   return UICatchLevelWindow:init(window)
 end
