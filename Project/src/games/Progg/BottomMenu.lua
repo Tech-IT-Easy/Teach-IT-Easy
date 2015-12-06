@@ -223,7 +223,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             object:deleteAction(object.position, object.inputArea)
             object:updateInputArea(object.inputArea, true)
             object.selectingActionEdit = nil
-            if object.inputArea == "queue" then
+            if object.inputArea == "queue" or object.inputArea == "if-wall" then
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = object.inputArea
             else
