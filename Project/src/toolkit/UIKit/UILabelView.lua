@@ -26,10 +26,7 @@ function UILabelView:new(args)
   --@member label UILabel type
   o.label = args.label
   --@member label data
-
-  -- o.labelData = sys.new_freetype(o.label.color, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},o.label.font)
-  o.labelData = sys.new_freetype({g=255, r=255, b=255, a=255}, 70, {x= 20, y=20}, script_path..'data/GROBOLD.ttf')
-
+  o.labelData = sys.new_freetype(o.label.color, o.label.size, {x = o.globalFrame.x,y = o.globalFrame.y},script_path..o.label.font)
   return UILabelView:init(o)
 end
 
@@ -38,7 +35,6 @@ function UILabelView:show()
 end
 
 function UILabelView:afterUpdateGlobalFrame()
-  -- self.labelData = sys.new_freetype({g=255, r=255, b=255, a=255}, 70, {x= 20, y=20}, script_path..'data/GROBOLD.ttf')
   self.labelData = sys.new_freetype(self.label.color, self.label.size,{x = self.globalFrame.x,y = self.globalFrame.y},script_path..self.label.font)
 end
 
