@@ -62,8 +62,6 @@ function PlatformContext:new()
 
   -- @member profile:Profile
   o.profile = nil
-  -- @member gameProgress:GameProgress
-  o.gameprogress = GameProgress:new()
 
   --------------
   -- code

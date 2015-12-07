@@ -46,22 +46,50 @@ end
 
 
 function Network:getProgress(game, name)
-  -- local t = {}
-  -- http.request{
-  --     url = "http://2015-3.pumi.ida.liu.se:9000/".. game .."/"..name .."/",
-  --     sink = ltn12.sink.table(t)
-  -- }
-  -- table = table.concat(t)
-
-  local table
-  if name == "Knatte" then
-      table = {level = 1, proggGameBasicLevel = false, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
-  elseif name == "Fnatte" then
-      table = {level = 3, proggGameBasicLevel = true, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
-  elseif name == "Tjatte" then
-      table  = {level = 5, proggGameBasicLevel = true, proggGameProcLevel= true, proggGameLoopLevel = true, proggGameMaster = false }
+  local t = {}
+  local b, c, h = http.request{
+    url = "http://localhost:8000/progress/"..name.."/",
+    sink = ltn12.sink.table(t)
+  }
+  local table = table.concat(t)
+  print(table)
+  if c == 200 then -- HTTP STATUS 200
+    print("Got progress from server")
+    return json.parse(table)
   else
-      table = {level = 0, proggGameBasicLevel = false, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
+    print("No progress from server")
+    if name == "Knatte" then
+        table = {level = 1, proggGameBasicLevel = false, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
+    elseif name == "Fnatte" then
+        table = {level = 3, proggGameBasicLevel = true, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
+    elseif name == "Tjatte" then
+        table  = {level = 5, proggGameBasicLevel = true, proggGameProcLevel= true, proggGameLoopLevel = true, proggGameMaster = false }
+    else
+        table = {level = 0, proggGameBasicLevel = false, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
+    end
+  end
+  return table
+end
+
+
+function Network:pushProgress(game, name, progress)
+  local t = {}
+  local reqbody = json.stringify(progress)
+  local b, c, h = http.request{
+    method = "PUT",
+    url = "http://localhost:8000/progress/"..name.."/",
+    source = ltn12.source.string(reqbody),
+    headers = {
+      ["content-type"] = "application/json",
+      ["content-length"] = tostring(#reqbody)
+    },
+    sink = ltn12.sink.table(t)
+
+  }
+  local table = table.concat(t)
+  if c == 200 then -- HTTP STATUS 200
+    print("Updated progress succesfully to server")
+    return json.parse(table)
   end
   return table
 end
@@ -75,7 +103,6 @@ function Network:getLevels(game)
     sink = ltn12.sink.table(t)
   }
   local table = table.concat(t)
-  print(table)
   if c == 200 then -- HTTP STATUS 200
     print("Got levels from server")
     return json.parse(table)
