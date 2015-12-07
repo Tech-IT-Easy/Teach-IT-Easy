@@ -6,7 +6,7 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-lunit = require "lunit"
+--[[lunit = require "lunit"
 module("src_menus_SelectLevel", package.seeall, lunit.testcase)
 SelectLevel = require "menus.SelectLevel"
 
@@ -58,3 +58,5 @@ function test_loadview()
 
     verify_mock(mc)
 end
+
+]]

@@ -85,7 +85,7 @@ function SelectLevel:loadview()
   self.username = platformContext.profile.name
 
   self.unlockedLevels = self.context.profile.gameprogress:getProgress("games.Progg.ProggGame").level + 1
-  --self.unlockedLevels = 9
+
   self.checkImage = gfx.loadpng('data/check.png')
   self.checkImage:premultiply()
   self.lockImage = gfx.loadpng('data/lock.png')
@@ -100,11 +100,6 @@ end
 -- @author Marcus
 -------------------------------------
 function SelectLevel:active(x1)
-  --[[if x1 == 1 then
-    screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.25) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
-  --screen:clear({ g = 255, r = 255, b = 255 }, { x = (screen:get_width() * 0.08 + (screen:get_width() * 0.22) * (x1 - 1)) * 1.04, y = (screen:get_height() * 0.28) * 1.02, w = screen:get_height() * 0.24, h = screen:get_height() * 0.24 })
-  screen:copyfrom(self.checkImage, nil, {x = screen:get_width() * 0.13 + (screen:get_width() * 0.22) * (x1 - 1), y = (screen:get_height() * 0.40), w = self.checkImage:get_width() * 0.1, h = self.checkImage:get_height() * 0.1})
-  else]]
 
   if x1 < 5 and x1 < self.unlockedLevels then
   screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
@@ -127,9 +122,7 @@ function SelectLevel:active(x1)
     screen:clear({ g = 255, r = 255, b = 255 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 5) + 4, y = (screen:get_height() * 0.65) + 4, w = screen:get_height() * 0.24, h = screen:get_height() * 0.24 })
   level_fonts[x1]:draw_over_surface(screen, ""..x1)
   end
-  --end
 
-  --screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = self.checkImage:get_width() * 0.6, h = self.checkImage:get_height() * 0.6 }, true)
 
 end
 
@@ -157,7 +150,7 @@ function SelectLevel:inactive(x1)
   level_fonts[x1]:draw_over_surface(screen, ""..x1)
   end
 
-  --screen:copyfrom(self.myimages[x1], nil, { x = (prof_sel_hspacing * x1) + prof_sel_itemwidth * (x1 - 1)*0.82 + screen:get_width() * 0.04, y = prof_sel_itemy - screen:get_height() * 0.035, w = self.checkImage:get_width() * 0.6, h = self.checkImage:get_height() * 0.6 }, true)
+
 
 end
 
@@ -170,8 +163,7 @@ function SelectLevel:lockedlevels(x1)
   if x1 < 5 then
     screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
     screen:copyfrom(self.lockImage, nil, {x = (screen:get_width() * 0.13 + (screen:get_width() * 0.23) * (x1 - 1)) + 50, y = (screen:get_height() * 0.43), w = self.lockImage:get_width() * 0.1, h = self.lockImage:get_height() * 0.1})
-  --level_fonts[x1]:draw_over_surface(screen, ""..x1)
-   -- screen:clear({ g = 131, r = 255, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 1), y = (screen:get_height() * 0.28), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
+
   else
   screen:clear({ g = 131, r = 0, b = 143 }, { x = screen:get_width() * 0.08 + (screen:get_width() * 0.23) * (x1 - 5), y = (screen:get_height() * 0.65), w = screen:get_height() * 0.25, h = screen:get_height() * 0.25 })
   screen:copyfrom(self.lockImage, nil, {x = (screen:get_width() * 0.13 + (screen:get_width() * 0.23) * (x1 - 5)) + 50, y = (screen:get_height() * 0.80), w = self.lockImage:get_width() * 0.1, h = self.lockImage:get_height() * 0.1})
