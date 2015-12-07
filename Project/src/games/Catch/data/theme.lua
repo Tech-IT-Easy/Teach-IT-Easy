@@ -13,8 +13,8 @@ THEME.COLOR = {
 
 THEME.IMAGE = {
   GAME_BACKGROUND = {imagePath="games/Catch/data/readinggame_background.png",imageType="png"},
-  COP_BACKGROUND = {imagePath="data/bowser.png",imageType="png"},
-  THIEF_BACKGROUND = {imagePath="data/mario.png",imageType="png"}
+  COP_BACKGROUND = {imagePath="games/Catch/data/cop.png",imageType="png"},
+  THIEF_BACKGROUND = {imagePath="games/Catch/data/thief.png",imageType="png"}
 }
 THEME.LEVEL = {
   ROWS = 2,

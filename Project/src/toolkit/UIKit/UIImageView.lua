@@ -20,6 +20,7 @@ function UIImageView:setImage(image)
 end
 
 function UIImageView:show()
+  self.image.imageData:premultiply()
   screen:copyfrom(self.image.imageData, nil, self.globalFrame, true)
 end
 

@@ -30,7 +30,7 @@ end
 -- as of right now.
 -----------------------------------------------------------
 function Catch:load()
-  self.levels = require("games.Catch.Levels")
+  self.levels = require("games.Catch.data.levels.Levels")
 end
 
 -----------------------
