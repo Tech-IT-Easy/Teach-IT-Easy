@@ -20,9 +20,6 @@ function UIImageView:setImage(image)
 end
 
 function UIImageView:show()
-  if self.image.imageType == "png" then
-    self.image.imageData:premultiply()
-  end
   screen:copyfrom(self.image.imageData, nil, self.globalFrame, true)
 end
 

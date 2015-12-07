@@ -150,7 +150,7 @@ function UICatchMainWindow:setPlayers()
   self.moveUnit = (self.mainPanel.frame.w - self.thief.frame.x - self.thief.frame.w) / self.maxNumberOfGuesses
   self.cop.moveUnit = self.moveUnit
   self.thief.moveUnit = self.moveUnit
-  self.cop.bonusMoveUnit = (self.thief.frame.x - self.cop.frame.x - self.cop.frame.w+40) / string.len(self.correctWord)
+  self.cop.bonusMoveUnit = (self.thief.frame.x - self.cop.frame.x - self.cop.frame.w + 50) / string.len(self.correctWord)
 end
 
 function UICatchMainWindow:setGuessWordBox()

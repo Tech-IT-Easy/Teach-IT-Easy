@@ -19,6 +19,7 @@ function UIImage:new(args)
   --@member imageBuffer load image when created
   if(args.imageType=="png") then
     o.imageData = gfx.loadpng(args.imagePath)
+    o.imageData:premultiply()
   elseif(args.imageType=="jpeg") then
     o.imageData = gfx.loadjpeg(args.imagePath)
   end
