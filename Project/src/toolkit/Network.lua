@@ -90,8 +90,10 @@ function Network:pushProgress(game, name, progress)
   if c == 200 then -- HTTP STATUS 200
     print("Updated progress succesfully to server")
     return json.parse(table)
+  else
+    print("Couldnt update progress to server")
+    return "Error"
   end
-  return table
 end
 
 
