@@ -63,6 +63,9 @@ function PlatformContext:new()
   -- @member profile:Profile
   o.profile = nil
 
+
+  math.randomseed(os.time())
+
   --------------
   -- code
   --------------

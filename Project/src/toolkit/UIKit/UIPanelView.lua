@@ -26,6 +26,10 @@ function UIPanelView:afterUpdateGlobalFrame()
   end
 end
 
+function UIPanelView:emptyChildView()
+  self.children = {}
+end
+
 function UIPanelView:addChildView(view)
   table.insert(self.children,view)
   view:setContainer(self)

@@ -26,7 +26,6 @@ if ADConfig.isSimulator then
 end
 
 local PlatformContext= require("platform.PlatformContext")
-
 -- create global a game context
 platformContext = PlatformContext:new()
 
@@ -37,7 +36,7 @@ platformContext = PlatformContext:new()
 -- @author Chuck
 -----------------------------------------------------------
 function onKey(key,state)
-  -- ADLogger.trace("OnKey("..key..","..state..")")
+  ADLogger.trace("OnKey("..key..","..state..")")
   if key == 'exit' then
     sys.stop()
   end
@@ -58,5 +57,6 @@ function onStart()
   end
   
   platformContext:load()
-  platformContext:show()  
+  platformContext:show()
+  
 end

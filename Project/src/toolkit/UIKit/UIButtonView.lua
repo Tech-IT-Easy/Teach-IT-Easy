@@ -4,6 +4,7 @@
 --
 -- @Author:Created by Chuck, NOV 19,2015
 -----------------------------------------------------------
+SystemFreeType = require("toolkit.UIKit.UISystemFreeType")
 local UIDefaultTheme = require("toolkit.UIKit.UIDefaultTheme")
 local UIView = require("toolkit.UIKit.UIView")
 local UIButtonView = extends(UIView)
@@ -51,7 +52,7 @@ function UIButtonView:new(args)
       x = o.globalFrame.x + o.labelPosition.x,
       y = o.globalFrame.y + o.labelPosition.y
     }
-    o.labelData = sys.new_freetype(o.label.color, o.label.size, o.labelAbsolutePosition,o.label.font)
+   
   end
 
   return UIButtonView:init(o)
@@ -75,10 +76,22 @@ function UIButtonView:afterUpdateGlobalFrame()
       x = self.globalFrame.x + self.labelPosition.x,
       y = self.globalFrame.y + self.labelPosition.y
     }
-    self.labelData = sys.new_freetype(self.label.color, self.label.size, self.labelAbsolutePosition,self.label.font)
   end
 end
+function UIButtonView:setLabel(label,position)
+  self.label = label
+  self.labelPosition = position or {x=0,y=0}
+  self:updateLabelPosition()
+end
 
+function UIButtonView:updateLabelPosition()
+  if self.label then
+    self.labelAbsolutePosition = {
+      x = self.globalFrame.x + self.labelPosition.x,
+      y = self.globalFrame.y + self.labelPosition.y
+    }
+  end
+end
 -- show the button on specific position
 function UIButtonView:show()
   -- draw frame with border color
@@ -116,8 +129,8 @@ function UIButtonView:show()
   -- end draw background image
 
   -- draw text,
-  if self.label and self.labelData then
-    self.labelData:draw_over_surface(screen, self.label.text)
+  if self.label and self.labelAbsolutePosition then
+    SystemFreeType:drawLabel(self.label,self.labelAbsolutePosition)
   end
   -- end draw text
 end

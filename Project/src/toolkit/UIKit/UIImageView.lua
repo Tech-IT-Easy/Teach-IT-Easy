@@ -15,6 +15,9 @@ function UIImageView:new(args)
   o.image = args.image
   return UIImageView:init(o)
 end
+function UIImageView:setImage(image)
+  self.image = image
+end
 
 function UIImageView:show()
   screen:copyfrom(self.image.imageData, nil, self.globalFrame, true)
