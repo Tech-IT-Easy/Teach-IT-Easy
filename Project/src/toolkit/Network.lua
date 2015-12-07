@@ -9,6 +9,7 @@ local Object = require('toolkit.Object')
 local http = require("socket.http")
 local ltn12 = require("ltn12")
 local json = require("lib.json")
+local server = require("Config.server")
 
 Network = extends(Object)
 
@@ -68,15 +69,16 @@ end
 
 function Network:getLevels(game)
   local t = {}
-  http.request{
-    --url = "http://2015-3.pumi.ida.liu.se:9000/".. game .."/levels/",
-    url = "http://localhost:8000/"..game.."/levels/",
+  local b, c, h = http.request{
+    --url = server.url.. game .."/levels/",
+    url = "http://localhost:8000/levels/",
     sink = ltn12.sink.table(t)
   }
   local table = table.concat(t)
-  if table == not nil then
+  print(table)
+  if c == 200 then -- HTTP STATUS 200
     print("Got levels from server")
-    return table
+    return json.parse(table)
   else
     print("No levels from server")
   end
