@@ -160,13 +160,38 @@ function TrophyRoom:loadProgress(game)
         end
         -- progGameMasterProc = false
     elseif (game == "reading") then
-        self.totalLevels = 10
+        self.totalLevels = 8
+        if (platformContext.profile.gameprogress.progress["games.Catch.Catch"].catchABC) then
+            table.insert(self.achievementButtons, { "ABC", "You have completed level 2" })
+            self.done["1"] = true
+        else
+            table.insert(self.achievementButtons, { "ABC", "Learn the alphabet", "Finish level 2" })
+        end
+        if (platformContext.profile.gameprogress.progress["games.Catch.Catch"].catchKindergarten) then
+            table.insert(self.achievementButtons, { "Kindergarten", "Level 4 is completed" })
+            self.done["2"] = true
+        else
+            table.insert(self.achievementButtons, { "Kindergarten", "Can you read?", "Finish level 4" })
+        end
+        if (platformContext.profile.gameprogress.progress["games.Catch.Catch"].catchElementary) then
+            table.insert(self.achievementButtons, { "Elementary School", "Level 6 completed" })
+            self.done["3"] = true
+        else
+            table.insert(self.achievementButtons, { "Elementary School", "This needs skill", "Finish level 4" })
+        end
+        if (platformContext.profile.gameprogress.progress["games.Catch.Catch"].catchPhd) then
+            table.insert(self.achievementButtons, { "Phd", "You are awesome" })
+            self.done["4"] = true
+        else
+            table.insert(self.achievementButtons, { "Phd", "Master of programming", "Finish all levels" })
+        end
         self.achievementButtons = {
             { "ABC", "Learn the alphabet", "Finish level 1" },
-            { "Kindergarten", "Can you read?", "Finish level 2" }, {
-                "Sentances", "This needs skill",
+            { "Kindergarten", "Can you read?", "Finish level 2" },
+            {
+                "Elementary School", "This needs skill",
                 "Finish level 4"
-            }, { "Phd", "Some serious stuff", "Buy levels for 20$" }, { "Shakespeare", "Real pro", "Level soon in stores" }
+            }, { "Phd", "Some serious stuff", "Complete all Levels" }
         }
     end
 end
