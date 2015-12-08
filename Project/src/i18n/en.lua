@@ -21,11 +21,14 @@ return {
 
     ["MENU_MAIN"] = "MAIN MENU",
 
+    ["SETTINGS_MAIN"] = "SETTINGS",
+
     ["LEVEL_SELECT"] = "SELECT LEVEL",
 
     ["PROGRESS"] = "Progress",
 
-    ["TROPHY_MENU"] = "Game trophies",
+    ["TROPHY_MENU_PROGG"] = "Programming game trophies",
+    ["TROPHY_MENU_READING"] = "  Reading game trophies",
     ["TROPHY_COMPLETED"] = "You have completed %s levels out of %s",
 
     ["EDIT_NAME"] = "Edit name",
