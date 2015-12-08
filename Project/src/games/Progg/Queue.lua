@@ -203,7 +203,7 @@ function Queue:clearAll(queueType)
     self.ifFalseActions = {}
 
     if self.buildArea ~= nil then
-      self.buildArea:setQueue(self.actions, queueType)
+      self.buildArea:setQueue({}, "all")
     end
 
   elseif queueType == "loop" then

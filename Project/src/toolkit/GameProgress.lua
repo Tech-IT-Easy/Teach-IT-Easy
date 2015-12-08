@@ -34,7 +34,12 @@ function GameProgress:getprogressStart(game)
         return "N/A"
     else
 --        print("Getting progress for game: "..game)
-        return self.progress[game].level.."/8"
+        if self.progress[game].level ~= nil then
+            return self.progress[game].level.."/8"
+        else
+            return "N/A"
+        end
+
     end
 end
 
