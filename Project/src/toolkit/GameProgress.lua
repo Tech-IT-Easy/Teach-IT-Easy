@@ -15,8 +15,6 @@ function GameProgress:new(name)
     o.progress["games.Progg.ProggGame"] = {}
     o.progress["games.Catch.Catch"] = {}
     o.progress["games.Progg.ProggGame"] = Network:getProgress("games.Progg.ProggGame", name)
-    o.progress["games.Catch.Catch"] = Network:getProgress("games.Catch.Catch", name)
-
     return GameProgress:init(o)
 end
 
