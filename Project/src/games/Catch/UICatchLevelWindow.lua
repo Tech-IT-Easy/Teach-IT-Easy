@@ -12,7 +12,7 @@ local UILabel = require("toolkit.UIKit.UILabel")
 
 local UIImage = require("toolkit.UIKit.UIImage")
 local Event = require("toolkit.Event")
-local THEME = require("games/Catch/data/theme")
+local THEME = require("games.Catch.data.theme")
 
 -- This is a instance window, which is created for using when required
 local UICatchLevelWindow = extends(UIWindowView)
