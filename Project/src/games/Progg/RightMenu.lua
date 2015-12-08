@@ -31,6 +31,7 @@ function RightMenu:new(maxCommands)
     o.currentHighlight = nil
     o.inputAreaChanged = false
     o.preventFalseChanged = false
+    o.isMovingAction = false
     o.inputArea = "queue"
     o.highlightTimer = nil
     o.isFirstTimeLoop = true
@@ -60,7 +61,9 @@ function RightMenu:show(bottomInput, preventFalse)
     --self:stop()
     --self:loopLayout()
     --self:buildLayout()
-    if (self.inputAreaChanged == true or self.preventFalseChanged == true) then
+    if self.isMovingAction == true then
+        self:moveLayout()
+    elseif (self.inputAreaChanged == true or self.preventFalseChanged == true) then
         if (self.inputArea == "queue") then
             self:standardLayout()
         elseif(self.inputArea == "loop") then
@@ -81,8 +84,6 @@ function RightMenu:show(bottomInput, preventFalse)
         self:highlight(self.toHighlight)
         self.toHighlight = nil
     end
-
-
 end
 
 
@@ -217,6 +218,16 @@ function RightMenu:optionsLayout()
         self.can_enter = true
     end
     self.draw:addOptions(self.can_enter)
+end
+
+-------------------------------------
+-- Called to change button layout
+-- to show information message for
+-- user when moving an action
+-- @author Tobias Lundell
+-------------------------------------
+function RightMenu:moveLayout()
+    self.draw:addMoveInstructions()
 end
 
 -------------------------------------

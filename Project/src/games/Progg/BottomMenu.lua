@@ -203,6 +203,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 --            end
             elseif object.selectingActionEdit ~= nil then   --Handles input when a command is selected
                 object.isMovingAction = true
+                object.rightMenu.isMovingAction = object.isMovingAction
                 object.posActionToMove = object.position
                 object.selectingActionEdit = nil
             elseif object.isMovingAction == true or object.character.hasWon == true then  -- Handles input while user is moving an action, or while victory screen is open.
@@ -284,6 +285,14 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then --Handles input when a command is selected and it's not a method or input when moving a command
                 object.selectingActionEdit = nil
                 object.isMovingAction = false
+                object.rightMenu.isMovingAction = false
+                object.prevPosition = object.position
+                object.position = object.posActionToMove
+                if (object.inputArea ~= "queue") then
+                    object.buildArea:setPosition(object.prevPosition)
+                    object.buildArea:setPosition(object.position)
+                end
+                object.posActionToMove = nil
                 object.rightMenu.inputAreaChanged = true
             if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-wall"  then
                 object.rightMenu.inputArea = "build"
@@ -549,6 +558,7 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             if object.isMovingAction == true then   -- Handles input while user is moving an action
             object:moveAction(object.posActionToMove, object.position)
             object.isMovingAction = false
+            object.rightMenu.isMovingAction = false
             object:updateInputArea(object.inputArea, true)
             if object.inputArea == "queue" then
                 object.rightMenu.inputAreaChanged = true
