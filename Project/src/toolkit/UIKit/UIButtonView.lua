@@ -26,7 +26,7 @@ function UIButtonView:new(args)
   -- @member marked as selected, default is false
   o.isSelected = args.isSelected or false
   -- @member hightlight color
-  o.selectedColor = args.selectedColor or {r=0,g=100,b=255}
+  o.selectedColor = args.selectedColor or UIDefaultTheme.BUTTON_VIEW.BACKGROUND
   -- @member marked as selected, default is false
   o.isFocused = args.isFocused or false
   -- @member focused color
@@ -55,6 +55,20 @@ function UIButtonView:new(args)
    
   end
 
+  -- especially number
+   -- @member label
+  o.tipLabel = args.tipLabel or nil
+  -- @member label position
+  o.tipLabelPosition = args.tipLabelPosition or {x=0,y=0}
+
+  -- @member labelData
+  -- firstly change position relative to button frame
+  if o.tipLabel then
+    o.tipLabelAbsolutePosition = {
+      x = o.globalFrame.x + o.tipLabelPosition.x,
+      y = o.globalFrame.y + o.tipLabelPosition.y
+    }
+  end
   return UIButtonView:init(o)
 end
 
@@ -70,14 +84,9 @@ function UIButtonView:afterUpdateGlobalFrame()
     w = self.frame.w - 2*self.borderWidth,
     h = self.frame.h - 2*self.borderWidth
   }
-
-  if self.label then
-    self.labelAbsolutePosition = {
-      x = self.globalFrame.x + self.labelPosition.x,
-      y = self.globalFrame.y + self.labelPosition.y
-    }
-  end
+  self:updateLabelPosition()
 end
+
 function UIButtonView:setLabel(label,position)
   self.label = label
   self.labelPosition = position or {x=0,y=0}
@@ -89,6 +98,12 @@ function UIButtonView:updateLabelPosition()
     self.labelAbsolutePosition = {
       x = self.globalFrame.x + self.labelPosition.x,
       y = self.globalFrame.y + self.labelPosition.y
+    }
+  end
+  if self.tipLabel then
+    self.tipLabelAbsolutePosition = {
+      x = self.globalFrame.x + self.tipLabelPosition.x,
+      y = self.globalFrame.y + self.tipLabelPosition.y
     }
   end
 end
@@ -131,6 +146,12 @@ function UIButtonView:show()
   -- draw text,
   if self.label and self.labelAbsolutePosition then
     SystemFreeType:drawLabel(self.label,self.labelAbsolutePosition)
+  end
+  -- end draw text
+  
+  -- draw tip text,
+  if self.tipLabel and self.tipLabelAbsolutePosition then
+    SystemFreeType:drawLabel(self.tipLabel,self.tipLabelAbsolutePosition)
   end
   -- end draw text
 end
