@@ -350,6 +350,8 @@ function TrophyRoom:printProgressionBar()
     local finishedLevels
     if self.currentGame == "progg" then
         finishedLevels = platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].level
+    elseif self.currentGame == "reading" then
+        finishedLevels = platformContext.profile.gameprogress.progress["games.Catch.Catch"].level
     else
         finishedLevels = 0
     end
