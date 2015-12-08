@@ -8,7 +8,9 @@ THEME.COLOR = {
   GREEN = {r=0,g=255,b=0,a=255 },
   DARK_GRAY = {r=27,g=29,b=52,a=255 },
   DARK_GRAY_1 = {r=36,g=60,b=93,a=255 },
-  LIGHT_GRAY = {r=92,g=128,b=149,a=255 }
+  LIGHT_GRAY = {r=92,g=128,b=149,a=255 },
+  WHITE_HALF = { g = 228, r = 187, b = 235, a =255 },
+  DARK_BLUE = { g = 131, r = 0, b = 143, a=255 }
 }
 
 THEME.IMAGE = {
@@ -28,7 +30,8 @@ THEME.MENU = {
   COLUMNS = 3,
   BORDER_WIDTH = 4,
   RECTANGLE_SIZE = 80,
-  FONT_SIZE = 50
+  FONT_SIZE = 50,
+  TIP_FONT_SIZE = 30
 }
 
 THEME.FRAME = {

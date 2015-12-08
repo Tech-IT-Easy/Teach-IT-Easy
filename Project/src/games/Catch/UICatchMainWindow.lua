@@ -56,12 +56,14 @@ function UICatchMainWindow:new(context)
   -- layout right menu
   local textAlignCenterPosition = {x=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2,y=(THEME.MENU.RECTANGLE_SIZE - THEME.MENU.FONT_SIZE)/2}
   window.labels = {}
+  window.tipLabels = {}
   window.cells = {}
   for i = 1, THEME.MENU.ROWS do
     for j = 1, THEME.MENU.COLUMNS do
       local index = (i-1) * THEME.MENU.ROWS + j
         window.labels[index] = UILabel:new{identity="menuRow"..i.."Col"..j,text='-',color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
-        window.buttons[index] = UIButtonView:new{identity="button"..index,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=window.labels[index],labelPosition=textAlignCenterPosition}
+        window.tipLabels[index] = UILabel:new{identity="menuRowTip"..i.."Col"..j,text=index,color=THEME.COLOR.WHITE,size=THEME.MENU.TIP_FONT_SIZE,font=UILabel.FONT_GROBOLD }
+        window.buttons[index] = UIButtonView:new{identity="button"..index,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,focusedBorderColor=THEME.COLOR.DARK_GRAY_1,focusedBackgroundColor=THEME.COLOR.WHITE_HALF,borderWidth = THEME.MENU.BORDER_WIDTH,label=window.labels[index],labelPosition=textAlignCenterPosition,tipLabel=window.tipLabels[index]}
         window.cells[index] = UICollectionCellView:new{view=window.buttons[index],viewType="UIButtonView" }
         window:setShortcutKey(window.buttons[index], Event.formatSystemKey[""..index])
         window:setFocusWeight{view=window.buttons[index], hWeight=1, vWeight=1}
@@ -182,6 +184,6 @@ function UICatchMainWindow:updateLevelText(currentLevel)
 end
 
 function UICatchMainWindow:updateTryCountText(cur)
-  self.tryCountLabelView.label.text = self.maxNumberOfGuesses.." / "..cur
+  self.tryCountLabelView.label.text = cur.." / "..self.maxNumberOfGuesses
 end
 return UICatchMainWindow
