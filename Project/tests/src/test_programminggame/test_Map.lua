@@ -120,7 +120,6 @@ function test_setCharacter_one()
     a.starty = 200
     a.boxpadding = 20
     a.innerboxheight = 40
-    a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
     a:setCharacter(input, 0)
 
     verify_mock(mc)
@@ -154,7 +153,6 @@ function test_setCharacter_two()
     a.starty = 200
     a.boxpadding = 20
     a.innerboxheight = 40
-    a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
     a:setCharacter(input,0)
 
     verify_mock(mc)
@@ -189,7 +187,6 @@ function test_setCharacter_three()
     a.starty = 200
     a.boxpadding = 20
     a.innerboxheight = 40
-    a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
     a:setCharacter(input,0)
 
     verify_mock(mc)
@@ -225,7 +222,6 @@ function test_setCharacter_four()
     a.starty = 200
     a.boxpadding = 20
     a.innerboxheight = 40
-    a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
     a:setCharacter(input,0)
 
     verify_mock(mc)
@@ -260,7 +256,6 @@ function test_setCharacter_five()
     a.starty = 200
     a.boxpadding = 20
     a.innerboxheight = 40
-    a.tiles = { 0, 0, 0, 0, 0, 0, 0 }
     a:setCharacter(input,0)
 
     verify_mock(mc)

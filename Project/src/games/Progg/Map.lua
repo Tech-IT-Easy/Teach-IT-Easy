@@ -357,8 +357,11 @@ function Map:setCharacter(i, direction)
         self.image1 = gfx.loadpng(images.LEFT)
         self.image1:premultiply()
     end
-    --Makes sure the old picture is overdrawn entirely
-    self:square(i, self.tiles[i])
+
+    if (self.tiles ~= nil) then
+        --Makes sure the old picture is overdrawn entirely
+        self:square(i, self.tiles[i])
+    end
 
     screen:copyfrom(self.image1, nil, {
         x = self:getX(i) + self.boxpadding,
