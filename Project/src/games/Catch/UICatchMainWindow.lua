@@ -15,13 +15,13 @@ local People = require("games.Catch.People")
 -- This is a instance window, which is created for using when required
 local UICatchMainWindow = extends(UIWindowView)
 
-function UICatchMainWindow:new()
-  local window = UICatchMainWindow:super{title="Window Title"}
-
+function UICatchMainWindow:new(context)
+  local window = UICatchMainWindow:super{title="Window Title" }
   -- private data model with <local>
   window.gameBackground = UIImage:new(THEME.IMAGE.GAME_BACKGROUND)
   window.thiefImage = UIImage:new(THEME.IMAGE.THIEF_BACKGROUND)
-  window.copImage = UIImage:new(THEME.IMAGE.COP_BACKGROUND)
+  window.copImage = UIImage:new({imagePath = context.profile.images.RIGHT, imageType="png"})
+
 
  -- member components
   window.enterEnable = false

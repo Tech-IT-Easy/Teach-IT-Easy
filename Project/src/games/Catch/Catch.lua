@@ -66,7 +66,7 @@ function Catch:windowOpen(args)
   if args == nil or args.windowName == "levelWindow" then
     self.windowController = UICatchLevelWindowController:new({game=self,immediateResponse=false})
   elseif args.windowName == "mainWindow" then
-    self.windowController = UICatchMainWindowController:new({level = args.windowArgs.level,game=self})
+    self.windowController = UICatchMainWindowController:new({level = args.windowArgs.level,game=self,context=self.platformContext} )
   end
   self.gameEventListener:attach(self.windowController)
   self.newWindow = true

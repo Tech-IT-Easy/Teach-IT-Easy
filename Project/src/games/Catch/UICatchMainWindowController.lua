@@ -10,7 +10,7 @@ local UICatchMainWindowController = extends(UIWindowViewController)
 
 function UICatchMainWindowController:new(args)
 
-  local o = UICatchMainWindowController:super(UICatchMainWindow:new())
+  local o = UICatchMainWindowController:super(UICatchMainWindow:new(args.context))
   --assert(args and args.game,"UICatchMainWindowController:new:error game parameter is nil")
   o.game = args.game
   o.levels = o.game.levels
