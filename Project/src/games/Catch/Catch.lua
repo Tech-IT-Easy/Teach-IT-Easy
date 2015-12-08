@@ -11,7 +11,7 @@ local UICatchLevelWindowController = require('games.Catch.UICatchLevelWindowCont
 local UIAlertWindowController = require("toolkit.UIKit.UIAlertWindowController")
 local UIButtonView = require("toolkit.UIKit.UIButtonView")
 local UILabel = require("toolkit.UIKit.UILabel")
-local THEME = require("games/Catch/data/theme")
+local THEME = require("games.Catch.data.theme")
 
 -----------------------------------------------------------
 -- Constructor method, see 'toolkit.Game'
