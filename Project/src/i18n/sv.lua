@@ -21,11 +21,14 @@ return {
 
     ["MENU_MAIN"] = "HUVUDMENY",
 
+    ["SETTINGS_MAIN"] = "INSTÄLLNINGAR",
+
     ["LEVEL_SELECT"] = "VÄLJ NIVÅ",
 
     ["PROGRESS"] = "Avklarat",
 
-    ["TROPHY_MENU"] = "Troféer",
+    ["TROPHY_MENU_PROGG"] = "Programmerings trofeér",
+    ["TROPHY_MENU_READING"] = "  Lässpels trofeér",
     ["TROPHY_COMPLETED"] = "Du har klarat %s nivåer av %s",
 
     ["EDIT_NAME"] = "Ändra namn",

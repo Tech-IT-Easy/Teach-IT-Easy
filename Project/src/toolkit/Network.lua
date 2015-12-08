@@ -48,7 +48,7 @@ end
 function Network:getProgress(game, name)
   local t = {}
   local b, c, h = http.request{
-    url = server.url.."/progress/"..name.."/",
+    url = server.url.."/"..game.."/progress/"..name.."/",
     sink = ltn12.sink.table(t)
   }
   local table = table.concat(t)
@@ -81,7 +81,7 @@ function Network:pushProgress(game, name, progress)
   local reqbody = json.stringify(progress)
   local b, c, h = http.request{
     method = "PUT",
-    url = server.url.."/progress/"..name.."/",
+    url = server.url.."/"..game.."/progress/"..name.."/",
     source = ltn12.source.string(reqbody),
     headers = {
       ["content-type"] = "application/json",
@@ -104,7 +104,7 @@ end
 function Network:getLevels(game)
   local t = {}
   local b, c, h = http.request{
-    url = server.url.."/levels/",
+    url = server.url.."/"..game.."/levels/",
     sink = ltn12.sink.table(t)
   }
   local table = table.concat(t)

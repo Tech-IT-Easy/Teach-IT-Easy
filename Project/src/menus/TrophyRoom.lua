@@ -312,15 +312,12 @@ function TrophyRoom:printTopPanel()
     image1:premultiply()
 
     main_menu_appname:draw_over_surface(screen, LOCALE.APP_NAME)
-    local pageTitle
-    --LOCALE.TROPHY_MENU
     -- name of page
     if self.currentGame == "progg" then
-        pageTitle = "Programming game trophies"
+        trophy_room_pagename:draw_over_surface(screen, LOCALE.TROPHY_MENU_PROGG)
     elseif self.currentGame == "reading" then
-        pageTitle = "  Reading game trophies"
+        trophy_room_pagename:draw_over_surface(screen, LOCALE.TROPHY_MENU_READING)
     end
-    trophy_room_pagename:draw_over_surface(screen, pageTitle)
 
     local count = 0
     for _ in pairs(self.games) do
@@ -330,7 +327,6 @@ function TrophyRoom:printTopPanel()
 
     if self.games[self.currentGame] < count then
         --print right arrow
-        print("rightarrow")
         trophy_room_rightarrow:draw_over_surface(screen, "-->")
     end
     if self.games[self.currentGame] > 1 then
@@ -354,6 +350,8 @@ function TrophyRoom:printProgressionBar()
     local finishedLevels
     if self.currentGame == "progg" then
         finishedLevels = platformContext.profile.gameprogress.progress["games.Progg.ProggGame"].level
+    elseif self.currentGame == "reading" then
+        finishedLevels = platformContext.profile.gameprogress.progress["games.Catch.Catch"].level
     else
         finishedLevels = 0
     end
