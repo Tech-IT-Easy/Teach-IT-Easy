@@ -127,7 +127,7 @@ end
 
 function UICatchMainWindowController:onKeyEvent(event)
   if event.key == Event.KEY_BACK and event.state == Event.KEY_STATE_DOWN then
-    self.game:exit()
+    self.game:windowOpen{windowName="levelWindow",immediateResponse=true}
   end
 end
 
