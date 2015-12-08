@@ -94,10 +94,18 @@ function BottomMenu:show()
         self.inputAreaChanged = false
     end
     if (self.inputArea ~= "queue") then
-        self.buildArea:show(self.queue, self.inputArea)
+        if not self.isMovingAction then
+            self.buildArea:show(self.queue, self.inputArea)
+        else
+            self.buildArea:show(self.queue, self.inputArea, self.posActionToMove)
+        end
     else
         self.drawBottomMenu:icons(self.queue.actions, self.inputArea)
-        self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
+        if not self.isMovingAction then
+            self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
+        else
+            self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions, self.posActionToMove)
+        end
     end
     if (self.inputArea == "if-wall" and #self.queue.ifTrueActions == 0) then
         if (self.preventFalse == false) then
