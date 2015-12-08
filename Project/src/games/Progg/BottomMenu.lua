@@ -176,42 +176,43 @@ function bottomMenuEventHandler:update(object,eventListener,event)
         --Switch for all the input handling to implement
         if event.key == Event.KEY_ONE and not object.inExitPopUp then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-            object.queue.loopCounter[object.queue.loopPointer] = 1
-            object.selectingLoopCounter=false
-            object.rightMenu.inputAreaChanged = true
-            object.rightMenu.inputArea = "build"
-            elseif object.clearAllCheck == true then  --Handles input when confirming if user wants to clear a queue
-            object.queue:clearAll(object.inputArea)
-            object.clearAllCheck = false
-            object.rightMenu.inputAreaChanged = true
-            object.inputAreaChanged = true
-            if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
+                object.queue.loopCounter[object.queue.loopPointer] = 1
+                object.selectingLoopCounter=false
+                object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = "build"
-            elseif object.inputArea == "if-wall"  then
-                object.rightMenu.inputArea = "if-wall"
-            else
+            elseif object.clearAllCheck == true then  --Handles input when confirming if user wants to clear a queue
+                object.queue:clearAll(object.inputArea)
+                object.clearAllCheck = false
+                object.rightMenu.inputAreaChanged = true
+                object.inputAreaChanged = true
                 object.rightMenu.inputArea = "queue"
-            end
+--            if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
+--                object.rightMenu.inputArea = "build"
+--            elseif object.inputArea == "if-wall"  then
+--                object.rightMenu.inputArea = "if-wall"
+--            else
+--                object.rightMenu.inputArea = "queue"
+--            end
             elseif object.selectingActionEdit ~= nil then   --Handles input when a command is selected
-            object.isMovingAction = true
-            object.posActionToMove = object.position
-            object.selectingActionEdit = nil
+                object.isMovingAction = true
+                object.posActionToMove = object.position
+                object.selectingActionEdit = nil
             elseif object.isMovingAction == true or object.character.hasWon == true then  -- Handles input while user is moving an action, or while victory screen is open.
-            print("Not allowed")
+                print("Not allowed")
             else -- Handles input during normal state. Lets user add "move forward" to current queue.
-            object.queue:push(Commands.MOVE, object.inputArea)
-            object.rightMenu.toHighlight = (Commands.MOVE)
+                object.queue:push(Commands.MOVE, object.inputArea)
+                object.rightMenu.toHighlight = (Commands.MOVE)
             end
 
         elseif event.key == Event.KEY_TWO and not object.inExitPopUp then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then--Handles input when selecting how many times a loop should repeat
-            object.queue.loopCounter[object.queue.loopPointer]  = 2
-            object.selectingLoopCounter=false
-            object.rightMenu.inputAreaChanged = true
-            object.rightMenu.inputArea = "build"
+                object.queue.loopCounter[object.queue.loopPointer]  = 2
+                object.selectingLoopCounter=false
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "build"
             elseif object.clearAllCheck == true then --Handles input when confirming if user wants to clear a queue
-            object.clearAllCheck = false
-            object.rightMenu.inputAreaChanged = true
+                object.clearAllCheck = false
+                object.rightMenu.inputAreaChanged = true
             if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-not-wall"  then
                 object.rightMenu.inputArea = "build"
             elseif object.inputArea == "if-wall"  then
@@ -220,9 +221,9 @@ function bottomMenuEventHandler:update(object,eventListener,event)
                 object.rightMenu.inputArea = "queue"
             end
             elseif object.selectingActionEdit ~= nil then --Handles input when a command is selected
-            object:deleteAction(object.position, object.inputArea)
-            object:updateInputArea(object.inputArea, true)
-            object.selectingActionEdit = nil
+                object:deleteAction(object.position, object.inputArea)
+                object:updateInputArea(object.inputArea, true)
+                object.selectingActionEdit = nil
             if object.inputArea == "queue" or object.inputArea == "if-wall" then
                 object.rightMenu.inputAreaChanged = true
                 object.rightMenu.inputArea = object.inputArea
@@ -233,49 +234,49 @@ function bottomMenuEventHandler:update(object,eventListener,event)
             elseif object.isMovingAction == true  or object.character.hasWon == true then -- Handles input while user is moving an action or when victory screen is open.
             print("Not allowed")
             else -- Handles input during normal state. Lets user add "turn left" to current queue.
-            object.queue:push(Commands.TURN_LEFT, object.inputArea)
-            object.rightMenu.toHighlight = (Commands.TURN_LEFT)
+                object.queue:push(Commands.TURN_LEFT, object.inputArea)
+                object.rightMenu.toHighlight = (Commands.TURN_LEFT)
             end
 
         elseif event.key == Event.KEY_THREE and not object.inExitPopUp then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then--Handles input when selecting how many times a loop should repeat
-            object.queue.loopCounter[object.queue.loopPointer]  = 3
-            object.selectingLoopCounter=false
-            object.rightMenu.inputAreaChanged = true
-            object.rightMenu.inputArea = "build"
+                object.queue.loopCounter[object.queue.loopPointer]  = 3
+                object.selectingLoopCounter=false
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit == "loop" or object.selectingActionEdit == "P1" or object.selectingActionEdit == "P2" or object.selectingActionEdit == "if"  then -- Handles input while a method is selected. Lets user enter the selected method.
             if(object.selectingActionEdit == "loop")then
                 object.buildArea:setQueue(object.queue.loopActions[object.queue.loopPointer],"loop")
             end
-            object:enterMethod()
-            object.selectingActionEdit = nil
-            object.rightMenu.inputAreaChanged = true
-            object.rightMenu.inputArea = "build"
+                object:enterMethod()
+                object.selectingActionEdit = nil
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit == "if-wall"  then -- Handles input while a method is selected. Lets user enter the selected method.
-            object:enterMethod()
-            object.selectingActionEdit = nil
-            object.rightMenu.inputAreaChanged = true
-            object.rightMenu.inputArea = "if-wall"
+                object:enterMethod()
+                object.selectingActionEdit = nil
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "if-wall"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true  or object.character.hasWon == true then  --Handles input when a command is selected and it's not a method or input when moving a command or when vicotry screen is open
-            print("Not allowed")
-            --object.selectingActionEdit = nil
+                print("Not allowed")
+                --object.selectingActionEdit = nil
             else -- Handles input during normal state. Lets user add "turn right" to current queue.
-            object.queue:push(Commands.TURN_RIGHT, object.inputArea)
-            object.rightMenu.toHighlight = (Commands.TURN_RIGHT)
+                object.queue:push(Commands.TURN_RIGHT, object.inputArea)
+                object.rightMenu.toHighlight = (Commands.TURN_RIGHT)
             end
 
         elseif event.key == Event.KEY_FOUR and not object.inExitPopUp then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-            object.queue.loopCounter[object.queue.loopPointer]  = 4
-            object.selectingLoopCounter=false
-            object.rightMenu.inputAreaChanged = true
-            object.rightMenu.inputArea = "build"
+                object.queue.loopCounter[object.queue.loopPointer]  = 4
+                object.selectingLoopCounter=false
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "build"
             elseif object.character.hasWon == true then
                 print("Not allowed")
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true then --Handles input when a command is selected and it's not a method or input when moving a command
-            object.selectingActionEdit = nil
-            object.isMovingAction = false
-            object.rightMenu.inputAreaChanged = true
+                object.selectingActionEdit = nil
+                object.isMovingAction = false
+                object.rightMenu.inputAreaChanged = true
             if object.inputArea == "loop" or object.inputArea == "P1" or object.inputArea == "P2" or object.inputArea == "if-wall"  then
                 object.rightMenu.inputArea = "build"
             else
@@ -288,12 +289,12 @@ function bottomMenuEventHandler:update(object,eventListener,event)
 
         elseif event.key == Event.KEY_FIVE and not object.inExitPopUp then
             if(object.inputArea =="loop" and object.selectingLoopCounter==true ) then --Handles input when selecting how many times a loop should repeat
-            object.queue.loopCounter[object.queue.loopPointer]  = 5
-            object.selectingLoopCounter=false
-            object.rightMenu.inputAreaChanged = true
-            object.rightMenu.inputArea = "build"
+                object.queue.loopCounter[object.queue.loopPointer]  = 5
+                object.selectingLoopCounter=false
+                object.rightMenu.inputAreaChanged = true
+                object.rightMenu.inputArea = "build"
             elseif object.selectingActionEdit ~= nil or object.isMovingAction == true or object.maxCommands["if-wall"] == 0  or object.character.hasWon == true then --Handles input when a command is selected, when moving a command or when loop has no available slots
-            print("Not allowed")
+                print("Not allowed")
             else
                 if #object.queue.actions<object.maxCommands[object.inputArea] == false then
                     print("Action not allowed")
