@@ -54,8 +54,9 @@ function ProfileSelection:handleinput(event)
 
     self.pos = self.pos - 1
   elseif event.key == Event.KEY_DOWN then
-
+    if #profiles ~= 4 then
     self.pos = 5
+    end
 
   elseif event.key == Event.KEY_UP and self.pos == 5 and #profiles ~= 0 then
 
