@@ -12,16 +12,17 @@ function UICatchLevelWindowController:new(args)
   local o = UICatchLevelWindowController:super(UICatchLevelWindow:new())
   o.game = args.game
   o.window:initialize{levels=o.game.levels}
+  o.number = 1
   o.immediateResponse = args.immediateResponse -- some wired key press when enter window for first time 
   return UICatchLevelWindowController:init(o)
 end
 
 function UICatchLevelWindowController:onClickEvent(sender)
-  if immediateResponse then
+  if self.immediateResponse then
     local levelNumber = sender.label.text
     self.game:windowOpen({windowName="mainWindow",windowArgs={level=levelNumber}})
   else
-    immediateResponse = true
+    self.immediateResponse = true
   end
 end
 
