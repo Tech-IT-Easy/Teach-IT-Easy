@@ -14,7 +14,6 @@ function GameProgress:new(name)
     o.progress = {}
     o.progress["games.Progg.ProggGame"] = {}
     o.progress["games.Catch.Catch"] = {}
-    o.progress["games.Catch.Catch"] = Network:getProgress("games.Catch.Catch", name)
     o.progress["games.Progg.ProggGame"] = Network:getProgress("games.Progg.ProggGame", name)
     o.progress["games.Catch.Catch"] = Network:getProgress("games.Catch.Catch", name)
 
@@ -66,7 +65,7 @@ end
 -- @author Trygg
 -------------------------------------
 function GameProgress:setProgress(game, progress)
-        self.progress[game] = progress
+    self.progress[game] = progress
 end
 
 
