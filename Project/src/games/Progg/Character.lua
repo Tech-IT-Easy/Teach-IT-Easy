@@ -116,7 +116,6 @@ function Character:startExecution(inqueue)
               self.recursionTrack[self.recursionLevel] = "P1"
             end
             self.onP1=true
-            print(self.procProcess[self.recursionLevel]);
             if(self.procProcess[self.recursionLevel]<#self.queue.p1Actions)then
               if (not self.onIf) then
                 self.procProcess[self.recursionLevel] =  self.procProcess[self.recursionLevel] + 1;
@@ -251,9 +250,10 @@ function Character:execute(command)
       end
     else --If encounter collision-> restart
     self.executionTimer:stop()
+    self.executionTimer = nil
     self:reset()
-    self.position = self.startPosition
     gfx.update()
+    return
     end
   end
 
@@ -336,12 +336,13 @@ end
 -- @author Ludwig Wikblad
 ---------------------------------------
 function Character:reset()
+
   self.map:restartCharacter(self.position.x,self.position.y)
   self.position.x = self.startPosition.x
   self.position.y = self.startPosition.y
   self.state = 0
   self.onP1 = false
-  self.procProcess = 0
+  self.procProcess[1] = 0
   self.nrOfIterations = 0
   self.onP2 = false
   self.onLoop = false
@@ -349,7 +350,7 @@ function Character:reset()
   self.onIfTrue = false
   self.onIfFalse = false
   self.j = 0
-  self.procProcess = {}
+
   self.recursionLevel = 0
   self.recursionTrack = {}
   if self.rightMenu ~= nil then  self.rightMenu:stop() end
