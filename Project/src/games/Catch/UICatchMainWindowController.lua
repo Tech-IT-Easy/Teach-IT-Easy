@@ -72,12 +72,12 @@ function UICatchMainWindowController:onClickEvent(sender)
           -- start if self.currentLevel == #self.levels then
           if self.currentLevel == #self.levels then
             -- open Congratulations window to say success
-            self.game:alertWindowOpen{title="Congratulations, mission completed! ", OK="Exit",Cancel="Retry",
+            self.game:alertWindowOpen{title="Congratulations, mission completed! ", OK="Done",Cancel="Exit",
               callback=function(sender)
                 if sender.identity=="OK" then
-                  self.game:exit()
-                else
                   self.game:windowOpen{windowName="levelWindow"}
+                else
+                  self.game:exit()
                 end
               end
             }
