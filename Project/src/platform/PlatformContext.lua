@@ -31,8 +31,6 @@ local Event = require('toolkit.Event')
 local ProggLevels = require("games.Progg.levels.ProggLevels")
 local GameProgress =require('toolkit.GameProgress')
 
-local UIStartWindowController = require('platform.UIStartWindowController')
-
 
 PlatformContext = extends(Object)
 
