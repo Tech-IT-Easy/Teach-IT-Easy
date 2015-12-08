@@ -66,6 +66,7 @@ end
 -------------------------------------
 function GameProgress:setProgress(game, progress)
     self.progress[game] = progress
+    Network:pushProgress(game, self.name, progress)
 end
 
 
