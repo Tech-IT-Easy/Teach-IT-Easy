@@ -74,9 +74,9 @@ end
 -- @param queue. The queue of commands. An array of strings.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBottomMenu:icons(queue, inputArea)
+function DrawBottomMenu:icons(queue)
 
-    if #queue > self.maxCommands[inputArea] then
+    if #queue > self.maxCommands["queue"] then
         return;
     end
     if queue[#queue] ~= nil then
@@ -98,9 +98,9 @@ end
 -- @param queue:Queue. The queue of commands. An array of strings.
 -- @author Tobias Lundell
 ----------------------------------------
-function DrawBottomMenu:allIcons(queue, inputArea)
+function DrawBottomMenu:allIcons(queue)
     for i=1, #queue do
-        if i > self.maxCommands[inputArea] then
+        if i > self.maxCommands["queue"] then
             return;
         end
         if queue[i] ~= nil then

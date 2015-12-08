@@ -58,9 +58,11 @@ function BottomMenu:new(levelData,context)
     o.buildArea = buildArea:new(o.maxCommands, o.position)
     -- @member drawBottomMenu:DrawBottomMenu
     o.drawBottomMenu = newDrawBottomMenu:new(o.maxCommands)
-    -- @member character:Character
+    -- @member queue:Queue
     o.queue = Queue:new(o, o.buildArea, o.maxCommands)
+    -- @member rightMenu:RightMenu
     o.rightMenu = rightMenu:new(o.maxCommands)
+    -- @member character:Character
     o.character = Character:new(1,5,o.rightMenu, levelData, context)
     return BottomMenu:init(o)
 end
@@ -84,7 +86,6 @@ end
 -- @ author Mikael Ögren; Tobias Lundell
 --------------------------------------------
 function BottomMenu:show()
-    --if (self.prevInputArea ~= self.inputArea) then
     if (self.inputAreaChanged) then
         if (self.inputArea == "queue") then
             self:updateInputArea(self.inputAreaStack:peek(), false)
@@ -100,7 +101,7 @@ function BottomMenu:show()
             self.buildArea:show(self.queue, self.inputArea, self.posActionToMove)
         end
     else
-        self.drawBottomMenu:icons(self.queue.actions, self.inputArea)
+        self.drawBottomMenu:icons(self.queue.actions)
         if not self.isMovingAction then
             self.drawBottomMenu:highlightIcon(self.position, self.prevPosition, self.queue.actions)
         else
@@ -129,7 +130,7 @@ end
 --------------------------------------------
 function BottomMenu:updateInputArea(inArea, active)
     self:load(inArea, active)
-    self.drawBottomMenu:allIcons(self.queue.actions, self.inputArea)
+    self.drawBottomMenu:allIcons(self.queue.actions)
 end
 
 -------------------------------------
