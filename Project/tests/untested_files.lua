@@ -27,8 +27,6 @@ require "menus.TrophyRoom"
 require "platform.PlatformContext"
 require "platform.PlatformMenu"
 require "platform.Profile"
-require "platform.UIStartWindowController"
-require "platform.UIStartWindowView"
 
 require "toolkit.UIKit.UIButtonView"
 require "toolkit.UIKit.UIImage"
