@@ -117,6 +117,12 @@ function BuildArea:setQueue(queue, queueType)
         self.ifTrueQueue = queue
     elseif queueType == "if-not-wall" then
         self.ifFalseQueue = queue
+    elseif queueType == "all" then --specifically used by Queue when clearing all actions, it sends empty table
+        self.loopQueue = queue
+        self.p1Queue = queue
+        self.p2Queue = queue
+        self.ifTrueQueue = queue
+        self.ifFalseQueue = queue
     end
 end
 
