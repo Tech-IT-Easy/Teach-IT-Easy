@@ -153,7 +153,7 @@ function BottomMenu:returnToMenus()
         self.character.executionTimer = nil
     end
     self.context.platformEventListener:removeChainListener()
-    self.context:createNewMenu()
+    self.context:createNewMenu("selectlevel")
     self.context.game = nil
 end
 
