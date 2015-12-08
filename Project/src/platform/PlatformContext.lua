@@ -79,12 +79,15 @@ end
 --old menu is discarded when game is created.
 -- @author Ludwig Wikblad
 ------------------------------------
-function PlatformContext:createNewMenu()
+function PlatformContext:createNewMenu(input)
+  if input==nil then
+  input = "games"
+  end
   if self.platformMenu == nil then
     self.platformMenu = PlatformMenu:new()
     self.platformEventListener:attach(self.platformMenu)
     local newview = {}
-    table.insert(newview, "selectlevel")
+    table.insert(newview, input)
     table.insert(newview, self.profile.name)
     self.platformMenu:changeview(newview)
     self.platformMenu:show()

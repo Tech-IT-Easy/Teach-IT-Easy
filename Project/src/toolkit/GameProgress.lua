@@ -13,7 +13,7 @@ function GameProgress:new(name)
     o.name = name
     o.progress = {}
     o.progress["games.Progg.ProggGame"] = {}
---  o.progress["games.Reading.ReadingGame"] = {}
+    o.progress["games.Catch.Catch"] = {}
 
     o.progress["games.Progg.ProggGame"] = Network:getProgress("games.Progg.ProggGame", name)
 

@@ -102,7 +102,7 @@ end
 
 function Catch:exit()
   self.platformContext.platformEventListener:removeChainListener()
-  self.platformContext:createNewMenu()
+  self.platformContext:createNewMenu("games")
   self.platformContext.game = nil
   collectgarbage()
 end
