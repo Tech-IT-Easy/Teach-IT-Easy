@@ -185,14 +185,6 @@ function TrophyRoom:loadProgress(game)
         else
             table.insert(self.achievementButtons, { "Phd", "Master of programming", "Finish all levels" })
         end
-        self.achievementButtons = {
-            { "ABC", "Learn the alphabet", "Finish level 1" },
-            { "Kindergarten", "Can you read?", "Finish level 2" },
-            {
-                "Elementary School", "This needs skill",
-                "Finish level 4"
-            }, { "Phd", "Some serious stuff", "Complete all Levels" }
-        }
     end
 end
 
