@@ -59,7 +59,15 @@ function Network:getProgress(game, name)
   else
     print("No progress from server")
     if game == "games.Catch.Catch" then
-        table = { level = 1, catchABC = false, catchKindergarten= false, catchElementary = false, catchPhd = false }
+        if name == "Knatte" then
+            table = { level = 1, catchABC = false, catchKindergarten= false, catchElementary = false, catchPhd = false }
+        elseif name == "Fnatte" then
+            table = { level = 3, catchABC = true, catchKindergarten= false, catchElementary = false, catchPhd = false }
+        elseif name == "Tjatte" then
+            table = { level = 5, catchABC = true, catchKindergarten= true, catchElementary = false, catchPhd = false }
+        else
+            table = { level = 0, catchABC = false, catchKindergarten= false, catchElementary = false, catchPhd = false }
+        end
     elseif game == "games.Progg.ProggGame" then
         if name == "Knatte" then
             table = {level = 1, proggGameBasicLevel = false, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
