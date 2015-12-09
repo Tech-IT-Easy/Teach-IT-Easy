@@ -1,7 +1,8 @@
 -------------------------------------
--- Created by IntelliJ IDEA.
--- User: Marcus
--- Date: 2015-11-04
+-- Menu class that represents the
+-- menu for choosing avatar when creating
+-- a new profile.
+-- @author Marcus Fridén
 -------------------------------------
 
 -- Changed to extending empty super-menu

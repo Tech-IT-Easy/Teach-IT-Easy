@@ -1,3 +1,8 @@
+----------------------------------------
+-- This class represents the queue with
+-- actions to execute in the programming game.
+----------------------------------------
+
 local Object = require('toolkit.Object')
 local Queue = extends(Object)
 

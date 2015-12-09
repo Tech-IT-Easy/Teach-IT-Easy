@@ -1,10 +1,9 @@
---
--- Created by IntelliJ IDEA.
--- User: Mikael
--- Date: 11/16/2015
--- Time: 11:08 AM
--- To change this template use File | Settings | File Templates.
---
+------------------------------------
+-- This class holds function for drawing
+-- the bottom menu in the programming
+-- game.
+-- @author Mikael Ögren; Tobias Lundell
+------------------------------------
 
 skin = require('menus.skin')
 local Object = require("toolkit.Object")

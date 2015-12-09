@@ -1,3 +1,8 @@
+-------------------------------------
+-- Menu class that represents the menu
+-- showing the different games.
+-------------------------------------
+
 local Super = require('toolkit.MenuSuperClass')
 local Games = extends(Super)
 local Event = require('toolkit.Event')

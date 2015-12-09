@@ -1,3 +1,8 @@
+------------------------------------
+-- Class holding pre-defined colors
+-- to be used in the application.
+------------------------------------
+
 COLOR = {
   RED =               { g = 255, r = 0,   b = 0,   a=255},
   BLUE =              { g = 0,   r = 0,   b = 255, a=255},

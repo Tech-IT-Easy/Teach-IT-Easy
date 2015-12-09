@@ -1,3 +1,9 @@
+------------------------------------
+-- Menu class that represents the main
+-- menu that is shown after selecting
+-- profile.
+------------------------------------
+
 local Super = require('toolkit.MenuSuperClass')
 local MainMenu = extends(Super)
 local Event = require('toolkit.Event')

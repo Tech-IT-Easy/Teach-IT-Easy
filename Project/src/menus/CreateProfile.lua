@@ -1,5 +1,9 @@
---CreateProfile = {} --MenuView:new()
--- Changed to extending empty super-menu
+-------------------------------------
+-- Menu class that represents the menu
+-- for choosing profile name when
+-- creating a new profile.
+-------------------------------------
+
 local Super = require('menus.InputName')
 local CreateProfile = extends(Super)
 
