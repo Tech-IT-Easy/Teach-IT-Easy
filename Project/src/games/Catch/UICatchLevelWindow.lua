@@ -37,6 +37,7 @@ function UICatchLevelWindow:new()
   --layout menu items with collection layout view
   local labels = {}
   local cells = {}
+  local modReplaceList = {1,3,5,7,2,4,6,8}
   local textAlignCenterPosition = {x=(THEME.LEVEL.RECTANGLE_SIZE - THEME.LEVEL.FONT_SIZE)/2,y=(THEME.LEVEL.RECTANGLE_SIZE - THEME.LEVEL.FONT_SIZE)/2}
   for i = 1, THEME.LEVEL.ROWS do
     for j = 1, THEME.LEVEL.COLUMNS do
@@ -44,7 +45,7 @@ function UICatchLevelWindow:new()
         labels[index] = UILabel:new{identity="level"..index,text=index.."",color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
         window.buttons[index] = UIButtonView:new{identity="catchWindowLevelSelect"..index,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=labels[index],labelPosition=textAlignCenterPosition}
         cells[index] = UICollectionCellView:new{view=window.buttons[index],viewType="UIButtonView" }
-        window:setFocusWeight{view=window.buttons[index], hWeight=index, vWeight=i}
+        window:setFocusWeight{view=window.buttons[index], hWeight=index, vWeight=modReplaceList[index]}
         window.collectionPanel:fillWithCell(cells[index],i-1,j-1)
     end
   end
