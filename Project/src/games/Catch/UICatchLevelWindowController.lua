@@ -14,7 +14,10 @@ local UICatchLevelWindowController = extends(UIWindowViewController)
 
 function UICatchLevelWindowController:new(args)
   local unlockedLevels = args.context.profile.gameprogress:getProgress("games.Catch.Catch").level
-  local o = UICatchLevelWindowController:super(UICatchLevelWindow:new{levelNumber=unlockedLevels + 1})
+  if unlockedLevels < 8 then 
+    unlockedLevels = unlockedLevels + 1
+  end
+  local o = UICatchLevelWindowController:super(UICatchLevelWindow:new{levelNumber=unlockedLevels})
   o.game = args.game
   o.window:initialize{levels=o.game.levels}
   o.immediateResponse = args.immediateResponse -- some wired key press when enter window for first time 
