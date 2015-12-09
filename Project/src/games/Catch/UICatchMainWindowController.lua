@@ -142,8 +142,10 @@ function UICatchMainWindowController:onKeyEvent(event)
 end
 
 function UICatchMainWindowController:updateProgress()
-    if self.currentLevel < #self.levels then
+    if self.currentLevel <= #self.levels then
       local progress = self.context.profile.gameprogress:getProgress("games.Catch.Catch")
+      print(progress.level)
+      print(self.currentLevel)
       if progress.level < self.currentLevel then
         progress.level = self.currentLevel
         if (progress.level == 2) then
