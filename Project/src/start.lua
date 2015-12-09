@@ -1,5 +1,5 @@
 --[[TEACH IT EASY, an educational games platform
-    Copyright (C) 2015  <name of author>
+    Copyright (C) 2015  Linköping University
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

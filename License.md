@@ -1,6 +1,3 @@
-This software is licensed under a dual license system (MIT or GPL version 3). This means you are free to choose with which of both licenses (MIT or GPL version 3) you want to use this library.
-
-The license texts of the MIT license and the GPL version 3 are as follows:
 
 
 MIT
