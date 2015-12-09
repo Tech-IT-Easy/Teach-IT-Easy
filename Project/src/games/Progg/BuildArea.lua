@@ -52,23 +52,23 @@ end
 -- @param queue:Queue. The queue containing the actions to be drawn.
 -- @author Tobias Lundell
 -----------------------------------------------------
-function BuildArea:show(queue, inputArea)
+function BuildArea:show(queue, inputArea, posToBeMoved)
     if self.buildType == "P1" then
         self.drawBuildArea:icons(self.p1Queue, inputArea)
-        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.p1Queue)
+        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.p1Queue, posToBeMoved)
     elseif self.buildType == "P2" then
         self.drawBuildArea:icons(self.p2Queue, inputArea)
-        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.p2Queue)
+        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.p2Queue, posToBeMoved)
     elseif self.buildType == "loop" then
         self.drawBuildArea:icons(self.loopQueue, inputArea)
-        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.loopQueue)
+        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.loopQueue, posToBeMoved)
         self.drawBuildArea:drawLoopCounter(queue.loopCounter[queue.loopPointer])
     elseif self.buildType == "if-wall" then
         self.drawBuildArea:icons(self.ifTrueQueue, inputArea)
-        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.ifTrueQueue)
+        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.ifTrueQueue, posToBeMoved)
     elseif self.buildType == "if-not-wall" then
         self.drawBuildArea:icons(self.ifFalseQueue, inputArea)
-        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.ifFalseQueue)
+        self.drawBuildArea:highlightIcon(self.position, self.prevPosition, self.ifFalseQueue, posToBeMoved)
     end
 end
 
@@ -116,6 +116,12 @@ function BuildArea:setQueue(queue, queueType)
     elseif queueType == "if-wall" then
         self.ifTrueQueue = queue
     elseif queueType == "if-not-wall" then
+        self.ifFalseQueue = queue
+    elseif queueType == "all" then --specifically used by Queue when clearing all actions, it sends empty table
+        self.loopQueue = queue
+        self.p1Queue = queue
+        self.p2Queue = queue
+        self.ifTrueQueue = queue
         self.ifFalseQueue = queue
     end
 end

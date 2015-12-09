@@ -12,7 +12,7 @@ local UILabel = require("toolkit.UIKit.UILabel")
 
 local UIImage = require("toolkit.UIKit.UIImage")
 local Event = require("toolkit.Event")
-local THEME = require("games/Catch/data/theme")
+local THEME = require("games.Catch.data.theme")
 
 -- This is a instance window, which is created for using when required
 local UICatchLevelWindow = extends(UIWindowView)
@@ -44,7 +44,7 @@ function UICatchLevelWindow:new()
         labels[index] = UILabel:new{identity="level"..index,text=index.."",color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
         window.buttons[index] = UIButtonView:new{identity="catchWindowLevelSelect"..index,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=labels[index],labelPosition=textAlignCenterPosition}
         cells[index] = UICollectionCellView:new{view=window.buttons[index],viewType="UIButtonView" }
-        window:setFocusWeight{view=window.buttons[index], hWeight=index, vWeight=i}
+        window:setFocusWeight{view=window.buttons[index], hWeight=index, vWeight=2*j-math.mod(i,2)}
         window.collectionPanel:fillWithCell(cells[index],i-1,j-1)
     end
   end

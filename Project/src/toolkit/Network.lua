@@ -48,7 +48,7 @@ end
 function Network:getProgress(game, name)
   local t = {}
   local b, c, h = http.request{
-    url = server.url.."/progress/"..name.."/",
+    url = server.url.."/"..game.."/progress/"..name.."/",
     sink = ltn12.sink.table(t)
   }
   local table = table.concat(t)
@@ -58,14 +58,18 @@ function Network:getProgress(game, name)
     return json.parse(table)
   else
     print("No progress from server")
-    if name == "Knatte" then
-        table = {level = 1, proggGameBasicLevel = false, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
-    elseif name == "Fnatte" then
-        table = {level = 3, proggGameBasicLevel = true, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
-    elseif name == "Tjatte" then
-        table  = {level = 5, proggGameBasicLevel = true, proggGameProcLevel= true, proggGameLoopLevel = true, proggGameMaster = false }
-    else
-        table = {level = 0, proggGameBasicLevel = false, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
+    if game == "games.Catch.Catch" then
+        table = { level = 1, catchABC = false, catchKindergarten= false, catchElementary = false, catchPhd = false }
+    elseif game == "games.Progg.ProggGame" then
+        if name == "Knatte" then
+            table = {level = 1, proggGameBasicLevel = false, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
+        elseif name == "Fnatte" then
+            table = {level = 3, proggGameBasicLevel = true, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
+        elseif name == "Tjatte" then
+            table  = {level = 5, proggGameBasicLevel = true, proggGameProcLevel= true, proggGameLoopLevel = true, proggGameMaster = false }
+        else
+            table = {level = 0, proggGameBasicLevel = false, proggGameProcLevel= false, proggGameLoopLevel = false, proggGameMaster = false }
+        end
     end
   end
   return table
@@ -77,7 +81,7 @@ function Network:pushProgress(game, name, progress)
   local reqbody = json.stringify(progress)
   local b, c, h = http.request{
     method = "PUT",
-    url = server.url.."/progress/"..name.."/",
+    url = server.url.."/"..game.."/progress/"..name.."/",
     source = ltn12.source.string(reqbody),
     headers = {
       ["content-type"] = "application/json",
@@ -100,7 +104,7 @@ end
 function Network:getLevels(game)
   local t = {}
   local b, c, h = http.request{
-    url = server.url.."/levels/",
+    url = server.url.."/"..game.."/levels/",
     sink = ltn12.sink.table(t)
   }
   local table = table.concat(t)

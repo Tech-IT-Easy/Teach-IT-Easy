@@ -13,6 +13,7 @@ skin = require('games.Progg.progg_skin')
 function DrawBuildArea:new(maxCommands)
     local o = DrawBuildArea:super()
     o.maxCommands = maxCommands
+    o.rowLength = 8
     return DrawBuildArea:init(o)
 end
 
@@ -104,35 +105,44 @@ end
 --Highlights an icon
 --
 ----------
-function DrawBuildArea:highlightIcon(position,prevPos, queue)
+function DrawBuildArea:highlightIcon(position,prevPos, queue, posToBeMoved)
     if position < 17 or queue == nil then
         return;
     end
     self.pos = position - 16
     if queue[self.pos] ~= nil then
         self.image = gfx.loadpng(self:getFileName(queue[self.pos]))
-        if self.pos <= 8 then
-            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.538 + (self.pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
-            screen:clear({r = 255, g = 255, b = 255 }, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
-        else
-            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.538 + (self.pos-9)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
-            screen:clear({r = 255, g = 255, b = 251}, { x = screen:get_width()*(0.538 + (self.pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.538 + (self.pos-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
-        end
-        self.image:destroy()
-        collectgarbage()
-    else
-        if self.pos <= 8 then
-            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.538 + (self.pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
-            screen:clear({r = 78, g = 113, b = 215}, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-        else
-            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.538 + (self.pos-9)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
-            screen:fill({r = 78, g = 113, b = 215}, { x = screen:get_width()*(0.538 + (self.pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
-        end
-    end
+                if self.pos <= self.rowLength then
+                    if (posToBeMoved == position) then
+                        screen:clear({r = 255, g = 0, b = 0}, {x = screen:get_width()*(0.538 + (self.pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+                    else
+                        screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.538 + (self.pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+                    end
+                    screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+                    screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+                else
+                    if (posToBeMoved == position) then
+                        screen:clear({r = 255, g = 0, b = 0}, {x = screen:get_width()*(0.538 + (self.pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+                    else
+                        screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.538 + (self.pos-self.rowLength -1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.8435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+                    end
+                    screen:clear({r = 255, g = 255, b = 251}, { x = screen:get_width()*(0.538 + (self.pos-self.rowLength -1)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+                    screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.538 + (self.pos-self.rowLength -1)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+                end
+                self.image:destroy()
+                collectgarbage()
+            else
+                if self.pos <= self.rowLength then
+                    screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.538 + (self.pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+                    screen:clear({r = 78, g = 113, b = 215  }, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+                else
+                    screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.538 + (self.pos-self.rowLength -1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.8435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+                    screen:clear({r = 78, g = 113, b = 215}, { x = screen:get_width()*(0.538 + (self.pos-self.rowLength -1)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
+                end
+            end
+
     if prevPos ~= nil then
-        self:clearPos(prevPos, queue)
+        self:clearPos(prevPos, queue, posToBeMoved)
     end
 end
 
@@ -140,19 +150,19 @@ end
 --- Clears a highlight from a position1
 ---
 ---------------------
-function DrawBuildArea:clearPos(pos, queue)
-    if pos < 17 then
+function DrawBuildArea:clearPos(pos, queue, posToBeMoved)
+    if pos < 17 or pos == posToBeMoved then
         return;
     end
     self.pos = pos - 16
     if queue[self.pos] ~= nil then
         self.image = gfx.loadpng(self:getFileName(queue[self.pos]))
         if self.pos <= 8 then
-            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068})
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068})
             --screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         else
-            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.538 + (self.pos-9)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068  })
+            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.538 + (self.pos-9)*0.055) - highlight_border_thickness, y = screen:get_height()*0.8435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068  })
             --screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.538 + (self.pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.538 + (self.pos-9)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         end
@@ -160,10 +170,10 @@ function DrawBuildArea:clearPos(pos, queue)
         collectgarbage()
     else
         if self.pos <= 8 then
-            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
             --screen:clear({r = 78, g = 113, b = 215}, { x = screen:get_width()*(0.538 + (self.pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
         else
-            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.538 + (self.pos-9)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.538 + (self.pos-9)*0.055) - highlight_border_thickness, y = screen:get_height()*0.8435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
             --screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.538 + (self.pos-9)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
         end
     end

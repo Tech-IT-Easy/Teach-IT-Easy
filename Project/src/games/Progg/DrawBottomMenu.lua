@@ -74,9 +74,9 @@ end
 -- @param queue. The queue of commands. An array of strings.
 -- @author Mikael Ögren
 -------------------------------------
-function DrawBottomMenu:icons(queue, inputArea)
+function DrawBottomMenu:icons(queue)
 
-    if #queue > self.maxCommands[inputArea] then
+    if #queue > self.maxCommands["queue"] then
         return;
     end
     if queue[#queue] ~= nil then
@@ -98,9 +98,9 @@ end
 -- @param queue:Queue. The queue of commands. An array of strings.
 -- @author Tobias Lundell
 ----------------------------------------
-function DrawBottomMenu:allIcons(queue, inputArea)
+function DrawBottomMenu:allIcons(queue)
     for i=1, #queue do
-        if i > self.maxCommands[inputArea] then
+        if i > self.maxCommands["queue"] then
             return;
         end
         if queue[i] ~= nil then
@@ -123,18 +123,26 @@ end
 --@param pos:Integer, prevPos:Integer, queue:Queue.
 -- @author Mikael Ögren
 ----------------------------------------
-function DrawBottomMenu:highlightIcon(pos, prevPos, queue)
+function DrawBottomMenu:highlightIcon(pos, prevPos, queue, posToBeMoved)
     if pos > 2*self.rowLength then
         return;
     end
     if queue[pos] ~= nil then
         self.image = gfx.loadpng(self:getFileName(queue[pos]))
         if pos <= self.rowLength then
-            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+            if (posToBeMoved == pos) then
+                screen:clear({r = 255, g = 0, b = 0}, {x = screen:get_width()*(0.038 + (pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+            else
+                screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+            end
             screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         else
-            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-self.rowLength -1)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+            if (posToBeMoved == pos) then
+                screen:clear({r = 255, g = 0, b = 0}, {x = screen:get_width()*(0.038 + (pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+            else
+                screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-self.rowLength -1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.8435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+            end
             screen:clear({r = 255, g = 255, b = 251}, { x = screen:get_width()*(0.038 + (pos-self.rowLength -1)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
             screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos-self.rowLength -1)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
         end
@@ -142,16 +150,16 @@ function DrawBottomMenu:highlightIcon(pos, prevPos, queue)
         collectgarbage()
     else
         if pos <= self.rowLength then
-            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
             screen:clear({r = 78, g = 113, b = 215  }, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.7435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
         else
-            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-self.rowLength -1)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+            screen:clear({r = 255, g = 192, b = 0}, {x = screen:get_width()*(0.038 + (pos-self.rowLength -1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.8435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
             screen:clear({r = 78, g = 113, b = 215}, { x = screen:get_width()*(0.038 + (pos-self.rowLength -1)*0.055), y = screen:get_height()*0.8435, w = screen:get_width()*0.039, h = screen:get_height()*0.068 })
         end
     end
 
     if prevPos ~= nil then
-        self:clearPos(prevPos, queue)
+        self:clearPos(prevPos, queue, posToBeMoved)
     end
 end
 
@@ -159,26 +167,29 @@ end
 -- Clears the previous position for highlighting.
 -- @param pos:Integer, queue:Queue. The position to be cleared and the queue of commands.
 ---------------------------------------------
-function DrawBottomMenu:clearPos(pos, queue)
-    if pos > 2*self.rowLength then
-        return;
-    end
-    if queue[pos] ~= nil then
-        self.image = gfx.loadpng(self:getFileName(queue[pos]))
-        if pos <= self.rowLength then
-            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068})
-            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
-        else
-            screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (pos - self.rowLength - 1)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068  })
-            screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos - self.rowLength - 1)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+function DrawBottomMenu:clearPos(pos, queue, posToBeMoved)
+    if (pos ~= posToBeMoved) then
+        print (pos)
+        if pos > 2*self.rowLength then
+            return;
         end
-        self.image:destroy()
-        collectgarbage()
-    else
-        if pos <= self.rowLength then
-            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055) - 3, y = screen:get_height()*0.7435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+        if queue[pos] ~= nil then
+            self.image = gfx.loadpng(self:getFileName(queue[pos]))
+            if pos <= self.rowLength then
+                screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068})
+                screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos-1)*0.055), y = screen:get_height()*0.744, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+            else
+                screen:clear({r = 255, g = 255, b = 251 }, { x = screen:get_width()*(0.038 + (pos - self.rowLength - 1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.8435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068  })
+                screen:copyfrom(self.image, nil, { x = screen:get_width()*(0.038 + (pos - self.rowLength - 1)*0.055), y = screen:get_height()*0.844, w=screen:get_width()*0.038, h = screen:get_height()*0.066 }, true)
+            end
+            self.image:destroy()
+            collectgarbage()
         else
-            screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.038 + (pos - self.rowLength - 1)*0.055) - 3, y = screen:get_height()*0.8435 - 3, w = screen:get_width()*0.039, w = 6 + screen:get_width()*0.039, h = 6 + screen:get_height()*0.068 })
+            if pos <= self.rowLength then
+                screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.038 + (pos-1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.7435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+            else
+                screen:clear({r = 78, g = 113, b = 215 }, { x = screen:get_width()*(0.038 + (pos - self.rowLength - 1)*0.055) - highlight_border_thickness, y = screen:get_height()*0.8435 - highlight_border_thickness, w = screen:get_width()*0.039, w = 2*highlight_border_thickness + screen:get_width()*0.039, h = 2*highlight_border_thickness + screen:get_height()*0.068 })
+            end
         end
     end
 end
@@ -230,10 +241,10 @@ function DrawBottomMenu:getFileName(action)
 
     elseif action == "P2" then
         return "data/progg_game_icons/P2.png"
-        
+
     elseif action == "fix" then
         return "data/progg_game_icons/action.png"
-        
+
     end
 end
 

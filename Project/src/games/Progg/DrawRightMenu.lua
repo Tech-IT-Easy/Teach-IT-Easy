@@ -325,6 +325,24 @@ function DrawRightMenu:addOptions(can_enter)
     nr_10:draw_over_surface(screen, "Back")
 end
 
+---------------------------------------
+-- Draws an instruction message in the right
+-- menu for moving an action.
+-- @author Tobias Lundell
+---------------------------------------
+function DrawRightMenu:addMoveInstructions()
+    self:clearRow(1)
+    self:clearRow(2)
+    self:clearRow(3)
+    self:clearRow(4)
+    move_instruction_line1:draw_over_surface(screen, "Go to the position")
+    move_instruction_line2:draw_over_surface(screen, "where you want to")
+    move_instruction_line3:draw_over_surface(screen, "move the action and")
+    move_instruction_line4:draw_over_surface(screen, "press OK to confirm")
+    self:drawFullRow(4,78,113,215)
+    command_10:draw_over_surface(screen, "4")
+    nr_10:draw_over_surface(screen, "Back")
+end
 -------------------------------------
 -- Adds numbers to the loop layout
 -- @author Vilhelm

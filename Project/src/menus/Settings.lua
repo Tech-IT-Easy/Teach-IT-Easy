@@ -111,7 +111,7 @@ end
 function Settings:renderui()
 
     main_menu_appname:draw_over_surface(screen, LOCALE.APP_NAME)
-    main_menu_pagename:draw_over_surface(screen, LOCALE.MENU_MAIN)
+    settings_menu_pagename:draw_over_surface(screen, LOCALE.SETTINGS_MAIN)
     main_menu_username:draw_over_surface(screen, platformContext.profile.name)
 
     local avatarImageUrl = platformContext.profile.avatar

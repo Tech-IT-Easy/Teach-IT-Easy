@@ -9,7 +9,7 @@ local UILabelView = require("toolkit.UIKit.UILabelView")
 local UIImage = require("toolkit.UIKit.UIImage")
 local UILabel = require("toolkit.UIKit.UILabel")
 local Event = require("toolkit.Event")
-local THEME = require("games/Catch/data/theme")
+local THEME = require("games.Catch.data.theme")
 local People = require("games.Catch.People")
 
 -- This is a instance window, which is created for using when required

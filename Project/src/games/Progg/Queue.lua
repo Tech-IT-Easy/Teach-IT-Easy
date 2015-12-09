@@ -193,34 +193,32 @@ end
 ----------------------------------------
 function Queue:clearAll(queueType)
   if queueType == "queue" or queueType == nil then
-    for i=1, #self.actions do
-        table.remove(self.actions)
-    end
+    self.actions = {}
     self.loopActions = {}
     self.loopCounter = {}
     self.loopPointer = 0
-  elseif queueType == "loop" then
-    for i=1, #self.loopActions[self.loopPointer] do
-        table.remove(self.loopActions[self.loopPointer])
+    self.p1Actions = {}
+    self.p2Actions = {}
+    self.ifTrueActions = {}
+    self.ifFalseActions = {}
+
+    if self.buildArea ~= nil then
+      self.buildArea:setQueue({}, "all")
     end
 
-    if self.buildArea ~= nil then self.buildArea:setQueue(self.loopActions[self.loopPointer], queueType) end
+  elseif queueType == "loop" then
+    self.loopActions[self.loopPointer] = {}
+    if self.buildArea ~= nil then
+      self.buildArea:setQueue(self.loopActions[self.loopPointer], queueType)
+    end
   elseif queueType == "P1" then
-    for i=1, #self.p1Actions do
-        table.remove(self.p1Actions)
-    end
+    self.p1Actions = {}
   elseif queueType == "P2" then
-    for i=1, #self.p2Actions do
-        table.remove(self.p2Actions)
-    end
+    self.p2Actions = {}
   elseif queueType == "if-wall" then
-    for i=1, #self.ifTrueActions do
-        table.remove(self.ifTrueActions)
-    end
+    self.ifTrueActions = {}
   elseif queueType == "if-not-wall" then
-    for i=1, #self.ifFalseActions do
-        table.remove(self.ifFalseActions)
-    end
+    self.ifFalseActions = {}
   end
   if queueType == "queue" then
     self.bottomMenu.drawBottomMenu:emptySlots(queueType)

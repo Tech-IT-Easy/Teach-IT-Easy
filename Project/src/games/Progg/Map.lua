@@ -358,6 +358,11 @@ function Map:setCharacter(i, direction)
         self.image1:premultiply()
     end
 
+    if (self.tiles ~= nil) then
+        --Makes sure the old picture is overdrawn entirely
+        self:square(i, self.tiles[i])
+    end
+
     screen:copyfrom(self.image1, nil, {
         x = self:getX(i) + self.boxpadding,
         y = self:getY(i) + self.boxpadding,

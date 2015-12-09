@@ -14,9 +14,8 @@ function GameProgress:new(name)
     o.progress = {}
     o.progress["games.Progg.ProggGame"] = {}
     o.progress["games.Catch.Catch"] = {}
-
     o.progress["games.Progg.ProggGame"] = Network:getProgress("games.Progg.ProggGame", name)
-
+    o.progress["games.Catch.Catch"] = Network:getProgress("games.Catch.Catch", name)
     return GameProgress:init(o)
 end
 
@@ -35,7 +34,12 @@ function GameProgress:getprogressStart(game)
         return "N/A"
     else
 --        print("Getting progress for game: "..game)
-        return self.progress[game].level.."/8"
+        if self.progress[game].level ~= nil then
+            return self.progress[game].level.."/8"
+        else
+            return "N/A"
+        end
+
     end
 end
 
@@ -65,7 +69,8 @@ end
 -- @author Trygg
 -------------------------------------
 function GameProgress:setProgress(game, progress)
-        self.progress[game] = progress
+    self.progress[game] = progress
+    Network:pushProgress(game, self.name, progress)
 end
 
 

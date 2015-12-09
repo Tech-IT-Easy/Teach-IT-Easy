@@ -114,6 +114,8 @@ instructions_subpagename = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255
 settings_buttontext1 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.09, { x = screen:get_width() * 0.075, y = (screen:get_height() * 0.345) }, script_path .. 'data/condensed.ttf')
 settings_buttontext2 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.09, { x = screen:get_width() * 0.075, y = (screen:get_height() * 0.345) + ((screen:get_height() * 0.2125) * 1) }, script_path .. 'data/condensed.ttf')
 settings_buttontext3 = sys.new_freetype({ g = 131, r = 0, b = 143, a = 255 }, screen:get_height() * 0.09, { x = screen:get_width() * 0.075, y = (screen:get_height() * 0.345) + ((screen:get_height() * 0.2125) * 2) }, script_path .. 'data/condensed.ttf')
+settings_menu_pagename = sys.new_freetype({ g = 255, r = 255, b = 255, a = 255 }, screen:get_height() * 0.07, { x = screen:get_width() * 0.39, y = main_menu_pagenamebaseline }, script_path .. 'data/Chalkduster.ttf')
+
 
 -------------------------------------
 -- Freetype objects used in the game selection page.
