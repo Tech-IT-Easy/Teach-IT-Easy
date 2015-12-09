@@ -45,7 +45,7 @@ function UICatchMainWindow:new(context)
   window.mainPanel:addChildView(window.cop)
   window.mainPanel:addChildView(window.tryCountLabelView)
   window.rightPanel = UIPanelView:new{frame={x=screen:get_width()*proportion,y=0,w=screen:get_width()*(1-proportion),h=screen:get_height()*proportion},backgroundColor=THEME.COLOR.LIGHT_GRAY }
-  window.collectionPanel = UICollectionView:new{frame={x=0,y=80,w=screen:get_width()*(1-proportion),h=screen:get_width()*(1-proportion)},space=10,cols=THEME.MENU.COLUMNS,rows=THEME.MENU.ROWS,backgroundColor=THEME.COLOR.LIGHT_GRAY}
+  window.collectionPanel = UICollectionView:new{frame={x=screen:get_width()*(1-proportion)*0.05,y=80,w=screen:get_width()*(1-proportion)*0.9,h=screen:get_width()*(1-proportion)*0.9},space=10,cols=THEME.MENU.COLUMNS,rows=THEME.MENU.ROWS,backgroundColor=THEME.COLOR.LIGHT_GRAY}
   window.wordImageView = UIImageView:new{image=nil,frame={x=10,y=window.collectionPanel.frame.h+100,w=window.rightPanel.frame.w-40,h=window.rightPanel.frame.w-40}}
   window.levelLabelView = UILabelView:new{identity="levelLabel",frame={x=25,y=10,w=0,h=0},label=UILabel:new{identity="LEVEL 1",text="LEVEL 1",color=THEME.COLOR.WHITE,size=50,font=UILabel.FONT_GROBOLD}}
   

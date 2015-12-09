@@ -65,8 +65,8 @@ function UIButtonView:new(args)
   -- firstly change position relative to button frame
   if o.tipLabel then
     o.tipLabelAbsolutePosition = {
-      x = o.globalFrame.x + o.tipLabelPosition.x,
-      y = o.globalFrame.y + o.tipLabelPosition.y
+      x = o.globalFrame.x + o.tipLabelPosition.x - 5,
+      y = o.globalFrame.y + o.tipLabelPosition.y - 5
     }
   end
   return UIButtonView:init(o)
@@ -102,8 +102,8 @@ function UIButtonView:updateLabelPosition()
   end
   if self.tipLabel then
     self.tipLabelAbsolutePosition = {
-      x = self.globalFrame.x + self.tipLabelPosition.x,
-      y = self.globalFrame.y + self.tipLabelPosition.y
+      x = self.globalFrame.x + self.tipLabelPosition.x - 5,
+      y = self.globalFrame.y + self.tipLabelPosition.y - 5
     }
   end
 end
