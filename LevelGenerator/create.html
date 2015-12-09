@@ -1,0 +1,130 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <style>
+  body{
+    background-image:url("bg.png");
+    background-size:cover;
+  }
+  table{
+    border-collapse:collapse;
+    position: relative;
+    top:60px;left:60px;
+  }
+  table,tr,td,img{
+    margin:0;padding:0;border:0;
+  }
+  #choose{
+    display:none;
+  }
+  .popover {
+    background-color: #222 !important;
+}
+
+  </style>
+  <script src="bootstrap/js/bootstrap.js"></script>
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
+</head>
+<body>
+
+<!-- TODO: generate .level file from this -->
+
+<script>
+var mytable = "<table><tr>";
+var img1 = '<img src="tile2/0.png" width="128px" data-toggle="popover" title="Choose another tile" data-content="" ';
+var img2 = '/>';
+
+for (var i = 0; i < 5; i++) {
+  for (var j = 0; j < 8; j++) {
+    mytable += "<td>" + img1 + 'id="'+j+"-"+i+'"' + img2 +"</td>";
+  }
+  mytable += "</tr><tr>";
+}
+
+mytable += "</tr></table>";
+
+document.write(mytable);
+
+</script>
+
+
+<div id="choose" style="background-color:#ccc;">
+  <img src="tile2/0.png" width="32px" style="margin:4px;"/><img src="tile2/1.png" width="32px" style="margin:4px;"/>
+  <img src="tile2/2.png" width="32px" style="margin:4px;"/><img src="tile2/3.png" width="32px" style="margin:4px;"/>
+  <br/>
+
+  <img src="tile2/4.png" width="32px" style="margin:4px;"/><img src="tile2/5.png" width="32px" style="margin:4px;"/>
+  <img src="tile2/6.png" width="32px" style="margin:4px;"/><img src="tile2/7.png" width="32px" style="margin:4px;"/>
+  <br/>
+
+  <img src="tile2/8.png" width="32px" style="margin:4px;"/><img src="tile2/9.png" width="32px" style="margin:4px;"/>
+  <img src="tile2/a.png" width="32px" style="margin:4px;"/><img src="tile2/b.png" width="32px" style="margin:4px;"/>
+  <br/>
+
+  <img src="tile2/c.png" width="32px" style="margin:4px;"/><img src="tile2/d.png" width="32px" style="margin:4px;"/>
+  <img src="tile2/e.png" width="32px" style="margin:4px;"/><img src="tile2/f.png" width="32px" style="margin:4px;"/>
+  <br/>
+</div>
+
+<div style="position:fixed;right:1em;bottom:1em;padding:1em;background-color:white;">
+<button id="btn">Generate</button><br/>
+<textarea id="maptxt" placeholder="Map" style="width:150px;height:150px;padding:1em;"></textarea>
+</div>
+
+</body>
+
+<script>
+/* v1.0
+$("img").click(function() {
+    var src = $(this).attr("src");
+    var res = src.split("/");
+    res = res[1].split(".");
+    // res is an integer between 0 and 15
+    res = parseInt(res[0],16);
+    //console.log("Res = "+res);
+
+    var newOne = (res+1)%15;
+    var hexString = newOne.toString(16);
+
+    newOne = "tile2/"+hexString+".png";
+    //console.log("New one = "+newOne);
+
+    $(this).attr("src", newOne);
+});
+*/
+var clicked = 0;
+
+$(function () {
+  $('[data-toggle="popover"]').popover({
+    html : true,
+    content: function() {
+      clicked = $(this).attr("id");
+      return $('#choose').html();
+    }
+  })
+});
+
+$(document).on("click", ".popover-content img", function() {
+  //alert('changing: '+clicked);
+  //alert('to: '+$(this).attr("src"));
+  $("#"+clicked).attr("src", $(this).attr("src"));
+  $('.popover').popover('hide');
+});
+
+$(document).on("click", "#btn", function() {
+  var txt = "";
+  var cpt = 0;
+  $('table > tbody > tr > td > img').each(function() {
+    var res = $(this).attr('src').substring(6,7);
+    txt += res;
+    cpt++;
+    if (cpt % 8 == 0) txt += "\n";
+    console.log(">>> "+res);
+
+  });
+  $('#maptxt').val(txt);
+});
+
+</script>
+
+</html>
