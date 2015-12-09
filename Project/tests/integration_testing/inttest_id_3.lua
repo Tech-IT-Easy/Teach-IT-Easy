@@ -125,7 +125,7 @@ end
 
 -------------------------------------
 -- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
--- Adding commands from bottommenu by simulating key presses.
+-- Adding commands from BottomMenu by simulating key presses.
 -- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
 -- @author name: Andreas
 -------------------------------------
@@ -428,7 +428,7 @@ end
 
 -------------------------------------
 -- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
--- Deleting commands from bottommenu by simulating key presses.
+-- Deleting commands from BottomMenu by simulating key presses.
 -- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
 -- @author name: Andreas
 -------------------------------------
@@ -495,7 +495,7 @@ end
 
 
 -------------------------------------
--- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Test interface between BottomMenu, Queue, Commands, Character and BuildArea.
 -- Tests if correct actions is taken by simulating different key presses.
 -- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
 -- @author name: Andreas

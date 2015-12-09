@@ -1,5 +1,5 @@
 -- Add your testfiles here .
-require "tests.src.test_main"
+--require "tests.src.test_main"
 
 require "tests.src.menus.test_MainMenu"
 require "tests.src.menus.test_ProfileSelection"

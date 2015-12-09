@@ -44,7 +44,7 @@ function UICatchLevelWindow:new()
         labels[index] = UILabel:new{identity="level"..index,text=index.."",color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
         window.buttons[index] = UIButtonView:new{identity="catchWindowLevelSelect"..index,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=labels[index],labelPosition=textAlignCenterPosition}
         cells[index] = UICollectionCellView:new{view=window.buttons[index],viewType="UIButtonView" }
-        window:setFocusWeight{view=window.buttons[index], hWeight=index, vWeight=2*j-math.mod(i,2)}
+        window:setFocusWeight{view=window.buttons[index], hWeight=index, vWeight=i}
         window.collectionPanel:fillWithCell(cells[index],i-1,j-1)
     end
   end

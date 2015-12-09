@@ -56,7 +56,7 @@ local function create_queue(inqueue, type)
 end
 
 -------------------------------------
--- Test interface betwwen Character and queue. Test level 1, with simple commands
+-- Test interface between Character and queue. Test level 1, with simple commands
 -- @system_under_test: Queue, Character:execute(command)
 -- @author name: Andreas
 -------------------------------------
@@ -107,7 +107,7 @@ function test_execute_simple_commads()
 end
 
 -------------------------------------
--- Test interface betwwen Character and queue. Test level 4, requires more complex quque of commands
+-- Test interface between Character and queue. Test level 4, requires more complex queue of commands
 -- @system_under_test: Queue, Character:execute(command)
 -- @author name: Andreas
 -------------------------------------
