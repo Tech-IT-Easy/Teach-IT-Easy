@@ -51,6 +51,7 @@ This class represents the different types of tiles or "blocks" that is used by t
 #### games.Progg.progg_skin
 This class keeps track of fixed positions and freetype objects that are used in the programming game module.
 
+
 The game uses these methods do the tasks of drawing the game and allowing interaction through using Commands.
 
 ## Constraints of the software
