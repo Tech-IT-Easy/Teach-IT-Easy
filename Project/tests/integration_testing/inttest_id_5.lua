@@ -128,9 +128,9 @@ end
 --Test if character moved according to the added loop
 
 -------------------------------------
--- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Test interface between BottomMenu, Queue, Commands, Character and BuildArea.
 -- Adding loop with commands to Queue from BottomMenu by simulating key presses.
--- Then executing queue from BottomMenu by using Character functions.
+-- Then executing queue from BottomMenu by using Character functions in BottomMenu.
 -- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
 -- @author name: Andreas
 -------------------------------------
@@ -170,11 +170,11 @@ function test_execute_queue_2()
     lunit.assert_equal(test_command, bm_queue, "Did not found the correct element in the queue")
 
     --Select number of iteration. Selects 5 iterations in this case.
-    test_event = event:new("5", "down") --simulates a key press on key 6
+    test_event = event:new("4", "down") --simulates a key press on key 4
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
     local loopCounter = bottommenu.queue.loopCounter
     --print("Number of iterations: " .. loopCounter)
-    lunit.assert_equal(5, loopCounter[1], "Not correct number of iterations")
+    lunit.assert_equal(4, loopCounter[1], "Not correct number of iterations")
 
     --Tests function bottomMenuEventHandler:update in BottomMenu when key is pressed with key = "1"
     --Adding MOVE-action to loop
@@ -215,8 +215,13 @@ function test_execute_queue_2()
     --Test if character moved according to the added commands
     test_event = event:new("0", "down") --simulates a key press on key 0
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
+
+    while(( 0<#bottommenu.character.queue.actions or bottommenu.character.onP1 or bottommenu.character.onP2 or bottommenu.character.onLoop) )do
+        start()
+    end
+
     local pos_X = bottommenu.character.position.x
     local pos_Y=bottommenu.character.position.y
     lunit.assert_equal(1,pos_X ,"Did not move to the right x-coordinate")
-    lunit.assert_equal(5,pos_Y ,"Did not move to the right x-coordinate")
+    lunit.assert_equal(1,pos_Y ,"Did not move to the right y-coordinate")
 end

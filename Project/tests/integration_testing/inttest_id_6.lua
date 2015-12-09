@@ -126,9 +126,9 @@ end
 --Test if character moved according to the added procedure
 
 -------------------------------------
--- Test interface between the BottomMenu, Queue, Commands, Character and BuildArea.
+-- Test interface between BottomMenu, Queue, Commands, Character and BuildArea.
 -- Adding procedure with commands to Queue from BottomMenu by simulating key presses.
--- Then executing queue from BottomMenu by using Character functions.
+-- Then executing queue from BottomMenu by using Character functions in BottomMenu.
 -- @system_under_test: BottomMenu, Queue, Commands, Character and BuildArea.
 -- @author name: Andreas
 -------------------------------------
@@ -206,9 +206,14 @@ function test_execute_queue_3()
     --Test if character moved according to the added commands
     test_event = event:new("0", "down") --simulates a key press on key 0
     bottomMenuEventHandler:update(bottommenu,nil,test_event)
+
+    while(( 0<#bottommenu.character.queue.actions or bottommenu.character.onP1 or bottommenu.character.onP2 or bottommenu.character.onLoop) )do
+        start()
+    end
+
     local pos_X = bottommenu.character.position.x
     local pos_Y=bottommenu.character.position.y
     lunit.assert_equal(1,pos_X ,"Did not move to the right x-coordinate")
-    lunit.assert_equal(5,pos_Y ,"Did not move to the right x-coordinate")
+    lunit.assert_equal(4,pos_Y ,"Did not move to the right y-coordinate")
 end
 
