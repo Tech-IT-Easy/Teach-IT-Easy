@@ -1,3 +1,8 @@
+------------------------------------
+-- Menu class representing the settings
+-- menu page.
+------------------------------------
+
 -- MainMenu = {} --MenuView:new()
 -- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')

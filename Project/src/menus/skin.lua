@@ -1,3 +1,9 @@
+-----------------------------------
+-- This class keeps track of freetype
+-- objects that are used in the different
+-- menus.
+-----------------------------------
+
 if ADConfig.isSimulator then
     script_path = ""
 else

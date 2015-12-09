@@ -1,10 +1,9 @@
---
--- Created by IntelliJ IDEA.
--- User: Mikael
--- Date: 11/16/2015
--- Time: 1:41 PM
--- To change this template use File | Settings | File Templates.
---
+-------------------------------------
+-- This class contains methods for
+-- drawing the build area in the
+-- bottom menu in the programming game
+-- @author Mikael Ögren; Tobias Lundell
+-------------------------------------
 
 local Object = require("toolkit.Object")
 local DrawBuildArea = extends(Object)

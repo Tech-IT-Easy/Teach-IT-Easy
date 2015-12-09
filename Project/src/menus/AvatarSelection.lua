@@ -1,6 +1,7 @@
 -------------------------------------
--- Created by IntelliJ IDEA.
--- User: Marcus / Vilhelm
+-- Menu class containing methods for
+-- choosing avatar.
+-- @author Marcus; Vilhelm
 -- Date: 2015-11-04
 -------------------------------------
 

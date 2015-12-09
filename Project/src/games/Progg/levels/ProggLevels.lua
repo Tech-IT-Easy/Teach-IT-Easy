@@ -1,10 +1,8 @@
---
--- Created by IntelliJ IDEA.
--- User: Trygg
--- Date: 2015-11-30
--- Time: 01:14
--- To change this template use File | Settings | File Templates.
---
+------------------------------
+-- This class contains the different
+-- levels of the programming game.
+-- @author: Alexander Trygg
+------------------------------
 
 local Object = require("toolkit.Object")
 local ProggLevels = extends(Object)

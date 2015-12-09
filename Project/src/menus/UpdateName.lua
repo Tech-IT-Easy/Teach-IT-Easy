@@ -1,3 +1,8 @@
+------------------------------------
+-- Menu class for updating a profile
+-- name.
+------------------------------------
+
 --CreateProfile = {} --MenuView:new()
 -- Changed to extending empty super-menu
 local Super = require('menus.InputName')

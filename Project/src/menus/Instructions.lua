@@ -1,10 +1,8 @@
---
--- Created by IntelliJ IDEA.
--- User: Mikael
--- Date: 11/29/2015
--- Time: 8:49 PM
--- To change this template use File | Settings | File Templates.
---
+-------------------------------------
+-- Menu class for the menu page showing
+-- instructions on how to play the game.
+-- @author Mikael Ögren
+-------------------------------------
 
 local Super = require('toolkit.MenuSuperClass')
 local Instructions = extends(Super)

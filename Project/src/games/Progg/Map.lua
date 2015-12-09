@@ -1,9 +1,8 @@
--- This class represents the game map.
-
--- Created by IntelliJ IDEA.
--- User: Adam Lydén
--- Date: 2015-11-04
--- Time: 13:57
+----------------------------------
+-- This class represents the game map
+-- in the programming game.
+-- @author Adam Lydén
+-----------------------------------
 
 
 local Object = require('toolkit.Object')

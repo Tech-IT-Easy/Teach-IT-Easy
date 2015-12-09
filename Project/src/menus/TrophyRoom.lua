@@ -1,10 +1,8 @@
---
--- Created by IntelliJ IDEA.
--- User: Erik
--- Date: 2015-11-19
--- Time: 16:22
--- To change this template use File | Settings | File Templates.
---
+----------------------------------
+-- Menu class representing the
+-- trophy room menu page.
+-- @author Erik Jansson
+----------------------------------
 
 local Super = require('toolkit.MenuSuperClass')
 TrophyRoom = extends(Super)

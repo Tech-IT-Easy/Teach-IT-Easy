@@ -1,4 +1,7 @@
 -------------------------------------
+-- This class represents a profile. It holds
+-- avatar and progress related to an instance
+-- of Profile.
 -- @author Adam
 -------------------------------------
 
@@ -11,7 +14,7 @@ local GameProgress =require('toolkit.GameProgress')
 -- Constructor method
 -- @param name:String the name of the profile
 -- @param avatarNum:integer a representation of the avatar images
--- @return :Progile a new instance of Profile
+-- @return :Profile a new instance of Profile
 -- @author Adam
 -------------------------------------
 function Profile:new(name, image, imagefolder)

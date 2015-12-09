@@ -1,10 +1,8 @@
---
--- Created by IntelliJ IDEA.
--- User: Marcus
--- Date: 2015-11-29
--- Time: 23:37
--- To change this template use File | Settings | File Templates.
---
+------------------------------
+-- Menu class that represents the
+-- select level menu.
+-- @author Marcus Fridén
+------------------------------
 
 local Super = require('toolkit.MenuSuperClass')
 local SelectLevel = extends(Super)

@@ -1,4 +1,8 @@
---CreateProfile = {} --MenuView:new()
+-----------------------------------
+-- Menu super class for inputting
+-- name when creating a new profile
+-----------------------------------
+
 -- Changed to extending empty super-menu
 local Super = require('toolkit.MenuSuperClass')
 local InputName = extends(Super)
