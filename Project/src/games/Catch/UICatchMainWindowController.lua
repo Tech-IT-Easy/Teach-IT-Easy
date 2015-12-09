@@ -144,8 +144,8 @@ end
 function UICatchMainWindowController:updateProgress()
     if self.currentLevel < #self.levels then
       local progress = self.context.profile.gameprogress:getProgress("games.Catch.Catch")
-      if progress.level < self.currentLevel + 1 then
-        progress.level = self.currentLevel + 1
+      if progress.level < self.currentLevel then
+        progress.level = self.currentLevel
         if (progress.level == 2) then
             progress.catchABC = true
         elseif (progress.level == 4) then
