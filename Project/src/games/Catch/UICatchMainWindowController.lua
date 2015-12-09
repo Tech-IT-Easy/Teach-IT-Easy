@@ -91,11 +91,11 @@ function UICatchMainWindowController:onClickEvent(sender)
           -- start if self.currentLevel == #self.levels then
           if self.currentLevel == #self.levels then
             -- open Congratulations window to say success
-
+            self:updateProgress()
             self.game:alertWindowOpen{title="Congratulations, mission completed! ", OK="Done",Cancel="Exit",
               callback=function(sender)
                 if sender.identity=="OK" then
-                    self:updateProgress()
+                    
                   self.game:windowOpen{windowName="levelWindow",immediateResponse=true}
                 else
                   self.game:exit()
@@ -105,10 +105,10 @@ function UICatchMainWindowController:onClickEvent(sender)
             --end open Congratulations window
           else  -- else if self.currentLevel ~= #self.levels then
             -- open window
+            self:updateProgress()
             self.game:alertWindowOpen{title="You win, Next level or Retry?", OK="Next",Cancel="Retry",
               callback=function(sender)
                 if sender.identity=="OK" then
-                    self:updateProgress()
                   self.currentLevel = self.currentLevel + 1
                   self.window:updateLevelText(self.currentLevel)
                   self:initialize()
@@ -142,18 +142,22 @@ function UICatchMainWindowController:onKeyEvent(event)
 end
 
 function UICatchMainWindowController:updateProgress()
-    local progress = self.context.profile.gameprogress:getProgress("games.Catch.Catch")
-    progress.level = self.currentLevel
-    if (self.currentLevel == 2) then
-        progress.catchABC = true
-    elseif (self.currentLevel == 4) then
-        progress.catchKindergarten = true
-    elseif (self.currentLevel == 6) then
-        progress.catchElementary = true
-    elseif (self.currentLevel == 8) then
-        progress.catchPhd = true
+    if self.currentLevel < #self.levels then
+      local progress = self.context.profile.gameprogress:getProgress("games.Catch.Catch")
+      if progress.level < self.currentLevel + 1 then
+        progress.level = self.currentLevel + 1
+        if (progress.level == 2) then
+            progress.catchABC = true
+        elseif (progress.level == 4) then
+            progress.catchKindergarten = true
+        elseif (progress.level == 6) then
+            progress.catchElementary = true
+        elseif (progress.level == 8) then
+            progress.catchPhd = true
+        end
+        self.context.profile.gameprogress:setProgress("games.Catch.Catch", progress)
+      end
     end
-    self.context.profile.gameprogress:setProgress("games.Catch.Catch", progress)
 end
 
 return UICatchMainWindowController
