@@ -1,3 +1,10 @@
+
+-----------------------------------------------------------
+-- This class provides a implementation of a double circle 
+-- list that can be used for any datatype.
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------
+
 local Object = require("toolkit.Object")
 
 local List = extends(Object)

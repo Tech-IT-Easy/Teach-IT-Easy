@@ -1,3 +1,9 @@
+-----------------------------------------------------------
+-- This class manage UIWindowView, create it and show it
+--
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------
+
 local Controllable = require("toolkit.Controllable")
 local Event = require("toolkit.Event")
 

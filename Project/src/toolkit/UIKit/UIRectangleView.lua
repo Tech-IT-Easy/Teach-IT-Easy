@@ -1,3 +1,10 @@
+-----------------------------------------------------------
+-- This class is the class for showing a rectangle, which can be
+-- configured based on its properties
+--
+-- @Author:Created by Chuck, NOV 19,2015
+-----------------------------------------------------------
+
 SystemFreeType = require("toolkit.UIKit.UISystemFreeType")
 local UIView = require("toolkit.UIKit.UIView")
 local UIRectangleView = extends(UIView)

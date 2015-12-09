@@ -1,5 +1,10 @@
--- Created by chuck, now it doesn't affect anything.
--- Don't consider this file, just keep it.
+-----------------------------------------------------------
+-- This is window controller that is responsible for managing 
+-- the game main window such as creating and initializing and 
+-- also controlling game logic
+--
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------
 
 local UIWindowViewController = require("toolkit.UIKit.UIWindowViewController")
 local UICatchMainWindow = require('games.Catch.UICatchMainWindow')

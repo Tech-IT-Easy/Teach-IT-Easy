@@ -1,3 +1,9 @@
+-----------------------------------------------------------
+-- This is a Game main window which show all the game components
+--
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------
+
 local UIWindowView = require("toolkit.UIKit.UIWindowView")
 local UIPanelView = require("toolkit.UIKit.UIPanelView")
 local UIRectangleView = require("toolkit.UIKit.UIRectangleView")

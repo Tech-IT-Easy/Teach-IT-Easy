@@ -1,3 +1,9 @@
+-----------------------------------------------------------
+-- This class can show a people player with a image
+--
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------
+
 local UIView = require("toolkit.UIKit.UIView")
 local People = extends(UIView)
 

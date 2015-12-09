@@ -1,3 +1,8 @@
+-----------------------------------------------------------
+-- This ListNode is for List
+--
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------
 local Object = require("toolkit.Object")
 
 local ListNode = extends(Object)

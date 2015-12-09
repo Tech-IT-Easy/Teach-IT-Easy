@@ -1,3 +1,9 @@
+-----------------------------------------------------------
+-- This UIKit default configuration is listed in this file
+--
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------
+
 local COLOR = {
   WHITE = {r = 255,   g = 255,   b = 255},
   WHITE_HALF = { g = 228, r = 187, b = 235 },

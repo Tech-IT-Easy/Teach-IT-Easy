@@ -1,1 +1,5 @@
--- wait to implement
+-----------------------------------------------------------
+-- This class can show a keyboard window
+--
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------

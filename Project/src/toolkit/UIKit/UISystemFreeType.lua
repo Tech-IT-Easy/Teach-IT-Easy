@@ -1,4 +1,9 @@
--- Global for free type error
+-----------------------------------------------------------
+-- SystemFreeType is a global variable for saving free type error
+--
+-- @Author:Created by Chuck, NOV 19,2015
+-----------------------------------------------------------
+
 if SystemFreeType == nil then
   SystemFreeType= {}
 end

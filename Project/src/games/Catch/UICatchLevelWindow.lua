@@ -1,15 +1,17 @@
+-----------------------------------------------------------
+-- This is a Level Selection window with eight boxes
+--
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------
+
 local UIWindowView = require("toolkit.UIKit.UIWindowView")
 local UIPanelView = require("toolkit.UIKit.UIPanelView")
 local UIRectangleView = require("toolkit.UIKit.UIRectangleView")
 local UICollectionView = require("toolkit.UIKit.UICollectionView")
 local UICollectionCellView = require("toolkit.UIKit.UICollectionCellView")
-
 local UIButtonView = require("toolkit.UIKit.UIButtonView")
-
 local UILabelView = require("toolkit.UIKit.UILabelView")
-
 local UILabel = require("toolkit.UIKit.UILabel")
-
 local UIImage = require("toolkit.UIKit.UIImage")
 local Event = require("toolkit.Event")
 local THEME = require("games.Catch.data.theme")

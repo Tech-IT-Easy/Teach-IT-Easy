@@ -1,3 +1,11 @@
+-----------------------------------------------------------
+-- This class is super class of a window, which will be shown
+-- as a full screen container. UIView classes can be added into
+-- a window
+--
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------
+--
 local UIView = require("toolkit.UIKit.UIView")
 local List = require("toolkit.Utils.List")
 local ListNode = require("toolkit.Utils.ListNode")

@@ -1,5 +1,9 @@
--- Created by chuck, now it doesn't affect anything.
--- Don't consider this file, just keep it.
+-----------------------------------------------------------
+-- This class can show a popup window with a message and two 
+-- button, one of buttons is Cancel and another is OK
+--
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------
 
 local UIWindowView = require("toolkit.UIKit.UIWindowView")
 local List = require("toolkit.Utils.List")

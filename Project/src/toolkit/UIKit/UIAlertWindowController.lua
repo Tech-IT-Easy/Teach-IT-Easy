@@ -1,5 +1,8 @@
--- Created by chuck, now it doesn't affect anything. 
--- Don't consider this file, just keep it.
+-----------------------------------------------------------
+-- This class manage UIAlertWindowView, create it and show it
+--
+-- @Author:Created by Chuck, Nov 16,2015
+-----------------------------------------------------------
 
 local UIWindowViewController = require("toolkit.UIKit.UIWindowViewController")
 local UIAlertWindowView = require('toolkit.UIKit.UIAlertWindowView')
