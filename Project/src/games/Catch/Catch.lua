@@ -39,7 +39,7 @@ end
 
 function Catch:start()
   self:load()
-  self.windowController = UICatchLevelWindowController:new({game=self,immediateResponse=false}) --UICatchMainWindowController
+  self.windowController = UICatchLevelWindowController:new({game=self,immediateResponse=false,context=self.platformContext}) --UICatchMainWindowController
   self.gameEventListener:attach(self.windowController)
   print("Starting game Catch...")
 
@@ -64,7 +64,7 @@ function Catch:windowOpen(args)
   --self.lastWindowController = self.windowController
   self.gameEventListener:remove(self.windowController)
   if args == nil or args.windowName == "levelWindow" then
-    self.windowController = UICatchLevelWindowController:new({game=self,immediateResponse=args.immediateResponse or false})
+    self.windowController = UICatchLevelWindowController:new({game=self,immediateResponse=args.immediateResponse or false,context=self.platformContext})
   elseif args.windowName == "mainWindow" then
     self.windowController = UICatchMainWindowController:new({level = args.windowArgs.level,game=self,context=self.platformContext} )
   end

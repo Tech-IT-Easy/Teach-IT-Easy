@@ -19,11 +19,14 @@ local THEME = require("games.Catch.data.theme")
 -- This is a instance window, which is created for using when required
 local UICatchLevelWindow = extends(UIWindowView)
 
-function UICatchLevelWindow:new()
+function UICatchLevelWindow:new(args)
   local window = UICatchLevelWindow:super{title="Window Title",backgroundImage=UIImage:new(THEME.IMAGE.GAME_BACKGROUND)}
 
   -- private data model with <local>
   -- components
+  window.levelNumber = args.levelNumber
+  window.lockImage = UIImage:new(THEME.IMAGE.LOCK_LEVEL)
+  
   window.buttons = {}
   local textLabel = UILabel:new{identity="CHOOSE LEVEL",text="CHOOSE LEVEL",color=THEME.COLOR.WHITE,size=70,font=UILabel.FONT_GROBOLD} 
   window.title = UILabelView:new{identity="catachWindowTitle",frame={x=400,y=20,w=0,h=0},label=textLabel}
@@ -45,9 +48,13 @@ function UICatchLevelWindow:new()
     for j = 1, THEME.LEVEL.COLUMNS do
       local index = (i-1) * THEME.LEVEL.COLUMNS + j
         labels[index] = UILabel:new{identity="level"..index,text=index.."",color=THEME.COLOR.DARK_GRAY_1,size=THEME.MENU.FONT_SIZE,font=UILabel.FONT_GROBOLD }
-        window.buttons[index] = UIButtonView:new{identity="catchWindowLevelSelect"..index,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=labels[index],labelPosition=textAlignCenterPosition}
+        if index <= window.levelNumber then
+           window.buttons[index] = UIButtonView:new{identity="catchWindowLevelSelect"..index,enableFocus=true,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,label=labels[index],labelPosition=textAlignCenterPosition}
+           window:setFocusWeight{view=window.buttons[index], hWeight=index, vWeight=modReplaceList[index]}
+        else
+          window.buttons[index] = UIButtonView:new{identity="catchWindowLevelSelect"..index,enableFocus=false,frame=THEME.FRAME.BUTTON,borderColor=THEME.COLOR.DARK_GRAY_1,borderWidth = THEME.MENU.BORDER_WIDTH,backgroundImage=window.lockImage}--label=labels[index],labelPosition=textAlignCenterPosition}
+        end
         cells[index] = UICollectionCellView:new{view=window.buttons[index],viewType="UIButtonView" }
-        window:setFocusWeight{view=window.buttons[index], hWeight=index, vWeight=modReplaceList[index]}
         window.collectionPanel:fillWithCell(cells[index],i-1,j-1)
     end
   end

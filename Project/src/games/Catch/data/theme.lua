@@ -16,7 +16,8 @@ THEME.COLOR = {
 THEME.IMAGE = {
   GAME_BACKGROUND = {imagePath="games/Catch/data/readinggame_background.png",imageType="png"},
   COP_BACKGROUND = {imagePath="games/Catch/data/cop.png",imageType="png"},
-  THIEF_BACKGROUND = {imagePath="games/Catch/data/thief.png",imageType="png"}
+  THIEF_BACKGROUND = {imagePath="games/Catch/data/thief.png",imageType="png"},
+  LOCK_LEVEL = {imagePath="games/Catch/data/lock.png",imageType="png"}
 }
 THEME.LEVEL = {
   ROWS = 2,

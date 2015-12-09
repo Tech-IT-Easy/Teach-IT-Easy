@@ -13,10 +13,10 @@ local Event = require('toolkit.Event')
 local UICatchLevelWindowController = extends(UIWindowViewController)
 
 function UICatchLevelWindowController:new(args)
-  local o = UICatchLevelWindowController:super(UICatchLevelWindow:new())
+  local unlockedLevels = args.context.profile.gameprogress:getProgress("games.Catch.Catch").level
+  local o = UICatchLevelWindowController:super(UICatchLevelWindow:new{levelNumber=unlockedLevels})
   o.game = args.game
   o.window:initialize{levels=o.game.levels}
-  o.number = 1
   o.immediateResponse = args.immediateResponse -- some wired key press when enter window for first time 
   return UICatchLevelWindowController:init(o)
 end
