@@ -14,6 +14,9 @@ local UICatchLevelWindowController = extends(UIWindowViewController)
 
 function UICatchLevelWindowController:new(args)
   local unlockedLevels = args.context.profile.gameprogress:getProgress("games.Catch.Catch").level
+  if unlockedLevels < 8 then 
+    unlockedLevels = unlockedLevels + 1
+  end
   local o = UICatchLevelWindowController:super(UICatchLevelWindow:new{levelNumber=unlockedLevels})
   o.game = args.game
   o.window:initialize{levels=o.game.levels}
